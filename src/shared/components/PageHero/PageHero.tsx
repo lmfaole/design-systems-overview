@@ -19,10 +19,10 @@ export function PageHero({ title, background, description, className, ...rest }:
             <div className="page-hero__bg" aria-hidden="true">
                 {background}
             </div>
-            <Flex className="page-hero__inner" alignItems="center" justifyContent="center">
+            <Flex className="page-hero__inner" alignItems="center" justifyContent="flex-start">
                 <div className="page-hero__text">
                     <h1>{title}</h1>
-                    {description && <p className="page-hero__description">{description}</p>}
+                    {description && <p className="page-hero__description lead">{description}</p>}
                 </div>
             </Flex>
         </FullBleed>

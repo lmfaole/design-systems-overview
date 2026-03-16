@@ -23,12 +23,13 @@ export function Grid({ as: Tag = "div", gap = "m", columns, className, style, ch
     const classes = ["grid", className].filter(Boolean).join(" ");
     const colMin = columns ? COL_MIN_WIDTHS[columns] : undefined;
     const inlineStyle = colMin
-        ? { "--grid-col-min": colMin, ...style }
+        ? { "--grid-col-min": colMin, "--grid-cols": columns, ...style }
         : style;
 
     return (
         <Tag
             className={classes}
+            data-columns={columns}
             data-gap={`var(--jkl-spacing-${gap})`}
             style={inlineStyle as React.CSSProperties}
             {...rest}

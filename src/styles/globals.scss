@@ -109,13 +109,6 @@ body {
   max-width: 60ch;
 }
 
-/* Pattern ("monster") pages: narrower, centered, more editorial typography. */
-.pattern-page__content {
-  width: 100%;
-  max-width: 120ch;
-  margin-inline: auto;
-}
-
 .post-prose--pattern {
   --pattern-prose-max-width: 58ch;
 
@@ -126,7 +119,7 @@ body {
   .pattern-prose__text {
     width: 100%;
     max-width: var(--pattern-prose-max-width);
-    margin-inline: auto;
+    margin-inline: 0;
   }
 
   .pattern-prose__text :where(h1, h2, h3) {

@@ -72,11 +72,13 @@ export default async function PatternPage({ params, searchParams }: PatternPageP
 }
 
 function ExamplesSection({ examples }: { examples: PatternPost["examples"] }) {
+    const columns = Math.min(4, Math.max(1, examples.length)) as 1 | 2 | 3 | 4;
+
     return (
         <section aria-labelledby="eksempler">
             <Flex direction="column" gap="m">
                 <h2 id="eksempler">Eksempler</h2>
-                <Grid columns={2} gap="m">
+                <Grid columns={columns} gap="m">
                     {examples.map((example) => (
                         <ExampleCard
                             key={example.title}
