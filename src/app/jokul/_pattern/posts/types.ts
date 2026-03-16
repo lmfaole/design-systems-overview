@@ -44,7 +44,7 @@ export interface PatternAccessibility {
      * Short headline for the key a11y concern this pattern addresses.
      *
      * Should read well as an H3, and ideally describes the outcome:
-     * "Gi X et tydelig navn", "Sorg for Y med tastatur", etc.
+     * "Gi X et tydelig navn", "Sørg for Y med tastatur", etc.
      */
     title: React.ReactNode;
     /**

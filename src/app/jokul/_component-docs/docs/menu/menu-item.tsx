@@ -6,6 +6,8 @@ const doc: ComponentDoc = {
     name: "MenuItem",
     package: "@fremtind/jokul/menu",
     category: "Overlegg",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     showOnOverview: false,
     description: {
         short: "Valgbart element i menyen.",

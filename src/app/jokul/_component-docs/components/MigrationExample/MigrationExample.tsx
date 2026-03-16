@@ -1,14 +1,14 @@
-import {Flex} from "@fremtind/jokul/flex";
-import {CodeBlock} from "@/shared/components/CodeBlock";
-import {Grid} from "@/shared/components/Grid";
-import type {Migration} from "@/app/jokul/_component-docs/docs/types";
+import { Flex } from "@fremtind/jokul/flex";
+import { CodeBlock } from "@/shared/components/CodeBlock";
+import { Grid } from "@/shared/components/Grid";
+import type { Migration } from "@/app/jokul/_component-docs/docs/types";
 import "./migration-example.scss";
 
 interface MigrationExampleProps {
     migration: Migration;
 }
 
-export function MigrationExample({migration}: MigrationExampleProps) {
+export function MigrationExample({ migration }: MigrationExampleProps) {
     return (
         <Flex direction="column" gap="s" className="migration-example">
             {migration.description && <p className="small muted">{migration.description}</p>}
@@ -28,11 +28,11 @@ export function MigrationExample({migration}: MigrationExampleProps) {
             <Grid columns={2} gap="m">
                 <Flex direction="column" gap="xs" className="migration-example__block">
                     <span className="migration-example__block-label muted">Før</span>
-                    <CodeBlock code={migration.before}/>
+                    <CodeBlock code={migration.before} />
                 </Flex>
                 <Flex direction="column" gap="xs" className="migration-example__block">
                     <span className="migration-example__block-label muted">Etter</span>
-                    <CodeBlock code={migration.after}/>
+                    <CodeBlock code={migration.after} />
                 </Flex>
             </Grid>
         </Flex>

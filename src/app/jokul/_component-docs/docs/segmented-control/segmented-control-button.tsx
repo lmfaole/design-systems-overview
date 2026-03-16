@@ -6,6 +6,8 @@ const doc: ComponentDoc = {
     name: "SegmentedControlButton",
     package: "@fremtind/jokul/segmented-control",
     category: "Handling",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     showOnOverview: false,
     description: {
         short: "Enkelt alternativ i SegmentedControl.",

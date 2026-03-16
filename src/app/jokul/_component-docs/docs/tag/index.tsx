@@ -7,6 +7,8 @@ const doc: ComponentDoc = {
     name: "Tag",
     package: "@fremtind/jokul/tag",
     category: "Visning",
+    status: "stable",
+    complexity: { use: "easy", maintenance: "easy" },
     description: {
         short: "Brukes til å vise kategorier statuser og etiketter.",
         long: "Tag brukes til å vise kategorier, statuser og etiketter. De er kun visuelle elementer — ikke bruk Tag som knapper eller lenker. For klikkbare filtre, bruk Chip-komponenten i stedet.",

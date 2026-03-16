@@ -6,6 +6,8 @@ const doc: ComponentDoc = {
     name: "SkeletonRadioButtonGroup",
     package: "@fremtind/jokul/skeleton",
     category: "Tilbakemelding",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     showOnOverview: false,
     description: {
         short: "Plassholder for en gruppe radioknapper.",

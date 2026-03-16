@@ -8,9 +8,11 @@ const doc: ComponentDoc = {
     name: "Radio Button",
     package: "@fremtind/jokul/radio-button",
     category: "Skjema",
+    status: "stable",
+    complexity: { use: "easy", maintenance: "easy" },
     description: {
-        short: "RadioButton og RadioButtonGroup brukes for enovalgslister.",
-        long: "RadioButton og RadioButtonGroup brukes for enovalgslister.",
+        short: "RadioButton og RadioButtonGroup brukes for envalgslister.",
+        long: "RadioButton og RadioButtonGroup brukes for envalgslister.",
     },
     relationships: {
         alternatives: [{ id: "radio-panel", description: "Bruk RadioPanel når du trenger et større klikkbart kortområde rundt hvert alternativ." }],

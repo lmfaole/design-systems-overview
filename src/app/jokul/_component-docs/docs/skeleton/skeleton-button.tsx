@@ -6,6 +6,8 @@ const doc: ComponentDoc = {
     name: "SkeletonButton",
     package: "@fremtind/jokul/skeleton",
     category: "Tilbakemelding",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     showOnOverview: false,
     description: {
         short: "Plassholder som matcher bredde og høyde på en Button.",

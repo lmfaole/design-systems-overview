@@ -9,6 +9,7 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/icon-button",
     category: "Handling",
     status: "deprecated",
+    complexity: { use: "easy", maintenance: "easy" },
     description: {
         short: "Kompakt knapp for handlinger uten synlig tekst.",
         long: "Kompakt knapp for handlinger som kun trenger et ikon. Gi alltid en aria-label som beskriver handlingen. Deprecated: bruk heller Button med variant=\"ghost\" og icon.",

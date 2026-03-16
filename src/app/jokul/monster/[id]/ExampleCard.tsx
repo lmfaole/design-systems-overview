@@ -43,10 +43,12 @@ export function ExampleCard({ title, description, code, children }: ExampleCardP
                 <Flex alignItems="center" justifyContent="center" style={{ minHeight: "6rem" }}>
                     {children}
                 </Flex>
-                <strong>{title}</strong>
-                {description && <p className="muted">{description}</p>}
+                <div>
+                    <p>{title}</p>
+                    {description && <p className="muted">{description}</p>}
+                </div>
 
-                <Flex justifyContent="start">
+                <Flex justifyContent="end">
                     <Button
                         variant="ghost"
                         type="button"

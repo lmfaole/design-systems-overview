@@ -6,6 +6,8 @@ const doc: ComponentDoc = {
     name: "Search.Button",
     package: "@fremtind/jokul/search",
     category: "Skjema",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     showOnOverview: false,
     description: {
         short: "Frittstående søkeknapp som pares med Search-inputfeltet i et skjema.",

@@ -6,6 +6,8 @@ const doc: ComponentDoc = {
     name: "TablePagination",
     package: "@fremtind/jokul/table",
     category: "Visning",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     showOnOverview: false,
     description: {
         short: "Paginering for tabeller med kontrollert sidevalg og rader per side.",

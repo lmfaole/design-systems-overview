@@ -8,6 +8,14 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/menu",
     category: "Overlegg",
     status: "stable",
+    complexity: {
+        use: "hard",
+        maintenance: "hard",
+        notes: {
+            use: "Krever riktig tastaturnavigasjon, fokusstyring og aria-roller i menyen.",
+            maintenance: "Bygger på flytende posisjonering og fokuslogikk som må holdes i sync med WAI-ARIA.",
+        },
+    },
     description: {
         short: "Dropdown-meny som åpnes av et trigger-element.",
         long: "Menu er en dropdown-meny som åpnes av et trigger-element. Den støtter vanlige valg, separatorer og avkrysningselementer.",

@@ -7,6 +7,8 @@ const doc: ComponentDoc = {
     name: "Text Area",
     package: "@fremtind/jokul/text-area",
     category: "Skjema",
+    status: "stable",
+    complexity: { use: "easy", maintenance: "easy" },
     description: {
         short: "TextArea er et flerlinjers tekstinputfelt for lengre tekstinnhold.",
         long: "TextArea er et flerlinjers tekstinputfelt for lengre tekstinnhold.",

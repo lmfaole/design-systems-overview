@@ -8,6 +8,7 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/loader",
     category: "Tilbakemelding",
     status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     description: {
         short: "Komponenter bygger opp et innholdsskjelett som matcher layouten til det.",
         long: "Skeleton-komponenter bygger opp et innholdsskjelett som matcher layouten til det virkelige innholdet, og gir brukeren en visuell indikasjon på at innhold er på vei.",

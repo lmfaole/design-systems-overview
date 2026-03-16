@@ -25,7 +25,7 @@ export function MultipleSubmitsExample() {
             <Flex direction="column" gap="xs" alignItems="center">
                 <Button onClick={handleSave}>Lagre</Button>
                 <small className="muted">
-                    Paagende: {pending} · Lagret: {saved}
+                    Pågående: {pending} · Lagret: {saved}
                 </small>
             </Flex>
         </div>
@@ -62,4 +62,3 @@ export function LockedSubmitExample() {
         </div>
     );
 }
-

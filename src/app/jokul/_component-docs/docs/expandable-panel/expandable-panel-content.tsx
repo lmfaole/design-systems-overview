@@ -6,6 +6,8 @@ const doc: ComponentDoc = {
     name: "ExpandablePanel.Content",
     package: "@fremtind/jokul/expandable-panel",
     category: "Visning",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     showOnOverview: false,
     description: {
         short: "Innholdsområdet som vises og skjules.",

@@ -7,6 +7,8 @@ const doc: ComponentDoc = {
     name: "Expandable Panel",
     package: "@fremtind/jokul/expander",
     category: "Visning",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     description: {
         short: "ExpandablePanel er et utviddbart panel med header og innhold.",
         long: "ExpandablePanel er et utviddbart panel med header og innhold.",

@@ -8,6 +8,8 @@ const doc: ComponentDoc = {
     name: "Text Input",
     package: "@fremtind/jokul/text-input",
     category: "Skjema",
+    status: "stable",
+    complexity: { use: "easy", maintenance: "medium" },
     description: {
         short: "TextInput er en enkeltlinjers tekstinndatafelt.",
         long: "TextInput er en enkeltlinjers tekstinndatafelt. Komponenten inkluderer label, feilmelding og hjelpetekst i ett og håndterer tilgjengelighet automatisk — label er koblet til input via htmlFor/id. Alle skjema-primitiver i Jøkul følger samme API-mønster.",

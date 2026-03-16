@@ -52,38 +52,44 @@ export default async function PatternPage({ params, searchParams }: PatternPageP
         <Flex as="main" direction="column" gap="xl">
             <PageHero title={post.title} description={post.goals} background={background} />
 
-            <Article className="post-prose">
-                {post.examples.length > 0 && <ExamplesSection examples={post.examples} />}
-                <AccessibilitySection accessibility={post.accessibility} />
-            </Article>
+            <div className="pattern-page__content">
+                <Flex direction="column" gap="xl">
+                    <Article className="post-prose post-prose--pattern">
+                        {post.examples.length > 0 && <ExamplesSection examples={post.examples} />}
+                        <AccessibilitySection accessibility={post.accessibility} />
+                    </Article>
 
-            {usedComponents.length > 0 && (
-                <Flex as="section" direction="column" gap="m">
-                    <h2>Komponenter</h2>
-                    <RelatedComponentsTable items={usedComponents} />
+                    {usedComponents.length > 0 && (
+                        <Flex as="section" direction="column" gap="m">
+                            <h2>Komponenter</h2>
+                            <RelatedComponentsTable items={usedComponents} />
+                        </Flex>
+                    )}
                 </Flex>
-            )}
+            </div>
         </Flex>
     );
 }
 
 function ExamplesSection({ examples }: { examples: PatternPost["examples"] }) {
     return (
-        <Flex as="section" direction="column" gap="m">
-            <h2 id="eksempler">Eksempler</h2>
-            <Grid columns={2} gap="m">
-                {examples.map((example) => (
-                    <ExampleCard
-                        key={example.title}
-                        title={example.title}
-                        description={example.description}
-                        code={example.code}
-                    >
-                        <example.Example />
-                    </ExampleCard>
-                ))}
-            </Grid>
-        </Flex>
+        <section aria-labelledby="eksempler">
+            <Flex direction="column" gap="m">
+                <h2 id="eksempler">Eksempler</h2>
+                <Grid columns={2} gap="m">
+                    {examples.map((example) => (
+                        <ExampleCard
+                            key={example.title}
+                            title={example.title}
+                            description={example.description}
+                            code={example.code}
+                        >
+                            <example.Example />
+                        </ExampleCard>
+                    ))}
+                </Grid>
+            </Flex>
+        </section>
     );
 }
 
@@ -91,68 +97,72 @@ function AccessibilitySection({ accessibility }: { accessibility: PatternPost["a
     const wcagSorted = [...accessibility.wcag].sort((a, b) => compareWcagIds(a.id, b.id));
 
     return (
-        <Flex as="section" direction="column" gap="m">
-            <h2 id="tilgjengelighet">Tilgjengelighet</h2>
-            <h3>{accessibility.title}</h3>
-            <p>{accessibility.description}</p>
+        <section aria-labelledby="tilgjengelighet">
+            <div className="pattern-prose__text">
+                <Flex direction="column" gap="l">
+                    <h2 id="tilgjengelighet">Tilgjengelighet</h2>
+                    <h3>{accessibility.title}</h3>
+                    <p>{accessibility.description}</p>
 
-            {accessibility.ariaRoles.length > 0 && (
-                <Flex direction="column" gap="s">
-                    <h4>ARIA</h4>
-                    <UnorderedList>
-                        {accessibility.ariaRoles.map((item, i) => (
-                            <ListItem key={i}>{item}</ListItem>
-                        ))}
-                    </UnorderedList>
+                    {accessibility.ariaRoles.length > 0 && (
+                        <Flex direction="column" gap="s">
+                            <h4>ARIA</h4>
+                            <UnorderedList>
+                                {accessibility.ariaRoles.map((item, i) => (
+                                    <ListItem key={i}>{item}</ListItem>
+                                ))}
+                            </UnorderedList>
+                        </Flex>
+                    )}
+
+                    {wcagSorted.length > 0 && (
+                        <Flex direction="column" gap="s">
+                            <h4>WCAG</h4>
+                            <UnorderedList>
+                                {wcagSorted.map((rule) => {
+                                    return (
+                                        <ListItem key={rule.id}>
+                                            <Flex direction="column" gap="xs">
+                                                {rule.url ? (
+                                                    <Link href={rule.url} external>
+                                                        {rule.id} {rule.title} (Nivå {rule.level})
+                                                    </Link>
+                                                ) : (
+                                                    <span>
+                                                        {rule.id} {rule.title} (Nivå {rule.level})
+                                                    </span>
+                                                )}
+                                                <small className="muted">{rule.relevance}</small>
+                                            </Flex>
+                                        </ListItem>
+                                    );
+                                })}
+                            </UnorderedList>
+                        </Flex>
+                    )}
+
+                    <Flex direction="column" gap="s">
+                        <h4>Slik unngår du det</h4>
+                        <UnorderedList>
+                            {accessibility.avoid.map((item, i) => (
+                                <ListItem key={i}>{item}</ListItem>
+                            ))}
+                        </UnorderedList>
+                    </Flex>
+
+                    {accessibility.testing && accessibility.testing.length > 0 && (
+                        <Flex direction="column" gap="s">
+                            <h4>Testing</h4>
+                            <UnorderedList>
+                                {accessibility.testing.map((item, i) => (
+                                    <ListItem key={i}>{item}</ListItem>
+                                ))}
+                            </UnorderedList>
+                        </Flex>
+                    )}
                 </Flex>
-            )}
-
-            {wcagSorted.length > 0 && (
-                <Flex direction="column" gap="s">
-                    <h4>WCAG</h4>
-                    <UnorderedList>
-                        {wcagSorted.map((rule) => {
-                            return (
-                                <ListItem key={rule.id}>
-                                    <Flex direction="column" gap="xs">
-                                        {rule.url ? (
-                                            <Link href={rule.url} external>
-                                                {rule.id} {rule.title} (Niva {rule.level})
-                                            </Link>
-                                        ) : (
-                                            <span>
-                                                {rule.id} {rule.title} (Niva {rule.level})
-                                            </span>
-                                        )}
-                                        <small className="muted">{rule.relevance}</small>
-                                    </Flex>
-                                </ListItem>
-                            );
-                        })}
-                    </UnorderedList>
-                </Flex>
-            )}
-
-            <Flex direction="column" gap="s">
-                <h4>Slik unngar du det</h4>
-                <UnorderedList>
-                    {accessibility.avoid.map((item, i) => (
-                        <ListItem key={i}>{item}</ListItem>
-                    ))}
-                </UnorderedList>
-            </Flex>
-
-            {accessibility.testing && accessibility.testing.length > 0 && (
-                <Flex direction="column" gap="s">
-                    <h4>Testing</h4>
-                    <UnorderedList>
-                        {accessibility.testing.map((item, i) => (
-                            <ListItem key={i}>{item}</ListItem>
-                        ))}
-                    </UnorderedList>
-                </Flex>
-            )}
-        </Flex>
+            </div>
+        </section>
     );
 }
 

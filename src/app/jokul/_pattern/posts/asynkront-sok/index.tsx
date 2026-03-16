@@ -4,8 +4,8 @@ import { IgnoreStaleResponsesExample, StaleResponsesExample } from "./examples";
 
 const post: PatternPost = {
     id: 2,
-    title: "Asynkront sok",
-    goals: "Gi riktige resultater selv nar brukeren skriver raskt.",
+    title: "Asynkront søk",
+    goals: "Gi riktige resultater selv når brukeren skriver raskt.",
     examples: [
         {
             title: "Vanlig feil: gamle svar overskriver",
@@ -46,8 +46,8 @@ export function StaleResponsesExample() {
 
     return (
         <>
-            <TextInput label="Sok" value={query} onChange={(e) => setQuery(e.target.value)} />
-            {loading ? <Loader textDescription="Soker" /> : <div>Resultat for: {response.query}</div>}
+            <TextInput label="Søk" value={query} onChange={(e) => setQuery(e.target.value)} />
+            {loading ? <Loader textDescription="Søker" /> : <div>Resultat for: {response.query}</div>}
         </>
     );
 }
@@ -95,18 +95,18 @@ export function IgnoreStaleResponsesExample() {
         },
     ],
     accessibility: {
-        title: "Gi tydelig status nar innhold oppdateres asynkront",
+        title: "Gi tydelig status når innhold oppdateres asynkront",
         description: (
             <>
                 Asynkrone oppdateringer kan gi forvirrende opplevelser hvis UI-et viser feil
                 resultat, eller hvis statusendringer ikke blir kommunisert. Gi brukeren
-                tydelig tilbakemelding pa lasting og treff, uten a flytte fokus.
+                tydelig tilbakemelding på lasting og treff, uten å flytte fokus.
             </>
         ),
         ariaRoles: [
             <>
-                Bruk <code>aria-live</code> (f.eks. <code>polite</code>) for a annonsere
-                status som "Soker" / "Ingen treff" / "3 treff".{" "}
+                Bruk <code>aria-live</code> (f.eks. <code>polite</code>) for å annonsere
+                status som "Søker" / "Ingen treff" / "3 treff".{" "}
                 <Link
                     href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-live"
                     external
@@ -127,7 +127,7 @@ export function IgnoreStaleResponsesExample() {
                 .
             </>,
             <>
-                Unnga a flytte fokus nar resultatene oppdateres; la brukeren styre videre
+                Unngå å flytte fokus når resultatene oppdateres; la brukeren styre videre
                 navigasjon (f.eks. til en treffliste).
             </>,
         ],
@@ -137,7 +137,7 @@ export function IgnoreStaleResponsesExample() {
                 title: "Info and Relationships",
                 level: "A",
                 relevance:
-                    "Presenter treff med riktig struktur (liste/tabell), sa hjelpemidler forstar innholdet.",
+                    "Presenter treff med riktig struktur (liste/tabell), så hjelpemidler forstår innholdet.",
                 url: "https://www.w3.org/WAI/WCAG21/Understanding/info-and-relationships.html",
             },
             {
@@ -145,7 +145,7 @@ export function IgnoreStaleResponsesExample() {
                 title: "On Input",
                 level: "A",
                 relevance:
-                    "Oppdatering pa input ma ikke gi uventede kontekstendringer eller stjele fokus.",
+                    "Oppdatering på input må ikke gi uventede kontekstendringer eller stjele fokus.",
                 url: "https://www.w3.org/WAI/WCAG21/Understanding/on-input.html",
             },
             {
@@ -153,7 +153,7 @@ export function IgnoreStaleResponsesExample() {
                 title: "Status Messages",
                 level: "AA",
                 relevance:
-                    "Brukere som ikke ser skjermen ma fa med seg at det lastes og at resultatene endres.",
+                    "Brukere som ikke ser skjermen må få med seg at det lastes og at resultatene endres.",
                 url: "https://www.w3.org/WAI/WCAG21/Understanding/status-messages.html",
             },
         ],
@@ -163,12 +163,12 @@ export function IgnoreStaleResponsesExample() {
                 eller <code>AbortController</code>).
             </>,
             "Vis en tydelig lastetilstand og avslutt den for nyeste kall (ikke for et gammelt svar).",
-            "Unnga a flytte fokus automatisk til resultatene; tilby heller en tydelig struktur brukeren kan navigere til.",
+            "Unngå å flytte fokus automatisk til resultatene; tilby heller en tydelig struktur brukeren kan navigere til.",
             "Hvis du viser flere treff: presenter dem som liste (ul/li) eller tabell, ikke som en lang tekststreng.",
         ],
         testing: [
             'Skriv raskt (f.eks. "a" -> "ab") og sjekk at resultatet alltid matcher siste input.',
-            'Skjermleser: verifiser at "Soker" og antall/ingen treff annonseres uten fokusflytting.',
+            'Skjermleser: verifiser at "Søker" og antall/ingen treff annonseres uten fokusflytting.',
             "Tastatur: verifiser at du kan navigere videre til resultatene uten uventede hopp.",
         ],
     },

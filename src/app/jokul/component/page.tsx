@@ -35,7 +35,7 @@ export default function ComponentsPage() {
                 doc.description.long.toLowerCase().includes(q) ||
                 doc.package.toLowerCase().includes(q);
             const matchesCategory = !activeCategory || doc.category === activeCategory;
-            const status = doc.status ?? "stable";
+            const status = doc.status;
             const matchesStatus = !activeStatus || status === activeStatus;
             return matchesQuery && matchesCategory && matchesStatus;
         });

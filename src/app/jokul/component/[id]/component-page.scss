@@ -15,3 +15,20 @@
         }
     }
 }
+
+.component-complexity {
+    margin: 0;
+
+    &__row {
+        margin: 0;
+    }
+
+    &__label,
+    &__value {
+        margin: 0;
+    }
+
+    &__label {
+        min-width: 8rem;
+    }
+}

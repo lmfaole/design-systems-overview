@@ -7,6 +7,8 @@ const doc: ComponentDoc = {
     name: "Flex",
     package: "@fremtind/jokul/flex",
     category: "Layout",
+    status: "stable",
+    complexity: { use: "easy", maintenance: "easy" },
     description: {
         short: "Den primære layout-primitiven i Jøkul.",
         long: "Flex er den primære layout-primitiven i Jøkul. Den lar deg bygge flexbox-layouts med Jøkuls spacing-skala for gap, uten å skrive CSS. Komponenten rendres som div som standard, men kan rendres som et hvilket som helst HTML-element via as-proppen.",

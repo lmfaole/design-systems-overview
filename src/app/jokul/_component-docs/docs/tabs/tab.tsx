@@ -6,6 +6,8 @@ const doc: ComponentDoc = {
     name: "Tab",
     package: "@fremtind/jokul/tabs",
     category: "Navigasjon",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     showOnOverview: false,
     description: {
         short: "Enkelt fane-knapp.",

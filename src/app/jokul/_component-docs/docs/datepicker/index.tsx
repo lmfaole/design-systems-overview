@@ -9,6 +9,14 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/datepicker",
     category: "Skjema",
     status: "stable",
+    complexity: {
+        use: "hard",
+        maintenance: "hard",
+        notes: {
+            use: "Datoformat, lokalisering og tastaturnavigasjon gjør riktig bruk krevende.",
+            maintenance: "Avhenger av kalenderlogikk, formatering og a11y-krav.",
+        },
+    },
     description: {
         short: "DatePicker er et skjemafelt for å velge en dato.",
         long: "DatePicker er et skjemafelt for å velge en dato. Den kombinerer et tekstfelt med en interaktiv kalender og validerer datoformatet automatisk.",

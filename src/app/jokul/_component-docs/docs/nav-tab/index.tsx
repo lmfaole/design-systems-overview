@@ -7,6 +7,8 @@ const doc: ComponentDoc = {
     name: "Nav Tab",
     package: "@fremtind/jokul/tabs",
     category: "Navigasjon",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     description: {
         short: "NavTab er lenkefaner for URL-basert navigasjon.",
         long: "NavTab er lenkefaner for URL-basert navigasjon. Aktiv fane styres av aria-selected basert på gjeldende URL — i motsetning til Tabs som er tilstandsstyrt.",

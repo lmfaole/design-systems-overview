@@ -33,7 +33,7 @@ export function MultipleSubmitsExample() {
     return (
         <>
             <Button onClick={handleSave}>Lagre</Button>
-            <small>Paagende: {pending} · Lagret: {saved}</small>
+            <small>Pågående: {pending} · Lagret: {saved}</small>
         </>
     );
 }
@@ -77,20 +77,20 @@ export function LockedSubmitExample() {
         },
     ],
     accessibility: {
-        title: "Gi tydelig status og unnga dupliserte handlinger",
+        title: "Gi tydelig status og unngå dupliserte handlinger",
         description: (
             <>
-                Hvis en knapp kan aktiveres flere ganger mens en lagring paagar, kan det gi
-                duplikate endringer og uklare resultater. La handlingen vere idempotent der
-                du kan, og gi tydelig tilbakemelding pa hva som skjer.
+                Hvis en knapp kan aktiveres flere ganger mens en lagring pågår, kan det gi
+                duplikate endringer og uklare resultater. La handlingen være idempotent der
+                du kan, og gi tydelig tilbakemelding på hva som skjer.
             </>
         ),
         ariaRoles: [
             <>
-                Bruk ekte <code>&lt;button&gt;</code> (eller Jøkul <code>Button</code>) sa
-                tastatur og hjelpemidler far riktig oppforsel.{" "}
+                Bruk ekte <code>&lt;button&gt;</code> (eller Jøkul <code>Button</code>) så
+                tastatur og hjelpemidler får riktig oppførsel.{" "}
                 <Link href="https://www.w3.org/WAI/ARIA/apg/patterns/button/" external>
-                    Les mer om knappemonsteret i ARIA APG
+                    Les mer om knappemønsteret i ARIA APG
                 </Link>
                 .
             </>,
@@ -107,7 +107,7 @@ export function LockedSubmitExample() {
             </>,
             <>
                 Marker relevante regioner som opptatt med <code>aria-busy</code> mens du
-                venter pa respons.{" "}
+                venter på respons.{" "}
                 <Link
                     href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-busy"
                     external
@@ -123,7 +123,7 @@ export function LockedSubmitExample() {
                 title: "Error Prevention (Legal, Financial, Data)",
                 level: "AA",
                 relevance:
-                    "For viktige handlinger ma brukeren kunne unnga feil, f.eks. ved bekreftelse eller mulighet til a angre.",
+                    "For viktige handlinger må brukeren kunne unngå feil, f.eks. ved bekreftelse eller mulighet til å angre.",
                 url: "https://www.w3.org/WAI/WCAG21/Understanding/error-prevention-legal-financial-data.html",
             },
             {
@@ -131,14 +131,14 @@ export function LockedSubmitExample() {
                 title: "Status Messages",
                 level: "AA",
                 relevance:
-                    "Brukere som ikke ser skjermen ma fa med seg at lagring paagar og nar den er ferdig.",
+                    "Brukere som ikke ser skjermen må få med seg at lagring pågår og når den er ferdig.",
                 url: "https://www.w3.org/WAI/WCAG21/Understanding/status-messages.html",
             },
         ],
         avoid: [
             "Ikke la en \"Lagre\"-knapp kunne trigges flere ganger mens samme request er pending.",
-            "Ikke skjul at noe skjer: vis loader/tekst, og avslutt den nar handlingen er ferdig.",
-            "Unnga a erstatte knappen med en spinner uten tekst (da mister brukere kontekst).",
+            "Ikke skjul at noe skjer: vis loader/tekst, og avslutt den når handlingen er ferdig.",
+            "Unngå å erstatte knappen med en spinner uten tekst (da mister brukere kontekst).",
             "For irreversible eller viktige handlinger: vurder bekreftelse eller angre-mulighet.",
         ],
         testing: [
@@ -151,4 +151,3 @@ export function LockedSubmitExample() {
 };
 
 export default post;
-

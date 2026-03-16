@@ -6,6 +6,8 @@ const doc: ComponentDoc = {
     name: "ExpandablePanel.Header",
     package: "@fremtind/jokul/expandable-panel",
     category: "Visning",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     showOnOverview: false,
     description: {
         short: "Klikkbar header som viser skjuler innholdet.",

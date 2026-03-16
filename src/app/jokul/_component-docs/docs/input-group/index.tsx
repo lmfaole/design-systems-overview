@@ -9,8 +9,9 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/input-group",
     category: "Skjema",
     status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     description: {
-        short: "InputGroup kombinerer et skjemafelt med label hjelpetekst og feilmelding på.",
+        short: "InputGroup kombinerer et skjemafelt med label, hjelpetekst og feilmelding på en tilgjengelig måte.",
         long: "InputGroup kombinerer et skjemafelt med label, hjelpetekst og feilmelding på en tilgjengelig måte. Bruk FieldGroup når du skal gruppere Checkbox eller RadioButton under en felles legend.",
     },
     preview: <InputGroupPreview />,

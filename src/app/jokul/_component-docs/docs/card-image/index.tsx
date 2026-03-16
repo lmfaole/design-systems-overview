@@ -7,6 +7,8 @@ const doc: ComponentDoc = {
     name: "Card Image",
     package: "@fremtind/jokul/card",
     category: "Visning",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     showOnOverview: false,
     description: {
         short: "CardImage er en bildekomponent laget for bruk inne i Card.",

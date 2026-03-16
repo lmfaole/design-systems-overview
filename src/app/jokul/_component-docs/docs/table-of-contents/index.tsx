@@ -7,6 +7,8 @@ const doc: ComponentDoc = {
     name: "Table Of Contents",
     package: "@fremtind/jokul/table-of-contents",
     category: "Navigasjon",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     description: {
         short: "TableOfContents viser en navigerbar innholdsfortegnelse for siden.",
         long: "TableOfContents viser en navigerbar innholdsfortegnelse for siden.",

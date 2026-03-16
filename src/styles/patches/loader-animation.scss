@@ -1,0 +1,11 @@
+/* Temporary patch: Jøkul Loader animation gets optimized away (animation-duration becomes 0s)
+   when using Next.js/Turbopack CSS optimization.
+
+   Tracking issue: https://github.com/lmfaole/lmfaole/issues/58
+*/
+
+.jkl-loader__dot {
+  animation-duration: 2500ms;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}

@@ -8,6 +8,14 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/popover",
     category: "Overlegg",
     status: "stable",
+    complexity: {
+        use: "hard",
+        maintenance: "hard",
+        notes: {
+            use: "Plassering, fokus og klikk-utenfor gjør riktig integrasjon krevende.",
+            maintenance: "Avhenger av flytende posisjonering og portal-/overlay-logikk.",
+        },
+    },
     description: {
         short: "Flytende informasjonsboks som vises ved siden av et trigger-element.",
         long: "Popover er en flytende informasjonsboks som vises ved siden av et trigger-element. Den brukes til kontekstuell informasjon, forklaringer og enkle handlinger som ikke krever en full modal. Bygget på Floating UI.",

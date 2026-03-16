@@ -7,6 +7,8 @@ const doc: ComponentDoc = {
     name: "Radio Panel",
     package: "@fremtind/jokul/radio-panel",
     category: "Skjema",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     description: {
         short: "RadioPanel er et panelbasert envalgsalternativ.",
         long: "RadioPanel er et panelbasert envalgsalternativ.",

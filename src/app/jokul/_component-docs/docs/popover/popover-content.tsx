@@ -6,6 +6,8 @@ const doc: ComponentDoc = {
     name: "Popover.Content",
     package: "@fremtind/jokul/popover",
     category: "Overlegg",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     showOnOverview: false,
     description: {
         short: "Det flytende innholdsområdet som vises når popoveren er åpen.",

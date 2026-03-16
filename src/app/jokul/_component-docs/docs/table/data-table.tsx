@@ -6,6 +6,8 @@ const doc: ComponentDoc = {
     name: "DataTable",
     package: "@fremtind/jokul/table",
     category: "Visning",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     description: {
         short: "Rendrer en komplett tabell fra kolonne- og radlister med responsive.",
         long: "Rendrer en komplett tabell fra kolonne- og radlister, med responsive listevisning og caption for tilgjengelighet.",

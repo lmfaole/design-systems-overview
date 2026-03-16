@@ -6,6 +6,8 @@ const doc: ComponentDoc = {
     name: "LinkList.Link",
     package: "@fremtind/jokul/link-list",
     category: "Navigasjon",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     showOnOverview: false,
     description: {
         short: "Lenke inne i lenkegruppelisten.",

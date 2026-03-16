@@ -8,6 +8,15 @@ const doc: ComponentDoc = {
     name: "Autosuggest",
     package: "@fremtind/jokul/autosuggest",
     category: "Skjema",
+    status: "stable",
+    complexity: {
+        use: "hard",
+        maintenance: "hard",
+        notes: {
+            use: "Asynkrone forslag krever debounce, a11y og håndtering av tomme/feil-tilstander.",
+            maintenance: "Må koordineres med input, liste og resultathåndtering over tid.",
+        },
+    },
     description: {
         short: "Tekstinputfelt som viser forslag mens brukeren skriver.",
         long: "Autosuggest er et tekstinputfelt som viser forslag mens brukeren skriver. Passer for søk og fritekstfelt med et endelig sett av gyldige valg.",

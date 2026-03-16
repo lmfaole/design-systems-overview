@@ -8,7 +8,7 @@ export const props: PropDef[] = [
         source: "custom",
         status: "stable",
         description:
-            "Metode fra useToast(). content kan vaere en tekststreng eller et objekt med valgfri title og content (ReactNode). options kan sette variant, timeout og action. Returnerer en key (string) som brukes med close().",
+            "Metode fra useToast(). content kan være en tekststreng eller et objekt med valgfri title og content (ReactNode). options kan sette variant, timeout og action. Returnerer en key (string) som brukes med close().",
     },
     {
         name: "close",

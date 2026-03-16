@@ -7,6 +7,8 @@ const doc: ComponentDoc = {
     name: "Chip",
     package: "@fremtind/jokul/chip",
     category: "Handling",
+    status: "stable",
+    complexity: { use: "easy", maintenance: "easy" },
     description: {
         short: "Brukes for interaktive filtre og tagger som brukeren kan velge.",
         long: "Chip brukes for interaktive filtre og tagger som brukeren kan velge og velge bort.",

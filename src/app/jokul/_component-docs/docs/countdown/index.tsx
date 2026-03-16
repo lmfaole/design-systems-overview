@@ -7,6 +7,8 @@ const doc: ComponentDoc = {
     name: "Countdown",
     package: "@fremtind/jokul/countdown",
     category: "Visning",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     description: {
         short: "Viser en nedtelling fra et gitt antall millisekunder.",
         long: "Countdown viser en nedtelling fra et gitt antall millisekunder.",

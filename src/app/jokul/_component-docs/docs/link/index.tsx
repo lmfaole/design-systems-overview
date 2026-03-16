@@ -7,6 +7,8 @@ const doc: ComponentDoc = {
     name: "Link",
     package: "@fremtind/jokul/link",
     category: "Navigasjon",
+    status: "stable",
+    complexity: { use: "easy", maintenance: "easy" },
     description: {
         short: "Jøkuls grunnleggende lenkestil for inline-lenker og frittstående lenker.",
         long: "Link er Jøkuls grunnleggende lenkestil for inline-lenker og frittstående lenker.",

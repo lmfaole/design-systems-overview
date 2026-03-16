@@ -88,14 +88,14 @@ function SearchExample({
         <div style={{ width: "100%", maxWidth: "20rem" }}>
             <Flex direction="column" gap="xs">
                 <TextInput
-                    label="Sok"
+                    label="Søk"
                     value={query}
                     onChange={(e) => onQueryChange(e.target.value)}
-                    helpLabel={`Prov a skrive "ab" raskt etter "a".`}
+                    helpLabel={`Prøv å skrive "ab" raskt etter "a".`}
                 />
 
                 <Flex alignItems="center" gap="xs">
-                    {loading ? <Loader textDescription="Soker" /> : <strong>Resultat</strong>}
+                    {loading ? <Loader textDescription="Søker" /> : <strong>Resultat</strong>}
                     <small className="muted">for: {response.query || "–"}</small>
                 </Flex>
 

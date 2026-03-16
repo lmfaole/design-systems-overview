@@ -17,7 +17,7 @@ export function BreadcrumbItemPreview() {
 
     return (
         <Breadcrumb>
-            <BreadcrumbItem><a href="#">Hjem</a></BreadcrumbItem>
+            <BreadcrumbItem><span>Hjem</span></BreadcrumbItem>
             <BreadcrumbItem><span>{labels[idx]}</span></BreadcrumbItem>
         </Breadcrumb>
     );
@@ -35,8 +35,8 @@ export function BreadcrumbPreview() {
 
     return (
         <Breadcrumb>
-            <BreadcrumbItem><a href="#">Hjem</a></BreadcrumbItem>
-            <BreadcrumbItem><a href="#">Forsikringer</a></BreadcrumbItem>
+            <BreadcrumbItem><span>Hjem</span></BreadcrumbItem>
+            <BreadcrumbItem><span>Forsikringer</span></BreadcrumbItem>
             <BreadcrumbItem><span>{labels[idx]}</span></BreadcrumbItem>
         </Breadcrumb>
     );

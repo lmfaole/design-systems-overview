@@ -7,8 +7,10 @@ const doc: ComponentDoc = {
     name: "Checkbox",
     package: "@fremtind/jokul/checkbox",
     category: "Skjema",
+    status: "stable",
+    complexity: { use: "easy", maintenance: "easy" },
     description: {
-        short: "Brukes for binære valg i skjemaer typisk for samtykke eller.",
+        short: "Brukes for binære valg i skjemaer, typisk samtykke eller flervalgslister.",
         long: "Checkbox brukes for binære valg i skjemaer, typisk for samtykke eller flervalgslister.",
     },
     relationships: {

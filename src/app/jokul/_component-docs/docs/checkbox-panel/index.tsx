@@ -7,6 +7,8 @@ const doc: ComponentDoc = {
     name: "Checkbox Panel",
     package: "@fremtind/jokul/checkbox-panel",
     category: "Skjema",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     description: {
         short: "CheckboxPanel er en utvidet avkrysningsboks med et synlig paneldesign.",
         long: "CheckboxPanel er en utvidet avkrysningsboks med et synlig paneldesign.",

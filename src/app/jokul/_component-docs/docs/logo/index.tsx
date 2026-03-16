@@ -7,6 +7,8 @@ const doc: ComponentDoc = {
     name: "Logo",
     package: "@fremtind/jokul/logo",
     category: "Visning",
+    status: "stable",
+    complexity: { use: "easy", maintenance: "easy" },
     description: {
         short: "Rendrer Fremtind-logoen som en SVG-komponent.",
         long: "Logo rendrer Fremtind-logoen som en SVG-komponent.",

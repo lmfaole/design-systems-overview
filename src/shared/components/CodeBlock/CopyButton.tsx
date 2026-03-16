@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@fremtind/jokul/button";
 import { Icon } from "@fremtind/jokul/icon";
 
-export function CopyButton({ code, className }: { code: string; className?: string }) {
+export function CopyButton({ code }: { code: string }) {
     const [copied, setCopied] = useState(false);
 
     const handleCopy = async () => {
@@ -15,7 +15,6 @@ export function CopyButton({ code, className }: { code: string; className?: stri
 
     return (
         <Button
-            className={className}
             variant="ghost"
             onClick={handleCopy}
             icon={<Icon>{copied ? "check" : "content_copy"}</Icon>}

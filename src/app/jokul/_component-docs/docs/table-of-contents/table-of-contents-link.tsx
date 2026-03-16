@@ -6,6 +6,8 @@ const doc: ComponentDoc = {
     name: "TableOfContents.Link",
     package: "@fremtind/jokul/table-of-contents",
     category: "Navigasjon",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     showOnOverview: false,
     description: {
         short: "Lenke i innholdsfortegnelsen.",

@@ -9,8 +9,9 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/system-message",
     category: "Tilbakemelding",
     status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     description: {
-        short: "SystemMessage brukes til å kommunisere viktig informasjon til brukeren på.",
+        short: "SystemMessage brukes til å kommunisere viktig informasjon til brukeren på sidenivå.",
         long: "SystemMessage brukes til å kommunisere viktig informasjon til brukeren på sidenivå. Finnes i variantene info, success, warning og error. Kan gjøres avvisbar med dismissAction.",
     },
     relationships: {

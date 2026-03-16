@@ -8,6 +8,8 @@ const doc: ComponentDoc = {
     name: "Icon",
     package: "@fremtind/jokul/icon",
     category: "Visning",
+    status: "stable",
+    complexity: { use: "easy", maintenance: "easy" },
     description: {
         short: "Rendrer Material Symbols-ikoner.",
         long: "Icon rendrer Material Symbols-ikoner. Gi navnet på ikonet som child-tekst.",

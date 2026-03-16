@@ -8,6 +8,8 @@ const doc: ComponentDoc = {
     name: "Button",
     package: "@fremtind/jokul/button",
     category: "Handling",
+    status: "stable",
+    complexity: { use: "easy", maintenance: "easy" },
     description: {
         short: "Brukes til å utløse handlinger.",
         long: "Button brukes til å utløse handlinger. Knapper er det primære interaksjonselementet og skal alltid kommunisere hva som skjer når brukeren trykker på dem. Velg variant basert på handlingens prioritet — bruk én primary-knapp per kontekst og reserver ghost for lavprioriterte handlinger.",

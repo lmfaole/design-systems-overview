@@ -7,9 +7,12 @@ import {TableOfContents} from "@fremtind/jokul/table-of-contents";
 import {NavTab, NavTabs} from "@fremtind/jokul/tabs";
 import {Card} from "@fremtind/jokul/card";
 import {Breadcrumb, BreadcrumbItem} from "@fremtind/jokul/breadcrumb";
+import {PopupTip} from "@fremtind/jokul/tooltip";
+import {Tag} from "@fremtind/jokul/tag";
 import {useParams} from "next/navigation";
 import type {Migration} from "@/app/jokul/_component-docs/data";
 import {getComponentDoc, getParentAndSiblings, getRelationships} from "@/app/jokul/_component-docs/data";
+import type {ComponentComplexityRating} from "@/app/jokul/_component-docs/docs/types";
 import {PropTable} from "@/app/jokul/_component-docs/components/PropTable";
 import {MigrationExample} from "@/app/jokul/_component-docs/components/MigrationExample";
 import {NotFound} from "@/shared/components/NotFound";
@@ -20,6 +23,42 @@ import {PageHero} from "@/shared/components/PageHero/PageHero";
 import {DotsIllustration} from "@/shared/components/Illustration";
 import {PreviewHoverContext} from "@/app/jokul/_component-docs/components/PreviewHoverContext";
 import {Article, ArticleToc} from "@/shared/components/Article";
+
+const COMPLEXITY_LABEL: Record<ComponentComplexityRating, string> = {
+    easy: "Enkel",
+    medium: "Middels",
+    hard: "Vanskelig",
+};
+
+function ComplexityRow({
+    label,
+    rating,
+    note,
+    noteAriaLabel,
+}: {
+    label: string;
+    rating: ComponentComplexityRating;
+    note?: string;
+    noteAriaLabel: string;
+}) {
+    return (
+        <Flex as="div" alignItems="center" gap="s" className="component-complexity__row">
+            <dt className="component-complexity__label muted">{label}</dt>
+            <dd className="component-complexity__value">
+                <Flex alignItems="center" gap="xs">
+                    <Tag variant="neutral">{COMPLEXITY_LABEL[rating]}</Tag>
+                    {note && (
+                        <PopupTip
+                            content={note}
+                            placement="top"
+                            triggerProps={{"aria-label": noteAriaLabel}}
+                        />
+                    )}
+                </Flex>
+            </dd>
+        </Flex>
+    );
+}
 
 function MigrationSection({migrations}: { migrations: Migration[] }) {
     const [active, setActive] = useState<string>(migrations[0]?.deprecates.name ?? "");
@@ -171,6 +210,7 @@ export default function ComponentPage() {
             )}
 
             <ArticleToc>
+                <TableOfContents.Link href="#kompleksitet">Kompleksitet</TableOfContents.Link>
                 {requires.length > 0 && (
                     <TableOfContents.Link href="#krever">Krever</TableOfContents.Link>
                 )}
@@ -193,6 +233,24 @@ export default function ComponentPage() {
                     <TableOfContents.Link href="#migrering">Migrering</TableOfContents.Link>
                 )}
             </ArticleToc>
+
+            <Flex as="section" direction="column" gap="s">
+                <h2 id="kompleksitet">Kompleksitet</h2>
+                <Flex as="dl" direction="column" gap="xs" className="component-complexity">
+                    <ComplexityRow
+                        label="Bruk"
+                        rating={doc.complexity.use}
+                        note={doc.complexity.notes?.use}
+                        noteAriaLabel={`Hvorfor er brukskompleksiteten vurdert som ${COMPLEXITY_LABEL[doc.complexity.use].toLowerCase()}?`}
+                    />
+                    <ComplexityRow
+                        label="Vedlikehold"
+                        rating={doc.complexity.maintenance}
+                        note={doc.complexity.notes?.maintenance}
+                        noteAriaLabel={`Hvorfor er vedlikeholdskompleksiteten vurdert som ${COMPLEXITY_LABEL[doc.complexity.maintenance].toLowerCase()}?`}
+                    />
+                </Flex>
+            </Flex>
 
             {requires.length > 0 && (
                 <Flex as="section" direction="column" gap="m">

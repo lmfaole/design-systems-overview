@@ -6,6 +6,8 @@ const doc: ComponentDoc = {
     name: "DescriptionTerm",
     package: "@fremtind/jokul/description-list",
     category: "Visning",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     showOnOverview: false,
     description: {
         short: "Nøkkelen dt i et nøkkel-verdi-par.",

@@ -6,6 +6,8 @@ const doc: ComponentDoc = {
     name: "TableHeader",
     package: "@fremtind/jokul/table",
     category: "Visning",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     showOnOverview: false,
     description: {
         short: "Overskriftscelle i tabellen.",

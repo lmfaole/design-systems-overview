@@ -7,8 +7,17 @@ const doc: ComponentDoc = {
     name: "Tabs",
     package: "@fremtind/jokul/tabs",
     category: "Navigasjon",
+    status: "stable",
+    complexity: {
+        use: "hard",
+        maintenance: "hard",
+        notes: {
+            use: "Krever riktig kobling mellom tab og panel samt tastaturnavigasjon.",
+            maintenance: "Flere subkomponenter og fokuslogikk må holdes konsistent.",
+        },
+    },
     description: {
-        short: "Organiser innhold i faner der kun én fane vises om.",
+        short: "Organiser innhold i faner der kun én fane vises om gangen.",
         long: "Tabs organiser innhold i faner der kun én fane vises om gangen.",
     },
     relationships: {

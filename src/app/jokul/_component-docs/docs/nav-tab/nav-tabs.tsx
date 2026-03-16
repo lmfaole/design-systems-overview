@@ -7,6 +7,8 @@ const doc: ComponentDoc = {
     name: "NavTabs",
     package: "@fremtind/jokul/tabs",
     category: "Navigasjon",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     showOnOverview: false,
     description: {
         short: "Wrapper-komponent som inneholder NavTab-elementene og håndterer tablist-rollen og den animerte.",

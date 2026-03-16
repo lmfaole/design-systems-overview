@@ -6,6 +6,8 @@ const doc: ComponentDoc = {
     name: "TableRow",
     package: "@fremtind/jokul/table",
     category: "Visning",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     showOnOverview: false,
     description: {
         short: "Rad i tabellen.",

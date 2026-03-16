@@ -7,6 +7,8 @@ const doc: ComponentDoc = {
     name: "Breadcrumb",
     package: "@fremtind/jokul/breadcrumb",
     category: "Navigasjon",
+    status: "stable",
+    complexity: { use: "easy", maintenance: "easy" },
     description: {
         short: "Viser hvor brukeren er i nettstedets hierarki og gir snarveier.",
         long: "Breadcrumb viser hvor brukeren er i nettstedets hierarki og gir snarveier tilbake til overordnede sider.",

@@ -7,6 +7,8 @@ const doc: ComponentDoc = {
     name: "Search Input",
     package: "@fremtind/jokul/search",
     category: "Skjema",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     description: {
         short: "SearchInput er et søkeinputfelt med søkeikon og valgfri label.",
         long: "SearchInput er et søkeinputfelt med søkeikon og valgfri label.",

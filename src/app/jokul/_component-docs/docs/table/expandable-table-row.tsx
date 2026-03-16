@@ -6,6 +6,8 @@ const doc: ComponentDoc = {
     name: "ExpandableTableRow",
     package: "@fremtind/jokul/table",
     category: "Visning",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     showOnOverview: false,
     description: {
         short: "Rad som kan utvides for å vise tilleggsinformasjon.",

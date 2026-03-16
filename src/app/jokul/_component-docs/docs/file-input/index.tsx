@@ -8,6 +8,7 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/file-input",
     category: "Skjema",
     status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     description: {
         short: "FileInput er et skjemaelement for å laste opp filer.",
         long: "FileInput er et skjemaelement for å laste opp filer. Den støtter dra-og-slipp, filtype- og størrelsesbegrensning, og viser opplastingsstatus.",

@@ -53,6 +53,13 @@ export function PropTable({props, migrations}: PropTableProps) {
     const migrationMap = new Map<string, string>(
         (migrations ?? []).map((m) => [m.deprecates.name, `#migration-${m.deprecates.name}`])
     );
+    const sortedProps = props
+        .map((prop, index) => ({prop, index}))
+        .sort((a, b) => {
+            if (a.prop.required === b.prop.required) return a.index - b.index;
+            return a.prop.required ? -1 : 1;
+        })
+        .map(({prop}) => prop);
 
     return (
         <Flex direction="column" gap="m">
@@ -67,7 +74,7 @@ export function PropTable({props, migrations}: PropTableProps) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {props.map((prop) => (
+                    {sortedProps.map((prop) => (
                         <PropTableRow
                             key={prop.name}
                             prop={prop}

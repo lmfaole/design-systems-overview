@@ -7,6 +7,8 @@ const doc: ComponentDoc = {
     name: "Field Group",
     package: "@fremtind/jokul/input-group",
     category: "Skjema",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     description: {
         short: "FieldGroup grupperer relaterte skjemaelementer under en felles legend.",
         long: "FieldGroup grupperer relaterte skjemaelementer under en felles legend.",

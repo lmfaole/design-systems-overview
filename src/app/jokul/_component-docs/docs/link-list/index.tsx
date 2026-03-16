@@ -7,8 +7,10 @@ const doc: ComponentDoc = {
     name: "Link List",
     package: "@fremtind/jokul/link-list",
     category: "Navigasjon",
+    status: "stable",
+    complexity: { use: "easy", maintenance: "easy" },
     description: {
-        short: "LinkList viser en tematisk gruppert liste av lenker med en.",
+        short: "LinkList viser en tematisk gruppert liste av lenker med en felles overskrift.",
         long: "LinkList viser en tematisk gruppert liste av lenker med en felles overskrift.",
     },
     relationships: {

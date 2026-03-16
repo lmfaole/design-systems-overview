@@ -6,6 +6,8 @@ const doc: ComponentDoc = {
     name: "TableFooter",
     package: "@fremtind/jokul/table",
     category: "Visning",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     showOnOverview: false,
     description: {
         short: "Wrapper for tabellens fot tfoot der totalsummer og paginering typisk.",

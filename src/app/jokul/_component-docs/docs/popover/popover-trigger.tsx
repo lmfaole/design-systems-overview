@@ -6,6 +6,8 @@ const doc: ComponentDoc = {
     name: "Popover.Trigger",
     package: "@fremtind/jokul/popover",
     category: "Overlegg",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     showOnOverview: false,
     description: {
         short: "Trigger-elementet som åpner og lukker popoveren.",

@@ -42,6 +42,7 @@
 @use "@fremtind/jokul/styles/components/segmented-control/segmented-control.scss";
 @use "@fremtind/jokul/styles/components/select/select.scss";
 @use "./patches/select-beta.scss" as select-beta;
+@use "./patches/loader-animation.scss" as loader-animation;
 @use "@fremtind/jokul/styles/components/summary-table/summary-table.scss";
 @use "@fremtind/jokul/styles/components/system-message/system-message.scss";
 @use "@fremtind/jokul/styles/components/table/table.scss";
@@ -75,6 +76,7 @@ body {
   padding-inline: 1rem;
   padding-block: var(--jkl-spacing-xl);
   padding-block-end: 0;
+  flex: 1;
 }
 
 /* Prose max-width: scoped to direct children of .post-prose
@@ -107,6 +109,40 @@ body {
   max-width: 60ch;
 }
 
+/* Pattern ("monster") pages: narrower, centered, more editorial typography. */
+.pattern-page__content {
+  width: 100%;
+  max-width: 120ch;
+  margin-inline: auto;
+}
+
+.post-prose--pattern {
+  --pattern-prose-max-width: 58ch;
+
+  font-size: var(--jkl-font-size-4);
+  line-height: var(--jkl-line-height-relaxed);
+  text-align: start;
+
+  .pattern-prose__text {
+    width: 100%;
+    max-width: var(--pattern-prose-max-width);
+    margin-inline: auto;
+  }
+
+  .pattern-prose__text :where(h1, h2, h3) {
+    text-wrap: balance;
+  }
+
+  .pattern-prose__text :where(p, li) {
+    text-wrap: pretty;
+    hyphens: auto;
+  }
+
+  .pattern-prose__text p {
+    font-size: inherit;
+    line-height: inherit;
+  }
+}
 // ============================================================
 // Default element typography using Jøkul mixins
 // ============================================================

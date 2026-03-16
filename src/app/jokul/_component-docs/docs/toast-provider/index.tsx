@@ -8,14 +8,15 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/toast",
     category: "Overlegg",
     status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     showOnOverview: false,
     description: {
-        short: "Kontekstleverandor for toast-meldinger i applikasjonen.",
-        long: "Gir kontekst og container for toasts i appen. Ma omslutte komponenttreet der useToast() brukes, og lar deg styre visning og begrensninger som placement og maks synlige toasts.",
+        short: "Kontekstleverandør for toast-meldinger i applikasjonen.",
+        long: "Gir kontekst og container for toasts i appen. Må omslutte komponenttreet der useToast() brukes, og lar deg styre visning og begrensninger som plassering og maks synlige toasts.",
     },
     relationships: {
         related: [
-            { id: "toast", description: "Hook-baserte metoder (useToast) for a vise og lukke toasts." },
+            { id: "toast", description: "Hook-baserte metoder (useToast) for å vise og lukke toasts." },
         ],
     },
     preview: <ToastProviderPreview />,

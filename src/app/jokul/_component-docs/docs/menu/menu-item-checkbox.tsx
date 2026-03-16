@@ -6,6 +6,8 @@ const doc: ComponentDoc = {
     name: "MenuItemCheckbox",
     package: "@fremtind/jokul/menu",
     category: "Overlegg",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     showOnOverview: false,
     description: {
         short: "Avkrysningselement i menyen for å toggle tilstander.",

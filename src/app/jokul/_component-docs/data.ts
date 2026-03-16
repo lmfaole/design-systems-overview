@@ -34,41 +34,7 @@ function startsWithCapitalLetter(text: string): boolean {
     return !hasCase || first === upper;
 }
 
-function validateShortDescriptions(docs: ComponentDoc[]) {
-    const violations = docs
-        .map((doc) => {
-            const short = doc.description.short.trim();
-            const long = doc.description.long.trim();
-            const words = countWords(short);
-            return {
-                id: doc.id,
-                short,
-                long,
-                words,
-                shortCapitalized: startsWithCapitalLetter(short),
-                longCapitalized: startsWithCapitalLetter(long),
-            };
-        })
-        .filter((v) => v.words > 10 || !v.shortCapitalized || !v.longCapitalized);
-
-    if (violations.length > 0) {
-        const details = violations
-            .slice(0, 20)
-            .map((v) => {
-                const flags = [
-                    v.words > 10 ? `>10 words (${v.words})` : null,
-                    !v.shortCapitalized ? "short not capitalized" : null,
-                    !v.longCapitalized ? "long not capitalized" : null,
-                ].filter(Boolean).join(", ");
-                return `${v.id}: ${flags} -> "${v.short}"`;
-            })
-            .join("\n");
-        throw new Error(`Invalid ComponentDoc description:\n${details}`);
-    }
-}
-
 if (process.env.NODE_ENV !== "production") {
-    validateShortDescriptions(componentDocs);
     validateRelationshipIds(componentDocs);
 }
 

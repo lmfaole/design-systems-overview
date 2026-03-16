@@ -7,6 +7,42 @@ import type { ComponentId } from "./ids";
  * Complete documentation record for a single Jøkul component.
  * One file per component under `src/app/jokul/_component-docs/docs/`.
  */
+export type ComponentStatus = "stable" | "beta" | "deprecated";
+
+/**
+ * Complexity rating scale.
+ */
+export type ComponentComplexityRating = "easy" | "medium" | "hard";
+
+/**
+ * Optional explanation for a complexity rating.
+ */
+export interface ComponentComplexityNotes {
+    /**
+     * Why the component is rated as it is for usage in apps.
+     */
+    use?: string;
+    /**
+     * Why the component is rated as it is for maintenance in Jøkul.
+     */
+    maintenance?: string;
+}
+
+/**
+ * Complexity ratings for a component.
+ *
+ * - `use` — How hard it is to implement and use correctly in an app (state handling, edge cases, a11y).
+ * - `maintenance` — How hard it is to maintain and evolve in Jøkul (internal complexity).
+ */
+export interface ComponentComplexity {
+    use: ComponentComplexityRating;
+    maintenance: ComponentComplexityRating;
+    /**
+     * Optional notes explaining the rating.
+     */
+    notes?: ComponentComplexityNotes;
+}
+
 export interface ComponentDoc {
     /**
      * Unique kebab-case identifier matching the URL segment, e.g. `"text-input"`.
@@ -44,13 +80,17 @@ export interface ComponentDoc {
 
     /**
      * Lifecycle status of the component as a whole.
-     * Omit for stable components to keep the UI clean.
      *
      * - `"stable"`     — Default. Production-ready.
      * - `"beta"`       — Functional but API may change.
      * - `"deprecated"` — Will be removed. Add a migration note in the doc description.
      */
-    status?: "stable" | "beta" | "deprecated";
+    status: ComponentStatus;
+
+    /**
+     * Complexity ratings for this component.
+     */
+    complexity: ComponentComplexity;
 
     /**
      * Set to `false` to hide this doc from the component overview page (and other

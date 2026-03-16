@@ -8,9 +8,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/message",
     category: "Tilbakemelding",
     status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     description: {
         short: "Oppsummerer skjemafeil i en liste ved innsending.",
-        long: "Viser en samlet feilliste for hele skjemaet etter forsok pa innsending. Brukes sammen med feltfeil for a hjelpe brukeren a finne og rette mangler.",
+        long: "Viser en samlet feilliste for hele skjemaet etter forsøk på innsending. Brukes sammen med feltfeil for å hjelpe brukeren å finne og rette mangler.",
     },
     relationships: {
         related: [
@@ -22,4 +23,3 @@ const doc: ComponentDoc = {
 };
 
 export default doc;
-

@@ -6,6 +6,8 @@ const doc: ComponentDoc = {
     name: "TableColumn",
     package: "@fremtind/jokul/table",
     category: "Visning",
+    status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     showOnOverview: false,
     description: {
         short: "Col definisjon for å angi bredde egenskaper på en tabellkolonne.",

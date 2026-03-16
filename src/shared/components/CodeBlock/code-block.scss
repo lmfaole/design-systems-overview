@@ -1,9 +1,12 @@
-.code-block,
-.prose-code-block {
+.code-block {
   overflow: hidden;
+  border: 1px solid var(--jkl-color-border-separator);
+  border-radius: var(--jkl-border-radius-medium);
+  background: var(--jkl-color-background-container-high);
 
   &__content {
     position: relative;
+    padding: var(--jkl-spacing-m);
   }
 
   &__copy {
@@ -11,13 +14,6 @@
     top: var(--jkl-spacing-xs);
     right: var(--jkl-spacing-xs);
     z-index: 1;
-    opacity: 0.6;
-    transition: opacity 150ms ease;
-
-    &:hover,
-    &:focus-visible {
-      opacity: 1;
-    }
   }
 
   &__pre {
@@ -25,17 +21,9 @@
     max-width: none;
     background: none;
     border-radius: 0;
+    font-size: var(--jkl-font-size-2);
+    line-height: var(--jkl-line-height-tight);
     // Pad right side so long lines don't run under the copy button
     padding-inline-end: var(--jkl-spacing-2xl);
-  }
-}
-
-.prose-code-block {
-  border: 1px solid var(--jkl-color-border-separator);
-  border-radius: var(--jkl-border-radius-medium);
-  background: var(--jkl-color-background-container-high);
-
-  &__content {
-    padding: var(--jkl-spacing-l);
   }
 }

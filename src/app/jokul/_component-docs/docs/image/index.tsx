@@ -8,6 +8,7 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/image",
     category: "Visning",
     status: "stable",
+    complexity: { use: "medium", maintenance: "medium" },
     description: {
         short: "Tilgjengelig bildekomponent som sikrer korrekt bruk av alt-tekst.",
         long: "Image er en tilgjengelig bildekomponent som sikrer korrekt bruk av alt-tekst. Den måler containerens bredde for å sette riktig sizes-attributt, og viser en plassholder mens bildet lastes. Komponenten krever at foreldreelementet har definert bredde og høyde.",
