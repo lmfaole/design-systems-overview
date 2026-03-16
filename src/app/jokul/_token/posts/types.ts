@@ -22,6 +22,38 @@ export interface ScssMixin {
   description: string;
   /** SCSS usage example shown in a code block */
   example: string;
+  /**
+   * Arguments the mixin/function accepts.
+   *
+   * Use SCSS names (e.g. "$size") and include "@content" when the mixin wraps a content block.
+   */
+  arguments?: ScssMixinArgument[];
+  /**
+   * What the mixin outputs/affects in CSS (properties/variables/selectors).
+   *
+   * Keep this concrete (e.g. "transition-duration", "--my-var", "@media (forced-colors: active)").
+   */
+  properties?: ScssMixinProperty[];
+}
+
+export interface ScssMixinArgument {
+  /** Argument name, e.g. "$style", "$min", "@content" */
+  name: string;
+  /** SCSS-ish type, e.g. "string", "number", "length", "block", "string | null" */
+  type: string;
+  /** Short explanation of what the argument does */
+  description: string;
+  /** True when the argument is optional (or has a default) */
+  optional?: boolean;
+  /** Default value when relevant (display only) */
+  defaultValue?: string;
+}
+
+export interface ScssMixinProperty {
+  /** CSS property, CSS variable, or selector the mixin affects */
+  name: string;
+  /** Short explanation of what is set/why it matters */
+  description: string;
 }
 
 export interface TokenPost {

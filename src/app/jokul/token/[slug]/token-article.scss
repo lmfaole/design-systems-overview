@@ -1,26 +1,4 @@
-body:has(.token-header) {
-    padding-block-start: 0;
-}
-
-article:has(.token-header) {
-    > .token-article__breadcrumb {
-        position: relative;
-        z-index: 10;
-    }
-
-    > .token-article__toc-card {
-        position: relative;
-        z-index: 5;
-    }
-}
-
-.token-article__toc-card {
-    display: inline-block;
-    margin-block-end: var(--jkl-spacing-2xl);
-}
-
 .token-article__meta {
-    margin-block: var(--jkl-spacing-xl);
     padding-block: var(--jkl-spacing-m);
     border-block: 1px solid var(--jkl-color-border-subdued);
 }

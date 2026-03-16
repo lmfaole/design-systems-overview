@@ -19,6 +19,7 @@ import {RelatedComponentsTable} from "@/app/jokul/_component-docs/components/Rel
 import {PageHero} from "@/shared/components/PageHero/PageHero";
 import {DotsIllustration} from "@/shared/components/Illustration";
 import {PreviewHoverContext} from "@/app/jokul/_component-docs/components/PreviewHoverContext";
+import {Article, ArticleToc} from "@/shared/components/Article";
 
 function MigrationSection({migrations}: { migrations: Migration[] }) {
     const [active, setActive] = useState<string>(migrations[0]?.deprecates.name ?? "");
@@ -130,7 +131,7 @@ export default function ComponentPage() {
         ];
 
     return (
-        <Flex as="article" direction="column" gap="xl">
+        <Article>
             <Breadcrumb aria-label="Komponentsti">
                 {breadcrumb.map((item) => (
                     <BreadcrumbItem key={item.label} aria-current={item.current ? "page" : undefined}>
@@ -169,7 +170,7 @@ export default function ComponentPage() {
                 </div>
             )}
 
-            <TableOfContents label="Innhold">
+            <ArticleToc>
                 {requires.length > 0 && (
                     <TableOfContents.Link href="#krever">Krever</TableOfContents.Link>
                 )}
@@ -191,7 +192,7 @@ export default function ComponentPage() {
                 {doc.migrations && doc.migrations.length > 0 && (
                     <TableOfContents.Link href="#migrering">Migrering</TableOfContents.Link>
                 )}
-            </TableOfContents>
+            </ArticleToc>
 
             {requires.length > 0 && (
                 <Flex as="section" direction="column" gap="m">
@@ -245,6 +246,6 @@ export default function ComponentPage() {
                 </Flex>
             )}
 
-        </Flex>
+        </Article>
     );
 }

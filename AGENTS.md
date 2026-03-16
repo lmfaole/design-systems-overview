@@ -14,7 +14,6 @@ Regler for AI-agenter og automatiserte assistenter som jobber i dette repoet.
 - Komponentdocs: `src/app/jokul/_component-docs/docs/`
 - Tokens: `src/app/jokul/_token/`
 - Monstre: `src/app/jokul/_pattern/` + ruter `src/app/jokul/monster/*` (numeriske id-er i URL: `/jokul/monster/1`)
-- MDX: `src/mdx-components.tsx` (kreves for at MDX skal fungere i Server Components)
 
 Type-spesifikke regler skal ligge som JSDoc ved typene (ikke i denne fila):
 - `src/app/jokul/_component-docs/docs/types/component.ts`
@@ -62,7 +61,8 @@ Merk: A11y-testene bruker Puppeteer/Chrome for Testing og kan installere browser
 
 ## GitHub-issues (påkrevd ved workarounds, ulogisk kode, dårlig ytelse, manglende dokumentasjon, med mer...)
 
-Hvis du lager en workaround for Jøkul-problemer (bug/manglende styles/API/a11y/SSR/ytelse/docs), opprett issue på norsk:
+Hvis du lager en workaround for Jøkul-problemer (bug, manglende eller utilstrekkelig default styling, API/a11y/SSR/ytelse/docs), opprett issue på norsk.
+Dette gjelder selv om workarounden ikke trenger å targete `.jkl-*` (f.eks. når du må legge på ekstra spacing i prose-lister):
 
 ```sh
 gh issue create \

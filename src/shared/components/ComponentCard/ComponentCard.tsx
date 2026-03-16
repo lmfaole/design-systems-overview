@@ -37,10 +37,12 @@ export function ComponentCard({doc}: ComponentCardProps) {
                     </PreviewHoverContext>
                 </Flex>
             )}
-            <Flex direction="column" gap="xs">
-                <strong>{doc.name}</strong>
-                <small className="muted">{description}</small>
-            </Flex>
+            <div className="component-card__content">
+                <Flex direction="column" gap="xs">
+                    <strong>{doc.name}</strong>
+                    <small className="muted">{description}</small>
+                </Flex>
+            </div>
         </Card>
     );
 }

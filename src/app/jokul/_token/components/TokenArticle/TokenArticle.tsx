@@ -1,9 +1,9 @@
 import React from "react";
 import {TableOfContents} from "@fremtind/jokul/table-of-contents";
-import {Card} from "@fremtind/jokul/card";
 import {Flex} from "@fremtind/jokul/flex";
 import {DataTable} from "@fremtind/jokul/table";
 import {PageHero} from "@/shared/components/PageHero/PageHero";
+import {Article, ArticleToc} from "@/shared/components/Article";
 import {ScssMixinSection} from "@/app/jokul/_token/components/ScssMixinSection";
 import {Section} from "@/app/jokul/_token/components/Section";
 import {slugify} from "@/shared/utils/format";
@@ -32,29 +32,25 @@ export function TokenArticle({
     ];
 
     return (
-        <article>
+        <Article>
             <PageHero title={title} background={illustration} description={excerpt} />
 
             {headings.length > 0 && (
-                <div className="token-article__toc-card">
-                    <Card padding="l">
-                        <TableOfContents label="Innhold">
-                            {headings.map((h) => (
-                                <TableOfContents.Link key={h} href={`#${slugify(h)}`}>{h}</TableOfContents.Link>
-                            ))}
-                        </TableOfContents>
-                    </Card>
-                </div>
+                <ArticleToc>
+                    {headings.map((h) => (
+                        <TableOfContents.Link key={h} href={`#${slugify(h)}`}>{h}</TableOfContents.Link>
+                    ))}
+                </ArticleToc>
             )}
 
             {meta && <div className="token-article__meta">{meta}</div>}
 
-            <Flex className="post-prose" direction="column" gap="l">
+            <Flex className="post-prose" direction="column" gap="xl">
                 {tokenOverview && (
                     <Section title="Tokens">
                         <Flex direction="column" gap="xl">
                             {tokenOverview.map((table) => (
-                                <div key={table.caption}>
+                                <Flex key={table.caption} direction="column" gap="m">
                                     {tokenOverview.length > 1 && <h3>{table.heading ?? table.caption}</h3>}
                                     {table.description && <p>{table.description}</p>}
                                     <DataTable
@@ -62,7 +58,7 @@ export function TokenArticle({
                                         columns={table.columns}
                                         rows={table.rows}
                                     />
-                                </div>
+                                </Flex>
                             ))}
                         </Flex>
                     </Section>
@@ -74,6 +70,6 @@ export function TokenArticle({
                     </Section>
                 )}
             </Flex>
-        </article>
+        </Article>
     );
 }

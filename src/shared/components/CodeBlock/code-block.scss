@@ -1,4 +1,5 @@
-.code-block {
+.code-block,
+.prose-code-block {
   overflow: hidden;
 
   &__content {
@@ -26,5 +27,15 @@
     border-radius: 0;
     // Pad right side so long lines don't run under the copy button
     padding-inline-end: var(--jkl-spacing-2xl);
+  }
+}
+
+.prose-code-block {
+  border: 1px solid var(--jkl-color-border-separator);
+  border-radius: var(--jkl-border-radius-medium);
+  background: var(--jkl-color-background-container-high);
+
+  &__content {
+    padding: var(--jkl-spacing-l);
   }
 }

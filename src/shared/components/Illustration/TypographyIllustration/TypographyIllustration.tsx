@@ -11,18 +11,17 @@ const LH_RELAXED = "var(--jkl-line-height-relaxed)";
 function rep(s: string, n = 8) { return s.repeat(n); }
 
 const ROWS = [
-    { size: "2.5cqi", weight: NORMAL, lh: LH_RELAXED, dur: 40,  delay: -3,   content: rep("caption · micro · detail · label · small · footnote · ") },
-    { size: "3.5cqi", weight: NORMAL, lh: LH_RELAXED, dur: 55,  delay: -10,  content: rep("font-size-1 · font-size-2 · font-size-3 · font-size-4 · font-size-5 · ") },
-    { size: "4cqi",   weight: BOLD,   lh: LH_TIGHT,   dur: 65,  delay: -20,  content: rep("font-weight · line-height · tracking · leading · spacing · ") },
-    { size: "5cqi",   weight: NORMAL, lh: LH_RELAXED, dur: 80,  delay: -28,  content: rep("body · paragraph · tekst · lesbart · flytende · naturlig · ") },
-    { size: "5.5cqi", weight: BOLD,   lh: LH_TIGHT,   dur: 70,  delay: -15,  content: rep("semi-bold · medium · light · regular · condensed · extended · ") },
-    { size: "6cqi",   weight: NORMAL, lh: LH_TIGHT,   dur: 100, delay: -38,  content: rep("overskrift · tittel · seksjon · artikkel · ingress · ") },
-    { size: "7cqi",   weight: BOLD,   lh: LH_TIGHT,   dur: 130, delay: -50,  content: rep("fremtind grotesk · typografisk hierarki · ") },
-    { size: "8cqi",   weight: NORMAL, lh: LH_FLUSH,   dur: 170, delay: -65,  content: rep("heading · display · hero · banner · ") },
-    { size: "9cqi",   weight: BOLD,   lh: LH_TIGHT,   dur: 190, delay: -75,  content: rep("font-size-6 · font-size-7 · font-size-8 · font-size-9 · ") },
-    { size: "11cqi",  weight: NORMAL, lh: LH_FLUSH,   dur: 250, delay: -95,  content: rep("typografi · grotesk · display · ") },
-    { size: "13cqi",  weight: BOLD,   lh: LH_FLUSH,   dur: 320, delay: -110, content: rep("heading · fremtind · hierarki · ") },
-    { size: "16cqi",  weight: BOLD,   lh: LH_FLUSH,   dur: 400, delay: -140, content: rep("typografi · grotesk · display · fremtind · ") },
+    // Cap the biggest rows so the hero background shows more lines of text.
+    { size: "min(2.4cqi, 0.95rem)", weight: NORMAL, lh: LH_RELAXED, dur: 40,  delay: -3,   content: rep("caption · micro · detail · label · small · footnote · ") },
+    { size: "min(2.9cqi, 1.05rem)", weight: NORMAL, lh: LH_RELAXED, dur: 55,  delay: -10,  content: rep("font-size-1 · font-size-2 · font-size-3 · font-size-4 · font-size-5 · ") },
+    { size: "min(3.4cqi, 1.2rem)",  weight: BOLD,   lh: LH_TIGHT,   dur: 65,  delay: -20,  content: rep("font-weight · line-height · tracking · leading · spacing · ") },
+    { size: "min(3.8cqi, 1.35rem)", weight: NORMAL, lh: LH_RELAXED, dur: 80,  delay: -28,  content: rep("body · paragraph · tekst · lesbart · flytende · naturlig · ") },
+    { size: "min(4.3cqi, 1.55rem)", weight: BOLD,   lh: LH_TIGHT,   dur: 70,  delay: -15,  content: rep("semi-bold · medium · light · regular · condensed · extended · ") },
+    { size: "min(4.8cqi, 1.75rem)", weight: NORMAL, lh: LH_TIGHT,   dur: 100, delay: -38,  content: rep("overskrift · tittel · seksjon · artikkel · ingress · ") },
+    { size: "min(5.3cqi, 2rem)",    weight: BOLD,   lh: LH_TIGHT,   dur: 130, delay: -50,  content: rep("fremtind grotesk · typografisk hierarki · ") },
+    { size: "min(5.8cqi, 2.25rem)", weight: NORMAL, lh: LH_FLUSH,   dur: 170, delay: -65,  content: rep("heading · display · hero · banner · ") },
+    { size: "min(6.4cqi, 2.5rem)",  weight: BOLD,   lh: LH_TIGHT,   dur: 190, delay: -75,  content: rep("font-size-6 · font-size-7 · font-size-8 · font-size-9 · ") },
+    { size: "min(7cqi, 2.8rem)",    weight: BOLD,   lh: LH_FLUSH,   dur: 240, delay: -95,  content: rep("typografi · grotesk · display · fremtind · ") },
 ] as const;
 
 export function TypographyIllustration() {
@@ -48,4 +47,3 @@ export function TypographyIllustration() {
         </div>
     );
 }
-

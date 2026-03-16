@@ -1,5 +1,5 @@
 import { Message } from "@fremtind/jokul/message";
-import { CodeBlock } from "@/shared/components/CodeBlock";
+import { ProseCodeBlock } from "@/shared/components/CodeBlock";
 import "./typography-pitfalls.scss";
 
 interface Pitfall {
@@ -141,8 +141,8 @@ export function TypographyPitfalls() {
                     </Message>
                     {(badCode || goodCode) && (
                         <div className="ty-pitfalls__code-pair">
-                            {badCode && <CodeBlock code={badCode} defaultOpen />}
-                            {goodCode && <CodeBlock code={goodCode} defaultOpen />}
+                            {badCode && <ProseCodeBlock code={badCode} />}
+                            {goodCode && <ProseCodeBlock code={goodCode} />}
                         </div>
                     )}
                     {note && (

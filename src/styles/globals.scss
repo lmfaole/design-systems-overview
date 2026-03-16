@@ -89,6 +89,24 @@ body {
   }
 }
 
+/* Jøkul List removes default ul/ol margins and does not add vertical spacing
+   between items. In prose contexts we want readable line length and a bit of
+   air between items without targeting internal `.jkl-*` class names. */
+.post-prose :where(ul, ol, dl),
+.post-prose-section :where(ul, ol, dl) {
+  max-width: 60ch;
+}
+
+.post-prose :where(li + li),
+.post-prose-section :where(li + li) {
+  margin-block-start: var(--jkl-spacing-xs);
+}
+
+.article-toc {
+  width: 100%;
+  max-width: 60ch;
+}
+
 // ============================================================
 // Default element typography using Jøkul mixins
 // ============================================================

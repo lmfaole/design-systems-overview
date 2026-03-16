@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
-import { Chip } from "@fremtind/jokul/chip";
+import React from "react";
 import { Flex } from "@fremtind/jokul/flex";
-import { CodeBlock } from "@/shared/components/CodeBlock";
+import { DataTable } from "@fremtind/jokul/table";
+import { ProseCodeBlock } from "@/shared/components/CodeBlock";
 import type { ScssMixin } from "@/app/jokul/_token/posts/types";
 
 interface ScssMixinSectionProps {
@@ -11,30 +11,48 @@ interface ScssMixinSectionProps {
 }
 
 export function ScssMixinSection({ mixins }: ScssMixinSectionProps) {
-    const [active, setActive] = useState(mixins[0]?.name ?? null);
-    const current = mixins.find((m) => m.name === active) ?? mixins[0];
-
     return (
-        <Flex direction="column" gap="m">
-            <Flex gap="xs" wrap="wrap" role="group" aria-label="Velg mixin">
-                {mixins.map((mixin) => (
-                    <Chip
-                        key={mixin.name}
-                        variant="filter"
-                        selected={mixin.name === active}
-                        onClick={() => setActive(mixin.name)}
-                    >
-                        {mixin.name}
-                    </Chip>
-                ))}
-            </Flex>
-
-            {current && (
-                <>
-                    <p>{current.description}</p>
-                    <CodeBlock code={current.example} defaultOpen />
-                </>
-            )}
+        <Flex direction="column" gap="xl">
+            {mixins.map((mixin) => (
+                <Flex key={mixin.name} direction="column" gap="m">
+                    <h3>{mixin.name}</h3>
+                    <p>{mixin.description}</p>
+                    {mixin.arguments && mixin.arguments.length > 0 && (
+                        <DataTable
+                            caption={`Argumenter: ${mixin.name}`}
+                            columns={["Navn", "Type", "Påkrevd", "Beskrivelse"]}
+                            rows={mixin.arguments.map((arg) => [
+                                <code key={`${arg.name}-n`}>{arg.name}</code>,
+                                <code key={`${arg.name}-t`}>{arg.type}</code>,
+                                arg.optional ? "Nei" : "Ja",
+                                (
+                                    <span key={`${arg.name}-d`}>
+                                        {arg.description}
+                                        {arg.defaultValue && (
+                                            <>
+                                                {" "}
+                                                <span className="muted">Standard:</span>{" "}
+                                                <code>{arg.defaultValue}</code>
+                                            </>
+                                        )}
+                                    </span>
+                                ),
+                            ])}
+                        />
+                    )}
+                    {mixin.properties && mixin.properties.length > 0 && (
+                        <DataTable
+                            caption={`Påvirker / setter: ${mixin.name}`}
+                            columns={["CSS", "Beskrivelse"]}
+                            rows={mixin.properties.map((prop) => [
+                                <code key={`${prop.name}-n`}>{prop.name}</code>,
+                                prop.description,
+                            ])}
+                        />
+                    )}
+                    <ProseCodeBlock code={mixin.example} />
+                </Flex>
+            ))}
         </Flex>
     );
 }

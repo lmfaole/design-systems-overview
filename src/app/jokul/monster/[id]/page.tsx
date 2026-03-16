@@ -2,13 +2,16 @@ import { Flex } from "@fremtind/jokul/flex";
 import { PageHero } from "@/shared/components/PageHero/PageHero";
 import { NotFound } from "@/shared/components/NotFound";
 import { getPatternPost } from "@/app/jokul/_pattern/data";
+import type { PatternPost } from "@/app/jokul/_pattern/data";
 import { getComponentDoc } from "@/app/jokul/_component-docs/data";
 import { RelatedComponentsTable } from "@/app/jokul/_component-docs/components/RelatedComponentsTable";
-import { Grid } from "@/shared/components/Grid";
-import { TokenFeature } from "@/shared/components/TokenFeature";
-import { getTokenPostById } from "@/app/jokul/_token/data";
 import type { ResolvedRelationship } from "@/app/jokul/_component-docs/data";
 import { DotsIllustration } from "@/shared/components/Illustration";
+import { Article } from "@/shared/components/Article";
+import { Grid } from "@/shared/components/Grid";
+import { ListItem, UnorderedList } from "@fremtind/jokul/list";
+import { Link } from "@fremtind/jokul/link";
+import { ExampleCard } from "./ExampleCard";
 
 export const runtime = "edge";
 
@@ -38,45 +41,131 @@ export default async function PatternPage({ params, searchParams }: PatternPageP
         );
     }
 
-    const { default: Content } = await post.content();
-
-    const relatedComponents: ResolvedRelationship[] = (post.relatedComponents ?? []).flatMap((id) => {
+    const usedComponents: ResolvedRelationship[] = (post.components ?? []).flatMap((id) => {
         const doc = getComponentDoc(id);
         return doc ? [{ doc, description: doc.description.short }] : [];
     });
 
-    const relatedTokens = (post.relatedTokens ?? []).flatMap((id) => {
-        const token = getTokenPostById(id);
-        return token ? [token] : [];
-    });
-
-    const background = post.illustration ?? <DotsIllustration />;
+    const background = <DotsIllustration />;
 
     return (
         <Flex as="main" direction="column" gap="xl">
-            <PageHero title={post.title} description={post.excerpt} background={background} />
+            <PageHero title={post.title} description={post.goals} background={background} />
 
-            <Flex as="article" className="post-prose" direction="column" gap="l">
-                <Content />
-            </Flex>
+            <Article className="post-prose">
+                {post.examples.length > 0 && <ExamplesSection examples={post.examples} />}
+                <AccessibilitySection accessibility={post.accessibility} />
+            </Article>
 
-            {relatedComponents.length > 0 && (
+            {usedComponents.length > 0 && (
                 <Flex as="section" direction="column" gap="m">
-                    <h2>Relaterte komponenter</h2>
-                    <RelatedComponentsTable items={relatedComponents} />
-                </Flex>
-            )}
-
-            {relatedTokens.length > 0 && (
-                <Flex as="section" direction="column" gap="m">
-                    <h2>Relaterte tokens</h2>
-                    <Grid columns={4} gap="m">
-                        {relatedTokens.map((token) => (
-                            <TokenFeature key={token.id} post={token} />
-                        ))}
-                    </Grid>
+                    <h2>Komponenter</h2>
+                    <RelatedComponentsTable items={usedComponents} />
                 </Flex>
             )}
         </Flex>
     );
+}
+
+function ExamplesSection({ examples }: { examples: PatternPost["examples"] }) {
+    return (
+        <Flex as="section" direction="column" gap="m">
+            <h2 id="eksempler">Eksempler</h2>
+            <Grid columns={2} gap="m">
+                {examples.map((example) => (
+                    <ExampleCard
+                        key={example.title}
+                        title={example.title}
+                        description={example.description}
+                        code={example.code}
+                    >
+                        <example.Example />
+                    </ExampleCard>
+                ))}
+            </Grid>
+        </Flex>
+    );
+}
+
+function AccessibilitySection({ accessibility }: { accessibility: PatternPost["accessibility"] }) {
+    const wcagSorted = [...accessibility.wcag].sort((a, b) => compareWcagIds(a.id, b.id));
+
+    return (
+        <Flex as="section" direction="column" gap="m">
+            <h2 id="tilgjengelighet">Tilgjengelighet</h2>
+            <h3>{accessibility.title}</h3>
+            <p>{accessibility.description}</p>
+
+            {accessibility.ariaRoles.length > 0 && (
+                <Flex direction="column" gap="s">
+                    <h4>ARIA</h4>
+                    <UnorderedList>
+                        {accessibility.ariaRoles.map((item, i) => (
+                            <ListItem key={i}>{item}</ListItem>
+                        ))}
+                    </UnorderedList>
+                </Flex>
+            )}
+
+            {wcagSorted.length > 0 && (
+                <Flex direction="column" gap="s">
+                    <h4>WCAG</h4>
+                    <UnorderedList>
+                        {wcagSorted.map((rule) => {
+                            return (
+                                <ListItem key={rule.id}>
+                                    <Flex direction="column" gap="xs">
+                                        {rule.url ? (
+                                            <Link href={rule.url} external>
+                                                {rule.id} {rule.title} (Niva {rule.level})
+                                            </Link>
+                                        ) : (
+                                            <span>
+                                                {rule.id} {rule.title} (Niva {rule.level})
+                                            </span>
+                                        )}
+                                        <small className="muted">{rule.relevance}</small>
+                                    </Flex>
+                                </ListItem>
+                            );
+                        })}
+                    </UnorderedList>
+                </Flex>
+            )}
+
+            <Flex direction="column" gap="s">
+                <h4>Slik unngar du det</h4>
+                <UnorderedList>
+                    {accessibility.avoid.map((item, i) => (
+                        <ListItem key={i}>{item}</ListItem>
+                    ))}
+                </UnorderedList>
+            </Flex>
+
+            {accessibility.testing && accessibility.testing.length > 0 && (
+                <Flex direction="column" gap="s">
+                    <h4>Testing</h4>
+                    <UnorderedList>
+                        {accessibility.testing.map((item, i) => (
+                            <ListItem key={i}>{item}</ListItem>
+                        ))}
+                    </UnorderedList>
+                </Flex>
+            )}
+        </Flex>
+    );
+}
+
+function compareWcagIds(a: string, b: string) {
+    const aParts = a.split(".").map((p) => Number.parseInt(p, 10));
+    const bParts = b.split(".").map((p) => Number.parseInt(p, 10));
+    const len = Math.max(aParts.length, bParts.length);
+
+    for (let i = 0; i < len; i++) {
+        const av = aParts[i] ?? -1;
+        const bv = bParts[i] ?? -1;
+        if (av !== bv) return av - bv;
+    }
+
+    return 0;
 }

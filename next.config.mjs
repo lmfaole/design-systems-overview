@@ -1,12 +1,6 @@
-import nextMDX from "@next/mdx";
-
-const withMDX = nextMDX({
-    extension: /\.mdx?$/,
-});
-
 /** @type {import("next").NextConfig} */
 const nextConfig = {
-    pageExtensions: ["ts", "tsx", "md", "mdx"],
+    pageExtensions: ["ts", "tsx"],
     async redirects() {
         // We moved from `/jokul/mønster` → `/jokul/monster` because the `ø` caused URL issues.
         // Keep a redirect so old links/bookmarks don't break.
@@ -30,4 +24,4 @@ const nextConfig = {
     },
 };
 
-export default withMDX(nextConfig);
+export default nextConfig;

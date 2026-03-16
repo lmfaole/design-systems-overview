@@ -1,2 +1,0 @@
-export { PatternFeature } from "./PatternFeature";
-

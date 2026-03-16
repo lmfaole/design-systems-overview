@@ -1,41 +1,29 @@
 "use client";
-import { useEffect, useState } from "react";
-import { ToastProvider, useToast } from "@fremtind/jokul/toast";
+import { Flex } from "@fremtind/jokul/flex";
+import { InfoIcon, SuccessIcon } from "@fremtind/jokul/icon";
 import { usePreviewHovered } from "@/app/jokul/_component-docs/components/PreviewHoverContext";
 
-function ToastPreviewInner() {
-    const isHovered = usePreviewHovered();
-    const [variant, setVariant] = useState<"info" | "success">("info");
-    const [toastKey, setToastKey] = useState<string | null>(null);
-    const { add, close } = useToast();
-
-    useEffect(() => {
-        setVariant(isHovered ? "success" : "info");
-    }, [isHovered]);
-
-    const title = variant === "success" ? "Fullført" : "Info";
-    const message = variant === "success" ? "Handlingen ble fullført!" : "En kort beskjed til brukeren.";
-
-    useEffect(() => {
-        // Keep a single toast in the preview and swap it when hover changes.
-        if (toastKey) {
-            close(toastKey);
-        }
-
-        const nextKey = add({ title, content: message }, { variant, timeout: "off" });
-        setToastKey(nextKey);
-
-        return () => close(nextKey);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [variant]);
-
-    return null;
-}
-
 export function ToastPreview() {
+    // IMPORTANT: Keep this preview side-effect free.
+    // Component cards render previews in lists, so calling `useToast().add` here would
+    // spawn real toasts on the component overview page.
+    const isHovered = usePreviewHovered();
+    const variant = isHovered ? "success" : "info";
+    const title = variant === "success" ? "Fullført" : "Info";
+    const message =
+        variant === "success" ? "Handlingen ble fullført!" : "En kort beskjed til brukeren.";
+
+    const Icon = variant === "success" ? SuccessIcon : InfoIcon;
+
     return (
-        <ToastProvider placement="center">
-            <ToastPreviewInner />
-        </ToastProvider>
+        <div className={`jkl-toast jkl-toast--${variant}`} aria-hidden="true">
+            <Flex alignItems="start" gap="xs">
+                <Icon className="jkl-toast__icon" />
+                <Flex direction="column" gap="xs" className="jkl-toast__content">
+                    <p className="jkl-toast__title">{title}</p>
+                    <p className="jkl-toast__message">{message}</p>
+                </Flex>
+            </Flex>
+        </div>
     );
 }
