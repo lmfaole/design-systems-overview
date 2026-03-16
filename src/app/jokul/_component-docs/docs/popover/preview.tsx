@@ -1,5 +1,4 @@
 "use client";
-import {useState} from "react";
 import {Popover} from "@fremtind/jokul/popover";
 import {Button} from "@fremtind/jokul/button";
 import {Link} from "@fremtind/jokul/link";
@@ -9,9 +8,8 @@ export function PopoverTriggerPreview() {
 }
 
 export function PopoverContentPreview() {
-    const [open, setOpen] = useState(true);
     return (
-        <Popover open={open} onOpenChange={setOpen}>
+        <Popover open={false} onOpenChange={() => undefined}>
             <Popover.Trigger asChild>
                 <Button variant="secondary">Vis informasjon</Button>
             </Popover.Trigger>
@@ -24,7 +22,7 @@ export function PopoverContentPreview() {
 
 export function PopoverBasicPreview() {
     return (
-        <Popover>
+        <Popover open={false} onOpenChange={() => undefined}>
             <Popover.Trigger asChild>
                 <Button variant="secondary">Vis informasjon</Button>
             </Popover.Trigger>

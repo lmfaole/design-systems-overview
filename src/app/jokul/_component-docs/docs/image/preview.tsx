@@ -1,8 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
 import { Image } from "@fremtind/jokul/image";
 import "./image.scss";
-import { usePreviewHovered } from "@/app/jokul/_component-docs/components/PreviewHoverContext";
 
 const images = [
     { src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=240&fit=crop", alt: "Fjelllandskap" },
@@ -10,21 +8,12 @@ const images = [
 ];
 
 export function ImagePreview() {
-    const isHovered = usePreviewHovered();
-    const [imgIdx, setImgIdx] = useState(0);
-
-    useEffect(() => {
-        if (!isHovered) { setImgIdx(0); return; }
-        const id = setInterval(() => setImgIdx(i => (i + 1) % images.length), 1500);
-        return () => clearInterval(id);
-    }, [isHovered]);
-
     return (
         <div className="image-component-preview">
             {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
             <Image
-                src={images[imgIdx].src}
-                alt={images[imgIdx].alt}
+                src={images[0].src}
+                alt={images[0].alt}
                 {...({ loading: "eager" } as any)}
             />
         </div>

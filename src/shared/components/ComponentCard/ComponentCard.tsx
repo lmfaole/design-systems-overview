@@ -25,23 +25,26 @@ export function ComponentCard({doc}: ComponentCardProps) {
             clickable
             padding="s"
             variant="outlined"
+            className="component-card"
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
         >
-            {preview && (
-                <Flex alignItems="center" justifyContent="center" className="component-card-preview">
-                    <PreviewHoverContext value={hovered}>
-                        <div className="component-card-preview__inner">
-                            {preview}
-                        </div>
-                    </PreviewHoverContext>
-                </Flex>
-            )}
-            <div className="component-card__content">
-                <Flex direction="column" gap="xs">
-                    <strong>{doc.name}</strong>
-                    <small className="muted">{description}</small>
-                </Flex>
+            <div className="component-card__container">
+                {preview && (
+                    <Flex alignItems="center" justifyContent="center" className="component-card-preview">
+                        <PreviewHoverContext value={hovered}>
+                            <div className="component-card-preview__inner">
+                                {preview}
+                            </div>
+                        </PreviewHoverContext>
+                    </Flex>
+                )}
+                <div className="component-card__content">
+                    <Flex direction="column" gap="xs">
+                        <strong>{doc.name}</strong>
+                        <small className="muted">{description}</small>
+                    </Flex>
+                </div>
             </div>
         </Card>
     );

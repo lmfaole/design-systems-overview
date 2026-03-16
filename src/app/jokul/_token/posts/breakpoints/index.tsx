@@ -41,12 +41,41 @@ const post: TokenPost = {
   illustration: <BreakpointsIllustration />,
   relatedComponents: [],
   resources: [
-    { title: "Jøkul — _screens.scss", url: "https://github.com/fremtind/jokul/blob/main/packages/core/src/jkl/_screens.scss" },
-    { title: "MDN: Using media queries", url: "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries" },
-    { title: "MDN: @container", url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@container" },
-    { title: "Mobile First — Luke Wroblewski", url: "https://www.lukew.com/ff/entry.asp?933" },
-    { title: "WCAG 2.1 — 1.3.4: Orientation", url: "https://www.w3.org/WAI/WCAG21/Understanding/orientation.html" },
-    { title: "WCAG 2.1 — 1.4.10: Reflow", url: "https://www.w3.org/WAI/WCAG21/Understanding/reflow.html" },
+    {
+      title: "MDN: Using media queries",
+      url: "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries",
+      publisher: "MDN",
+      relevance: 4,
+      description: "Grunnleggende bruk av media queries.",
+    },
+    {
+      title: "MDN: @container",
+      url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@container",
+      publisher: "MDN",
+      relevance: 3,
+      description: "Container queries som supplement til breakpoints.",
+    },
+    {
+      title: "Mobile First — Luke Wroblewski",
+      url: "https://www.lukew.com/ff/entry.asp?933",
+      publisher: "Luke Wroblewski",
+      relevance: 3,
+      description: "Prinsippet om å starte design i mobilformat.",
+    },
+    {
+      title: "WCAG 2.1 — 1.3.4: Orientation",
+      url: "https://www.w3.org/WAI/WCAG21/Understanding/orientation.html",
+      publisher: "W3C/WAI",
+      relevance: 4,
+      description: "Krav om at innhold ikke låses til én orientering.",
+    },
+    {
+      title: "WCAG 2.1 — 1.4.10: Reflow",
+      url: "https://www.w3.org/WAI/WCAG21/Understanding/reflow.html",
+      publisher: "W3C/WAI",
+      relevance: 4,
+      description: "Krav om at innhold fungerer ved smale visninger.",
+    },
   ],
 };
 

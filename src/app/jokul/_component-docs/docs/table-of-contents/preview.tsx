@@ -1,7 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
 import { TableOfContents } from "@fremtind/jokul/table-of-contents";
-import { usePreviewHovered } from "@/app/jokul/_component-docs/components/PreviewHoverContext";
 
 const tocLinks = [
     { href: "#intro", label: "Introduksjon" },
@@ -13,15 +11,7 @@ const tocLinks = [
 export function TableOfContentsLinkPreview() { return <TableOfContentsPreview />; }
 
 export function TableOfContentsPreview() {
-    const isHovered = usePreviewHovered();
-    const [activeIdx, setActiveIdx] = useState(0);
-
-    useEffect(() => {
-        if (!isHovered) { setActiveIdx(0); return; }
-        const id = setInterval(() => setActiveIdx(i => (i + 1) % tocLinks.length), 1000);
-        return () => clearInterval(id);
-    }, [isHovered]);
-
+    const activeIdx = 0;
     return (
         <TableOfContents label="Innhold">
             {tocLinks.map((link, idx) => (

@@ -2,6 +2,7 @@ import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { migrations } from "./migration";
 import { ButtonPreview } from "./preview";
+import { ButtonExample } from "./example";
 
 const doc: ComponentDoc = {
     id: "button",
@@ -23,6 +24,7 @@ const doc: ComponentDoc = {
     },
 
     preview: <ButtonPreview />,
+    example: (props) => <ButtonExample {...props} />,
     props,
     migrations
 };

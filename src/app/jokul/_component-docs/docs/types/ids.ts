@@ -43,6 +43,7 @@ export const COMPONENT_IDS = [
     "nav-tab",
     "pagination",
     "popover",
+    "popup-tip",
     "progress-bar",
     "radio-button",
     "radio-panel",

@@ -1,21 +1,6 @@
 "use client";
 import { Link } from "@fremtind/jokul/link";
-import { useState, useEffect } from "react";
-import { usePreviewHovered } from "@/app/jokul/_component-docs/components/PreviewHoverContext";
 
 export function LinkPreview() {
-    const isHovered = usePreviewHovered();
-    const full = "Les mer om bilforsikring";
-    const [text, setText] = useState(full);
-    useEffect(() => {
-        if (!isHovered) { setText(full); return; }
-        setText("");
-        let i = 0;
-        const id = setInterval(() => {
-            setText(full.slice(0, ++i));
-            if (i >= full.length) clearInterval(id);
-        }, 60);
-        return () => clearInterval(id);
-    }, [isHovered]);
-    return <Link href="#">{text || "\u00a0"}</Link>;
+    return <Link href="#">Les mer om bilforsikring</Link>;
 }

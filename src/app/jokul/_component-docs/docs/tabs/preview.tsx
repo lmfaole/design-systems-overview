@@ -1,8 +1,6 @@
 "use client";
-import {useEffect, useState} from "react";
 import {Tab, TabList, TabPanel, Tabs} from "@fremtind/jokul/tabs";
 import {Card} from "@fremtind/jokul/card";
-import {usePreviewHovered} from "@/app/jokul/_component-docs/components/PreviewHoverContext";
 
 export function TabPreview() {
     return <TabsPreview/>;
@@ -17,20 +15,8 @@ export function TabPanelPreview() {
 }
 
 export function TabsPreview() {
-    const isHovered = usePreviewHovered();
-    const [tabIndex, setTabIndex] = useState(0);
-
-    useEffect(() => {
-        if (!isHovered) {
-            setTabIndex(0);
-            return;
-        }
-        const id = setInterval(() => setTabIndex(i => (i + 1) % 4), 1200);
-        return () => clearInterval(id);
-    }, [isHovered]);
-
     return (
-        <Tabs key={tabIndex} defaultTab={tabIndex}>
+        <Tabs defaultTab={0}>
             <TabList>
                 <Tab>Bil</Tab>
                 <Tab>Hus</Tab>

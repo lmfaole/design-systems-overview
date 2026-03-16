@@ -61,12 +61,41 @@ const post: TokenPost = {
   illustration: <SpacingIllustration />,
   relatedComponents: [],
   resources: [
-    { title: "Jøkul Spacing — Storybook", url: "https://jokul.fremtind.no/" },
-    { title: "The 8-Point Grid System", url: "https://spec.fm/specifics/8-pt-grid" },
-    { title: "MDN: gap", url: "https://developer.mozilla.org/en-US/docs/Web/CSS/gap" },
-    { title: "MDN: padding", url: "https://developer.mozilla.org/en-US/docs/Web/CSS/padding" },
-    { title: "MDN: margin", url: "https://developer.mozilla.org/en-US/docs/Web/CSS/margin" },
-    { title: "Spacing, Grids and Layouts — Material Design", url: "https://m3.material.io/foundations/layout/understanding-layout/spacing" },
+    {
+      title: "The 8-Point Grid System",
+      url: "https://spec.fm/specifics/8-pt-grid",
+      publisher: "Spec.fm",
+      relevance: 4,
+      description: "Bakgrunn for 8‑punkts grid og spacing‑skalaer.",
+    },
+    {
+      title: "MDN: gap",
+      url: "https://developer.mozilla.org/en-US/docs/Web/CSS/gap",
+      publisher: "MDN",
+      relevance: 4,
+      description: "Bruk av gap i grid/flex‑layouter.",
+    },
+    {
+      title: "MDN: padding",
+      url: "https://developer.mozilla.org/en-US/docs/Web/CSS/padding",
+      publisher: "MDN",
+      relevance: 3,
+      description: "Hvordan padding påvirker layout og spacing.",
+    },
+    {
+      title: "MDN: margin",
+      url: "https://developer.mozilla.org/en-US/docs/Web/CSS/margin",
+      publisher: "MDN",
+      relevance: 3,
+      description: "Hvordan margin styrer mellomrom mellom elementer.",
+    },
+    {
+      title: "Spacing, Grids and Layouts — Material Design",
+      url: "https://m3.material.io/foundations/layout/understanding-layout/spacing",
+      publisher: "Material Design",
+      relevance: 3,
+      description: "Retningslinjer for spacing i design‑systemer.",
+    },
   ],
 };
 

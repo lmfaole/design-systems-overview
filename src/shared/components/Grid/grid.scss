@@ -8,6 +8,15 @@ $gap-tokens: "none", "xxs", "xs", "s", "m", "l", "xl";
     grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr));
   }
 
+  @media (max-width: 640px) {
+    &[data-columns] {
+      grid-template-columns: repeat(
+        auto-fill,
+        minmax(min(100%, var(--grid-col-min, 16rem)), 1fr)
+      );
+    }
+  }
+
   @each $token in $gap-tokens {
     &[data-gap="var(--jkl-spacing-#{$token})"] {
       gap: var(--jkl-spacing-#{$token});

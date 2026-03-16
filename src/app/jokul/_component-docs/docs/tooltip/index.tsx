@@ -10,11 +10,14 @@ const doc: ComponentDoc = {
     status: "stable",
     complexity: { use: "medium", maintenance: "medium" },
     description: {
-        short: "Og PopupTip viser tilleggsinformasjon ved hover eller klikk.",
-        long: "Tooltip og PopupTip viser tilleggsinformasjon ved hover eller klikk.",
+        short: "Tooltip gir korte hint til knapper og andre interaktive elementer.",
+        long: "Tooltip brukes for korte, ikke-interaktive hint til knapper og andre interaktive elementer (vises ved hover/fokus/klikk).",
     },
     preview: <TooltipPreview />,
     props,
+    relationships: {
+        related: [{ id: "popup-tip", description: "PopupTip er deprecated, men dokumentert separat for migrering." }],
+    },
 };
 
 export default doc;

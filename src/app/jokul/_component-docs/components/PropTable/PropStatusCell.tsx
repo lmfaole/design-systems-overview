@@ -1,6 +1,6 @@
 "use client";
 
-import { PopupTip } from "@fremtind/jokul/tooltip";
+import { Help } from "@fremtind/jokul/help";
 import type { PropDef } from "@/app/jokul/_component-docs/data";
 import { STATUS_COLOR, STATUS_LABEL } from "./constants";
 
@@ -20,7 +20,7 @@ export function PropStatusCell({
         >
             {STATUS_LABEL[status]}
             {status !== "deprecated" && statusDescription && (
-                <PopupTip content={statusDescription} placement="top" />
+                <Help buttonText="Hvorfor?">{statusDescription}</Help>
             )}
         </span>
     );

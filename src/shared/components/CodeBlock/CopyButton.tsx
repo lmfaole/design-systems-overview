@@ -1,10 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@fremtind/jokul/button";
+import { Button, type ButtonProps } from "@fremtind/jokul/button";
 import { Icon } from "@fremtind/jokul/icon";
 
-export function CopyButton({ code }: { code: string }) {
+type CopyButtonProps = {
+    code: string;
+} & Omit<ButtonProps<"button">, "onClick" | "children" | "icon" | "iconPosition">;
+
+export function CopyButton({ code, ...buttonProps }: CopyButtonProps) {
     const [copied, setCopied] = useState(false);
 
     const handleCopy = async () => {
@@ -20,8 +24,7 @@ export function CopyButton({ code }: { code: string }) {
             icon={<Icon>{copied ? "check" : "content_copy"}</Icon>}
             iconPosition="right"
             aria-label={copied ? "Kode kopiert" : "Kopier kode"}
-        >
-            {copied ? "Kopiert" : "Kopier"}
-        </Button>
+            {...buttonProps}
+        />
     );
 }

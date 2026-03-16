@@ -34,8 +34,13 @@ const post: TokenPost = {
   illustration: <BorderRadiusIllustration />,
   relatedComponents: ["button", "card", "chip", "modal", "popover"],
   resources: [
-    { title: "MDN: border-radius", url: "https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius" },
-    { title: "Jøkul Design Tokens — Storybook", url: "https://jokul.fremtind.no/" },
+    {
+      title: "MDN: border-radius",
+      url: "https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius",
+      publisher: "MDN",
+      relevance: 4,
+      description: "CSS-egenskapen som styrer avrunding i hjørner.",
+    },
   ],
 };
 

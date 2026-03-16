@@ -1,14 +1,12 @@
 # Agent Instructions
 
-Regler for AI-agenter og automatiserte assistenter som jobber i dette repoet.
+## Kjerneprinsipper (regler)
 
-## Kjerneprinsipper (alltid)
+- Skal bygge progressivt: funger uten "triks" først; forbedre deretter.
+- Skal alltid ivareta tilgjengelighet (semantisk HTML, riktig ARIA, tastatur, skjermleser).
+- Skal foretrekke moderne CSS og native Web APIs framfor egendefinerte workarounds.
 
-- Bygg progressivt: fungere uten "triks" først; forbedre deretter.
-- Tilgjengelighet er obligatorisk (semantisk HTML, riktig ARIA, tastatur, skjermleser).
-- Foretrekk moderne CSS og native Web APIs framfor egendefinerte workarounds.
-
-## Repo-oppsett (kort)
+## Repo-oppsett (regler)
 
 - App-ruter: `src/app/jokul/*`
 - Komponentdocs: `src/app/jokul/_component-docs/docs/`
@@ -21,26 +19,22 @@ Type-spesifikke regler skal ligge som JSDoc ved typene (ikke i denne fila):
 - `src/app/jokul/_component-docs/docs/types/example.ts`
 - `src/app/jokul/_component-docs/docs/types/migration.ts`
 
-## Jøkul-komponenter (bruk)
+## Jøkul-komponenter (regler)
 
-- Importer alltid fra `@fremtind/jokul/<component>`.
-- Ikke gjett props: verifiser i type defs:
+- Skal importere fra `@fremtind/jokul/<component>`.
+- Skal ikke gjette props: verifiser i type defs:
   `node_modules/@fremtind/jokul/build/es/components/<component>/types.d.ts`
-- Når du bruker en ny prop, komponent eller token, må den dokumenteres.
+- Skal dokumentere ny prop, komponent eller token ved bruk.
 
-## Styling (hard rules)
+## Styling (regler)
 
-- Ikke overstyr Jøkul-komponenters utseende (ikke bruk `style`/`className` for visuell endring).
-- Ikke skriv CSS som targeter `.jkl-*` (unntak: `src/styles/patches/*` for midlertidige upstream-feil i Jøkul, og da skal det finnes et GitHub-issue).
-- Bruk wrappers for layout og Jøkul tokens (`var(--jkl-*)`) for spacing/posisjonering på egne elementer.
-- Bruk Jøkul `Flex` for flex-layouts; unngå `display: flex/grid` i CSS/inline bare for enkel sentrering der `<Flex>` dekker behovet.
-- Aldri endre fonten for stilårsaker (font-weight, letter-spacing, text-transform og lignende).
+- Skal ikke overstyre Jøkul-komponenters utseende (ikke bruk `style`/`className` for visuell endring).
+- Skal ikke skrive CSS som targeter `.jkl-*` (unntak: `src/styles/patches/*` for midlertidige upstream-feil i Jøkul, og da skal det finnes et GitHub-issue).
+- Skal bruke wrappers for layout og Jøkul tokens (`var(--jkl-*)`) for spacing/posisjonering på egne elementer.
+- Skal bruke Jøkul `Flex` for flex-layouts; unngå `display: flex/grid` i CSS/inline bare for enkel sentrering der `<Flex>` dekker behovet.
+- Skal aldri endre fonten for stilårsaker (font-weight, letter-spacing, text-transform og lignende).
 
-## Unntak fra Jøkul
-
-- Dersom noe i Jøkul gjør at ting krasjer: lag en patch og et issue (beskrevet nedenfor). Husk å sjekk nøye at det er Jøkul som gjør det.
-
-## Kommandoer (lokalt/CI)
+## Kommandoer (regler)
 
 - Typecheck: `npm run typecheck`
 - Dev: `npm run dev`
@@ -51,18 +45,15 @@ Type-spesifikke regler skal ligge som JSDoc ved typene (ikke i denne fila):
 
 Merk: A11y-testene bruker Puppeteer/Chrome for Testing og kan installere browser via `npm run a11y:install`.
 
-## Deploy (Cloudflare Pages)
+## Komponentdocs (regler)
 
-- GitHub Actions deploy på push til `main`: `.github/workflows/deploy-cloudflare-pages.yml`
-- Krever secrets i GitHub:
-  - `CLOUDFLARE_API_TOKEN`
-  - `CLOUDFLARE_ACCOUNT_ID`
-- Wrangler: `wrangler.toml` (build output: `.vercel/output/static`)
+- Skal alltid definere `migrations` for `status: "deprecated"` (valideres i dev).
 
-## GitHub-issues (påkrevd ved workarounds, ulogisk kode, dårlig ytelse, manglende dokumentasjon, med mer...)
+## Ved feil eller mangler i Jøkul
 
-Hvis du lager en workaround for Jøkul-problemer (bug, manglende eller utilstrekkelig default styling, API/a11y/SSR/ytelse/docs), opprett issue på norsk.
-Dette gjelder selv om workarounden ikke trenger å targete `.jkl-*` (f.eks. når du må legge på ekstra spacing i prose-lister):
+- Skal opprette issue på norsk hvis du lager workaround for Jøkul-problemer (bug, manglende eller utilstrekkelig default styling, API/a11y/SSR/ytelse/docs).
+- Skal også opprette issue når dokumentasjonen til Jøkul er utydelig eller mangler viktig praksis.
+- Dette gjelder selv om workarounden ikke trenger å targete `.jkl-*` (f.eks. når du må legge på ekstra spacing i prose-lister):
 
 ```sh
 gh issue create \

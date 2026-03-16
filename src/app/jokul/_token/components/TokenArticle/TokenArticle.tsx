@@ -1,12 +1,10 @@
 import React from "react";
-import {TableOfContents} from "@fremtind/jokul/table-of-contents";
 import {Flex} from "@fremtind/jokul/flex";
 import {DataTable} from "@fremtind/jokul/table";
 import {PageHero} from "@/shared/components/PageHero/PageHero";
 import {Article, ArticleToc} from "@/shared/components/Article";
 import {ScssMixinSection} from "@/app/jokul/_token/components/ScssMixinSection";
 import {Section} from "@/app/jokul/_token/components/Section";
-import {slugify} from "@/shared/utils/format";
 import type {ScssMixin, TokenTable} from "@/app/jokul/_token/posts/types";
 
 interface TokenArticleProps {
@@ -26,22 +24,11 @@ export function TokenArticle({
                                  tokenOverview,
                                  scssSection,
                              }: TokenArticleProps) {
-    const headings = [
-        ...(tokenOverview ? ["Tokens"] : []),
-        ...(scssSection ? ["SCSS-mixins"] : []),
-    ];
-
     return (
         <Article>
             <PageHero title={title} background={illustration} description={excerpt} />
 
-            {headings.length > 0 && (
-                <ArticleToc>
-                    {headings.map((h) => (
-                        <TableOfContents.Link key={h} href={`#${slugify(h)}`}>{h}</TableOfContents.Link>
-                    ))}
-                </ArticleToc>
-            )}
+            <ArticleToc />
 
             {meta && <div className="token-article__meta">{meta}</div>}
 

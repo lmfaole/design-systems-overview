@@ -36,6 +36,7 @@ function startsWithCapitalLetter(text: string): boolean {
 
 if (process.env.NODE_ENV !== "production") {
     validateRelationshipIds(componentDocs);
+    validateDeprecatedMigrations(componentDocs);
 }
 
 export interface ResolvedRelationship {
@@ -164,4 +165,16 @@ function validateRelationshipIds(docs: ComponentDoc[]) {
     ].filter(Boolean).join("\n\n");
 
     throw new Error(parts);
+}
+
+function validateDeprecatedMigrations(docs: ComponentDoc[]) {
+    const missing = docs
+        .filter((doc) => doc.status === "deprecated")
+        .filter((doc) => !doc.migrations || doc.migrations.length === 0)
+        .map((doc) => doc.id);
+
+    if (missing.length === 0) return;
+
+    const lines = missing.map((id) => `- ${id}`).join("\n");
+    throw new Error(`Deprecated components must define migrations:\n${lines}`);
 }

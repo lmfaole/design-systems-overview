@@ -11,7 +11,7 @@ const doc: ComponentDoc = {
     complexity: { use: "medium", maintenance: "medium" },
     description: {
         short: "ExpandablePanel er et utviddbart panel med header og innhold.",
-        long: "ExpandablePanel er et utviddbart panel med header og innhold.",
+        long: "ExpandablePanel er et utviddbart panel med header og innhold. Når flere paneler står ved siden av hverandre, bør de bruke variant=\"stroke\" for å fremstå som en samlet liste.",
     },
 
     relationships: {

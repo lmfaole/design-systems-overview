@@ -43,6 +43,13 @@ export interface ComponentComplexity {
     notes?: ComponentComplexityNotes;
 }
 
+export interface ComponentExampleProps {
+    disabled: boolean;
+    variant?: "primary" | "secondary" | "ghost";
+    icon?: boolean;
+    iconPosition?: "left" | "right";
+}
+
 export interface ComponentDoc {
     /**
      * Unique kebab-case identifier matching the URL segment, e.g. `"text-input"`.
@@ -125,30 +132,27 @@ export interface ComponentDoc {
     };
 
     /**
-     * Live React element shown in the component card on the listing page and
-     * in the page header. Should be compact (fits ~200×120px) and visually representative.
+     * Small, static React element shown in the component card on the listing page
+     * and in the page header. Should be compact (fits ~200×120px) and visually representative.
      *
-     * **Always use a stateful preview — never static JSX.**
-     * Define a local function component above `const doc` that uses `useState`/`useEffect`
-     * and `usePreviewHovered` to animate or interact when the card is hovered.
-     * A static preview fails to communicate what the component _does_.
-     *
-     * @example
-     * ```tsx
-     * function MyPreview() {
-     *     const isHovered = usePreviewHovered();
-     *     const [checked, setChecked] = useState(false);
-     *     useEffect(() => { setChecked(isHovered); }, [isHovered]);
-     *     return <MyComponent checked={checked} onChange={e => setChecked(e.target.checked)} />;
-     * }
-     *
-     * const doc: ComponentDoc = {
-     *     // ...
-     *     preview: <MyPreview />,
-     * };
-     * ```
+     * **Keep previews side-effect free and static.**
+     * Do not use `useState`, `useEffect`, or hover-triggered animation here.
+     * Previews render in lists and should never open portals or run timers.
      */
     preview: React.ReactNode;
+
+    /**
+     * Bespoke example for the component page.
+     *
+     * This is the place for richer or more realistic usage that does NOT fit
+     * in the compact preview. It should be tailored for the component page and
+     * not reused in cards or overviews.
+     *
+     * Use the function form to receive simple, page-level controls (e.g. disabled).
+     *
+     * Optional — omit when no example is needed.
+     */
+    example?: React.ReactNode | ((props: ComponentExampleProps) => React.ReactNode);
 
     /**
      * Props accepted directly on the root component element.

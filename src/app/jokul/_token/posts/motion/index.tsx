@@ -41,13 +41,41 @@ const post: TokenPost = {
     illustration: <MotionIllustration/>,
     relatedComponents: [],
     resources: [
-        { title: "Jøkul Motion — Storybook", url: "https://jokul.fremtind.no/" },
-        { title: "Material Design: Motion", url: "https://m3.material.io/styles/motion/overview" },
-        { title: "MDN: prefers-reduced-motion", url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion" },
-        { title: "MDN: transition-timing-function", url: "https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function" },
-        { title: "MDN: animation", url: "https://developer.mozilla.org/en-US/docs/Web/CSS/animation" },
-        { title: "WCAG 2.1 — 2.3.3: Animation from Interactions", url: "https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html" },
-        { title: "The Illusion of Life: Disney Animation", url: "https://en.wikipedia.org/wiki/The_Illusion_of_Life:_Disney_Animation" },
+        {
+            title: "Material Design: Motion",
+            url: "https://m3.material.io/styles/motion/overview",
+            publisher: "Material Design",
+            relevance: 3,
+            description: "Retningslinjer for bevegelse i grensesnitt.",
+        },
+        {
+            title: "MDN: prefers-reduced-motion",
+            url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion",
+            publisher: "MDN",
+            relevance: 4,
+            description: "Hvordan respektere brukere som ønsker mindre animasjon.",
+        },
+        {
+            title: "MDN: transition-timing-function",
+            url: "https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function",
+            publisher: "MDN",
+            relevance: 3,
+            description: "Easing-kurver for overgangsanimasjoner.",
+        },
+        {
+            title: "MDN: animation",
+            url: "https://developer.mozilla.org/en-US/docs/Web/CSS/animation",
+            publisher: "MDN",
+            relevance: 3,
+            description: "CSS-animasjoner og nøkkelrammer.",
+        },
+        {
+            title: "WCAG 2.1 — 2.3.3: Animation from Interactions",
+            url: "https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html",
+            publisher: "W3C/WAI",
+            relevance: 4,
+            description: "Krav til å kunne redusere animasjon ved interaksjoner.",
+        },
     ],
 };
 

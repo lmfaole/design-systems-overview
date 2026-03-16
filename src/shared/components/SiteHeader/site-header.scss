@@ -23,5 +23,19 @@
 
   @media (max-width: 640px) {
     font-size: var(--jkl-font-size-2);
+
+    &__nav {
+      display: none;
+    }
+
+    &__menu {
+      align-self: center;
+    }
+  }
+
+  @media (min-width: 641px) {
+    &__menu {
+      display: none;
+    }
   }
 }

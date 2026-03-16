@@ -1,8 +1,15 @@
 import type React from "react";
+import type {
+  ResourcePublisher,
+  ResourceRelevance,
+} from "@/shared/components/ResourceList/types";
 
 export interface TokenResource {
   title: string;
   url: string;
+  publisher?: ResourcePublisher;
+  relevance?: ResourceRelevance;
+  description?: React.ReactNode;
 }
 
 export interface TokenTable {

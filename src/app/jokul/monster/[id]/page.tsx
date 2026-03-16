@@ -7,15 +7,12 @@ import { getComponentDoc } from "@/app/jokul/_component-docs/data";
 import { RelatedComponentsTable } from "@/app/jokul/_component-docs/components/RelatedComponentsTable";
 import type { ResolvedRelationship } from "@/app/jokul/_component-docs/data";
 import { DotsIllustration } from "@/shared/components/Illustration";
-import { Article } from "@/shared/components/Article";
+import { Article, ArticleToc } from "@/shared/components/Article";
 import { Grid } from "@/shared/components/Grid";
 import { ListItem, UnorderedList } from "@fremtind/jokul/list";
 import { Link } from "@fremtind/jokul/link";
-import {
-    PATTERN_RESOURCE_PUBLISHERS,
-    PATTERN_RESOURCE_PUBLISHER_TYPE_LABELS,
-} from "@/app/jokul/_pattern/posts/types";
 import { ExampleCard } from "./ExampleCard";
+import { ResourceSection } from "@/shared/components/ResourceList/ResourceSection";
 
 export const runtime = "edge";
 
@@ -54,15 +51,24 @@ export default async function PatternPage({ params, searchParams }: PatternPageP
 
     return (
         <Flex as="main" direction="column" gap="xl">
-            <PageHero title={post.title} description={post.goals} background={background} />
+            <PageHero title={post.title} description={post.goals} background={background} size="compact" />
 
             <div className="pattern-page__content">
                 <Flex direction="column" gap="xl">
                     <Article className="post-prose post-prose--pattern">
+                        <ArticleToc />
                         {post.examples.length > 0 && <ExamplesSection examples={post.examples} />}
                         {post.avoid.length > 0 && <AvoidSection avoid={post.avoid} />}
                         <AccessibilitySection accessibility={post.accessibility} />
-                        <ResourcesSection resources={post.resources} />
+                        <ResourceSection
+                            items={post.resources.map((resource) => ({
+                                title: resource.title,
+                                href: resource.href,
+                                publisher: resource.publisher,
+                                relevance: resource.relevance,
+                                description: resource.description,
+                            }))}
+                        />
                     </Article>
 
                     {usedComponents.length > 0 && (
@@ -192,42 +198,6 @@ function AccessibilitySection({ accessibility }: { accessibility: PatternPost["a
                             </UnorderedList>
                         </Flex>
                     )}
-                </Flex>
-            </div>
-        </section>
-    );
-}
-
-function ResourcesSection({ resources }: { resources: PatternPost["resources"] }) {
-    const sortedResources = [...resources].sort((a, b) => {
-        if (b.relevance !== a.relevance) return b.relevance - a.relevance;
-        return a.title.localeCompare(b.title);
-    });
-
-    return (
-        <section aria-labelledby="videre-lesning">
-            <div className="pattern-prose__text">
-                <Flex direction="column" gap="s">
-                    <h2 id="videre-lesning">Videre lesning</h2>
-                    <UnorderedList>
-                        {sortedResources.map((resource) => {
-                            const publisher = PATTERN_RESOURCE_PUBLISHERS[resource.publisher];
-                            const typeLabel = PATTERN_RESOURCE_PUBLISHER_TYPE_LABELS[publisher.type];
-                            return (
-                                <ListItem key={resource.href}>
-                                    <Flex direction="column" gap="xs">
-                                        <Link href={resource.href} external>
-                                            {resource.title}
-                                        </Link>
-                                        <small className="muted">
-                                            {publisher.title} · {typeLabel}
-                                            {resource.description ? ` · ${resource.description}` : ""}
-                                        </small>
-                                    </Flex>
-                                </ListItem>
-                            );
-                        })}
-                    </UnorderedList>
                 </Flex>
             </div>
         </section>

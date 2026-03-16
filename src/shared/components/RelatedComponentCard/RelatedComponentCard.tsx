@@ -11,9 +11,10 @@ import "./related-component-card.scss";
 interface RelatedComponentCardProps {
     doc: ComponentDoc;
     description: string;
+    layout?: "auto" | "horizontal";
 }
 
-export function RelatedComponentCard({doc, description}: RelatedComponentCardProps) {
+export function RelatedComponentCard({doc, description, layout = "auto"}: RelatedComponentCardProps) {
     const preview = doc.preview;
     const [hovered, setHovered] = useState(false);
 
@@ -26,6 +27,8 @@ export function RelatedComponentCard({doc, description}: RelatedComponentCardPro
             onMouseLeave={() => setHovered(false)}
             padding="s"
             variant="outlined"
+            className="related-component-card"
+            data-layout={layout}
         >
             {preview && (
                 <Flex alignItems="center" justifyContent="center" className="related-component-card__preview">
@@ -36,7 +39,7 @@ export function RelatedComponentCard({doc, description}: RelatedComponentCardPro
                     </PreviewHoverContext>
                 </Flex>
             )}
-            <Flex direction="column" gap="xs" style={{padding: "var(--jkl-spacing-s)"}}>
+            <Flex direction="column" gap="xs" className="related-component-card__content">
                 <p className="h5">{doc.name}</p>
                 <p className="related-component-card__description">{description}</p>
             </Flex>

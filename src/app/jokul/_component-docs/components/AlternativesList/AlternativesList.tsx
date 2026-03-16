@@ -9,9 +9,9 @@ interface AlternativesListProps {
 
 export function AlternativesList({items}: AlternativesListProps) {
     return (
-        <Grid columns={2}>
+        <Grid columns={1}>
             {items.map(({doc, description}) => (
-                <RelatedComponentCard key={doc.id} doc={doc} description={description}/>
+                <RelatedComponentCard key={doc.id} doc={doc} description={description} layout="horizontal" />
             ))}
         </Grid>
     );

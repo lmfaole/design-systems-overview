@@ -1,3 +1,7 @@
+.component-card {
+    container-type: inline-size;
+}
+
 .component-card-preview {
     background-image:
         linear-gradient(
@@ -29,4 +33,26 @@
 
 .component-card__content {
     padding: var(--jkl-spacing-m);
+}
+
+@container (min-width: 22rem) {
+    .component-card__container {
+        display: flex;
+        align-items: stretch;
+        gap: 0;
+    }
+
+    .component-card-preview {
+        flex: 0 0 40%;
+        height: auto;
+        min-height: 12rem;
+        border-bottom: 0;
+        border-right: 1px solid var(--jkl-color-border-subdued);
+    }
+
+    .component-card__content {
+        flex: 1;
+        display: flex;
+        align-items: center;
+    }
 }

@@ -1,18 +1,11 @@
 /* Component page — all hero styles now in page-hero.scss */
 
-.component-page-preview {
-    /* Establish a stable height floor that content can't shrink */
-    &__area {
-        position: relative;
-        min-height: 30svh;
+.component-metadata {
+    margin: 0;
 
-        /* Absolute child fills the area without influencing its height */
-        &__inner {
-            position: absolute;
-            inset: 0;
-            /* Allow overlays (popovers, tooltips) to escape the bounds */
-            overflow: visible;
-        }
+    dd,
+    dt {
+        margin: 0;
     }
 }
 
@@ -23,12 +16,7 @@
         margin: 0;
     }
 
-    &__label,
     &__value {
         margin: 0;
-    }
-
-    &__label {
-        min-width: 8rem;
     }
 }

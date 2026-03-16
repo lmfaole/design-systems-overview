@@ -3,12 +3,13 @@
 import {useEffect, useRef, useState} from "react";
 import {Flex} from "@fremtind/jokul/flex";
 import "./component-page.scss";
-import {TableOfContents} from "@fremtind/jokul/table-of-contents";
 import {NavTab, NavTabs} from "@fremtind/jokul/tabs";
 import {Card} from "@fremtind/jokul/card";
 import {Breadcrumb, BreadcrumbItem} from "@fremtind/jokul/breadcrumb";
-import {PopupTip} from "@fremtind/jokul/tooltip";
-import {Tag} from "@fremtind/jokul/tag";
+import { Help } from "@fremtind/jokul/help";
+import { DescriptionDetail, DescriptionList, DescriptionTerm } from "@fremtind/jokul/description-list";
+import { Message } from "@fremtind/jokul/message";
+import { Link } from "@fremtind/jokul/link";
 import {useParams} from "next/navigation";
 import type {Migration} from "@/app/jokul/_component-docs/data";
 import {getComponentDoc, getParentAndSiblings, getRelationships} from "@/app/jokul/_component-docs/data";
@@ -21,8 +22,12 @@ import {SubcomponentsList} from "@/app/jokul/_component-docs/components/Subcompo
 import {RelatedComponentsTable} from "@/app/jokul/_component-docs/components/RelatedComponentsTable";
 import {PageHero} from "@/shared/components/PageHero/PageHero";
 import {DotsIllustration} from "@/shared/components/Illustration";
-import {PreviewHoverContext} from "@/app/jokul/_component-docs/components/PreviewHoverContext";
 import {Article, ArticleToc} from "@/shared/components/Article";
+import { patternPosts } from "@/app/jokul/_pattern/data";
+import { getPatternHref } from "@/app/jokul/_pattern/data";
+import { PatternOverviewTable } from "@/app/jokul/monster/PatternOverviewTable";
+import { CopyButton } from "@/shared/components/CodeBlock/CopyButton";
+import { ComponentExample } from "@/app/jokul/_component-docs/components/ComponentExample/ComponentExample";
 
 const COMPLEXITY_LABEL: Record<ComponentComplexityRating, string> = {
     easy: "Enkel",
@@ -31,42 +36,46 @@ const COMPLEXITY_LABEL: Record<ComponentComplexityRating, string> = {
 };
 
 function ComplexityRow({
-    label,
     rating,
     note,
     noteAriaLabel,
 }: {
-    label: string;
     rating: ComponentComplexityRating;
     note?: string;
     noteAriaLabel: string;
 }) {
     return (
         <Flex as="div" alignItems="center" gap="s" className="component-complexity__row">
-            <dt className="component-complexity__label muted">{label}</dt>
-            <dd className="component-complexity__value">
+            <span className="component-complexity__value">
                 <Flex alignItems="center" gap="xs">
-                    <Tag variant="neutral">{COMPLEXITY_LABEL[rating]}</Tag>
-                    {note && (
-                        <PopupTip
-                            content={note}
-                            placement="top"
-                            triggerProps={{"aria-label": noteAriaLabel}}
-                        />
-                    )}
+                    <span>{COMPLEXITY_LABEL[rating]}</span>
+                    {note && <Help buttonText="Hvorfor?">{note}</Help>}
                 </Flex>
-            </dd>
+            </span>
         </Flex>
     );
 }
 
 function MigrationSection({migrations}: { migrations: Migration[] }) {
-    const [active, setActive] = useState<string>(migrations[0]?.deprecates.name ?? "");
+    const withAltNames = migrations.map((migration, index) => {
+        const sameName = migrations.filter((m) => m.deprecates.name === migration.deprecates.name);
+        const altIndex = sameName.length > 1 ? sameName.indexOf(migration) + 1 : 0;
+        const displayName =
+            altIndex > 0
+                ? `${migration.deprecates.name} (valg ${altIndex})`
+                : migration.deprecates.name;
+        const anchorId = altIndex > 0
+            ? `migration-${migration.deprecates.name}-alt-${altIndex}`
+            : `migration-${migration.deprecates.name}`;
+        return { migration, displayName, anchorId };
+    });
+
+    const [active, setActive] = useState<string>(withAltNames[0]?.displayName ?? "");
     const pendingScroll = useRef<string | null>(null);
 
     useEffect(() => {
         if (pendingScroll.current) {
-            const el = document.getElementById(`migration-${pendingScroll.current}`);
+            const el = document.getElementById(pendingScroll.current);
             if (el) {
                 const offset = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--jkl-spacing-xl")) || 64;
                 const top = el.getBoundingClientRect().top + window.scrollY - offset;
@@ -80,10 +89,12 @@ function MigrationSection({migrations}: { migrations: Migration[] }) {
         function handleHashChange() {
             const match = window.location.hash.match(/^#migration-(.+)$/);
             if (!match) return;
-            const name = decodeURIComponent(match[1]);
-            if (migrations.some((m) => m.deprecates.name === name)) {
-                pendingScroll.current = name;
-                setActive(name);
+            const id = decodeURIComponent(match[1]);
+            const targetId = `migration-${id}`;
+            const target = withAltNames.find((item) => item.anchorId === targetId);
+            if (target) {
+                pendingScroll.current = target.anchorId;
+                setActive(target.displayName);
             }
         }
 
@@ -92,7 +103,7 @@ function MigrationSection({migrations}: { migrations: Migration[] }) {
         return () => window.removeEventListener("hashchange", handleHashChange);
     }, [migrations]);
 
-    const visible = migrations.filter((m) => m.deprecates.name === active);
+    const visible = withAltNames.filter((item) => item.displayName === active);
 
     function selectTab(name: string) {
         pendingScroll.current = name;
@@ -101,26 +112,26 @@ function MigrationSection({migrations}: { migrations: Migration[] }) {
 
     return (
         <Flex as="section" direction="column" gap="m">
-            <h3 id="migrering">Migrering av deprecated props</h3>
+            <h3 id="migrering">Migreringsguider</h3>
             <div>
                 <NavTabs aria-label="Filtrer migrering">
-                    {migrations.map((m) => (
+                    {withAltNames.map(({ displayName }) => (
                         <NavTab
-                            key={m.deprecates.name}
+                            key={displayName}
                             as="button"
-                            aria-selected={active === m.deprecates.name}
-                            onClick={() => selectTab(m.deprecates.name)}
+                            aria-selected={active === displayName}
+                            onClick={() => selectTab(displayName)}
                         >
-                            {m.deprecates.name}
+                            {displayName}
                         </NavTab>
                     ))}
                 </NavTabs>
-                {visible.map((migration) => (
+                {visible.map(({ migration, anchorId }) => (
                     <Card
                         key={migration.title}
                         padding="l"
 
-                        id={`migration-${migration.deprecates.name}`}
+                        id={anchorId}
                     >
                         <MigrationExample migration={migration}/>
                     </Card>
@@ -149,15 +160,6 @@ export default function ComponentPage() {
     const heroDescription = doc.description.long;
     const siblingsAnchor = parentKind === "requires" ? "andre-komponenter" : "andre-delkomponenter";
 
-    const [previewHovered, setPreviewHovered] = useState(true);
-
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            setPreviewHovered(false);
-        }, 3000);
-        return () => clearTimeout(timeout);
-    }, []);
-
     const breadcrumb = parent
         ? [
             {href: "/jokul/component", label: "Komponenter"},
@@ -168,6 +170,23 @@ export default function ComponentPage() {
             {href: "/jokul/component", label: "Komponenter"},
             {label: doc.name, current: true},
         ];
+
+    const patternsUsingComponent = patternPosts
+        .filter((post) => post.components.includes(doc.id))
+        .map((post) => ({
+            id: post.id,
+            title: post.title,
+            href: getPatternHref(post),
+            goals: post.goals,
+            components: post.components.map((componentId) => {
+                const componentDoc = getComponentDoc(componentId);
+                return {
+                    id: componentId,
+                    name: componentDoc?.name ?? componentId,
+                    href: `/jokul/component/${componentId}`,
+                };
+            }),
+        }));
 
     return (
         <Article>
@@ -183,74 +202,23 @@ export default function ComponentPage() {
                 title={doc.name}
                 description={heroDescription}
                 background={<DotsIllustration/>}
+                size="compact"
             />
 
-            {doc.preview && (
-                <div
-                    className="component-page-preview"
-                    onMouseEnter={() => setPreviewHovered(true)}
-                    onMouseLeave={() => setPreviewHovered(false)}
-                >
-                    <Card padding="l" variant="outlined">
-                        <PreviewHoverContext value={previewHovered}>
-                            <div className="component-page-preview__area">
-                                <Flex
-                                    className="component-page-preview__area__inner"
-                                    alignItems="center"
-                                    justifyContent="center"
-                                    inert
-                                    aria-hidden="true"
-                                >
-                                    {doc.preview}
-                                </Flex>
-                            </div>
-                        </PreviewHoverContext>
-                    </Card>
-                </div>
+            <ArticleToc />
+
+            {doc.status === "deprecated" && doc.migrations && doc.migrations.length > 0 && (
+                <Message variant="warning">
+                    Denne komponenten er deprecated.{" "}
+                    <Link href="#migrering">Se migrering</Link>.
+                </Message>
             )}
 
-            <ArticleToc>
-                <TableOfContents.Link href="#kompleksitet">Kompleksitet</TableOfContents.Link>
-                {requires.length > 0 && (
-                    <TableOfContents.Link href="#krever">Krever</TableOfContents.Link>
-                )}
-                <TableOfContents.Link href="#props">Props</TableOfContents.Link>
-                {alternatives.length > 0 && (
-                    <TableOfContents.Link href="#alternativer">Alternativer</TableOfContents.Link>
-                )}
-                {subcomponents.length > 0 && (
-                    <TableOfContents.Link href="#delkomponenter">Delkomponenter</TableOfContents.Link>
-                )}
-                {siblings.length > 0 && (
-                    <TableOfContents.Link href={`#${siblingsAnchor}`}>
-                        {parentKind === "requires" ? "Andre komponenter" : "Andre delkomponenter"}
-                    </TableOfContents.Link>
-                )}
-                {related.length > 0 && (
-                    <TableOfContents.Link href="#relaterte-komponenter">Relaterte komponenter</TableOfContents.Link>
-                )}
-                {doc.migrations && doc.migrations.length > 0 && (
-                    <TableOfContents.Link href="#migrering">Migrering</TableOfContents.Link>
-                )}
-            </ArticleToc>
-
-            <Flex as="section" direction="column" gap="s">
-                <h2 id="kompleksitet">Kompleksitet</h2>
-                <Flex as="dl" direction="column" gap="xs" className="component-complexity">
-                    <ComplexityRow
-                        label="Bruk"
-                        rating={doc.complexity.use}
-                        note={doc.complexity.notes?.use}
-                        noteAriaLabel={`Hvorfor er brukskompleksiteten vurdert som ${COMPLEXITY_LABEL[doc.complexity.use].toLowerCase()}?`}
-                    />
-                    <ComplexityRow
-                        label="Vedlikehold"
-                        rating={doc.complexity.maintenance}
-                        note={doc.complexity.notes?.maintenance}
-                        noteAriaLabel={`Hvorfor er vedlikeholdskompleksiteten vurdert som ${COMPLEXITY_LABEL[doc.complexity.maintenance].toLowerCase()}?`}
-                    />
-                </Flex>
-            </Flex>
+            {doc.example && (
+                <ComponentExample>
+                    {doc.example}
+                </ComponentExample>
+            )}
 
             {requires.length > 0 && (
                 <Flex as="section" direction="column" gap="m">
@@ -297,12 +265,61 @@ export default function ComponentPage() {
                 </Flex>
             )}
 
-            {related.length > 0 && (
-                <Flex as="section" direction="column" gap="m">
-                    <h2 id="relaterte-komponenter">Relaterte komponenter</h2>
-                    <RelatedComponentsTable items={related}/>
-                </Flex>
-            )}
+                {related.length > 0 && (
+                    <Flex as="section" direction="column" gap="m">
+                        <h2 id="relaterte-komponenter">Relaterte komponenter</h2>
+                        <RelatedComponentsTable items={related}/>
+                    </Flex>
+                )}
+
+                {patternsUsingComponent.length > 0 && (
+                    <Flex as="section" direction="column" gap="m">
+                        <h2 id="brukes-i-monstre">Brukes i mønstre</h2>
+                        <PatternOverviewTable rows={patternsUsingComponent} />
+                    </Flex>
+                )}
+
+            <Flex as="section" direction="column" gap="s">
+                <h2 id="metadata">Metadata</h2>
+                <DescriptionList separators alignment="horizontal" className="component-metadata">
+                    <DescriptionTerm>Status</DescriptionTerm>
+                    <DescriptionDetail>
+                        {doc.status === "stable"
+                            ? "Stabil"
+                            : doc.status === "beta"
+                                ? "Beta"
+                                : "Deprecated"}
+                    </DescriptionDetail>
+
+                    <DescriptionTerm>Kategori</DescriptionTerm>
+                    <DescriptionDetail>{doc.category}</DescriptionDetail>
+
+                    <DescriptionTerm>Import</DescriptionTerm>
+                    <DescriptionDetail>
+                        <Flex alignItems="center" gap="xs">
+                            <code>{doc.package}</code>
+                            <CopyButton code={doc.package} data-size="small" />
+                        </Flex>
+                    </DescriptionDetail>
+
+                    <DescriptionTerm>Bruk</DescriptionTerm>
+                    <DescriptionDetail>
+                        <ComplexityRow
+                            rating={doc.complexity.use}
+                            note={doc.complexity.notes?.use}
+                            noteAriaLabel={`Hvorfor er brukskompleksiteten vurdert som ${COMPLEXITY_LABEL[doc.complexity.use].toLowerCase()}?`}
+                        />
+                    </DescriptionDetail>
+                    <DescriptionTerm>Vedlikehold</DescriptionTerm>
+                    <DescriptionDetail>
+                        <ComplexityRow
+                            rating={doc.complexity.maintenance}
+                            note={doc.complexity.notes?.maintenance}
+                            noteAriaLabel={`Hvorfor er vedlikeholdskompleksiteten vurdert som ${COMPLEXITY_LABEL[doc.complexity.maintenance].toLowerCase()}?`}
+                        />
+                    </DescriptionDetail>
+                </DescriptionList>
+            </Flex>
 
         </Article>
     );

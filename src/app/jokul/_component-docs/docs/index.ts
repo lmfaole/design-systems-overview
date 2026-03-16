@@ -49,6 +49,7 @@ import textAreaDoc from "./text-area";
 import tooltipDoc from "./tooltip";
 import radioPanelDoc from "./radio-panel";
 import popoverDoc from "./popover";
+import popupTipDoc from "./popup-tip";
 import toastDoc from "./toast";
 import toastProviderDoc from "./toast-provider";
 import systemMessageDoc from "./system-message";
@@ -130,6 +131,7 @@ export const componentDocs: ComponentDoc[] = [
     navTabDoc,
     paginationDoc,
     popoverDoc,
+    popupTipDoc,
     progressBarDoc,
     radioButtonDoc,
     radioPanelDoc,

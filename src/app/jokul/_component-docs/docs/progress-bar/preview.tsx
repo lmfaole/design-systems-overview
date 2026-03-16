@@ -1,27 +1,9 @@
 "use client";
-import { useState, useEffect } from "react";
 import { ProgressBar } from "@fremtind/jokul/progress-bar";
 import { Flex } from "@fremtind/jokul/flex";
-import { usePreviewHovered } from "@/app/jokul/_component-docs/components/PreviewHoverContext";
 
 export function ProgressBarPreview() {
-    const isHovered = usePreviewHovered();
-    const [value, setValue] = useState(40);
-
-    useEffect(() => {
-        if (!isHovered) {
-            setValue(40);
-            return;
-        }
-        setValue(0);
-        let v = 0;
-        const id = setInterval(() => {
-            v = Math.min(v + 2, 100);
-            setValue(v);
-            if (v >= 100) clearInterval(id);
-        }, 40);
-        return () => clearInterval(id);
-    }, [isHovered]);
+    const value = 40;
 
     return (
         <Flex direction="column" gap="s" style={{ width: "12rem" }}>

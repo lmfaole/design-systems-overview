@@ -7,13 +7,22 @@ interface PageHeroProps extends Omit<React.HTMLAttributes<HTMLElement>, "childre
     title: string;
     background: React.ReactNode;
     description?: React.ReactNode;
+    size?: "default" | "compact";
 }
 
-export function PageHero({ title, background, description, className, ...rest }: PageHeroProps) {
+export function PageHero({
+    title,
+    background,
+    description,
+    size = "default",
+    className,
+    ...rest
+}: PageHeroProps) {
     return (
         <FullBleed
             as="header"
             className={["page-hero", className].filter(Boolean).join(" ")}
+            data-size={size}
             {...rest}
         >
             <div className="page-hero__bg" aria-hidden="true">
