@@ -25,6 +25,11 @@ jobs:
                   node-version: 22
                   cache: npm
 
+            - name: Use npm 10 (workaround for npm 11 CI crash)
+              run: |
+                  corepack enable
+                  corepack prepare npm@10.9.2 --activate
+
             - name: Install dependencies
               run: npm ci
 
@@ -38,4 +43,3 @@ jobs:
                   accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
                   projectName: lmfaole
                   directory: .vercel/output/static
-
