@@ -5,7 +5,56 @@ import { IgnoreStaleResponsesExample, StaleResponsesExample } from "./examples";
 const post: PatternPost = {
     id: 2,
     title: "Asynkront søk",
+    category: "handlinger",
     goals: "Gi riktige resultater selv når brukeren skriver raskt.",
+    avoid: [
+        {
+            title: "Gamle svar overskriver nyeste input",
+            description: (
+                <>
+                    Hvis du ikke beskytter mot stale responses, kan eldre kall vinne.
+                </>
+            ),
+            code: `
+import { useEffect, useRef, useState } from "react";
+import { TextInput } from "@fremtind/jokul/text-input";
+import { Loader } from "@fremtind/jokul/loader";
+
+function fakeSearch(query: string): Promise<{ query: string; results: string[] }> {
+    const ms = Math.max(0, 3 - query.length) * 450 + 250;
+    return new Promise((resolve) =>
+        setTimeout(() => resolve({ query, results: query ? [\`\${query} - treff 1\`] : [] }), ms),
+    );
+}
+
+export function StaleResponsesExample() {
+    const [query, setQuery] = useState("a");
+    const [loading, setLoading] = useState(false);
+    const [response, setResponse] = useState({ query: "", results: [] as string[] });
+    const mounted = useRef(true);
+
+    useEffect(() => () => void (mounted.current = false), []);
+
+    useEffect(() => {
+        setLoading(true);
+        fakeSearch(query).then((r) => {
+            if (!mounted.current) return;
+            setResponse(r);
+            setLoading(false);
+        });
+    }, [query]);
+
+    return (
+        <>
+            <TextInput label="Søk" value={query} onChange={(e) => setQuery(e.target.value)} />
+            {loading ? <Loader textDescription="Søker" /> : null}
+        </>
+    );
+}
+`,
+            Example: StaleResponsesExample,
+        },
+    ],
     examples: [
         {
             title: "Vanlig feil: gamle svar overskriver",
@@ -172,6 +221,50 @@ export function IgnoreStaleResponsesExample() {
             "Tastatur: verifiser at du kan navigere videre til resultatene uten uventede hopp.",
         ],
     },
+    resources: [
+        {
+            title: "Combobox Pattern",
+            href: "https://www.w3.org/WAI/ARIA/apg/patterns/combobox/",
+            publisher: "W3C/WAI",
+            relevance: 5,
+            description: "Mønster for søk/auto-complete med tastatur og ARIA.",
+        },
+        {
+            title: "Autocomplete component",
+            href: "https://design-system.service.gov.uk/components/autocomplete/",
+            publisher: "GOV.UK",
+            relevance: 4,
+            description: "Praktiske råd for søk og forslag.",
+        },
+        {
+            title: "input type=\"search\"",
+            href: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/search",
+            publisher: "MDN",
+            relevance: 4,
+            description: "Native søkefelt og tilhørende atferd.",
+        },
+        {
+            title: "HTML Standard: Search state (type=search)",
+            href: "https://html.spec.whatwg.org/multipage/input.html#text-(type=text)-state-and-search-state-(type=search)",
+            publisher: "WHATWG",
+            relevance: 4,
+            description: "Spesifikasjon for søkefelt og native oppførsel.",
+        },
+        {
+            title: "ARIA22: Using role=status to present status messages",
+            href: "https://www.w3.org/WAI/WCAG21/Techniques/aria/ARIA22.html",
+            publisher: "W3C/WAI",
+            relevance: 4,
+            description: "Teknikk for å annonsere søkestatus uten å flytte fokus.",
+        },
+        {
+            title: "useDeferredValue",
+            href: "https://react.dev/reference/react/useDeferredValue",
+            publisher: "React",
+            relevance: 3,
+            description: "Avlaster rendering mens brukeren skriver i søkefeltet.",
+        },
+    ],
     components: ["text-input", "loader", "list"],
 };
 

@@ -11,32 +11,48 @@
 }
 
 .fi__dot {
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 0;
   background: var(--jkl-color-border-separator);
-  animation: dot-shimmer 3s calc(var(--dot-i, 0) * -0.11s) ease-in-out infinite;
+  transform-origin: center;
+  animation: dot-diamond-spin 2.5s calc(var(--dot-i, 0) * -0.12s) linear infinite;
 
   &:nth-child(3n) {
-    width: 2px;
-    height: 2px;
+    width: 3px;
+    height: 3px;
     background: var(--jkl-color-border-subdued);
   }
 
   &:nth-child(7n) {
-    width: 5px;
-    height: 5px;
+    width: 6px;
+    height: 6px;
   }
 }
 
-@keyframes dot-shimmer {
-  0%, 100% { opacity: 0.2; }
-  50%       { opacity: 1; }
+@keyframes dot-diamond-spin {
+  0% {
+    opacity: 0.2;
+    transform: rotate(45deg) scale(0);
+  }
+  30% {
+    opacity: 1;
+    transform: rotate(135deg) scale(1);
+  }
+  70% {
+    opacity: 0.2;
+    transform: rotate(225deg) scale(0);
+  }
+  100% {
+    opacity: 0.2;
+    transform: rotate(225deg) scale(0);
+  }
 }
 
 @include jkl.prefers-reduced-motion {
   .fi__dot {
     animation: none;
-    opacity: 0.5;
+    opacity: 0.7;
+    transform: rotate(45deg);
   }
 }

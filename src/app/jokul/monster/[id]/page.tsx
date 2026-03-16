@@ -11,6 +11,10 @@ import { Article } from "@/shared/components/Article";
 import { Grid } from "@/shared/components/Grid";
 import { ListItem, UnorderedList } from "@fremtind/jokul/list";
 import { Link } from "@fremtind/jokul/link";
+import {
+    PATTERN_RESOURCE_PUBLISHERS,
+    PATTERN_RESOURCE_PUBLISHER_TYPE_LABELS,
+} from "@/app/jokul/_pattern/posts/types";
 import { ExampleCard } from "./ExampleCard";
 
 export const runtime = "edge";
@@ -56,7 +60,9 @@ export default async function PatternPage({ params, searchParams }: PatternPageP
                 <Flex direction="column" gap="xl">
                     <Article className="post-prose post-prose--pattern">
                         {post.examples.length > 0 && <ExamplesSection examples={post.examples} />}
+                        {post.avoid.length > 0 && <AvoidSection avoid={post.avoid} />}
                         <AccessibilitySection accessibility={post.accessibility} />
+                        <ResourcesSection resources={post.resources} />
                     </Article>
 
                     {usedComponents.length > 0 && (
@@ -80,6 +86,30 @@ function ExamplesSection({ examples }: { examples: PatternPost["examples"] }) {
                 <h2 id="eksempler">Eksempler</h2>
                 <Grid columns={columns} gap="m">
                     {examples.map((example) => (
+                        <ExampleCard
+                            key={example.title}
+                            title={example.title}
+                            description={example.description}
+                            code={example.code}
+                        >
+                            <example.Example />
+                        </ExampleCard>
+                    ))}
+                </Grid>
+            </Flex>
+        </section>
+    );
+}
+
+function AvoidSection({ avoid }: { avoid: PatternPost["avoid"] }) {
+    const columns = Math.min(4, Math.max(1, avoid.length)) as 1 | 2 | 3 | 4;
+
+    return (
+        <section aria-labelledby="fallgruver">
+            <Flex direction="column" gap="m">
+                <h2 id="fallgruver">Hva du bør unngå</h2>
+                <Grid columns={columns} gap="m">
+                    {avoid.map((example) => (
                         <ExampleCard
                             key={example.title}
                             title={example.title}
@@ -162,6 +192,42 @@ function AccessibilitySection({ accessibility }: { accessibility: PatternPost["a
                             </UnorderedList>
                         </Flex>
                     )}
+                </Flex>
+            </div>
+        </section>
+    );
+}
+
+function ResourcesSection({ resources }: { resources: PatternPost["resources"] }) {
+    const sortedResources = [...resources].sort((a, b) => {
+        if (b.relevance !== a.relevance) return b.relevance - a.relevance;
+        return a.title.localeCompare(b.title);
+    });
+
+    return (
+        <section aria-labelledby="videre-lesning">
+            <div className="pattern-prose__text">
+                <Flex direction="column" gap="s">
+                    <h2 id="videre-lesning">Videre lesning</h2>
+                    <UnorderedList>
+                        {sortedResources.map((resource) => {
+                            const publisher = PATTERN_RESOURCE_PUBLISHERS[resource.publisher];
+                            const typeLabel = PATTERN_RESOURCE_PUBLISHER_TYPE_LABELS[publisher.type];
+                            return (
+                                <ListItem key={resource.href}>
+                                    <Flex direction="column" gap="xs">
+                                        <Link href={resource.href} external>
+                                            {resource.title}
+                                        </Link>
+                                        <small className="muted">
+                                            {publisher.title} · {typeLabel}
+                                            {resource.description ? ` · ${resource.description}` : ""}
+                                        </small>
+                                    </Flex>
+                                </ListItem>
+                            );
+                        })}
+                    </UnorderedList>
                 </Flex>
             </div>
         </section>

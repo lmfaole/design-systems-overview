@@ -1,6 +1,20 @@
 .component-card-preview {
-    background-image: radial-gradient(circle, color-mix(in srgb, var(--jkl-color-border-subdued) 40%, transparent) 1px, transparent 1px);
-    background-size: 20px 20px;
+    background-image:
+        linear-gradient(
+            45deg,
+            color-mix(in srgb, var(--jkl-color-border-subdued) 8%, transparent) 4%,
+            transparent 4%,
+            transparent 96%,
+            color-mix(in srgb, var(--jkl-color-border-subdued) 8%, transparent) 96%
+        ),
+        linear-gradient(
+            -45deg,
+            color-mix(in srgb, var(--jkl-color-border-subdued) 8%, transparent) 4%,
+            transparent 4%,
+            transparent 96%,
+            color-mix(in srgb, var(--jkl-color-border-subdued) 8%, transparent) 96%
+        );
+    background-size: 32px 32px;
     border-bottom: 1px solid var(--jkl-color-border-subdued);
     height: 14rem;
     overflow: hidden;

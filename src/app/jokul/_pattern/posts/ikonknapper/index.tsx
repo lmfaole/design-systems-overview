@@ -4,13 +4,32 @@ import {
     IconOnlyAriaLabelExample,
     IconOnlyScreenReaderOnlyExample,
     IconTextExample,
+    GenericLabelIconButtonExample,
     ToggleFavoriteExample,
 } from "./examples";
 
 const post: PatternPost = {
     id: 1,
     title: "Ikonknapper",
+    category: "handlinger",
     goals: "La brukeren utføre raske handlinger med ikon, med tydelig navn.",
+    avoid: [
+        {
+            title: "Generisk label på ikonknapp",
+            description: (
+                <>
+                    <code>aria-label</code> må beskrive handlingen, ikke bare være “Klikk”.
+                </>
+            ),
+            code: `
+import { Button } from "@fremtind/jokul/button";
+import { Icon } from "@fremtind/jokul/icon";
+
+<Button variant="ghost" icon={<Icon>close</Icon>} aria-label="Klikk" />
+`,
+            Example: GenericLabelIconButtonExample,
+        },
+    ],
     examples: [
         {
             title: "Ikon-only med aria-label",
@@ -190,6 +209,57 @@ export function ToggleFavorite() {
             "Pek: Sjekk at knappen er lett å treffe, og at den ikke ligger for tett på andre kontroller.",
         ],
     },
+    resources: [
+        {
+            title: "Button Pattern",
+            href: "https://www.w3.org/WAI/ARIA/apg/patterns/button/",
+            publisher: "W3C/WAI",
+            relevance: 5,
+            description: "Rolle, tastatur og ARIA-praksis for knapper.",
+        },
+        {
+            title: "HTML Standard: The button element",
+            href: "https://html.spec.whatwg.org/multipage/form-elements.html#the-button-element",
+            publisher: "WHATWG",
+            relevance: 3,
+            description: "Normativ oppførsel for button-elementet som ikonknapper bygger på.",
+        },
+        {
+            title: "G94: Providing short text alternative for non-text content",
+            href: "https://www.w3.org/WAI/WCAG22/Techniques/general/G94.html",
+            publisher: "W3C/WAI",
+            relevance: 4,
+            description: "Teknikk for å gi ikonknapper et tydelig tekstalternativ.",
+        },
+        {
+            title: "CSS UI 4: Outline and focus indicators",
+            href: "https://www.w3.org/TR/css-ui-4/#outline",
+            publisher: "W3C CSS Working Group",
+            relevance: 3,
+            description: "Spesifikasjon for focus/outline som påvirker fokusmarkering.",
+        },
+        {
+            title: "Accessible Icon Buttons",
+            href: "https://www.sarasoueidan.com/blog/accessible-icon-buttons/",
+            publisher: "Sara Soueidan",
+            relevance: 5,
+            description: "Detaljert gjennomgang av navngivning for ikonknapper.",
+        },
+        {
+            title: "How Can I Make My Icon System Accessible?",
+            href: "https://css-tricks.com/can-make-icon-system-accessible/",
+            publisher: "CSS-Tricks",
+            relevance: 4,
+            description: "Praktiske råd for tilgjengelige ikon- og knappesystemer.",
+        },
+        {
+            title: "aria-label",
+            href: "https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label",
+            publisher: "MDN",
+            relevance: 4,
+            description: "Når og hvordan bruke aria-label for ikonknapper.",
+        },
+    ],
     components: ["button", "icon", "screen-reader-only"],
 };
 

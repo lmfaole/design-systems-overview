@@ -38,3 +38,7 @@ export function ToggleFavoriteExample() {
         />
     );
 }
+
+export function GenericLabelIconButtonExample() {
+    return <Button variant="ghost" icon={<Icon>close</Icon>} aria-label="Klikk" />;
+}
