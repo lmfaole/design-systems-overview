@@ -1,6 +1,7 @@
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { CardPreview } from "./preview";
+import { CardExample } from "./example";
 
 const doc: ComponentDoc = {
     id: "card",
@@ -18,6 +19,12 @@ const doc: ComponentDoc = {
         related: [{ id: "flex", description: "Wrapper Card-elementer i Flex for å kontrollere mellomrom og justering i et kortgitter." }],
     },
     preview: <CardPreview />,
+    example: (props) => <CardExample {...props} />,
+    exampleControls: [
+        { name: "padding", options: ["s", "m", "l", "xl"], defaultValue: "s" },
+        { name: "variant", options: ["high", "low", "outlined"], defaultValue: "high" },
+        { name: "clickable", options: ["false", "true"], defaultValue: "false" },
+    ],
 
     props,
 };

@@ -25,6 +25,13 @@ const doc: ComponentDoc = {
 
     preview: <ButtonPreview />,
     example: (props) => <ButtonExample {...props} />,
+    exampleControls: [
+        { name: "variant", options: ["primary", "secondary", "ghost"], defaultValue: "primary" },
+        { name: "icon", options: ["false", "true"], defaultValue: "false" },
+        { name: "iconPosition", options: ["left", "right"], defaultValue: "left" },
+        { name: "disabled", options: ["false", "true"], defaultValue: "false" },
+        { name: "loader", options: ["false", "true"], defaultValue: "false" },
+    ],
     props,
     migrations
 };

@@ -215,7 +215,7 @@ export default function ComponentPage() {
             )}
 
             {doc.example && (
-                <ComponentExample>
+                <ComponentExample controls={doc.exampleControls}>
                     {doc.example}
                 </ComponentExample>
             )}

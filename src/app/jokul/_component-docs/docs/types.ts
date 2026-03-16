@@ -7,6 +7,8 @@ export type {
     ComponentComplexity,
     ComponentComplexityNotes,
     ComponentComplexityRating,
+    ComponentExampleProps,
+    ComponentExampleControl,
 } from "./types/component";
 export type { ComponentId } from "./types/ids";
 export { COMPONENT_IDS } from "./types/ids";

@@ -44,10 +44,13 @@ export interface ComponentComplexity {
 }
 
 export interface ComponentExampleProps {
-    disabled: boolean;
-    variant?: "primary" | "secondary" | "ghost";
-    icon?: boolean;
-    iconPosition?: "left" | "right";
+    [key: string]: string;
+}
+
+export interface ComponentExampleControl {
+    name: string;
+    options: readonly string[];
+    defaultValue: string;
 }
 
 export interface ComponentDoc {
@@ -153,6 +156,12 @@ export interface ComponentDoc {
      * Optional — omit when no example is needed.
      */
     example?: React.ReactNode | ((props: ComponentExampleProps) => React.ReactNode);
+
+    /**
+     * Optional prop controls shown in the example toolbar.
+     * Each control maps 1:1 with a prop name and passes a string value to the example render function.
+     */
+    exampleControls?: ComponentExampleControl[];
 
     /**
      * Props accepted directly on the root component element.

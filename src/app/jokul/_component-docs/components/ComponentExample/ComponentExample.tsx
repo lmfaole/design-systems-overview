@@ -1,37 +1,93 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Card } from "@fremtind/jokul/card";
 import { Flex } from "@fremtind/jokul/flex";
 import { BETA_Select as Select } from "@fremtind/jokul/select";
+import { Popover } from "@fremtind/jokul/popover";
+import { Button } from "@fremtind/jokul/button";
 import "./ComponentExample.scss";
+import type { ComponentExampleControl, ComponentExampleProps as ExampleValues } from "@/app/jokul/_component-docs/docs/types/component";
 
-type ComponentExampleProps = {
+type ComponentExampleComponentProps = {
     titleId?: string;
-    children: React.ReactNode | ((props: {
-        disabled: boolean;
-        variant?: "primary" | "secondary" | "ghost";
-        icon?: boolean;
-        iconPosition?: "left" | "right";
-    }) => React.ReactNode);
+    children: React.ReactNode | ((props: ExampleValues) => React.ReactNode);
+    controls?: ComponentExampleControl[];
 };
 
-export function ComponentExample({ titleId = "eksempel", children }: ComponentExampleProps) {
+function initControlValues(controls: ComponentExampleControl[] | undefined) {
+    return (controls ?? []).reduce<Record<string, string>>((acc, control) => {
+        acc[control.name] = control.defaultValue;
+        return acc;
+    }, {});
+}
+
+export function ComponentExample({ titleId = "eksempel", children, controls }: ComponentExampleComponentProps) {
     const [exampleTheme, setExampleTheme] = useState("auto");
     const [exampleSize, setExampleSize] = useState("medium");
-    const [exampleDisabled, setExampleDisabled] = useState(false);
-    const [exampleVariant, setExampleVariant] = useState<"primary" | "secondary" | "ghost">("primary");
-    const [exampleIcon, setExampleIcon] = useState(false);
-    const [exampleIconPosition, setExampleIconPosition] = useState<"left" | "right">("left");
-    const content = typeof children === "function"
-        ? children({
-            disabled: exampleDisabled,
-            variant: exampleVariant,
-            icon: exampleIcon,
-            iconPosition: exampleIconPosition,
-        })
-        : children;
-    const showProps = typeof children === "function";
+    const [exampleProps, setExampleProps] = useState<Record<string, string>>(() => initControlValues(controls));
+    const [isMobile, setIsMobile] = useState(false);
+    const [displayOpen, setDisplayOpen] = useState(false);
+    const [propsOpen, setPropsOpen] = useState(false);
+    const content = typeof children === "function" ? children(exampleProps) : children;
+    const showProps = typeof children === "function" && (controls?.length ?? 0) > 0;
+
+    useEffect(() => {
+        setExampleProps(initControlValues(controls));
+    }, [controls]);
+
+    useEffect(() => {
+        const media = window.matchMedia("(max-width: 48rem)");
+        const update = () => setIsMobile(media.matches);
+        update();
+        media.addEventListener("change", update);
+        return () => media.removeEventListener("change", update);
+    }, []);
+
+    const displayControls = useMemo(() => (
+        <>
+            <Select
+                label="Tema"
+                name="example-theme"
+                value={exampleTheme}
+                onChange={({ target }) => setExampleTheme(target.value)}
+            >
+                <option value="auto">auto</option>
+                <option value="light">light</option>
+                <option value="dark">dark</option>
+            </Select>
+            <Select
+                label="Størrelse"
+                name="example-size"
+                value={exampleSize}
+                onChange={({ target }) => setExampleSize(target.value)}
+            >
+                <option value="small">small</option>
+                <option value="medium">medium</option>
+                <option value="large">large</option>
+            </Select>
+        </>
+    ), [exampleTheme, exampleSize]);
+
+    const propControls = useMemo(() => (
+        <>
+            {(controls ?? []).map((control) => (
+                <Select
+                    key={control.name}
+                    label={control.name}
+                    name={`example-${control.name}`}
+                    value={exampleProps[control.name] ?? control.defaultValue}
+                    onChange={({ target }) =>
+                        setExampleProps((prev) => ({ ...prev, [control.name]: target.value }))
+                    }
+                >
+                    {control.options.map((option) => (
+                        <option key={option} value={option}>{option}</option>
+                    ))}
+                </Select>
+            ))}
+        </>
+    ), [controls, exampleProps]);
 
     return (
         <section className="component-page-example" aria-labelledby={titleId}>
@@ -54,73 +110,43 @@ export function ComponentExample({ titleId = "eksempel", children }: ComponentEx
                         </div>
                     </Card>
                     <Card data-size="small" asChild padding="l">
-                        <Flex gap="m" wrap="wrap" justifyContent="space-between" alignItems="start">
-                            <Flex gap="m" wrap="wrap">
-                                <Select
-                                    label="Tema"
-                                    name="example-theme"
-                                    value={exampleTheme}
-                                    onChange={({ target }) => setExampleTheme(target.value)}
-                                >
-                                    <option value="auto">auto</option>
-                                    <option value="light">light</option>
-                                    <option value="dark">dark</option>
-                                </Select>
-                                <Select
-                                    label="Størrelse"
-                                    name="example-size"
-                                    value={exampleSize}
-                                    onChange={({ target }) => setExampleSize(target.value)}
-                                >
-                                    <option value="small">small</option>
-                                    <option value="medium">medium</option>
-                                    <option value="large">large</option>
-                                </Select>
+                        {isMobile ? (
+                            <Flex gap="m" wrap="wrap" className="component-example__toolbar component-example__toolbar--mobile">
+                                <Popover open={displayOpen} onOpenChange={setDisplayOpen} clickOptions={{ enabled: true }}>
+                                    <Popover.Trigger asChild>
+                                        <Button variant="secondary">Visning</Button>
+                                    </Popover.Trigger>
+                                    <Popover.Content padding={16}>
+                                        <Flex direction="column" gap="m" data-size="small">
+                                            {displayControls}
+                                        </Flex>
+                                    </Popover.Content>
+                                </Popover>
+                                {showProps && (
+                                    <Popover open={propsOpen} onOpenChange={setPropsOpen} clickOptions={{ enabled: true }}>
+                                        <Popover.Trigger asChild>
+                                            <Button variant="secondary">Props</Button>
+                                        </Popover.Trigger>
+                                        <Popover.Content padding={16}>
+                                            <Flex direction="column" gap="m" data-size="small">
+                                                {propControls}
+                                            </Flex>
+                                        </Popover.Content>
+                                    </Popover>
+                                )}
                             </Flex>
-                            {showProps && (
-                                <Flex gap="m" wrap="wrap" className="component-example__props">
-                                    <Select
-                                        label="variant"
-                                        name="example-variant"
-                                        value={exampleVariant}
-                                        onChange={({ target }) => setExampleVariant(target.value as "primary" | "secondary" | "ghost")}
-                                    >
-                                        <option value="primary">Primary</option>
-                                        <option value="secondary">Secondary</option>
-                                        <option value="ghost">Ghost</option>
-                                    </Select>
-                                    <Select
-                                        label="icon"
-                                        name="example-icon"
-                                        value={exampleIcon ? "on" : "off"}
-                                        onChange={({ target }) => setExampleIcon(target.value === "on")}
-                                    >
-                                        <option value="off">Av</option>
-                                        <option value="on">På</option>
-                                    </Select>
-                                    {exampleIcon && (
-                                        <Select
-                                            label="iconPosition"
-                                            name="example-icon-position"
-                                            value={exampleIconPosition}
-                                            onChange={({ target }) => setExampleIconPosition(target.value as "left" | "right")}
-                                        >
-                                            <option value="left">Venstre</option>
-                                            <option value="right">Høyre</option>
-                                        </Select>
-                                    )}
-                                    <Select
-                                        label="disabled"
-                                        name="example-disabled"
-                                        value={exampleDisabled ? "disabled" : "enabled"}
-                                        onChange={({ target }) => setExampleDisabled(target.value === "disabled")}
-                                    >
-                                        <option value="enabled">Aktiv</option>
-                                        <option value="disabled">Deaktivert</option>
-                                    </Select>
+                        ) : (
+                            <Flex gap="m" wrap="wrap" className="component-example__toolbar" justifyContent="space-between" alignItems="start">
+                                <Flex gap="m" wrap="wrap">
+                                    {displayControls}
                                 </Flex>
-                            )}
-                        </Flex>
+                                {showProps && (
+                                    <Flex gap="m" wrap="wrap" className="component-example__props">
+                                        {propControls}
+                                    </Flex>
+                                )}
+                            </Flex>
+                        )}
                     </Card>
                 </Flex>
             </Flex>
