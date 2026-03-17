@@ -114,23 +114,23 @@ export function FlexExample(props: ComponentExampleProps) {
     const wrap = (props.wrap === "wrap" || props.wrap === "reverse" ? props.wrap : "nowrap") as FlexProps["wrap"];
     const gap = typeof props.gap === "string" && isGapValue(props.gap) ? props.gap : "m";
     const alignItems = (
-        typeof props.alignItems === "string" && alignItemValues.has(props.alignItems) ? props.alignItems : undefined;
+        typeof props.alignItems === "string" && alignItemValues.has(props.alignItems) ? props.alignItems : undefined
     ) as FlexProps["alignItems"];
     const alignContent = (
         typeof props.alignContent === "string" && alignContentValues.has(props.alignContent)
             ? props.alignContent
-            : undefined;
+            : undefined
     ) as FlexProps["alignContent"];
     const justifyContent = (
         typeof props.justifyContent === "string" && justifyContentValues.has(props.justifyContent)
             ? props.justifyContent
-            : undefined;
+            : undefined
     ) as FlexProps["justifyContent"];
     const textAlign = (
-        typeof props.textAlign === "string" && textAlignValues.has(props.textAlign) ? props.textAlign : undefined;
+        typeof props.textAlign === "string" && textAlignValues.has(props.textAlign) ? props.textAlign : undefined
     ) as FlexProps["textAlign"];
     const layout = (
-        typeof props.layout === "string" && layoutValues.has(props.layout) ? props.layout : undefined;
+        typeof props.layout === "string" && layoutValues.has(props.layout) ? props.layout : undefined
     ) as FlexProps["layout"];
     const fill = props.fill === true;
     const inline = props.inline === true;
