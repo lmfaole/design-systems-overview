@@ -46,15 +46,6 @@ function ComplexityRow({
     note?: string;
     noteAriaLabel: string;
 }) {
-    const toRelatedItems = (items: typeof requires) => items.map(({ doc, description }) => ({
-        doc: { id: doc.id, name: doc.name, preview: doc.preview } as RelatedComponentDoc,
-        description,
-    }));
-
-    const requiresItems = toRelatedItems(requires);
-    const siblingsItems = toRelatedItems(siblings);
-    const relatedItems = toRelatedItems(related);
-
     return (
         <Flex as="div" alignItems="center" gap="s" className="component-complexity__row">
             <span className="component-complexity__value">
@@ -169,6 +160,13 @@ export default function ComponentPage() {
     }
 
     const heroDescription = doc.description.long;
+    const toRelatedItems = (items: typeof requires) => items.map(({ doc: relatedDoc, description }) => ({
+        doc: { id: relatedDoc.id, name: relatedDoc.name, preview: relatedDoc.preview } as RelatedComponentDoc,
+        description,
+    }));
+    const requiresItems = toRelatedItems(requires);
+    const siblingsItems = toRelatedItems(siblings);
+    const relatedItems = toRelatedItems(related);
     const siblingsAnchor = parentKind === "requires" ? "andre-komponenter" : "andre-delkomponenter";
 
     const breadcrumb = parent
