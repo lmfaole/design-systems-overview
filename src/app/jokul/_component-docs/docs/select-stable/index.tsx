@@ -30,8 +30,8 @@ const doc: ComponentDoc = {
     preview: <SelectStablePreview />,
     example: (props) => <SelectStableExample {...props} />,
     exampleControlsConfig: {
-        include: ["defaultPrompt", "searchable", "maxShownOptions", "inline", "helpLabel", "errorLabel", "disabled"],
-        order: ["defaultPrompt", "searchable", "maxShownOptions", "inline", "helpLabel", "errorLabel", "disabled"],
+        include: ["defaultPrompt", "searchable", "maxShownOptions", "inline", "helpLabel", "errorLabel"],
+        order: ["defaultPrompt", "searchable", "maxShownOptions", "inline", "helpLabel", "errorLabel"],
         overrides: {
             defaultPrompt: { defaultValue: "Velg forsikring" },
             maxShownOptions: { defaultValue: 5, min: 3, max: 10, step: 1 },

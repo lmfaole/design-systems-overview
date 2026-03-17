@@ -16,5 +16,4 @@ export const props: PropDef[] = [
         { name: "maxShownOptions", type: "number", required: false, source: "custom", status: "stable", default: "5", description: "Antall valg synlig i listen før den scroller." },
         { name: "inline", type: "boolean", required: false, source: "custom", status: "stable", default: "false", description: "Viser label og nedtrekksmeny på samme linje." },
         { name: "width", type: "string", required: false, source: "custom", status: "stable", description: "Setter bredden på nedtrekksmenyen (CSS-verdi)." },
-        { name: "disabled", type: "boolean", required: false, source: "native", status: "stable", description: "Deaktiverer feltet." },
     ];

@@ -17,7 +17,6 @@ export function SelectStableExample(props: ComponentExampleProps) {
     const errorLabel = typeof props.errorLabel === "string" && props.errorLabel.trim() !== "" ? props.errorLabel : undefined;
     const searchable = props.searchable === true;
     const maxShownOptions = typeof props.maxShownOptions === "number" ? props.maxShownOptions : undefined;
-    const disabled = props.disabled === true;
     const inline = props.inline === true;
     const controlledValue = typeof props.value === "string" ? props.value : undefined;
     const [value, setValue] = useState<string | undefined>(controlledValue);
@@ -39,7 +38,6 @@ export function SelectStableExample(props: ComponentExampleProps) {
                 errorLabel={errorLabel}
                 searchable={searchable}
                 maxShownOptions={maxShownOptions}
-                disabled={disabled}
                 inline={inline}
                 value={value}
                 onChange={(event) => {
