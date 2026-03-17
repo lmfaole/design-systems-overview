@@ -9,6 +9,9 @@ export const PATTERN_IDS = [
     4,
     5,
     6,
+    7,
+    8,
+    9,
 ] as const;
 
 export type PatternId = (typeof PATTERN_IDS)[number];
