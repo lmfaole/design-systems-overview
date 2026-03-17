@@ -137,7 +137,7 @@ export function FlexExample(props: ComponentExampleProps) {
     const center = (
         props.center === true || (typeof props.center === "string" && centerValues.has(props.center))
             ? (props.center as "m" | "l" | "xl" | "2xl" | true)
-            : undefined;
+            : undefined
     ) as FlexProps["center"];
     const asChild = props.asChild === true;
     const as =
