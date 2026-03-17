@@ -1,6 +1,7 @@
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { CheckboxPreview } from "./preview";
+import { CheckboxExample } from "./example";
 
 const doc: ComponentDoc = {
     id: "checkbox",
@@ -22,6 +23,17 @@ const doc: ComponentDoc = {
     },
 
     preview: <CheckboxPreview />,
+    example: (props) => <CheckboxExample {...props} />,
+    exampleControlsConfig: {
+        include: ["label", "defaultChecked", "indeterminate", "invalid"],
+        order: ["label", "defaultChecked", "indeterminate", "invalid"],
+        overrides: {
+            label: { kind: "text", defaultValue: "Godta vilkårene" },
+            defaultChecked: { kind: "boolean", defaultValue: false },
+            indeterminate: { kind: "boolean", defaultValue: false },
+            invalid: { kind: "boolean", defaultValue: false },
+        },
+    },
     props,
 };
 

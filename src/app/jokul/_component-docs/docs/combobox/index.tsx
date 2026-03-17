@@ -1,6 +1,7 @@
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { ComboboxBasicPreview } from "./preview";
+import { ComboboxExample } from "./example";
 
 const doc: ComponentDoc = {
     id: "combobox",
@@ -24,6 +25,21 @@ const doc: ComponentDoc = {
         related: [{ id: "select", description: "Bruk Select når ingen fritekstinntasting er nødvendig og listen er liten nok til å bla gjennom." }, { id: "autosuggest", description: "Autosuggest ligner, men støtter ikke flervalg; bruk Combobox når flere verdier må velges." }],
     },
     preview: <ComboboxBasicPreview />,
+    example: (props) => <ComboboxExample {...props} />,
+    exampleControlsConfig: {
+        include: ["label", "placeholder", "helpLabel", "errorLabel", "noMatchingOption"],
+        order: ["label", "placeholder", "helpLabel", "errorLabel", "noMatchingOption"],
+        overrides: {
+            label: { defaultValue: "Velg forsikringer" },
+            placeholder: { defaultValue: "Søk i listen" },
+            helpLabel: {
+                defaultValue: "Velg flere alternativer.",
+                visibleWhen: { name: "errorLabel", operator: "notEquals", value: "Du må velge minst ett" },
+            },
+            errorLabel: { placeholder: "Feilmelding" },
+            noMatchingOption: { defaultValue: "Ingen treff" },
+        },
+    },
 
     props,
 };

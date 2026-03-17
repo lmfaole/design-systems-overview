@@ -1,6 +1,7 @@
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { ToggleSwitchPreview } from "./preview";
+import { ToggleSwitchExample } from "./example";
 
 const doc: ComponentDoc = {
     id: "toggle-switch",
@@ -21,6 +22,17 @@ const doc: ComponentDoc = {
     },
 
     preview: <ToggleSwitchPreview />,
+    example: (props) => <ToggleSwitchExample {...props} />,
+    exampleControlsConfig: {
+        include: ["label", "aria-pressed", "title", "disabled"],
+        order: ["label", "aria-pressed", "title", "disabled"],
+        overrides: {
+            label: { kind: "text", defaultValue: "Aktiver varsler" },
+            "aria-pressed": { kind: "boolean", defaultValue: false },
+            title: { kind: "text", defaultValue: "" },
+            disabled: { kind: "boolean", defaultValue: false },
+        },
+    },
     props,
 };
 

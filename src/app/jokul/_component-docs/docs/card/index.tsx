@@ -20,11 +20,10 @@ const doc: ComponentDoc = {
     },
     preview: <CardPreview />,
     example: (props) => <CardExample {...props} />,
-    exampleControls: [
-        { name: "padding", options: ["s", "m", "l", "xl"], defaultValue: "s" },
-        { name: "variant", options: ["high", "low", "outlined"], defaultValue: "high" },
-        { name: "clickable", options: ["false", "true"], defaultValue: "false" },
-    ],
+    exampleControlsConfig: {
+        include: ["padding", "variant", "clickable"],
+        order: ["variant", "padding", "clickable"],
+    },
 
     props,
 };

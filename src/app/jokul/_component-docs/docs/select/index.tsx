@@ -1,6 +1,7 @@
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { SelectPreview } from "./preview";
+import { SelectExample } from "./example";
 
 const doc: ComponentDoc = {
     id: "select",
@@ -19,6 +20,17 @@ const doc: ComponentDoc = {
     },
 
     preview: <SelectPreview />,
+    example: (props) => <SelectExample {...props} />,
+    exampleControlsConfig: {
+        include: ["label", "placeholder", "helpLabel", "errorLabel", "disabled"],
+        order: ["label", "placeholder", "helpLabel", "errorLabel", "disabled"],
+        overrides: {
+            label: { defaultValue: "Velg fylke" },
+            placeholder: { defaultValue: "Velg" },
+            helpLabel: { defaultValue: "Velg fylket du bor i." },
+            errorLabel: { placeholder: "Feilmelding" },
+        },
+    },
     props,
 };
 

@@ -33,6 +33,7 @@ Type-spesifikke regler skal ligge som JSDoc ved typene (ikke i denne fila):
 - Skal bruke wrappers for layout og Jøkul tokens (`var(--jkl-*)`) for spacing/posisjonering på egne elementer.
 - Skal bruke Jøkul `Flex` for flex-layouts; unngå `display: flex/grid` i CSS/inline bare for enkel sentrering der `<Flex>` dekker behovet.
 - Skal aldri endre fonten for stilårsaker (font-weight, letter-spacing, text-transform og lignende).
+- For JSON-kontroller i komponenteksempler med faste nøkler: bruk `valueOptions` og `keyReadOnly` så nøkler blir labels og verdier velges fra en liste.
 
 ## Kommandoer (regler)
 

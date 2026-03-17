@@ -2,6 +2,7 @@ import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { migrations } from "./migration";
 import { AutosuggestPreview } from "./preview";
+import { AutosuggestExample } from "./example";
 
 const doc: ComponentDoc = {
     id: "autosuggest",
@@ -29,6 +30,39 @@ const doc: ComponentDoc = {
         ],
     },
     preview: <AutosuggestPreview />,
+    example: (props) => <AutosuggestExample {...props} />,
+    exampleControlsConfig: {
+        include: [
+            "label",
+            "placeholder",
+            "variant",
+            "maxNumberOfHits",
+            "showDropdownControllerButton",
+            "helpLabel",
+            "errorLabel",
+        ],
+        order: [
+            "label",
+            "placeholder",
+            "variant",
+            "maxNumberOfHits",
+            "showDropdownControllerButton",
+            "helpLabel",
+            "errorLabel",
+        ],
+        overrides: {
+            label: { defaultValue: "Søk etter forsikring" },
+            placeholder: { defaultValue: "Begynn å skrive" },
+            variant: { kind: "select", options: ["small", "medium", "large"], defaultValue: "medium" },
+            maxNumberOfHits: { kind: "number", defaultValue: 5, min: 1 },
+            showDropdownControllerButton: { kind: "boolean", defaultValue: false },
+            helpLabel: {
+                defaultValue: "Prøv for eksempel «Bilforsikring».",
+                visibleWhen: { name: "errorLabel", operator: "notEquals", value: "Ingen treff" },
+            },
+            errorLabel: { placeholder: "Feilmelding" },
+        },
+    },
 
     props,
     migrations,

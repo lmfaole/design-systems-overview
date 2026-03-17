@@ -21,10 +21,16 @@ const doc: ComponentDoc = {
         long: "Table rendrer en tilgjengelig HTML-tabell med Jøkuls stilsett. Støtter sortering via useSortableTableHeader-hooken og responsiv listevisning med collapseToList.",
     },
     relationships: {
-        related: [{
-            id: "summary-table",
-            description: "Bruk SummaryTable for tokolonnet nøkkel-verdi-sammendrag med en totalsfoter i stedet for fullstendige tabelldata."
-        }],
+        related: [
+            {
+                id: "summary-table",
+                description: "Bruk SummaryTable for tokolonnet nøkkel-verdi-sammendrag med en totalsfoter i stedet for fullstendige tabelldata."
+            },
+            {
+                id: "data-table",
+                description: "Bruk DataTable når du vil bygge en tabell fra kolonner og rader uten å sette opp alle Table-delene manuelt."
+            },
+        ],
         subcomponents: [
             {id: "table-caption", description: "Tilgjengelig tabellbeskrivelse."},
             {id: "table-header", description: "En overskriftscelle i tabellen."},

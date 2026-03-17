@@ -1,6 +1,7 @@
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { SearchPreview } from "./preview";
+import { SearchExample } from "./example";
 
 const doc: ComponentDoc = {
     id: "search",
@@ -20,6 +21,45 @@ const doc: ComponentDoc = {
         ],
     },
     preview: <SearchPreview />,
+    example: (props) => <SearchExample {...props} />,
+    exampleControlsConfig: {
+        include: [
+            "label",
+            "placeholder",
+            "icon",
+            "helpLabel",
+            "errorLabel",
+            "labelProps.variant",
+            "labelProps.srOnly",
+            "disabled",
+            "readOnly",
+        ],
+        order: [
+            "label",
+            "placeholder",
+            "icon",
+            "helpLabel",
+            "errorLabel",
+            "labelProps.variant",
+            "labelProps.srOnly",
+            "disabled",
+            "readOnly",
+        ],
+        overrides: {
+            label: { defaultValue: "Søk" },
+            placeholder: { defaultValue: "Hva leter du etter?" },
+            icon: { kind: "select", options: ["search", "filter_alt", "filter_list"], defaultValue: "search" },
+            helpLabel: {
+                defaultValue: "Søk på navn eller nummer.",
+                visibleWhen: { name: "errorLabel", operator: "notEquals", value: "Søket er ugyldig" },
+            },
+            errorLabel: { placeholder: "Feilmelding" },
+            "labelProps.variant": { kind: "select", options: ["small", "medium", "large"], defaultValue: "medium" },
+            "labelProps.srOnly": { kind: "boolean", defaultValue: false },
+            disabled: { kind: "boolean", defaultValue: false },
+            readOnly: { kind: "boolean", defaultValue: false },
+        },
+    },
 
     props,
 };

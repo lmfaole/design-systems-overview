@@ -18,6 +18,14 @@ export const props: PropDef[] = [
             description: "Funksjon som rendrer inputfeltet med tilgjengelighetsprops injisert.",
         },
         {
+            name: "supportLabelProps",
+            type: 'Omit<SupportLabelProps, "id" | "errorLabel" | "helpLabel">',
+            required: false,
+            source: "custom",
+            status: "stable",
+            description: "Egenskaper for supportlabelen som vises under feltet.",
+        },
+        {
             name: "helpLabel",
             type: "React.ReactNode",
             required: false,

@@ -9,6 +9,9 @@ export type {
     ComponentComplexityRating,
     ComponentExampleProps,
     ComponentExampleControl,
+    ComponentExampleControlValue,
+    ComponentExampleControlArrayValue,
+    ComponentExampleControlsConfig,
 } from "./component";
 export type { ComponentId } from "./ids";
 export { COMPONENT_IDS } from "./ids";

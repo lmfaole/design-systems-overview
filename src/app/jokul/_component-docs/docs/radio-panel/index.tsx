@@ -1,6 +1,7 @@
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { RadioPanelPreview } from "./preview";
+import { RadioPanelExample } from "./example";
 
 const doc: ComponentDoc = {
     id: "radio-panel",
@@ -19,6 +20,17 @@ const doc: ComponentDoc = {
     },
 
     preview: <RadioPanelPreview />,
+    example: (props) => <RadioPanelExample {...props} />,
+    exampleControlsConfig: {
+        include: ["label", "description", "amount", "disabled"],
+        order: ["label", "description", "amount", "disabled"],
+        overrides: {
+            label: { defaultValue: "Standard" },
+            description: { defaultValue: "Dekker de vanligste behovene." },
+            amount: { defaultValue: "kr 1 200 / mnd" },
+            disabled: { kind: "boolean", defaultValue: false },
+        },
+    },
     props,
 };
 

@@ -1,6 +1,7 @@
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { ChipPreview } from "./preview";
+import { ChipExample } from "./example";
 
 const doc: ComponentDoc = {
     id: "chip",
@@ -18,6 +19,15 @@ const doc: ComponentDoc = {
     },
 
     preview: <ChipPreview />,
+    example: (props) => <ChipExample {...props} />,
+    exampleControlsConfig: {
+        include: ["label", "variant", "selected", "disabled"],
+        order: ["label", "variant", "selected", "disabled"],
+        overrides: {
+            label: { kind: "text", defaultValue: "Nyhet" },
+            selected: { kind: "boolean", defaultValue: false, visibleWhen: { name: "variant", value: "filter" } },
+        },
+    },
     props,
 };
 

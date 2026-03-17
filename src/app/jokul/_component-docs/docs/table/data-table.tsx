@@ -9,8 +9,16 @@ const doc: ComponentDoc = {
     status: "stable",
     complexity: { use: "medium", maintenance: "medium" },
     description: {
-        short: "Rendrer en komplett tabell fra kolonne- og radlister med responsive.",
+        short: "Rendrer en komplett tabell fra kolonne- og radlister.",
         long: "Rendrer en komplett tabell fra kolonne- og radlister, med responsive listevisning og caption for tilgjengelighet.",
+    },
+    relationships: {
+        related: [
+            {
+                id: "table",
+                description: "Bruk Table når du trenger full kontroll over semantikk og struktur med Table-delene.",
+            },
+        ],
     },
     preview: <DataTablePreview/>,
     props: [

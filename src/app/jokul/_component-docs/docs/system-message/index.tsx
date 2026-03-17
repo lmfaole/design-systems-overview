@@ -2,6 +2,7 @@ import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { migrations } from "./migration";
 import { SystemMessagePreview } from "./preview";
+import { SystemMessageExample } from "./example";
 
 const doc: ComponentDoc = {
     id: "system-message",
@@ -19,6 +20,16 @@ const doc: ComponentDoc = {
     },
 
     preview: <SystemMessagePreview />,
+    example: (props) => <SystemMessageExample {...props} />,
+    exampleControlsConfig: {
+        include: ["variant", "dismissed", "maxContentWidth", "role"],
+        order: ["variant", "dismissed", "maxContentWidth", "role"],
+        overrides: {
+            variant: { kind: "select", options: ["info", "success", "warning", "error"], defaultValue: "info" },
+            maxContentWidth: { placeholder: "f.eks. 56rem" },
+            role: { placeholder: "f.eks. alert" },
+        },
+    },
     props,
     migrations,
 };

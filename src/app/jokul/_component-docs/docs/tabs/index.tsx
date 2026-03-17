@@ -1,6 +1,7 @@
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { TabsPreview } from "./preview";
+import { TabsExample } from "./example";
 
 const doc: ComponentDoc = {
     id: "tabs",
@@ -31,6 +32,14 @@ const doc: ComponentDoc = {
     },
 
     preview: <TabsPreview />,
+    example: (props) => <TabsExample {...props} />,
+    exampleControlsConfig: {
+        include: ["defaultTab"],
+        order: ["defaultTab"],
+        overrides: {
+            defaultTab: { defaultValue: 0, min: 0, max: 2, step: 1 },
+        },
+    },
     props,
 };
 

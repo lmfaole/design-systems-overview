@@ -1,6 +1,7 @@
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { FileInputPreview } from "./preview";
+import { FileInputExample } from "./example";
 
 const doc: ComponentDoc = {
     id: "file-input",
@@ -19,6 +20,23 @@ const doc: ComponentDoc = {
         ],
     },
     preview: <FileInputPreview />,
+    example: (props) => <FileInputExample {...props} />,
+    exampleControlsConfig: {
+        include: ["legend", "accept", "maxSizeBytes", "multiple", "variant", "helpLabel", "errorLabel"],
+        order: ["legend", "accept", "maxSizeBytes", "multiple", "variant", "helpLabel", "errorLabel"],
+        overrides: {
+            legend: { defaultValue: "Last opp dokumenter" },
+            accept: { defaultValue: "image/*,.pdf" },
+            maxSizeBytes: { kind: "number", defaultValue: 5000000, min: 0 },
+            multiple: { kind: "boolean", defaultValue: true },
+            variant: { kind: "select", options: ["flexible", "small"], defaultValue: "flexible" },
+            helpLabel: {
+                defaultValue: "PDF eller bilde, maks 5 MB.",
+                visibleWhen: { name: "errorLabel", operator: "notEquals", value: "Opplastingen feilet" },
+            },
+            errorLabel: { placeholder: "Feilmelding" },
+        },
+    },
 
     props,
 };

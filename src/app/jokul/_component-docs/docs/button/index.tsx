@@ -25,13 +25,29 @@ const doc: ComponentDoc = {
 
     preview: <ButtonPreview />,
     example: (props) => <ButtonExample {...props} />,
-    exampleControls: [
-        { name: "variant", options: ["primary", "secondary", "ghost"], defaultValue: "primary" },
-        { name: "icon", options: ["false", "true"], defaultValue: "false" },
-        { name: "iconPosition", options: ["left", "right"], defaultValue: "left" },
-        { name: "disabled", options: ["false", "true"], defaultValue: "false" },
-        { name: "loader", options: ["false", "true"], defaultValue: "false" },
-    ],
+    exampleControlsConfig: {
+        include: ["label", "variant", "type", "icon", "iconName", "iconPosition", "disabled", "loader", "loaderText"],
+        order: ["label", "variant", "type", "icon", "iconName", "iconPosition", "disabled", "loader", "loaderText"],
+        overrides: {
+            label: {
+                kind: "text",
+                defaultValue: "Send inn",
+            },
+            icon: {
+                kind: "select",
+                options: ["none", "help", "info", "check_circle", "close", "custom"],
+                defaultValue: "help",
+            },
+            iconName: {
+                kind: "text",
+                defaultValue: "help_outline",
+                visibleWhen: { name: "icon", value: "custom" },
+            },
+            iconPosition: { visibleWhen: { name: "icon", operator: "notEquals", value: "none" } },
+            type: { kind: "select", options: ["button", "submit", "reset"], defaultValue: "button" },
+            loaderText: { kind: "text", defaultValue: "Laster", visibleWhen: { name: "loader", value: true } },
+        },
+    },
     props,
     migrations
 };

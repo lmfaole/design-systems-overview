@@ -1,6 +1,7 @@
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { FieldGroupPreview } from "./preview";
+import { FieldGroupExample } from "./example";
 
 const doc: ComponentDoc = {
     id: "field-group",
@@ -22,6 +23,22 @@ const doc: ComponentDoc = {
     },
 
     preview: <FieldGroupPreview />,
+    example: (props) => <FieldGroupExample {...props} />,
+    exampleControlsConfig: {
+        include: ["legend", "description", "helpLabel", "errorLabel", "labelProps.variant", "labelProps.srOnly"],
+        order: ["legend", "description", "helpLabel", "errorLabel", "labelProps.variant", "labelProps.srOnly"],
+        overrides: {
+            legend: { defaultValue: "Velg produkter" },
+            description: { defaultValue: "Velg det som passer behovet ditt." },
+            helpLabel: {
+                defaultValue: "Du kan velge flere alternativer.",
+                visibleWhen: { name: "errorLabel", operator: "notEquals", value: "Du må velge minst ett alternativ" },
+            },
+            errorLabel: { placeholder: "Feilmelding" },
+            "labelProps.variant": { kind: "select", options: ["small", "medium", "large"], defaultValue: "medium" },
+            "labelProps.srOnly": { kind: "boolean", defaultValue: false },
+        },
+    },
     props,
 };
 

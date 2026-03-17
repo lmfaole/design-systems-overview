@@ -1,6 +1,7 @@
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { CheckboxPanelPreview } from "./preview";
+import { CheckboxPanelExample } from "./example";
 
 const doc: ComponentDoc = {
     id: "checkbox-panel",
@@ -19,6 +20,18 @@ const doc: ComponentDoc = {
     },
 
     preview: <CheckboxPanelPreview />,
+    example: (props) => <CheckboxPanelExample {...props} />,
+    exampleControlsConfig: {
+        include: ["label", "description", "amount", "defaultChecked", "disabled"],
+        order: ["label", "description", "amount", "defaultChecked", "disabled"],
+        overrides: {
+            label: { defaultValue: "Bilforsikring" },
+            description: { defaultValue: "Dekker skade på egen bil." },
+            amount: { defaultValue: "kr 1 200 / mnd" },
+            defaultChecked: { kind: "boolean", defaultValue: true },
+            disabled: { kind: "boolean", defaultValue: false },
+        },
+    },
     props,
 };
 

@@ -2,6 +2,7 @@ import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { migrations } from "./migration";
 import { RadioButtonPreview } from "./preview";
+import { RadioButtonExample } from "./example";
 
 const doc: ComponentDoc = {
     id: "radio-button",
@@ -23,6 +24,20 @@ const doc: ComponentDoc = {
     },
 
     preview: <RadioButtonPreview />,
+    example: (props) => <RadioButtonExample {...props} />,
+    exampleControlsConfig: {
+        include: ["legend", "helpLabel", "errorLabel", "inline"],
+        order: ["legend", "helpLabel", "errorLabel", "inline"],
+        overrides: {
+            legend: { defaultValue: "Velg betaling" },
+            helpLabel: {
+                defaultValue: "Velg én betalingsmåte.",
+                visibleWhen: { name: "errorLabel", operator: "notEquals", value: "Du må velge en betalingsmåte" },
+            },
+            errorLabel: { placeholder: "Feilmelding" },
+            inline: { kind: "boolean", defaultValue: false },
+        },
+    },
     props,
     migrations,
 };

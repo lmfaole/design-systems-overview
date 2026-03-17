@@ -28,6 +28,7 @@ import { getPatternHref } from "@/app/jokul/_pattern/data";
 import { PatternOverviewTable } from "@/app/jokul/monster/PatternOverviewTable";
 import { CopyButton } from "@/shared/components/CodeBlock/CopyButton";
 import { ComponentExample } from "@/app/jokul/_component-docs/components/ComponentExample/ComponentExample";
+import { buildExampleControls } from "@/app/jokul/_component-docs/utils/example-controls";
 
 const COMPLEXITY_LABEL: Record<ComponentComplexityRating, string> = {
     easy: "Enkel",
@@ -215,7 +216,9 @@ export default function ComponentPage() {
             )}
 
             {doc.example && (
-                <ComponentExample controls={doc.exampleControls}>
+                <ComponentExample
+                    controls={doc.exampleControls ?? buildExampleControls(doc.props, doc.exampleControlsConfig)}
+                >
                     {doc.example}
                 </ComponentExample>
             )}

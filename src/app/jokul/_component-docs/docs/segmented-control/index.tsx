@@ -1,6 +1,7 @@
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { SegmentedControlPreview } from "./preview";
+import { SegmentedControlExample } from "./example";
 
 const doc: ComponentDoc = {
     id: "segmented-control",
@@ -21,6 +22,24 @@ const doc: ComponentDoc = {
     },
 
     preview: <SegmentedControlPreview />,
+    example: (props) => <SegmentedControlExample {...props} />,
+    exampleControlsConfig: {
+        include: ["legend", "description", "helpLabel", "errorLabel", "selectedValue", "separated", "disableLast"],
+        order: ["legend", "selectedValue", "description", "helpLabel", "errorLabel", "separated", "disableLast"],
+        overrides: {
+            legend: { kind: "text", defaultValue: "Velg forsikring" },
+            description: { kind: "text", defaultValue: "Velg ett alternativ." },
+            helpLabel: { kind: "text", defaultValue: "Du kan endre valget senere." },
+            errorLabel: { kind: "text", defaultValue: "" },
+            selectedValue: {
+                kind: "select",
+                options: ["bil", "hus", "reise"],
+                defaultValue: "bil",
+            },
+            separated: { kind: "boolean", defaultValue: false },
+            disableLast: { kind: "boolean", defaultValue: false },
+        },
+    },
     props,
 };
 

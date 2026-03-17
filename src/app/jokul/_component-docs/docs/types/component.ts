@@ -44,13 +44,125 @@ export interface ComponentComplexity {
 }
 
 export interface ComponentExampleProps {
-    [key: string]: string;
+    [key: string]: unknown;
 }
 
-export interface ComponentExampleControl {
+/**
+ * Supported example control values.
+ */
+export type ComponentExampleControlValue = string | number | boolean | null | undefined;
+export type ComponentExampleControlArrayValue = Array<Exclude<ComponentExampleControlValue, undefined>>;
+
+/**
+ * Optional condition for showing a control, based on another control's value.
+ */
+export type ComponentExampleControlCondition = {
     name: string;
-    options: readonly string[];
-    defaultValue: string;
+    value?:
+        | ComponentExampleControlValue
+        | ComponentExampleControlValue[]
+        | ComponentExampleControlArrayValue;
+    /**
+     * Comparison operator for visibility checks.
+     * Defaults to "equals" when omitted.
+     *
+     * - "equals" — matches value or any value in arrays
+     * - "notEquals" — inverse of equals
+     * - "exists" — true when a value is present (not null/undefined)
+     * - "truthy" — true for truthy values (arrays with length > 0)
+     */
+    operator?: "equals" | "notEquals" | "exists" | "truthy";
+};
+
+/**
+ * Select options for example controls.
+ */
+export type ComponentExampleSelectOption =
+    | string
+    | { label: string; value: Exclude<ComponentExampleControlValue, undefined> };
+
+/**
+ * Declarative example controls for component pages.
+ */
+export type ComponentExampleControl =
+    | {
+          name: string;
+          kind: "boolean";
+          defaultValue?: boolean;
+          visibleWhen?: ComponentExampleControlCondition;
+      }
+    | {
+          name: string;
+          kind: "select";
+          options: readonly ComponentExampleSelectOption[];
+          defaultValue?: Exclude<ComponentExampleControlValue, undefined>;
+          visibleWhen?: ComponentExampleControlCondition;
+      }
+    | {
+          name: string;
+          kind: "multiselect";
+          options: readonly ComponentExampleSelectOption[];
+          defaultValue?: ComponentExampleControlArrayValue;
+          visibleWhen?: ComponentExampleControlCondition;
+      }
+      | {
+          name: string;
+          kind: "json";
+          defaultValue?: string;
+          placeholder?: string;
+          rows?: number;
+          /**
+           * Optional list of allowed values for JSON map entries.
+           * When provided, values render as a select with these options.
+           * Recommended for fixed-key maps to keep values valid and scannable.
+           */
+          valueOptions?: readonly ComponentExampleSelectOption[];
+          /**
+           * When true, the key column is read-only to prevent invalid structures.
+           * Commonly paired with `valueOptions` so keys act as labels.
+           */
+          keyReadOnly?: boolean;
+          visibleWhen?: ComponentExampleControlCondition;
+      }
+    | {
+          name: string;
+          kind: "text";
+          defaultValue?: string;
+          placeholder?: string;
+          visibleWhen?: ComponentExampleControlCondition;
+      }
+    | {
+          name: string;
+          kind: "number";
+          defaultValue?: number;
+          min?: number;
+          max?: number;
+          step?: number;
+          placeholder?: string;
+          visibleWhen?: ComponentExampleControlCondition;
+      };
+
+/**
+ * Fine-tuning for auto-generated example controls.
+ */
+export interface ComponentExampleControlsConfig {
+    /**
+     * Only generate controls for these prop names (optional).
+     */
+    include?: string[];
+    /**
+     * Never generate controls for these prop names (optional).
+     */
+    exclude?: string[];
+    /**
+     * Overrides for generated controls, keyed by prop name.
+     * Use this to tweak defaults, change control kind, or add options.
+     */
+    overrides?: Record<string, Partial<ComponentExampleControl>>;
+    /**
+     * Optional ordering of generated controls; listed names are moved to the front in this order.
+     */
+    order?: string[];
 }
 
 export interface ComponentDoc {
@@ -159,9 +271,18 @@ export interface ComponentDoc {
 
     /**
      * Optional prop controls shown in the example toolbar.
-     * Each control maps 1:1 with a prop name and passes a string value to the example render function.
+     * Each control maps 1:1 with a prop name and passes the typed value to the example render function.
+     *
+     * When omitted, the component page auto-generates controls from {@link ComponentDoc.props}
+     * for common, simple prop types (boolean, string, number, literal unions).
+     * Set an empty array to explicitly show no controls.
      */
     exampleControls?: ComponentExampleControl[];
+    /**
+     * Optional config for auto-generated example controls.
+     * Only used when {@link ComponentDoc.exampleControls} is omitted.
+     */
+    exampleControlsConfig?: ComponentExampleControlsConfig;
 
     /**
      * Props accepted directly on the root component element.

@@ -2,6 +2,7 @@ import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { migrations } from "./migration";
 import { InputGroupPreview } from "./preview";
+import { InputGroupExample } from "./example";
 
 const doc: ComponentDoc = {
     id: "input-group",
@@ -15,6 +16,18 @@ const doc: ComponentDoc = {
         long: "InputGroup kombinerer et skjemafelt med label, hjelpetekst og feilmelding på en tilgjengelig måte. Bruk FieldGroup når du skal gruppere Checkbox eller RadioButton under en felles legend.",
     },
     preview: <InputGroupPreview />,
+    example: (props) => <InputGroupExample {...props} />,
+    exampleControlsConfig: {
+        include: ["label", "description", "supportLabelProps.label", "supportLabelProps.labelType", "inline"],
+        order: ["label", "description", "supportLabelProps.label", "supportLabelProps.labelType", "inline"],
+        overrides: {
+            label: { defaultValue: "E-post" },
+            description: { defaultValue: "Vi bruker e-post for kvittering." },
+            "supportLabelProps.label": { kind: "text", defaultValue: "Vi sender aldri spam." },
+            "supportLabelProps.labelType": { kind: "select", options: ["help", "warning", "error", "success"], defaultValue: "help" },
+            inline: { kind: "boolean", defaultValue: false },
+        },
+    },
 
     relationships: {
         related: [

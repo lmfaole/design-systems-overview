@@ -1,16 +1,28 @@
 .component-page-example {
     .component-example__toolbar {
-            border-radius: var(--jkl-border-radius-medium);
-            border: 1px solid var(--jkl-color-border-subdued);
-        }
-    
-        .component-example__toolbar--mobile {
-            flex-direction: row;
-            align-items: center;
-        }
+        border-radius: var(--jkl-border-radius-medium);
+        border: 1px solid var(--jkl-color-border-subdued);
+    }
+
+    .component-example__toolbar--mobile {
+        flex-direction: row;
+        align-items: center;
+    }
+
     .component-example__props {
         padding-left: var(--jkl-spacing-l);
-        border-inline-start: 1px solid var(--jkl-color-border-subdued);
+    }
+
+    .component-example__controls-inline {
+        width: 100%;
+    }
+
+    .component-example__props-inline {
+        width: 100%;
+    }
+
+    .component-example__json-error {
+        color: var(--jkl-color-text-danger);
     }
 
     @media (max-width: 48rem) {
@@ -19,15 +31,19 @@
             align-items: stretch;
         }
 
-                                                                                                                                .component-example__toolbar--mobile {
-                                                                                                                                    flex-direction: row;
-                                                                                                                                    align-items: center;
-                                                                                                                                }
+        .component-example__toolbar--mobile {
+            flex-direction: row;
+            align-items: center;
+        }
+
         .component-example__props {
             padding-left: 0;
-            border-left: 0;
             border-top: 1px solid var(--jkl-color-border-subdued);
             padding-top: var(--jkl-spacing-s);
+        }
+
+        .component-example__controls-inline {
+            flex-direction: column;
         }
     }
 

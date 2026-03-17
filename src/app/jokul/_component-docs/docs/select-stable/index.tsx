@@ -2,6 +2,7 @@ import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { migrations } from "./migration";
 import { SelectStablePreview } from "./preview";
+import { SelectStableExample } from "./example";
 
 const doc: ComponentDoc = {
     id: "select-stable",
@@ -27,6 +28,17 @@ const doc: ComponentDoc = {
     },
 
     preview: <SelectStablePreview />,
+    example: (props) => <SelectStableExample {...props} />,
+    exampleControlsConfig: {
+        include: ["defaultPrompt", "searchable", "maxShownOptions", "inline", "helpLabel", "errorLabel", "disabled"],
+        order: ["defaultPrompt", "searchable", "maxShownOptions", "inline", "helpLabel", "errorLabel", "disabled"],
+        overrides: {
+            defaultPrompt: { defaultValue: "Velg forsikring" },
+            maxShownOptions: { defaultValue: 5, min: 3, max: 10, step: 1 },
+            helpLabel: { defaultValue: "Velg typen som passer best." },
+            errorLabel: { placeholder: "Feilmelding" },
+        },
+    },
     props,
     migrations,
 };

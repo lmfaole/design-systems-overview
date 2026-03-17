@@ -18,6 +18,22 @@ export const props: PropDef[] = [
             description: "Egenskaper for label-elementet. Bruk f.eks. srOnly: true for å skjule labelen visuelt men beholde tilgjengelighet.",
         },
         {
+            name: "supportLabelProps",
+            type: 'Omit<SupportLabelProps, "id" | "errorLabel" | "helpLabel">',
+            required: false,
+            source: "custom",
+            status: "stable",
+            description: "Egenskaper for supportlabelen som vises under feltet.",
+        },
+        {
+            name: "description",
+            type: "string",
+            required: false,
+            source: "custom",
+            status: "stable",
+            description: "Kort beskrivelse som vises mellom label og inputfeltet. Brukes for å gi kontekst uten å bli en hjelpetekst.",
+        },
+        {
             name: "value",
             type: "string",
             required: false,

@@ -1,6 +1,7 @@
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { ExpandablePanelPreview } from "./preview";
+import { ExpandablePanelExample } from "./example";
 
 const doc: ComponentDoc = {
     id: "expandable-panel",
@@ -23,6 +24,15 @@ const doc: ComponentDoc = {
     },
 
     preview: <ExpandablePanelPreview />,
+    example: (props) => <ExpandablePanelExample {...props} />,
+    exampleControlsConfig: {
+        include: ["variant", "defaultOpen"],
+        order: ["variant", "defaultOpen"],
+        overrides: {
+            variant: { kind: "select", options: ["fill", "stroke"], defaultValue: "fill" },
+            defaultOpen: { kind: "boolean", defaultValue: false },
+        },
+    },
     props,
 };
 

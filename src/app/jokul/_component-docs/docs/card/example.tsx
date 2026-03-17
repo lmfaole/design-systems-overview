@@ -4,9 +4,9 @@ import { Flex } from "@fremtind/jokul/flex";
 import type { ComponentExampleProps } from "../types";
 
 export function CardExample(props: ComponentExampleProps) {
-    const padding = (props.padding ?? "s") as "s" | "m" | "l" | "xl";
-    const variant = (props.variant ?? "high") as "outlined" | "high" | "low";
-    const clickable = props.clickable === "true";
+    const padding = (typeof props.padding === "string" ? props.padding : "s") as "s" | "m" | "l" | "xl";
+    const variant = (typeof props.variant === "string" ? props.variant : "high") as "outlined" | "high" | "low";
+    const clickable = props.clickable === true;
 
     const cardProps = clickable
         ? { as: "button" as const, type: "button" as const, clickable: true, "aria-label": "Les mer om bilforsikring" }
