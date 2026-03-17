@@ -12,9 +12,15 @@ export function ChipExample(props: ComponentExampleProps) {
 
     return (
         <Flex gap="s" alignItems="center" wrap="wrap">
-            <Chip variant={variant} {...(variant === "filter" ? { selected } : {})} disabled={disabled}>
-                {label}
-            </Chip>
+            {variant === "filter" ? (
+                <Chip variant="filter" selected={selected} disabled={disabled}>
+                    {label}
+                </Chip>
+            ) : (
+                <Chip variant="input" disabled={disabled}>
+                    {label}
+                </Chip>
+            )}
         </Flex>
     );
 }
