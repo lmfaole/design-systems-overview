@@ -34,23 +34,3 @@
 }
 
 .home__section-header {}
-
-/* ── Token list ───────────────────────────────────────────────────────── */
-
-.home__feature-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--jkl-spacing-m);
-
-  @media (max-width: 680px) {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ── Token cards ──────────────────────────────────────────────────────── */
-
-.home__token-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: var(--jkl-spacing-m);
-}

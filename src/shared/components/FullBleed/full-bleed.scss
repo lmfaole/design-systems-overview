@@ -4,7 +4,7 @@
  * Breaks a child element out of a centered `max-width` body so it
  * fills the full viewport width.
  *
- * Requires `overflow-x: clip` on `html` (set in globals.scss).
+ * Requires `overflow-x: clip` on `.jkl` (set in `jokul.scss`).
  *
  * Dot grid variants (applied via the `dots` prop on the FullBleed component):
  * - `.full-bleed--dots`            full coverage, no fade

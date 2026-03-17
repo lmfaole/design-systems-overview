@@ -7,6 +7,22 @@ const post: PatternPost = {
     title: "Utvidbare tabellrader",
     category: "struktur",
     goals: "La brukeren se detaljer per rad uten å miste tabellkonteksten.",
+    rationale: {
+        use: [
+            <>
+                Velg utvidbare rader når tabellen trenger både oversikt og detaljer, men
+                full detaljvisning gjør tabellen for tung. Da kan brukeren åpne kun det som er
+                relevant, uten å miste radhodene og sammenligningen.
+            </>,
+        ],
+        avoid: [
+            <>
+                Unngå dette når alle rader normalt må leses i detalj, eller når informasjonen
+                bør presenteres samlet (f.eks. i et eget detaljerpanel). Hvis brukeren må åpne
+                nesten alt, er det bedre med en annen visning.
+            </>,
+        ],
+    },
     avoid: [
         {
             title: "Utvidelse uten riktig colSpan",

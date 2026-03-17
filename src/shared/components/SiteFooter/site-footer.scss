@@ -3,9 +3,7 @@
 .site-footer__inner {
     position: relative;
     z-index: 1;
-    max-width: calc(var(--site-max-width) - 2rem);
     margin-inline: auto;
     margin-block-start: var(--jkl-spacing-2xl);
-    padding-inline: 1rem;
     padding-block: var(--jkl-spacing-xl);
 }

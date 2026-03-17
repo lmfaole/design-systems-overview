@@ -96,6 +96,19 @@ export interface PatternAccessibility {
     testing?: React.ReactNode[];
 }
 
+export interface PatternRationale {
+    /**
+     * Why you would choose this pattern.
+     * Keep it short (2-5 sentences) and outcome-focused.
+     */
+    use: React.ReactNode[];
+    /**
+     * When you should NOT use it (or when an alternative is better).
+     * Keep it concrete and actionable.
+     */
+    avoid: React.ReactNode[];
+}
+
 export interface PatternExample {
     /**
      * Short label for this implementation variant.
@@ -181,6 +194,10 @@ export interface PatternPost {
      * Should be phrased as an outcome and not repeat the title.
      */
     goals: string;
+    /**
+     * Why/when to use (and not use) this pattern.
+     */
+    rationale?: PatternRationale;
     /**
      * Common pitfalls to avoid when implementing the pattern.
      *

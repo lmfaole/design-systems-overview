@@ -7,6 +7,22 @@ const post: PatternPost = {
     title: "Sorterbare tabeller",
     category: "struktur",
     goals: "La brukeren sortere tabellinnhold med tydelige, tilgjengelige overskrifter.",
+    rationale: {
+        use: [
+            <>
+                Bruk dette når brukeren må sammenligne eller finne verdier i større tabeller, og
+                sorteringsrekkefølgen påvirker beslutningen. Sorterbare overskrifter gir raskt
+                overblikk uten at brukeren må scrolle frem og tilbake.
+            </>,
+        ],
+        avoid: [
+            <>
+                Unngå sorterbare tabeller når rekkefølgen allerede er betydningsfull (f.eks.
+                kronologi) eller når antall rader er så lavt at sortering ikke gir verdi.
+                For små datamengder er tydelig prioritering i teksten ofte nok.
+            </>,
+        ],
+    },
     avoid: [
         {
             title: "Klikkbare overskrifter uten sorteringshint",

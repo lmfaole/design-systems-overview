@@ -57,6 +57,7 @@ export default async function PatternPage({ params, searchParams }: PatternPageP
                 <Flex direction="column" gap="xl">
                     <Article className="post-prose post-prose--pattern">
                         <ArticleToc />
+                        {post.rationale && <RationaleSection rationale={post.rationale} />}
                         {post.examples.length > 0 && <ExamplesSection examples={post.examples} />}
                         {post.avoid.length > 0 && <AvoidSection avoid={post.avoid} />}
                         <AccessibilitySection accessibility={post.accessibility} />
@@ -125,6 +126,34 @@ function AvoidSection({ avoid }: { avoid: PatternPost["avoid"] }) {
                             <example.Example />
                         </ExampleCard>
                     ))}
+                </Grid>
+            </Flex>
+        </section>
+    );
+}
+
+function RationaleSection({ rationale }: { rationale: NonNullable<PatternPost["rationale"]> }) {
+    return (
+        <section aria-labelledby="dos-and-donts">
+            <Flex direction="column" gap="l">
+                <h2 id="dos-and-donts">Hvorfor bruke mønsteret</h2>
+                <Grid columns={2} gap="m">
+                    <div>
+                        <h3>Hvorfor bruke</h3>
+                        <UnorderedList>
+                            {rationale.use.map((item, index) => (
+                                <ListItem key={index}>{item}</ListItem>
+                            ))}
+                        </UnorderedList>
+                    </div>
+                    <div>
+                        <h3>Hvorfor ikke bruke</h3>
+                        <UnorderedList>
+                            {rationale.avoid.map((item, index) => (
+                                <ListItem key={index}>{item}</ListItem>
+                            ))}
+                        </UnorderedList>
+                    </div>
                 </Grid>
             </Flex>
         </section>

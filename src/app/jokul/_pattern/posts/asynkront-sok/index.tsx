@@ -7,6 +7,25 @@ const post: PatternPost = {
     title: "Asynkront søk",
     category: "handlinger",
     goals: "Gi riktige resultater selv når brukeren skriver raskt.",
+    rationale: {
+        use: [
+            <>
+                Bruk asynkront søk når resultatene kommer fra et API og må oppdateres mens brukeren
+                skriver.
+            </>,
+            <>
+                Passer når du vil gi rask feedback uten å blokkere input-feltet.
+            </>,
+        ],
+        avoid: [
+            <>
+                Unngå dette når datasettet er lite nok til å filtreres lokalt.
+            </>,
+            <>
+                Velg eksplisitt søk (knapp) hvis hver forespørsel er tung eller kostbar.
+            </>,
+        ],
+    },
     avoid: [
         {
             title: "Gamle svar overskriver nyeste input",

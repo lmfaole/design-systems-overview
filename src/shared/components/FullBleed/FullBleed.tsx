@@ -11,7 +11,7 @@
  * — The negative difference pulls both edges to the viewport boundary.
  *
  * No `position: relative` or `overflow: hidden` hacks required. The parent
- * must have `overflow-x: clip` (set on `html` in globals.scss) to prevent a
+ * must have `overflow-x: clip` (set on `.jkl` in `jokul.scss`) to prevent a
  * horizontal scrollbar when the viewport is exactly at the body max-width.
  *
  * Props:

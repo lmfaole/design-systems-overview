@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import "../styles/globals.scss";
 
 export const metadata: Metadata = {
   title: "Jøkul Blog",

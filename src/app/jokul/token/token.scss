@@ -1,9 +1,0 @@
-.token-index__grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--jkl-spacing-m);
-
-  @media (max-width: 680px) {
-    grid-template-columns: 1fr;
-  }
-}

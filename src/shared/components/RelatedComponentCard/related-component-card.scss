@@ -1,11 +1,6 @@
-.related-component-card {
-    container-type: inline-size;
-}
-
 .related-component-card__preview {
     background-image: radial-gradient(circle, color-mix(in srgb, var(--jkl-color-border-subdued) 40%, transparent) 1px, transparent 1px);
     background-size: 20px 20px;
-    border-bottom: 1px solid var(--jkl-color-border-subdued);
     height: 12rem;
     overflow: hidden;
     padding: var(--jkl-spacing-l);
@@ -27,43 +22,8 @@
 }
 
 @container (min-width: 36rem) {
-    .related-component-card {
-        display: flex;
-        align-items: stretch;
-    }
-
     .related-component-card__preview {
-        width: 45%;
         height: auto;
         min-height: 10rem;
-        border-bottom: 0;
-        border-right: 1px solid var(--jkl-color-border-subdued);
     }
-
-    .related-component-card__content {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-}
-
-.related-component-card[data-layout="horizontal"] {
-    display: flex;
-    align-items: stretch;
-}
-
-.related-component-card[data-layout="horizontal"] .related-component-card__preview {
-    width: 45%;
-    height: auto;
-    min-height: 10rem;
-    border-bottom: 0;
-    border-right: 1px solid var(--jkl-color-border-subdued);
-}
-
-.related-component-card[data-layout="horizontal"] .related-component-card__content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }

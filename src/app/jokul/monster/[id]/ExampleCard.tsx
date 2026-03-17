@@ -18,6 +18,8 @@ import {
     useModal,
 } from "@fremtind/jokul/modal";
 import { ProseCodeBlock } from "@/shared/components/CodeBlock/ProseCodeBlock";
+import { SplitCard } from "@/shared/components/SplitCard";
+import "./ExampleCard.scss";
 
 interface ExampleCardProps {
     title: string;
@@ -38,28 +40,34 @@ export function ExampleCard({ title, description, code, children }: ExampleCardP
     }, []);
 
     return (
-        <Card padding="l" variant="outlined">
-            <Flex direction="column" gap="s">
-                <Flex alignItems="center" justifyContent="center" style={{ minHeight: "6rem" }}>
-                    {children}
-                </Flex>
-                <div>
-                    <p>{title}</p>
-                    {description && <p className="muted">{description}</p>}
-                </div>
+        <Card padding="s" variant="outlined">
+            <SplitCard
+                previewClassName="example-card__preview"
+                contentClassName="example-card__content"
+                preview={(
+                    <Flex alignItems="center" justifyContent="center">
+                        {children}
+                    </Flex>
+                )}
+                content={(
+                    <Flex direction="column" gap="s" alignItems="start">
+                        <div>
+                            <p>{title}</p>
+                            {description && <p className="muted">{description}</p>}
+                        </div>
 
-                <Flex justifyContent="end">
-                    <Button
-                        variant="ghost"
-                        type="button"
-                        disabled={!isMounted}
-                        onClick={() => instance?.show()}
-                        data-size="small"
-                    >
-                        Vis kode
-                    </Button>
-                </Flex>
-            </Flex>
+                        <Button
+                            variant="ghost"
+                            type="button"
+                            disabled={!isMounted}
+                            onClick={() => instance?.show()}
+                            data-size="small"
+                        >
+                            Vis kode
+                        </Button>
+                    </Flex>
+                )}
+            />
 
             {isMounted &&
                 createPortal(

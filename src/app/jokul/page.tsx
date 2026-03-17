@@ -25,7 +25,7 @@ export default function Home() {
                     <h2><Link href="/jokul/component">Komponenter</Link></h2>
                     <p>Prop-tabeller og kodeeksempler for alle Jøkul-komponenter.</p>
                 </Flex>
-                <Grid columns={4} gap="m">
+                <Grid columns={3} gap="m">
                     {componentDocs.filter((d) => d.showOnOverview !== false).slice(0, 8).map((doc) => (
                         <ComponentCard key={doc.id} doc={doc} />
                     ))}
@@ -39,11 +39,11 @@ export default function Home() {
                     <h2><Link href="/jokul/token">Designtokens</Link></h2>
                     <p>Fundamentene i Jøkul — typografi, farger og designtokens.</p>
                 </Flex>
-                <div className="home__feature-grid">
+                <Grid columns={3} gap="m">
                     {tokenPosts.map((post) => (
                         <TokenFeature key={post.id} post={post}/>
                     ))}
-                </div>
+                </Grid>
             </Flex>
         </Flex>
     );

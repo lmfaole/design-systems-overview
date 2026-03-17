@@ -1,0 +1,14 @@
+.example-card__preview {
+    padding: var(--jkl-spacing-l);
+    min-height: 6rem;
+}
+
+.example-card__content {
+    padding: var(--jkl-spacing-m);
+}
+
+@container (min-width: 22rem) {
+    .example-card__preview {
+        min-height: 10rem;
+    }
+}

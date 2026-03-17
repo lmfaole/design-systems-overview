@@ -2,7 +2,7 @@ import {Flex} from "@fremtind/jokul/flex";
 import {tokenPosts} from "@/app/jokul/_token/data";
 import {TokenFeature} from "@/shared/components/TokenFeature";
 import {PageHeader} from "@/shared/components/PageHeader";
-import "./token.scss";
+import {Grid} from "@/shared/components/Grid";
 
 export const runtime = "edge";
 
@@ -13,11 +13,11 @@ export default function TokenPage() {
                 title="Designtokens"
                 description="Fundamentene i Jøkul — typografi, farger og spacing. Les disse for å forstå designsystemets kjerneprinsipper."
             />
-            <div className="token-index__grid">
+            <Grid columns={3} gap="m">
                 {tokenPosts.map((post) => (
                     <TokenFeature key={post.id} post={post}/>
                 ))}
-            </div>
+            </Grid>
         </Flex>
     );
 }

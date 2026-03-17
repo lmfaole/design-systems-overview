@@ -5,15 +5,17 @@
    ───────────────────────────────────────────────────────────── */
 
 .site-header {
-  font-size: var(--jkl-font-size-3);
-  line-height: var(--jkl-line-height-tight);
   width: 100%;
+  position: relative;
+  z-index: 2;
 
   &__inner {
-    max-width: calc(var(--site-max-width) - 2rem);
-    margin-inline: auto;
-    padding-inline: 1rem;
     padding-block: var(--jkl-spacing-s);
+  }
+
+  &__content {
+    font-size: var(--jkl-font-size-3);
+    line-height: var(--jkl-line-height-tight);
   }
 
   &__nav {

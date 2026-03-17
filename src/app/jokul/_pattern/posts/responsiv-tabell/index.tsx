@@ -7,6 +7,22 @@ const post: PatternPost = {
     title: "Responsiv tabell med listevisning",
     category: "struktur",
     goals: "Gjør tabellinnhold lesbart på små skjermer uten å miste kontekst.",
+    rationale: {
+        use: [
+            <>
+                Bruk dette når tabellene må fungere på mobil og innholdet fortsatt trenger
+                kolonneetiketter for å gi mening. Listevisning med <code>data-th</code> bevarer
+                kontekst uten å tvinge horisontal scrolling.
+            </>,
+        ],
+        avoid: [
+            <>
+                Ikke bruk listevisning hvis tabellen har så mange kolonner at hver rad blir en
+                lang, tung liste. Da bør innholdet omstruktureres til kort eller et eget
+                detaljvisningsmønster.
+            </>,
+        ],
+    },
     avoid: [
         {
             title: "collapseToList uten data-th",
