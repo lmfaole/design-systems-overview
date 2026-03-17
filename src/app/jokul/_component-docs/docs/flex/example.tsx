@@ -149,7 +149,7 @@ export function FlexExample(props: ComponentExampleProps) {
     const responsiveGap = parseResponsiveGap((demo as Record<string, unknown>).gapResponsive);
     const responsiveLayout = parseResponsiveMap((demo as Record<string, unknown>).layoutResponsive);
 
-    const resolvedGap: FlexProps["gap"] = useResponsive && responsiveGap ? responsiveGap : gap;
+    const resolvedGap = (useResponsive && responsiveGap ? responsiveGap : gap) as FlexProps["gap"];
     const resolvedLayout = useResponsive && responsiveLayout ? responsiveLayout : layout;
 
     const content = Array.from({ length: itemCount }, (_, index) => {
