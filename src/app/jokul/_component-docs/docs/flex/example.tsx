@@ -179,22 +179,41 @@ export function FlexExample(props: ComponentExampleProps) {
                 backgroundColor: "var(--jkl-color-background-container-low)",
             }}
         >
-            <Flex
-                direction={direction}
-                wrap={wrap}
-                gap={resolvedGap}
-                alignItems={alignItems}
-                alignContent={alignContent}
-                justifyContent={justifyContent}
-                textAlign={textAlign}
-                layout={resolvedLayout}
-                fill={fill}
-                inline={inline}
-                center={center}
-                {...(asChild ? { asChild: true } : { as })}
-            >
-                {asChild ? <section aria-label="Eksempelinnhold">{content}</section> : content}
-            </Flex>
+            {asChild ? (
+                <Flex
+                    direction={direction}
+                    wrap={wrap}
+                    gap={resolvedGap}
+                    alignItems={alignItems}
+                    alignContent={alignContent}
+                    justifyContent={justifyContent}
+                    textAlign={textAlign}
+                    layout={resolvedLayout}
+                    fill={fill}
+                    inline={inline}
+                    center={center}
+                    asChild
+                >
+                    <section aria-label="Eksempelinnhold">{content}</section>
+                </Flex>
+            ) : (
+                <Flex
+                    direction={direction}
+                    wrap={wrap}
+                    gap={resolvedGap}
+                    alignItems={alignItems}
+                    alignContent={alignContent}
+                    justifyContent={justifyContent}
+                    textAlign={textAlign}
+                    layout={resolvedLayout}
+                    fill={fill}
+                    inline={inline}
+                    center={center}
+                    as={as}
+                >
+                    {content}
+                </Flex>
+            )}
         </div>
     );
 }
