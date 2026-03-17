@@ -106,31 +106,39 @@ function parseResponsiveGap(value: unknown): Record<string, string> | undefined 
 }
 
 export function FlexExample(props: ComponentExampleProps) {
-    const direction =
+    const direction = (
         props.direction === "column" || props.direction === "row-reverse" || props.direction === "column-reverse"
             ? props.direction
-            : "row";
-    const wrap = props.wrap === "wrap" || props.wrap === "reverse" ? props.wrap : "nowrap";
+            : "row"
+    ) as FlexProps["direction"];
+    const wrap = (props.wrap === "wrap" || props.wrap === "reverse" ? props.wrap : "nowrap") as FlexProps["wrap"];
     const gap = typeof props.gap === "string" && isGapValue(props.gap) ? props.gap : "m";
-    const alignItems =
+    const alignItems = (
         typeof props.alignItems === "string" && alignItemValues.has(props.alignItems) ? props.alignItems : undefined;
-    const alignContent =
+    ) as FlexProps["alignItems"];
+    const alignContent = (
         typeof props.alignContent === "string" && alignContentValues.has(props.alignContent)
             ? props.alignContent
             : undefined;
-    const justifyContent =
+    ) as FlexProps["alignContent"];
+    const justifyContent = (
         typeof props.justifyContent === "string" && justifyContentValues.has(props.justifyContent)
             ? props.justifyContent
             : undefined;
-    const textAlign =
+    ) as FlexProps["justifyContent"];
+    const textAlign = (
         typeof props.textAlign === "string" && textAlignValues.has(props.textAlign) ? props.textAlign : undefined;
-    const layout = typeof props.layout === "string" && layoutValues.has(props.layout) ? props.layout : undefined;
+    ) as FlexProps["textAlign"];
+    const layout = (
+        typeof props.layout === "string" && layoutValues.has(props.layout) ? props.layout : undefined;
+    ) as FlexProps["layout"];
     const fill = props.fill === true;
     const inline = props.inline === true;
-    const center =
+    const center = (
         props.center === true || (typeof props.center === "string" && centerValues.has(props.center))
             ? (props.center as "m" | "l" | "xl" | "2xl" | true)
             : undefined;
+    ) as FlexProps["center"];
     const asChild = props.asChild === true;
     const as =
         typeof props.as === "string" && props.as.trim().length > 0
