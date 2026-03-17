@@ -1,6 +1,7 @@
 "use client";
 
 import { Flex } from "@fremtind/jokul/flex";
+import type { FlexProps } from "@fremtind/jokul/flex";
 import { Card } from "@fremtind/jokul/card";
 import type { ComponentExampleProps } from "../types";
 
@@ -31,6 +32,34 @@ const textAlignValues = new Set(["left", "center", "right"]);
 const layoutValues = new Set(["auto", "1", "2", "3", "4", "6", "4.8", "8.4", "2.10", "10.2", "3.9", "9.3", "5.7", "7.5"]);
 const centerValues = new Set(["m", "l", "xl", "2xl"]);
 const breakpointValues = new Set(["small", "medium", "large", "xl"]);
+const gapTokenValues = new Set([
+    "none",
+    "2xs",
+    "xs",
+    "s",
+    "m",
+    "l",
+    "xl",
+    "2xl",
+    "0",
+    "2",
+    "4",
+    "8",
+    "12",
+    "16",
+    "20",
+    "24",
+    "28",
+    "32",
+    "40",
+    "48",
+    "56",
+    "64",
+    "72",
+    "80",
+    "104",
+    "168",
+]);
 
 function parseResponsiveMap(value: unknown): Record<string, string> | undefined {
     if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
@@ -47,13 +76,42 @@ function parseResponsiveMap(value: unknown): Record<string, string> | undefined 
     return Object.fromEntries(entries);
 }
 
+function isGapValue(value: string) {
+    const trimmed = value.trim();
+    if (trimmed.length === 0) return false;
+    if (gapTokenValues.has(trimmed)) return true;
+    const parts = trimmed.split(/\s+/).filter(Boolean);
+    if (parts.length !== 2) return false;
+    const [first, second] = parts;
+    const bothTokens = gapTokenValues.has(first) && gapTokenValues.has(second);
+    if (!bothTokens) return false;
+    const firstIsStatic = /^\d+$/.test(first);
+    const secondIsStatic = /^\d+$/.test(second);
+    return firstIsStatic === secondIsStatic;
+}
+
+function parseResponsiveGap(value: unknown): Record<string, string> | undefined {
+    if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
+    const entries = Object.entries(value)
+        .filter(([key]) => breakpointValues.has(key))
+        .map(([key, rawValue]) => {
+            if (typeof rawValue === "string") return [key, rawValue.trim()] as const;
+            if (typeof rawValue === "number") return [key, String(rawValue)] as const;
+            return [key, ""] as const;
+        })
+        .filter(([, rawValue]) => isGapValue(rawValue));
+
+    if (entries.length === 0) return undefined;
+    return Object.fromEntries(entries);
+}
+
 export function FlexExample(props: ComponentExampleProps) {
     const direction =
         props.direction === "column" || props.direction === "row-reverse" || props.direction === "column-reverse"
             ? props.direction
             : "row";
     const wrap = props.wrap === "wrap" || props.wrap === "reverse" ? props.wrap : "nowrap";
-    const gap = typeof props.gap === "string" && props.gap.trim() !== "" ? props.gap : "m";
+    const gap = typeof props.gap === "string" && isGapValue(props.gap) ? props.gap : "m";
     const alignItems =
         typeof props.alignItems === "string" && alignItemValues.has(props.alignItems) ? props.alignItems : undefined;
     const alignContent =
@@ -88,10 +146,10 @@ export function FlexExample(props: ComponentExampleProps) {
         ? Math.min(Math.max(heightRaw, 8), 32)
         : 16;
     const useResponsive = (demo as Record<string, unknown>).useResponsive === true;
-    const responsiveGap = parseResponsiveMap((demo as Record<string, unknown>).gapResponsive);
+    const responsiveGap = parseResponsiveGap((demo as Record<string, unknown>).gapResponsive);
     const responsiveLayout = parseResponsiveMap((demo as Record<string, unknown>).layoutResponsive);
 
-    const resolvedGap = useResponsive && responsiveGap ? responsiveGap : gap;
+    const resolvedGap: FlexProps["gap"] = useResponsive && responsiveGap ? responsiveGap : gap;
     const resolvedLayout = useResponsive && responsiveLayout ? responsiveLayout : layout;
 
     const content = Array.from({ length: itemCount }, (_, index) => {
