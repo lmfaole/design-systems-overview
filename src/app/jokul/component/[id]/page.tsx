@@ -20,6 +20,7 @@ import {NotFound} from "@/shared/components/NotFound";
 import {AlternativesList} from "@/app/jokul/_component-docs/components/AlternativesList";
 import {SubcomponentsList} from "@/app/jokul/_component-docs/components/SubcomponentsList";
 import {RelatedComponentsTable} from "@/app/jokul/_component-docs/components/RelatedComponentsTable";
+import type { RelatedComponentDoc } from "@/shared/components/RelatedComponentCard";
 import {PageHero} from "@/shared/components/PageHero/PageHero";
 import {DotsIllustration} from "@/shared/components/Illustration";
 import {Article, ArticleToc} from "@/shared/components/Article";
@@ -45,6 +46,15 @@ function ComplexityRow({
     note?: string;
     noteAriaLabel: string;
 }) {
+    const toRelatedItems = (items: typeof requires) => items.map(({ doc, description }) => ({
+        doc: { id: doc.id, name: doc.name, preview: doc.preview } as RelatedComponentDoc,
+        description,
+    }));
+
+    const requiresItems = toRelatedItems(requires);
+    const siblingsItems = toRelatedItems(siblings);
+    const relatedItems = toRelatedItems(related);
+
     return (
         <Flex as="div" alignItems="center" gap="s" className="component-complexity__row">
             <span className="component-complexity__value">
@@ -223,10 +233,10 @@ export default function ComponentPage() {
                 </ComponentExample>
             )}
 
-            {requires.length > 0 && (
+            {requiresItems.length > 0 && (
                 <Flex as="section" direction="column" gap="m">
                     <h2 id="krever">Krever</h2>
-                    <RelatedComponentsTable items={requires}/>
+                    <RelatedComponentsTable items={requiresItems}/>
                 </Flex>
             )}
 
@@ -253,7 +263,7 @@ export default function ComponentPage() {
                 </Flex>
             )}
 
-            {siblings.length > 0 && (
+            {siblingsItems.length > 0 && (
                 <Flex as="section" direction="column" gap="m">
                     <h2 id={siblingsAnchor}>
                         {parentKind === "requires"
@@ -261,19 +271,19 @@ export default function ComponentPage() {
                             : `Andre delkomponenter i ${parent?.name}`}
                     </h2>
                     {parentKind === "requires" ? (
-                        <RelatedComponentsTable items={siblings}/>
+                        <RelatedComponentsTable items={siblingsItems}/>
                     ) : (
                         <SubcomponentsList items={siblings}/>
                     )}
                 </Flex>
             )}
 
-                {related.length > 0 && (
-                    <Flex as="section" direction="column" gap="m">
-                        <h2 id="relaterte-komponenter">Relaterte komponenter</h2>
-                        <RelatedComponentsTable items={related}/>
-                    </Flex>
-                )}
+            {relatedItems.length > 0 && (
+                <Flex as="section" direction="column" gap="m">
+                    <h2 id="relaterte-komponenter">Relaterte komponenter</h2>
+                    <RelatedComponentsTable items={relatedItems}/>
+                </Flex>
+            )}
 
                 {patternsUsingComponent.length > 0 && (
                     <Flex as="section" direction="column" gap="m">

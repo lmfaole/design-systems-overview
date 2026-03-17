@@ -5,7 +5,7 @@ import { getPatternPost } from "@/app/jokul/_pattern/data";
 import type { PatternPost } from "@/app/jokul/_pattern/data";
 import { getComponentDoc } from "@/app/jokul/_component-docs/data";
 import { RelatedComponentsTable } from "@/app/jokul/_component-docs/components/RelatedComponentsTable";
-import type { ResolvedRelationship } from "@/app/jokul/_component-docs/data";
+import type { RelatedComponentDoc } from "@/shared/components/RelatedComponentCard";
 import { DotsIllustration } from "@/shared/components/Illustration";
 import { Article, ArticleToc } from "@/shared/components/Article";
 import { Grid } from "@/shared/components/Grid";
@@ -42,9 +42,9 @@ export default async function PatternPage({ params, searchParams }: PatternPageP
         );
     }
 
-    const usedComponents: ResolvedRelationship[] = (post.components ?? []).flatMap((id) => {
+    const usedComponents: Array<{ doc: RelatedComponentDoc; description: string }> = (post.components ?? []).flatMap((id) => {
         const doc = getComponentDoc(id);
-        return doc ? [{ doc, description: doc.description.short }] : [];
+        return doc ? [{ doc: { id: doc.id, name: doc.name, preview: doc.preview }, description: doc.description.short }] : [];
     });
 
     const background = <DotsIllustration />;

@@ -8,8 +8,10 @@ import {Card} from "@fremtind/jokul/card";
 import Link from "next/link";
 import "./related-component-card.scss";
 
+export type RelatedComponentDoc = Pick<ComponentDoc, "id" | "name" | "preview">;
+
 interface RelatedComponentCardProps {
-    doc: ComponentDoc;
+    doc: RelatedComponentDoc;
     description: string;
     layout?: "auto" | "horizontal";
 }
