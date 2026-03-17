@@ -1,6 +1,7 @@
-import type {ComponentDoc} from "../types";
-import {props} from "./props";
-import {TablePreview} from "./preview";
+import type { ComponentDoc } from "../types";
+import { props } from "./props";
+import { TablePreview } from "./preview";
+import { TableExample } from "./example";
 
 const doc: ComponentDoc = {
     id: "table",
@@ -47,7 +48,15 @@ const doc: ComponentDoc = {
             {id: "table-pagination", description: "Paginering for tabeller."},
         ],
     },
-    preview: <TablePreview/>,
+    preview: <TablePreview />,
+    example: (props) => <TableExample {...props} />,
+    exampleControlsConfig: {
+        include: ["caption", "collapseToList", "fullWidth"],
+        order: ["caption", "collapseToList", "fullWidth"],
+        overrides: {
+            caption: { kind: "text", defaultValue: "Forsikringspremier" },
+        },
+    },
 
     props,
 };

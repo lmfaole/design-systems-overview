@@ -186,6 +186,7 @@ export default function ComponentPage() {
             id: post.id,
             title: post.title,
             href: getPatternHref(post),
+            category: post.category,
             goals: post.goals,
             components: post.components.map((componentId) => {
                 const componentDoc = getComponentDoc(componentId);
@@ -286,7 +287,7 @@ export default function ComponentPage() {
                 {patternsUsingComponent.length > 0 && (
                     <Flex as="section" direction="column" gap="m">
                         <h2 id="brukes-i-monstre">Brukes i mønstre</h2>
-                        <PatternOverviewTable rows={patternsUsingComponent} />
+                        <PatternOverviewTable rows={patternsUsingComponent} showFilters={false} />
                     </Flex>
                 )}
 

@@ -1,4 +1,3 @@
-import "../styles/globals.scss";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,9 +12,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="no">
-      <body className="jkl" data-theme="auto">
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

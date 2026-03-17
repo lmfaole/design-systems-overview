@@ -1,5 +1,6 @@
-import type {ComponentDoc} from "../types";
-import {ExpandableTableRowControllerPreview} from "./preview";
+import type { ComponentDoc } from "../types";
+import { ExpandableTableRowControllerPreview } from "./preview";
+import { ExpandableTableRowControllerExample } from "./expandable-table-row-controller-example";
 
 const doc: ComponentDoc = {
     id: "expandable-table-row-controller",
@@ -13,7 +14,18 @@ const doc: ComponentDoc = {
         short: "Kontrollerer for utvidbar rad.",
         long: "Kontrollerer for utvidbar rad. Inneholder knappen som toggler den utvidede visningen. Skal brukes inni ExpandableTableRow.",
     },
-    preview: <ExpandableTableRowControllerPreview/>,
+    preview: <ExpandableTableRowControllerPreview />,
+    example: (props) => <ExpandableTableRowControllerExample {...props} />,
+    exampleControlsConfig: {
+        include: ["children", "data-th", "isOpen", "collapseToList"],
+        order: ["children", "data-th", "isOpen", "collapseToList"],
+        overrides: {
+            children: { kind: "text", defaultValue: "Vis detaljer" },
+            "data-th": { kind: "text", defaultValue: "Detaljer" },
+            isOpen: { kind: "boolean", defaultValue: false },
+            collapseToList: { kind: "boolean", defaultValue: false },
+        },
+    },
     props: [
         {
             name: "children",

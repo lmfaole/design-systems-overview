@@ -1,5 +1,6 @@
 import type { ComponentDoc } from "../types";
 import { TableHeaderPreview } from "./preview";
+import { TableHeaderExample } from "./table-header-example";
 
 const doc: ComponentDoc = {
     id: "table-header",
@@ -14,6 +15,14 @@ const doc: ComponentDoc = {
         long: "En overskriftscelle i tabellen.",
     },
     preview: <TableHeaderPreview />,
+    example: (props) => <TableHeaderExample {...props} />,
+    exampleControlsConfig: {
+        include: ["align", "srOnly"],
+        order: ["align", "srOnly"],
+        overrides: {
+            align: { defaultValue: "right" },
+        },
+    },
     props: [
         { name: "scope", type: '"col" | "row"', required: false, source: "native", status: "stable", description: "Angir om cellen er overskrift for kolonne eller rad." },
         { name: "align", type: '"left" | "right" | "center"', required: false, source: "custom", status: "stable", default: '"left"', description: "Horisontal tekstjustering." },

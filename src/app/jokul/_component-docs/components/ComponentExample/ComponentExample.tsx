@@ -449,6 +449,7 @@ function getValueByPath(
 export function ComponentExample({ titleId = "eksempel", children, controls }: ComponentExampleComponentProps) {
     const [exampleTheme, setExampleTheme] = useState("auto");
     const [exampleSize, setExampleSize] = useState("medium");
+    const [exampleViewport, setExampleViewport] = useState("auto");
     const normalizedControls = useMemo(() => normalizeControls(controls), [controls]);
     const [exampleProps, setExampleProps] = useState<Record<string, RawControlValue>>(() =>
         initControlValues(normalizedControls),
@@ -475,6 +476,14 @@ export function ComponentExample({ titleId = "eksempel", children, controls }: C
     );
     const content = typeof children === "function" ? children(resolvedExampleProps) : children;
     const showProps = typeof children === "function" && visibleControls.length > 0;
+    const viewportWidth =
+        exampleViewport === "mobile"
+            ? "23rem"
+            : exampleViewport === "tablet"
+                ? "48rem"
+                : exampleViewport === "desktop"
+                    ? "72rem"
+                    : "100%";
 
     useEffect(() => {
         setExampleProps(initControlValues(normalizedControls));
@@ -512,8 +521,20 @@ export function ComponentExample({ titleId = "eksempel", children, controls }: C
                 <option value="medium">medium</option>
                 <option value="large">large</option>
             </Select>
+            <Select
+                label="Viewport"
+                name="example-viewport"
+                value={exampleViewport}
+                onChange={({ target }) => setExampleViewport(target.value)}
+                data-size="small"
+            >
+                <option value="auto">auto</option>
+                <option value="mobile">mobile</option>
+                <option value="tablet">tablet</option>
+                <option value="desktop">desktop</option>
+            </Select>
         </>
-    ), [exampleTheme, exampleSize]);
+    ), [exampleTheme, exampleSize, exampleViewport]);
 
     const propControls = useMemo(() => {
         const getLabel = (control: NormalizedControl) => {
@@ -700,7 +721,22 @@ export function ComponentExample({ titleId = "eksempel", children, controls }: C
                                 alignItems="center"
                                 justifyContent="center"
                             >
-                                {content}
+                                {exampleViewport === "auto" ? (
+                                    content
+                                ) : (
+                                    <div
+                                        style={{
+                                            width: viewportWidth,
+                                            maxWidth: "100%",
+                                            border: "1px solid var(--jkl-color-border-subdued)",
+                                            borderRadius: "var(--jkl-border-radius-s)",
+                                            padding: "var(--jkl-spacing-m)",
+                                            boxSizing: "border-box",
+                                        }}
+                                    >
+                                        {content}
+                                    </div>
+                                )}
                             </Flex>
                         </div>
                     </Card>

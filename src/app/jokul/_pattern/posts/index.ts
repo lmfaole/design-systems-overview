@@ -7,6 +7,9 @@ import tabsPattern from "./faner";
 import breadcrumbsPattern from "./brodsmuler";
 import destructiveConfirmPattern from "./bekreft-destruktiv-handling";
 import errorSummaryPattern from "./feiloppsummering";
+import sortableTablesPattern from "./sorterbare-tabeller";
+import expandableTableRowsPattern from "./utvidbare-tabellrader";
+import responsiveTablePattern from "./responsiv-tabell";
 import type { PatternPost } from "./types";
 
 export type { PatternPost } from "./types";
@@ -22,4 +25,7 @@ export const patternPosts: PatternPost[] = [
     breadcrumbsPattern,
     destructiveConfirmPattern,
     errorSummaryPattern,
+    sortableTablesPattern,
+    expandableTableRowsPattern,
+    responsiveTablePattern,
 ].sort((a, b) => a.title.localeCompare(b.title, "nb"));

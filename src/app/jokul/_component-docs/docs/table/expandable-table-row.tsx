@@ -1,5 +1,6 @@
-import type {ComponentDoc} from "../types";
-import {ExpandableTableRowPreview} from "./preview";
+import type { ComponentDoc } from "../types";
+import { ExpandableTableRowPreview } from "./preview";
+import { ExpandableTableRowExample } from "./expandable-table-row-example";
 
 const doc: ComponentDoc = {
     id: "expandable-table-row",
@@ -13,7 +14,16 @@ const doc: ComponentDoc = {
         short: "Rad som kan utvides for å vise tilleggsinformasjon.",
         long: "En rad som kan utvides for å vise tilleggsinformasjon.",
     },
-    preview: <ExpandableTableRowPreview/>,
+    preview: <ExpandableTableRowPreview />,
+    example: (props) => <ExpandableTableRowExample {...props} />,
+    exampleControlsConfig: {
+        include: ["isOpen", "collapseToList"],
+        order: ["isOpen", "collapseToList"],
+        overrides: {
+            isOpen: { kind: "boolean", defaultValue: false },
+            collapseToList: { kind: "boolean", defaultValue: false },
+        },
+    },
     props: [
         {
             name: "children",

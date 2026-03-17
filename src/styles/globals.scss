@@ -55,22 +55,24 @@
 @use "@fremtind/jokul/styles/components/toggle-switch/toggle-switch.scss";
 @use "@fremtind/jokul/styles/components/tooltip/tooltip.scss";
 
-html {
-  overflow-x: clip;
-}
-
-:root {
+.jkl {
   --site-max-width: 150ch;
-}
 
-body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: clip;
+
   background-color: var(--jkl-color-background-page);
   color: var(--jkl-color-text-default);
+}
+
+body:has(.jkl) {
   margin: 0;
   padding: 0;
 }
 
-.site-layout {
+.jkl .site-layout {
   max-width: var(--site-max-width);
   margin-inline: auto;
   padding-inline: 1rem;
@@ -83,7 +85,7 @@ body {
    so demo components (nested deeper) are not constrained.
    Lists constrain the list container itself (not li) so that
    Jøkul's list component styles are respected inside. */
-.post-prose {
+.jkl .post-prose {
   > h1, > h2, > h3, > h4, > h5, > p, > small,
   > ul, > ol,
   > dl {
@@ -94,22 +96,22 @@ body {
 /* Jøkul List removes default ul/ol margins and does not add vertical spacing
    between items. In prose contexts we want readable line length and a bit of
    air between items without targeting internal `.jkl-*` class names. */
-.post-prose :where(ul, ol, dl),
-.post-prose-section :where(ul, ol, dl) {
+.jkl .post-prose :where(ul, ol, dl),
+.jkl .post-prose-section :where(ul, ol, dl) {
   max-width: 60ch;
 }
 
-.post-prose :where(li + li),
-.post-prose-section :where(li + li) {
+.jkl .post-prose :where(li + li),
+.jkl .post-prose-section :where(li + li) {
   margin-block-start: var(--jkl-spacing-xs);
 }
 
-.article-toc {
+.jkl .article-toc {
   width: 100%;
   max-width: 60ch;
 }
 
-.post-prose--pattern {
+.jkl .post-prose--pattern {
   --pattern-prose-max-width: 58ch;
 
   font-size: var(--jkl-font-size-4);
@@ -140,28 +142,31 @@ body {
 // Default element typography using Jøkul mixins
 // ============================================================
 
-h1 { @include jkl.text-style("heading-1"); max-width: 30ch; }
-h2 { @include jkl.text-style("heading-2"); max-width: 35ch; }
-h3 { @include jkl.text-style("heading-3"); max-width: 40ch; }
-h4 { @include jkl.text-style("heading-4"); max-width: 45ch; }
-h5 { @include jkl.text-style("heading-5"); max-width: 50ch; }
+.jkl h1 { @include jkl.text-style("heading-1"); max-width: 30ch; }
+.jkl h2 { @include jkl.text-style("heading-2"); max-width: 35ch; }
+.jkl h3 { @include jkl.text-style("heading-3"); max-width: 40ch; }
+.jkl h4 { @include jkl.text-style("heading-4"); max-width: 45ch; }
+.jkl h5 { @include jkl.text-style("heading-5"); max-width: 50ch; }
 
-p { @include jkl.text-style("paragraph-medium"); max-width: 65ch; }
+.jkl p { @include jkl.text-style("paragraph-medium"); max-width: 65ch; }
 
-.lead { @include jkl.text-style("paragraph-large"); max-width: 65ch; }
+.jkl .lead { @include jkl.text-style("paragraph-large"); max-width: 65ch; }
 
-small { @include jkl.text-style("text-small"); max-width: 65ch; }
+.jkl small { @include jkl.text-style("text-small"); max-width: 65ch; }
 
-strong, b {
+.jkl strong,
+.jkl b {
   font-weight: jkl.$typography-weight-bold;
 }
 
-code, kbd, samp {
+.jkl code,
+.jkl kbd,
+.jkl samp {
   @include jkl.use-font-family("Fremtind Grotesk Mono");
   font-size: 0.875em;
 }
 
-pre {
+.jkl pre {
   @include jkl.use-font-family("Fremtind Grotesk Mono");
   overflow-x: auto;
   max-width: 80ch;
@@ -174,7 +179,7 @@ pre {
   }
 }
 
-blockquote {
+.jkl blockquote {
   @include jkl.text-style("paragraph-medium");
   max-width: 65ch;
   margin-inline: 0;
@@ -183,7 +188,7 @@ blockquote {
   color: var(--jkl-color-text-subdued);
 }
 
-hr {
+.jkl hr {
   border: 0;
   border-block-start: 1px solid var(--jkl-color-border-subdued);
   margin-block: var(--jkl-spacing-l);
@@ -191,14 +196,20 @@ hr {
 
 /* Utility: unstyled list — use when a semantic list is needed without browser defaults.
    Prefer Jøkul's List/UnorderedList/OrderedList components for all content lists. */
-.list-bare {
+.jkl .list-bare {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 // Prevent unwanted leading space at the top of any container
-h1, h2, h3, h4, h5, p, small {
+.jkl h1,
+.jkl h2,
+.jkl h3,
+.jkl h4,
+.jkl h5,
+.jkl p,
+.jkl small {
   &:first-child {
     margin-block-start: 0;
   }
@@ -208,17 +219,40 @@ h1, h2, h3, h4, h5, p, small {
   }
 }
 
-.muted {
+.jkl .muted {
   color: var(--jkl-color-text-subdued);
 }
 
 /* Tags should never be flush — ensure gap wherever they appear adjacent.
    Targets the data-component attribute to avoid relying on internal jkl class names. */
-[data-component="tag"] + [data-component="tag"] {
+.jkl [data-component="tag"] + [data-component="tag"] {
   margin-inline-start: var(--jkl-spacing-xxs);
 }
 
 /* Tag lists rendered as flex containers already use gap — reset adjacent margin */
-[class*="gap"] > [data-component="tag"] + [data-component="tag"] {
+.jkl [class*="gap"] > [data-component="tag"] + [data-component="tag"] {
   margin-inline-start: 0;
+}
+
+/* UA-only front page: reset all author styles when requested. */
+[data-ua-only],
+[data-ua-only] * {
+  all: revert;
+}
+
+[data-ua-only]::before,
+[data-ua-only]::after,
+[data-ua-only] *::before,
+[data-ua-only] *::after {
+  all: revert;
+}
+
+body:has([data-ua-only]) {
+  margin: revert;
+  padding: revert;
+}
+
+html:has([data-ua-only]) {
+  line-height: revert;
+  -webkit-text-size-adjust: revert;
 }

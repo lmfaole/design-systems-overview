@@ -12,6 +12,7 @@ export default function PatternIndexPage() {
         id: post.id,
         title: post.title,
         href: getPatternHref(post),
+        category: post.category,
         goals: post.goals,
         components: post.components.map((id) => {
             const doc = getComponentDoc(id);
