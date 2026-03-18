@@ -3,6 +3,7 @@ node_modules/
 .next
 .tsbuildinfo
 .tsbuildinfo.*
+tsconfig.tsbuildinfo
 .idea/
 .cache
 .DS_Store

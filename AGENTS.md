@@ -1,67 +1,117 @@
-# Agent Instructions
+# AGENTS.md
 
-## Kjerneprinsipper (regler)
+## Project Intent
 
-- Skal bygge progressivt: funger uten "triks" først; forbedre deretter.
-- Skal alltid ivareta tilgjengelighet (semantisk HTML, riktig ARIA, tastatur, skjermleser).
-- Skal foretrekke moderne CSS og native Web APIs framfor egendefinerte workarounds.
+This repo is a learning resource that collects UI patterns, design tokens, and documentation for design systems. Build
+patterns in `src/app/monster` (basic HTML + clear a11y) and design-system-specific pages under `src/app/ds/<system>`.
+Patterns should be focused on the design systems in scope, but also include general UI patterns that can be applied
+across systems. The goal is to create a comprehensive resource for designers and developers working with design systems,
+with a strong emphasis on accessibility and performance.
 
-## Repo-oppsett (regler)
+## Structure And Scope
 
-- App-ruter: `src/app/jokul/*`
-- Komponentdocs: `src/app/jokul/_component-docs/docs/`
-- Tokens: `src/app/jokul/_token/`
-- Monstre: `src/app/jokul/_pattern/` + ruter `src/app/jokul/monster/*` (numeriske id-er i URL: `/jokul/monster/1`)
+- Repo-wide rules apply everywhere.
+- When adding broad logic, prefer splitting into small files to keep cognitive load low.
+- Make reusable components whenever possible.
+- When working inside a design system, follow the conventions and patterns of that system as closely as possible.
+- Focus on patterns that are relevant to the design systems in scope, but also include general UI patterns that can be
+  applied across systems.
+- Prioritize accessibility and performance in all patterns and components.
+- Document patterns clearly, including usage guidelines, examples, and any relevant design considerations.
 
-Type-spesifikke regler skal ligge som JSDoc ved typene (ikke i denne fila):
-- `src/app/jokul/_component-docs/docs/types/component.ts`
-- `src/app/jokul/_component-docs/docs/types/prop.ts`
-- `src/app/jokul/_component-docs/docs/types/example.ts`
-- `src/app/jokul/_component-docs/docs/types/migration.ts`
+## Commands
 
-## Jøkul-komponenter (regler)
-
-- Skal importere fra `@fremtind/jokul/<component>`.
-- Skal ikke gjette props: verifiser i type defs:
-  `node_modules/@fremtind/jokul/build/es/components/<component>/types.d.ts`
-- Skal dokumentere ny prop, komponent eller token ved bruk.
-
-## Styling (regler)
-
-- Skal ikke overstyre Jøkul-komponenters utseende (ikke bruk `style`/`className` for visuell endring).
-- Skal ikke skrive CSS som targeter `.jkl-*` (unntak: `src/styles/patches/*` for midlertidige upstream-feil i Jøkul, og da skal det finnes et GitHub-issue).
-- Skal bruke wrappers for layout og Jøkul tokens (`var(--jkl-*)`) for spacing/posisjonering på egne elementer.
-- Skal bruke Jøkul `Flex` for flex-layouts; unngå `display: flex/grid` i CSS/inline bare for enkel sentrering der `<Flex>` dekker behovet.
-- Skal aldri endre fonten for stilårsaker (font-weight, letter-spacing, text-transform og lignende).
-- For JSON-kontroller i komponenteksempler med faste nøkler: bruk `valueOptions` og `keyReadOnly` så nøkler blir labels og verdier velges fra en liste.
-
-## Kommandoer (regler)
-
-- Typecheck: `npm run typecheck`
+- Install deps: `npm install`
 - Dev: `npm run dev`
 - Build: `npm run build`
-- Test (inkl. a11y): `npm test`
-- A11y direkte: `npm run test:a11y` (bruker `.pa11yci.json`, starter `next start` på `:3001`)
+- Typecheck: `npm run typecheck`
+- Tests (full): `npm test`
+- A11y (direct): `npm run test:a11y`
 - Cloudflare Pages build: `npm run pages:build`
 
-Merk: A11y-testene bruker Puppeteer/Chrome for Testing og kan installere browser via `npm run a11y:install`.
+## Code Style And Architecture
 
-## Komponentdocs (regler)
+- General rules:
+    - Write no more code than necessary.
+    - Prefer the newest available native browser APIs (CSS, HTML, JS) over custom workarounds.
+    - Keep components reusable and composable.
+    - Break down logic into small, focused files to improve readability and maintenance.
+    - When working inside a design system, follow the conventions and patterns of that system as closely as possible.
+    - Prioritize making it possible to use the design systems in scope to build patterns, and avoid adding custom styles
+      or logic that would not be applicable across systems.
+- CSS rules:
+    - Use nesting where it improves readability and maintainability, but avoid excessive nesting that can lead to
+      specificity issues and
+    - Do not use BEM notation, and use class names that make the css less verbose and more readable. Utilize the
+      cascade and specificity to write less code and make it more maintainable.
+    - Use logical properties.
+    - Use custom properties for design tokens and theming.
+    - Avoid using utility classes for styling, and instead prefer semantic class names that describe the purpose of
+      the element.
+    - Avoid using inline styles, and instead prefer using CSS classes to separate styling from markup and behavior.
+    - Use CSS variables for design tokens and theming, and avoid hardcoding values in CSS rules to improve
+      maintainability and flexibility.
+    - Use media, feature queries, and container queries to create responsive designs that adapt to different screen
+      sizes and contexts.
+    - Avoid using CSS frameworks or libraries that add unnecessary bloat and complexity to the codebase, and instead
+      prefer writing custom CSS that is tailored to the specific needs of the project.
+    - Use CSS preprocessors or postprocessors if necessary to improve the maintainability and organization of CSS
+      code, but avoid adding unnecessary complexity or dependencies to the project.
+    - NEVER override fonts, colors, gaps, margins, or other design tokens in CSS. If a design system has a semantic
+      token or a
+      mixin for a
+      property or properties, use it. If it doesn't exist, add
+      it to the design system and use it. This ensures consistency and maintainability across patterns and design
+      systems.
+- JavaScript rules:
+    - Favor server-side solutions where possible.
+    - Use modern JavaScript features and syntax to improve readability and maintainability, while ensuring compatibility
+      with target browsers.
+    - Avoid using JavaScript frameworks or libraries that add unnecessary bloat and complexity to the codebase, and
+      instead prefer writing custom JavaScript that is tailored to the specific needs of the project.
+    - Use JavaScript only for behavior that cannot be achieved with CSS alone, and avoid using JavaScript for styling or
+      layout purposes to improve performance and maintainability.
+- HTML rules:
+    - Use semantic HTML elements to improve accessibility and SEO, and avoid using non-semantic elements for layout or
+      styling purposes.
+    - Use ARIA attributes only when necessary to enhance accessibility, and avoid using them as a substitute for
+      semantic HTML elements to improve maintainability and performance.
+    - Avoid using inline event handlers in HTML, and instead prefer using JavaScript to attach event listeners to
+      improve separation of concerns and maintainability.
+    - Use proper nesting and structure in HTML to improve readability and maintainability, and avoid using deeply nested
+      or complex structures that can be difficult to understand and maintain.
+    - Avoid unnecessary divs or other elements in HTML, and instead prefer using semantic elements that convey the
+      meaning and purpose of the content to improve accessibility and maintainability.
+    - Avoid using unnecessary amounts of elements in HTML, and instead prefer using a minimal number of elements that
+      are necessary to achieve the desired layout and functionality to improve performance and maintainability.
 
-- Skal alltid definere `migrations` for `status: "deprecated"` (valideres i dev).
+## Testing Expectations
 
-## Ved feil eller mangler i Jøkul
+- Run the full test suite for changes, including a11y where relevant.
+- Write tests for new features, bug fixes, and any significant changes to existing patterns.
+- Use descriptive test names that clearly indicate what is being tested and the expected outcome.
+- Ensure tests cover edge cases and potential failure points to maintain robustness.
 
-- Skal opprette issue på norsk hvis du lager workaround for Jøkul-problemer (bug, manglende eller utilstrekkelig default styling, API/a11y/SSR/ytelse/docs).
-- Skal også opprette issue når dokumentasjonen til Jøkul er utydelig eller mangler viktig praksis.
-- Dette gjelder selv om workarounden ikke trenger å targete `.jkl-*` (f.eks. når du må legge på ekstra spacing i prose-lister):
+## Tooling
 
-```sh
-gh issue create \
-  --repo lmfaole/lmfaole \
-  --title "Jøkul-<type>: <Komponent> – <Kort beskrivelse>" \
-  --body-file /tmp/issue.md
-```
+- Use the newest available npm, Node, and OS versions.
+- Use `gh` for issue management and PRs.
+- Use `eslint` and `prettier` for code formatting and linting.
+- Use `vitest` for testing and `axe-core` for a11y testing.
+- Use `cloudflare pages` for hosting and deployment.
 
-Gyldige `<type>`:
-`Jøkul-bug | Jøkul-API | Jøkul-a11y | Jøkul-SSR | Jøkul-ytelse | Jøkul-docs`
+## Issue Reporting
+
+- Always file issues in the designsystems for any gaps, bugs, missing or unclear docs, a11y, SSR, performance, API
+  limitations, or workarounds.
+- File issues in `lmfaole/lmfaole` using `gh issue create`.
+- Write issues in Norwegian with a scan-friendly title and include labels for the issue type.
+- Issue body must include:
+    - Why the issue happens
+    - Why a user would want to do what they tried when the issue occurred
+    - Normal conventions for the pattern
+    - How to fix it
+    - The cost of not fixing it
+    - Any relevant links to docs, code, or other resources
+    - Screenshots or gifs if relevant
+    - A clear, actionable title that summarizes the issue and its impact on users.

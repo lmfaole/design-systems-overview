@@ -9,9 +9,9 @@ export default function NotFound() {
             <nav aria-label="Hjelpsomme lenker">
                 <ul>
                     <li><a href="/">Forsiden</a></li>
-                    <li><a href="/jokul">Jøkul</a></li>
-                    <li><a href="/jokul/component">Komponenter</a></li>
-                    <li><a href="/jokul/token">Designtokens</a></li>
+                    <li><a href="/ds/jokul">Jøkul</a></li>
+                    <li><a href="/ds/jokul/component">Komponenter</a></li>
+                    <li><a href="/ds/jokul/token">Designtokens</a></li>
                 </ul>
             </nav>
         </main>

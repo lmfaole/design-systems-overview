@@ -2,22 +2,32 @@
 const nextConfig = {
     pageExtensions: ["ts", "tsx"],
     async redirects() {
-        // We moved from `/jokul/mønster` → `/jokul/monster` because the `ø` caused URL issues.
+        // We moved from `/jokul/mønster` → `/monster` because the `ø` caused URL issues.
         // Keep a redirect so old links/bookmarks don't break.
         return [
             {
+                source: "/jokul/monster",
+                destination: "/monster",
+                permanent: false,
+            },
+            {
+                source: "/jokul/monster/:path*",
+                destination: "/monster/:path*",
+                permanent: false,
+            },
+            {
                 source: "/jokul/monster/ikonknapper",
-                destination: "/jokul/monster/1",
+                destination: "/monster/1",
                 permanent: false,
             },
             {
                 source: "/jokul/m\u00f8nster",
-                destination: "/jokul/monster",
+                destination: "/monster",
                 permanent: false,
             },
             {
                 source: "/jokul/m\u00f8nster/:path*",
-                destination: "/jokul/monster/:path*",
+                destination: "/monster/:path*",
                 permanent: false,
             },
         ];

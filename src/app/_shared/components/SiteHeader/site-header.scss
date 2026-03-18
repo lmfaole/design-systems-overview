@@ -1,0 +1,18 @@
+.site-header {
+  border-block-end: 1px solid var(--site-border-color);
+  color: var(--site-text-color);
+  padding-block: var(--site-space-s);
+  padding-inline: var(--site-space-s);
+
+  .brand,
+  .link {
+    color: inherit;
+    font: inherit;
+    text-decoration: none;
+  }
+
+  .links {
+    all: unset;
+    list-style: none;
+  }
+}

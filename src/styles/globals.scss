@@ -1,39 +1,19 @@
-@use "../shared/components/SiteContainer/site-container.scss";
-
-.jkl .muted {
-  color: var(--jkl-color-text-subdued);
+html {
+  color-scheme: light dark;
 }
 
-/* Tags should never be flush — ensure gap wherever they appear adjacent.
-   Targets the data-component attribute to avoid relying on internal jkl class names. */
-.jkl [data-component="tag"] + [data-component="tag"] {
-  margin-inline-start: var(--jkl-spacing-xxs);
+:root {
+  --site-border-color: light-dark(#e5e7eb, #4b5563);
+  --site-text-color: CanvasText;
+  --site-text-muted: GrayText;
+  --page-max-width: 90rem;
+  --site-space-s: 1rem;
+  --site-space-m: 1.5rem;
 }
 
-/* Tag lists rendered as flex containers already use gap — reset adjacent margin */
-.jkl [class*="gap"] > [data-component="tag"] + [data-component="tag"] {
-  margin-inline-start: 0;
-}
-
-/* UA-only front page: reset all author styles when requested. */
-[data-ua-only],
-[data-ua-only] * {
-  all: revert;
-}
-
-[data-ua-only]::before,
-[data-ua-only]::after,
-[data-ua-only] *::before,
-[data-ua-only] *::after {
-  all: revert;
-}
-
-body:has([data-ua-only]) {
-  margin: revert;
-  padding: revert;
-}
-
-html:has([data-ua-only]) {
-  line-height: revert;
-  -webkit-text-size-adjust: revert;
+.page {
+  box-sizing: border-box;
+  inline-size: min(100%, var(--page-max-width));
+  margin-inline: auto;
+  padding-inline: var(--site-space-s);
 }

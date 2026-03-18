@@ -1,9 +1,0 @@
-@use "@fremtind/jokul/styles/core/jkl" as jkl;
-
-.site-footer__inner {
-    position: relative;
-    z-index: 1;
-    margin-inline: auto;
-    margin-block-start: var(--jkl-spacing-2xl);
-    padding-block: var(--jkl-spacing-xl);
-}
