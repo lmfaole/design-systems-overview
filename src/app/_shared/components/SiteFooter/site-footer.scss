@@ -1,11 +1,9 @@
 .site-footer {
-  --footer-section-min: 12rem;
-
   border-block-start: 1px solid var(--site-border-color);
   color: var(--site-text-color);
   padding-block: var(--site-space-m);
   padding-inline: var(--site-space-s);
-  margin-block-start: var(--site-space-m);
+  margin-block-start: var(--site-space-xl);
 
   .content,
   .section,
@@ -27,8 +25,8 @@
 
   .section {
     flex: 1 0 0;
-    gap: 0.75rem;
-    min-inline-size: var(--footer-section-min);
+    gap: var(--site-space-xs);
+    min-inline-size: var(--site-section-min-width);
   }
 
   .title {
@@ -37,7 +35,7 @@
 
   .links {
     all: unset;
-    gap: 0.5rem;
+    gap: var(--site-space-xxs);
     list-style: none;
   }
 

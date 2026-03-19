@@ -1,9 +1,17 @@
+import type { Metadata } from "next";
 import { Flex } from "@fremtind/jokul/flex";
 import { Link } from "@fremtind/jokul/link";
 import { DESIGN_SYSTEMS } from "@/app/ds/_data/design-systems";
 import { SiteHeader, type SiteLink } from "@/app/_shared/components/SiteHeader";
 import { SiteFooter } from "@/app/_shared/components/SiteFooter";
+import { createPageMetadata } from "@/app/_shared/seo";
 import "../jokul/_styles/jokul.scss";
+
+export const metadata: Metadata = createPageMetadata({
+    title: "Jøkul",
+    description: "Dokumentasjon, komponenter, tokens og mønstre for Jøkul designsystem.",
+    path: "/ds/jokul",
+});
 
 export default function JokulLayout({ children }: { children: React.ReactNode }) {
     const designSystem = DESIGN_SYSTEMS.find((system) => system.name === "Jøkul");

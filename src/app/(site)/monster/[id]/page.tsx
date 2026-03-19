@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getPatternPost } from "@/app/monster/data";
 import { ExamplesSection } from "./_components/ExamplesSection";
 import { AvoidSection } from "./_components/AvoidSection";
@@ -5,6 +6,7 @@ import { DoAndDontsSection } from "./_components/DoAndDontsSection";
 import { AccessibilitySection } from "./_components/AccessibilitySection";
 import { ResourceSection } from "./_components/ResourceSection";
 import { ComponentsSection } from "./_components/ComponentsSection";
+import { createPageMetadata } from "@/app/_shared/seo";
 
 export const runtime = "edge";
 
@@ -13,6 +15,27 @@ type Awaitable<T> = T | Promise<T>;
 interface PatternPageProps {
     params: Awaitable<{ id: string }>;
     searchParams?: Awaitable<{ id?: string }>;
+}
+
+export async function generateMetadata({ params }: { params: Awaitable<{ id: string }> }): Promise<Metadata> {
+    const resolvedParams = await params;
+    const post = getPatternPost(resolvedParams.id);
+
+    if (!post) {
+        return createPageMetadata({
+            title: "Fant ikke mønster",
+            description: "Mønsteret du prøvde å åpne finnes ikke i ressursen.",
+            path: `/monster/${resolvedParams.id}`,
+            noIndex: true,
+        });
+    }
+
+    return createPageMetadata({
+        title: post.title,
+        description: post.goals,
+        path: `/monster/${post.id}`,
+        type: "article",
+    });
 }
 
 export default async function PatternPage({ params, searchParams }: PatternPageProps) {

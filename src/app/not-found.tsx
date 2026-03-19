@@ -1,6 +1,6 @@
 export default function NotFound() {
     return (
-        <main>
+        <main className="page">
             <p aria-hidden>404</p>
             <h1>Siden finnes ikke</h1>
             <p>

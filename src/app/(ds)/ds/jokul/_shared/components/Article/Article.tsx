@@ -8,10 +8,11 @@ type ArticleProps = Omit<FlexProps<"article">, "as" | "direction" | "gap">;
  * Uses Jøkul spacing tokens via `gap="xl"` (var(--jkl-spacing-xl)).
  */
 export function Article({ children, ...rest }: ArticleProps) {
+    const className = ["page", rest.className].filter(Boolean).join(" ");
+
     return (
-        <Flex as="article" direction="column" gap="xl" {...rest}>
+        <Flex as="article" direction="column" gap="xl" {...rest} className={className}>
             {children}
         </Flex>
     );
 }
-

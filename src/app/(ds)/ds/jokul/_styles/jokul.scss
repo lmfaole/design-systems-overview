@@ -57,11 +57,32 @@
 
 .jkl {
   --site-max-width: 180ch;
+  --page-max-width: var(--site-max-width);
   --site-border-color: var(--jkl-color-border-subdued);
   --site-text-color: var(--jkl-color-text-default);
   --site-text-muted: var(--jkl-color-text-subdued);
-  --site-space-s: var(--jkl-spacing-16);
-  --site-space-m: var(--jkl-spacing-24);
+  --site-space-xxs: var(--jkl-spacing-xxs);
+  --site-space-xs: var(--jkl-spacing-xs);
+  --site-space-s: var(--jkl-spacing-s);
+  --site-space-m: var(--jkl-spacing-m);
+  --site-space-l: var(--jkl-spacing-l);
+  --site-space-xl: var(--jkl-spacing-xl);
+  --site-heading-1-max-width: 30ch;
+  --site-heading-2-max-width: 35ch;
+  --site-heading-3-max-width: 40ch;
+  --site-heading-4-max-width: 45ch;
+  --site-heading-5-max-width: 50ch;
+  --site-copy-max-width: 65ch;
+  --site-code-font-family: "Fremtind Grotesk Mono", ui-monospace, monospace;
+  --site-code-font-size: 0.875em;
+  --site-pre-padding: var(--jkl-spacing-m);
+  --site-pre-background: var(--jkl-color-background-container-low);
+  --site-pre-border-radius: var(--jkl-border-radius-s);
+  --site-quote-padding-inline-start: var(--jkl-spacing-m);
+  --site-quote-border-color: var(--jkl-color-border-ui);
+  --site-quote-text-color: var(--jkl-color-text-subdued);
+  --site-rule-color: var(--jkl-color-border-subdued);
+  --site-rule-spacing: var(--jkl-spacing-l);
 
   min-height: 100vh;
   display: flex;
@@ -147,17 +168,45 @@ body:has(.jkl) {
 // Default element typography using Jøkul mixins
 // ============================================================
 
-.jkl h1 { @include jkl.text-style("heading-1"); max-width: 30ch; }
-.jkl h2 { @include jkl.text-style("heading-2"); max-width: 35ch; }
-.jkl h3 { @include jkl.text-style("heading-3"); max-width: 40ch; }
-.jkl h4 { @include jkl.text-style("heading-4"); max-width: 45ch; }
-.jkl h5 { @include jkl.text-style("heading-5"); max-width: 50ch; }
+.jkl h1 {
+  @include jkl.text-style("heading-1");
+  max-width: var(--site-heading-1-max-width);
+}
 
-.jkl p { @include jkl.text-style("paragraph-medium"); max-width: 65ch; }
+.jkl h2 {
+  @include jkl.text-style("heading-2");
+  max-width: var(--site-heading-2-max-width);
+}
 
-.jkl .lead { @include jkl.text-style("paragraph-large"); max-width: 65ch; }
+.jkl h3 {
+  @include jkl.text-style("heading-3");
+  max-width: var(--site-heading-3-max-width);
+}
 
-.jkl small { @include jkl.text-style("text-small"); max-width: 65ch; }
+.jkl h4 {
+  @include jkl.text-style("heading-4");
+  max-width: var(--site-heading-4-max-width);
+}
+
+.jkl h5 {
+  @include jkl.text-style("heading-5");
+  max-width: var(--site-heading-5-max-width);
+}
+
+.jkl p {
+  @include jkl.text-style("paragraph-medium");
+  max-width: var(--site-copy-max-width);
+}
+
+.jkl .lead {
+  @include jkl.text-style("paragraph-large");
+  max-width: var(--site-copy-max-width);
+}
+
+.jkl small {
+  @include jkl.text-style("text-small");
+  max-width: var(--site-copy-max-width);
+}
 
 .jkl strong,
 .jkl b {
@@ -168,16 +217,16 @@ body:has(.jkl) {
 .jkl kbd,
 .jkl samp {
   @include jkl.use-font-family("Fremtind Grotesk Mono");
-  font-size: 0.875em;
+  font-size: var(--site-code-font-size);
 }
 
 .jkl pre {
   @include jkl.use-font-family("Fremtind Grotesk Mono");
   overflow-x: auto;
   max-width: 80ch;
-  padding: var(--jkl-spacing-m);
-  background-color: var(--jkl-color-background-container-low);
-  border-radius: var(--jkl-border-radius-s);
+  padding: var(--site-pre-padding);
+  background-color: var(--site-pre-background);
+  border-radius: var(--site-pre-border-radius);
 
   code {
     font-size: inherit;
@@ -186,17 +235,17 @@ body:has(.jkl) {
 
 .jkl blockquote {
   @include jkl.text-style("paragraph-medium");
-  max-width: 65ch;
+  max-width: var(--site-copy-max-width);
   margin-inline: 0;
-  padding-inline-start: var(--jkl-spacing-m);
-  border-inline-start: 3px solid var(--jkl-color-border-ui);
-  color: var(--jkl-color-text-subdued);
+  padding-inline-start: var(--site-quote-padding-inline-start);
+  border-inline-start: 3px solid var(--site-quote-border-color);
+  color: var(--site-quote-text-color);
 }
 
 .jkl hr {
   border: 0;
-  border-block-start: 1px solid var(--jkl-color-border-subdued);
-  margin-block: var(--jkl-spacing-l);
+  border-block-start: 1px solid var(--site-rule-color);
+  margin-block: var(--site-rule-spacing);
 }
 
 /* Utility: unstyled list — use when a semantic list is needed without browser defaults.

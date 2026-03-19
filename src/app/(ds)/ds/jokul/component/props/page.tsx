@@ -50,7 +50,7 @@ export default function PropIndexPage() {
 
     if (!ready) {
         return (
-            <Flex as="main" direction="column" gap="xl">
+            <Flex as="main" className="page" direction="column" gap="xl">
                 <PageHeader
                     title="Komponentdokumentasjon"
                     description="Detaljert API-dokumentasjon, prop-tabeller og levende eksempler for komponenter fra Jøkul. Bruk dette som referanse når du bygger med designsystemet."
@@ -64,7 +64,7 @@ export default function PropIndexPage() {
     }
 
     return (
-        <Flex as="main" direction="column" gap="xl">
+        <Flex as="main" className="page" direction="column" gap="xl">
             <PageHeader
                 title="Komponentdokumentasjon"
                 description="Detaljert API-dokumentasjon, prop-tabeller og levende eksempler for komponenter fra Jøkul. Bruk dette som referanse når du bygger med designsystemet."

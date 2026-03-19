@@ -1,6 +1,14 @@
+import type { Metadata } from "next";
 import { DESIGN_SYSTEMS } from "@/app/ds/_data/design-systems";
 import { componentDocs } from "@/app/ds/jokul/_component-docs/data";
 import { DesignSystemExternalLinks } from "@/app/_shared/components/DesignSystemExternalLinks";
+import { createPageMetadata } from "@/app/_shared/seo";
+
+export const metadata: Metadata = createPageMetadata({
+    title: "Designsystemer",
+    description: "En samlet inngang til dokumentasjon, komponenter og UI-mønstre på tvers av designsystemer.",
+    path: "/",
+});
 
 export default function Home() {
     const jokulComponentCount = componentDocs.filter((doc) => doc.showOnOverview !== false).length;

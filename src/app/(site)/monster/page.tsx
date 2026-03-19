@@ -1,8 +1,15 @@
+import type { Metadata } from "next";
 import { patternPosts, getPatternHref } from "@/app/monster/data";
 import { getComponentDoc } from "@/app/ds/jokul/_component-docs/data";
 import type { PatternCategory } from "@/app/monster/types";
+import { createPageMetadata } from "@/app/_shared/seo";
 
 export const runtime = "edge";
+export const metadata: Metadata = createPageMetadata({
+    title: "UI-mønstre",
+    description: "Anbefalte løsninger på gjentakende UI-problemer med fokus på tilgjengelighet og forutsigbarhet.",
+    path: "/monster",
+});
 
 const CATEGORY_LABELS: Record<PatternCategory, string> = {
     handlinger: "Handlinger",

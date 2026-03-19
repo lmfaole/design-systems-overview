@@ -8,7 +8,7 @@ interface NotFoundProps {
 
 export function NotFound({ message, backHref, backLabel }: NotFoundProps) {
     return (
-        <main>
+        <main className="page">
             <h1>{message}</h1>
             <Link href={backHref}>{backLabel}</Link>
         </main>

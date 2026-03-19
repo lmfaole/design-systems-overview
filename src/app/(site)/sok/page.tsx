@@ -1,7 +1,9 @@
+import type { Metadata } from "next";
 import { componentDocs } from "@/app/ds/jokul/_component-docs/data";
 import { tokenPosts, getTokenSlug } from "@/app/ds/jokul/_token/data";
 import { patternPosts, getPatternHref } from "@/app/monster/data";
 import type { PatternCategory } from "@/app/monster/types";
+import { createPageMetadata } from "@/app/_shared/seo";
 
 type SearchParams = {
     q?: string;
@@ -19,6 +21,24 @@ function normalize(value: string) {
         .toLowerCase()
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "");
+}
+
+export async function generateMetadata({
+    searchParams,
+}: {
+    searchParams?: Promise<SearchParams> | SearchParams;
+}): Promise<Metadata> {
+    const resolvedSearchParams = await Promise.resolve(searchParams);
+    const query = typeof resolvedSearchParams?.q === "string" ? resolvedSearchParams.q.trim() : "";
+
+    return createPageMetadata({
+        title: query ? `Søk etter “${query}”` : "Søk",
+        description: query
+            ? `Søkeresultater for “${query}” i Jøkul-komponenter, designtokens og UI-mønstre.`
+            : "Søk etter komponenter, designtokens og UI-mønstre i læringsressursen.",
+        path: query ? `/sok?q=${encodeURIComponent(query)}` : "/sok",
+        noIndex: true,
+    });
 }
 
 export default function SearchPage({ searchParams }: { searchParams?: SearchParams }) {

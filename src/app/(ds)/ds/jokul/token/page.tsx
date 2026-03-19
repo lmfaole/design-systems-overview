@@ -8,7 +8,7 @@ export const runtime = "edge";
 
 export default function TokenPage() {
     return (
-        <Flex as="main" direction="column" gap="2xl">
+        <Flex as="main" className="page" direction="column" gap="2xl">
             <PageHeader
                 title="Designtokens"
                 description="Fundamentene i Jøkul — typografi, farger og spacing. Les disse for å forstå designsystemets kjerneprinsipper."

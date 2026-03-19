@@ -6,14 +6,115 @@ html {
   --site-border-color: light-dark(#e5e7eb, #4b5563);
   --site-text-color: CanvasText;
   --site-text-muted: GrayText;
-  --page-max-width: 90rem;
+  --site-max-width: 90rem;
+  --page-max-width: var(--site-max-width);
+  --site-space-xxs: 0.5rem;
+  --site-space-xs: 0.75rem;
   --site-space-s: 1rem;
   --site-space-m: 1.5rem;
+  --site-space-l: 2rem;
+  --site-space-xl: 3rem;
+  --site-section-min-width: 12rem;
+  --site-heading-1-max-width: 30ch;
+  --site-heading-2-max-width: 35ch;
+  --site-heading-3-max-width: 40ch;
+  --site-heading-4-max-width: 45ch;
+  --site-heading-5-max-width: 50ch;
+  --site-copy-max-width: 65ch;
+  --site-code-font-family: ui-monospace, "SFMono-Regular", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+  --site-code-font-size: 0.875em;
+  --site-pre-padding: var(--site-space-m);
+  --site-pre-background: light-dark(#f3f4f6, #1f2937);
+  --site-pre-border-radius: 0.5rem;
+  --site-quote-padding-inline-start: var(--site-space-m);
+  --site-quote-border-width: 3px;
+  --site-quote-border-color: var(--site-border-color);
+  --site-quote-text-color: var(--site-text-muted);
+  --site-rule-color: var(--site-border-color);
+  --site-rule-spacing: var(--site-space-l);
 }
 
 .page {
   box-sizing: border-box;
-  inline-size: min(100%, var(--page-max-width));
+  inline-size: min(100%, var(--site-max-width));
   margin-inline: auto;
   padding-inline: var(--site-space-s);
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+h1 {
+  max-width: var(--site-heading-1-max-width);
+}
+
+h2 {
+  max-width: var(--site-heading-2-max-width);
+}
+
+h3 {
+  max-width: var(--site-heading-3-max-width);
+}
+
+h4 {
+  max-width: var(--site-heading-4-max-width);
+}
+
+h5 {
+  max-width: var(--site-heading-5-max-width);
+}
+
+p,
+.lead,
+small,
+blockquote {
+  max-width: var(--site-copy-max-width);
+}
+
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--site-code-font-family);
+}
+
+code,
+kbd,
+samp {
+  font-size: var(--site-code-font-size);
+}
+
+pre {
+  overflow-x: auto;
+  padding: var(--site-pre-padding);
+  background-color: var(--site-pre-background);
+  border-radius: var(--site-pre-border-radius);
+
+  code {
+    font-size: inherit;
+  }
+}
+
+blockquote {
+  margin-inline: 0;
+  padding-inline-start: var(--site-quote-padding-inline-start);
+  border-inline-start: var(--site-quote-border-width) solid var(--site-quote-border-color);
+  color: var(--site-quote-text-color);
+}
+
+hr {
+  border: 0;
+  border-block-start: 1px solid var(--site-rule-color);
+  margin-block: var(--site-rule-spacing);
+}
+
+:where(h1, h2, h3, h4, h5, p, small):first-child {
+  margin-block-start: 0;
+}
+
+:where(h1, h2, h3, h4, h5, p, small):last-child {
+  margin-block-end: 0;
 }
