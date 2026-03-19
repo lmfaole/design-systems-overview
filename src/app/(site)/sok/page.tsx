@@ -5,6 +5,8 @@ import { patternPosts, getPatternHref } from "@/app/monster/data";
 import type { PatternCategory } from "@/app/monster/types";
 import { createPageMetadata } from "@/app/_shared/seo";
 
+export const runtime = "edge";
+
 type SearchParams = {
     q?: string;
 };
