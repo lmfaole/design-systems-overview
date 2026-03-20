@@ -1,0 +1,107 @@
+@use "@fremtind/jokul/styles/fonts/webfonts.scss";
+@use "@fremtind/jokul/styles/core/core.scss";
+@use "@fremtind/jokul/styles/components/flex/flex.scss";
+@use "@fremtind/jokul/styles/components/icon/icon.scss";
+@use "@fremtind/jokul/styles/components/loader/loader.scss";
+@use "@fremtind/jokul/styles/components/loader/skeleton-loader.scss";
+@use "@fremtind/jokul/styles/components/message/message.scss";
+@use "@fremtind/jokul/styles/components/progress-bar/progress-bar.scss";
+
+.monster-vanilla-demo {
+  display: grid;
+  gap: var(--site-space-s);
+  padding: var(--site-space-m);
+  border: 1px solid color-mix(in srgb, var(--site-border-color) 78%, transparent);
+  border-radius: var(--site-pre-border-radius);
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--site-page-background) 94%, var(--site-info-surface-color) 6%),
+      var(--site-page-background)
+    );
+}
+
+.monster-vanilla-stack {
+  display: grid;
+  gap: var(--site-space-s);
+}
+
+.monster-vanilla-stack > * {
+  margin: 0;
+}
+
+.monster-vanilla-status {
+  display: inline-flex;
+  gap: var(--site-space-xs);
+  align-items: center;
+  color: var(--site-info-text-color);
+}
+
+.monster-vanilla-spinner {
+  inline-size: 1rem;
+  block-size: 1rem;
+  border: 2px solid color-mix(in srgb, var(--site-info-border-color) 42%, transparent);
+  border-top-color: currentColor;
+  border-radius: 999px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .monster-vanilla-spinner {
+    animation: monster-vanilla-spin 0.9s linear infinite;
+  }
+
+  .monster-vanilla-skeleton-line {
+    animation: monster-vanilla-shimmer 1.4s linear infinite;
+  }
+}
+
+.monster-vanilla-skeleton-line {
+  display: block;
+  block-size: 0.875rem;
+  border-radius: 999px;
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--site-hint-surface-color) 75%, var(--site-page-background) 25%) 25%,
+      color-mix(in srgb, var(--site-info-surface-color) 65%, var(--site-page-background) 35%) 50%,
+      color-mix(in srgb, var(--site-hint-surface-color) 75%, var(--site-page-background) 25%) 75%
+    );
+  background-size: 200% 100%;
+}
+
+.monster-vanilla-skeleton-line--title {
+  block-size: 1.25rem;
+  inline-size: 55%;
+}
+
+.monster-vanilla-skeleton-line--body {
+  inline-size: 100%;
+
+  &.short {
+    inline-size: 72%;
+  }
+}
+
+.monster-vanilla-progress-header {
+  display: flex;
+  gap: var(--site-space-s);
+  justify-content: space-between;
+}
+
+.monster-vanilla-progress {
+  inline-size: 100%;
+  block-size: 0.875rem;
+  accent-color: var(--site-info-text-color);
+}
+
+@keyframes monster-vanilla-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes monster-vanilla-shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}

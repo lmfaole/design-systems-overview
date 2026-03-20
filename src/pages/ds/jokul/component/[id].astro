@@ -1,6 +1,7 @@
 ---
 import JokulLayout from "@/layouts/JokulLayout.astro";
 import { componentDocs, getComponentDoc } from "@/data/jokul/component-docs";
+import { getPatternBacklinksForComponentHref } from "@/data/monster/patterns";
 import { ComponentPageClient } from "@/features/ds/jokul/components/ComponentPageClient";
 
 export function getStaticPaths() {
@@ -15,6 +16,8 @@ const doc = getComponentDoc(id ?? "");
 if (!doc) {
     throw new Error(`Missing component for id "${id}"`);
 }
+
+const relatedPatterns = getPatternBacklinksForComponentHref(`/ds/jokul/component/${doc.id}`);
 ---
 
 <JokulLayout
@@ -22,5 +25,5 @@ if (!doc) {
     description={doc.description.long}
     path={`/ds/jokul/component/${doc.id}`}
 >
-    <ComponentPageClient id={doc.id} client:only="react" />
+    <ComponentPageClient id={doc.id} relatedPatterns={relatedPatterns} client:only="react" />
 </JokulLayout>

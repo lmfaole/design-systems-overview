@@ -1,20 +1,16 @@
-import type React from "react";
+import type { ReactNode } from "react";
 
-export type WcagLevel = "A" | "AA" | "AAA";
-
-export interface WcagRule {
-    id: string;
-    title: React.ReactNode;
-    level: WcagLevel;
-    relevance: React.ReactNode;
-    url?: string;
-}
-
-export interface PatternAccessibility {
+/**
+ * A single accessibility concern that should be called out on a pattern page.
+ */
+export interface PatternAccessibilityConcern {
+    /**
+     * Short heading used in the accessibility section.
+     */
     title: string;
-    description: string;
-    ariaRoles: React.ReactNode[];
-    wcag: WcagRule[];
-    avoid: React.ReactNode[];
-    testing?: React.ReactNode[];
+    /**
+     * Explanatory copy describing what to watch out for and why it matters.
+     * Can contain links or inline emphasis.
+     */
+    description: ReactNode;
 }

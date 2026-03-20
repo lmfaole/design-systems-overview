@@ -1,170 +1,322 @@
-import type { PatternPost } from "@/features/ds/monster/types";
 import {
-    BlockingExample,
-    InlineStatusExample,
-    SkeletonExample,
-    SpinnerOnlyExample,
-} from "./examples";
+    BASE_PATTERN_IMPLEMENTATION_DESIGN_SYSTEM,
+    type PatternPost,
+} from "@/features/ds/monster/types";
+import { PatternExampleCard } from "@/features/ds/monster/posts/components";
+import {
+    AccessibleStatusExample,
+    accessibleStatusExampleCode,
+    ContextualLoaderExample,
+    contextualLoaderExampleCode,
+    EscalatedWaitExample,
+    escalatedWaitExampleCode,
+    SkeletonRegionExample,
+    skeletonRegionExampleCode,
+    VanillaInlineStatusExample,
+    vanillaInlineStatusExampleCssCode,
+    vanillaInlineStatusExampleHtmlCode,
+    vanillaInlineStatusExampleJsCode,
+    VanillaProgressExample,
+    vanillaProgressExampleCssCode,
+    vanillaProgressExampleHtmlCode,
+    vanillaProgressExampleJsCode,
+    VanillaSkeletonExample,
+    vanillaSkeletonExampleCssCode,
+    vanillaSkeletonExampleHtmlCode,
+} from "./implementation-examples";
+import { LoadingStatesIllustration } from "./LoadingStatesIllustration";
 
 const post: PatternPost = {
     id: 1,
     title: "Lastetilstander",
     category: "tilbakemelding",
-    goals: "Gi brukeren tydelig beskjed om at noe laster, uten aa stoppe flyten.",
+    description: "Gi brukeren tydelig beskjed om at systemet jobber, uten å stoppe flyten mer enn nødvendig.",
+    illustration: {
+        label: "Illustrasjon av skjelettvisning, loader og fremdriftsindikator for en lastetilstand.",
+        component: LoadingStatesIllustration,
+    },
     doAndDonts: {
-        use: [
+        dos: [
             {
-                title: "Si hva som skjer",
-                description: "Fortell hva som lastes, og hold teksten kort.",
-                example: <InlineStatusExample />,
+                title: "Vis status der ventingen oppstår",
+                description: "Knytt lastetilstanden til den delen av grensesnittet som faktisk oppdateres.",
             },
             {
-                title: "Hold plassen stabil",
-                description: "Bruk skjelettvisning for aa unngaa hopp i layouten.",
-                example: <SkeletonExample />,
+                title: "Hold layouten stabil",
+                description: "Bruk skjelettvisning når innholdet har kjent struktur, slik at innholdet ikke hopper når det kommer inn.",
+            },
+            {
+                title: "Tilpass styrken til ventetiden",
+                description: "Start med diskret, inline status for korte laster, og eskaler til tydeligere tilbakemelding hvis ventetiden trekker ut.",
             },
         ],
-        avoid: [
+        donts: [
             {
-                title: "Skjul status",
-                description: "En spinner uten tekst gir ingen mening for mange brukere.",
-                example: <SpinnerOnlyExample />,
+                title: "Ikke blokker hele flaten for korte laster",
+                description: "Fullskjerms lasting eller tunge overlegg bryter flyten hvis brukeren kunne fortsatt å lese eller jobbe videre.",
             },
             {
-                title: "Blokker alt for korte laster",
-                description: "Kort venting kan ofte vises inline i stedet.",
-                example: <BlockingExample />,
+                title: "Ikke bruk bare spinner",
+                description: "Ren bevegelse sier lite om hva som skjer, hvor lenge det varer, eller hvilken del av siden som oppdateres.",
+            },
+            {
+                title: "Ikke la status blinke forbi",
+                description: "Hvis tilstanden er så kort at den ikke kan oppfattes, trenger du ofte ingen loader. Hvis den varer lenge nok til å merkes, trenger du tydelig tekstlig status.",
             },
         ],
     },
-    examples: [
+    accessibilityConcerns: [
         {
-            title: "Kort statusmelding i kontekst",
-            description: "For mindre oppdateringer der brukeren blir i samme flyt.",
-            variants: [
+            title: "Status må annonseres uten fokusflytting",
+            description: "Bruk role=\"status\" eller en passende live region for korte oppdateringer, og la fokus bli der brukeren allerede arbeider.",
+        },
+        {
+            title: "Regionen som lastes må markeres",
+            description: "Sett aria-busy=\"true\" på containeren som oppdateres, slik at hjelpemidler forstår at innholdet er midlertidig uferdig.",
+        },
+        {
+            title: "Bevegelse og farge er ikke nok alene",
+            description: "Kombiner animasjon med tekstlig status, ellers blir tilstanden utydelig for skjermlesere og brukere med nedsatt syn eller kognitiv belastning.",
+        },
+        {
+            title: "Lange laster trenger neste steg",
+            description: "Hvis ventetiden trekker ut, bør brukeren få mer kontekst, mulighet til å prøve igjen, eller en annen vei videre.",
+        },
+    ],
+    implementation: [
+        {
+            designSystem: BASE_PATTERN_IMPLEMENTATION_DESIGN_SYSTEM,
+            title: "Implementer lastetilstander med HTML, CSS og JS",
+            description: (
+                <>
+                    Start med native byggesteiner: bruk <code>role="status"</code> og{" "}
+                    <code>aria-busy</code> for tilgjengelig status, CSS for visuell tilbakemelding, og{" "}
+                    <code>&lt;progress&gt;</code> når du kan vise konkret fremdrift.
+                </>
+            ),
+            liveExamples: [
+                (
+                    <PatternExampleCard
+                        key="vanilla-inline-status-example"
+                        eyebrow="Kort ventetid"
+                        title="Vis status i regionen som oppdateres"
+                        description="Hold lastetilstanden nær innholdet som endres, og la teksten forklare hva som skjer."
+                        preview={<VanillaInlineStatusExample />}
+                        codeExamples={[
+                            {
+                                code: vanillaInlineStatusExampleHtmlCode,
+                                language: "html",
+                                label: "Struktur",
+                            },
+                            {
+                                code: vanillaInlineStatusExampleCssCode,
+                                language: "css",
+                                label: "Stiler",
+                            },
+                            {
+                                code: vanillaInlineStatusExampleJsCode,
+                                language: "js",
+                                label: "Logikk",
+                            },
+                        ]}
+                    />
+                ),
+                (
+                    <PatternExampleCard
+                        key="vanilla-skeleton-example"
+                        eyebrow="Stabil layout"
+                        title="Bruk skjelettvisning når strukturen er kjent"
+                        description="Enkle plassholdere i HTML og CSS gjør at innholdet ikke hopper når dataene kommer inn."
+                        preview={<VanillaSkeletonExample />}
+                        codeExamples={[
+                            {
+                                code: vanillaSkeletonExampleHtmlCode,
+                                language: "html",
+                                label: "Struktur",
+                            },
+                            {
+                                code: vanillaSkeletonExampleCssCode,
+                                language: "css",
+                                label: "Stiler",
+                            },
+                        ]}
+                    />
+                ),
+                (
+                    <PatternExampleCard
+                        key="vanilla-progress-example"
+                        eyebrow="Lengre ventetid"
+                        title="Gå over til fremdrift når brukeren må vente"
+                        description="Vis prosent og tydelig status når lasten varer lenge nok til at brukeren trenger forventningsstyring."
+                        preview={<VanillaProgressExample />}
+                        codeExamples={[
+                            {
+                                code: vanillaProgressExampleHtmlCode,
+                                language: "html",
+                                label: "Struktur",
+                            },
+                            {
+                                code: vanillaProgressExampleCssCode,
+                                language: "css",
+                                label: "Stiler",
+                            },
+                            {
+                                code: vanillaProgressExampleJsCode,
+                                language: "js",
+                                label: "Logikk",
+                            },
+                        ]}
+                    />
+                ),
+            ],
+            components: [
                 {
-                    label: "HTML",
-                    kind: "html",
-                    howTo: "Bruk role=\"status\" og aria-live=\"polite\" for rolige oppdateringer.",
-                    description: "Passer for inline status i skjema og lister.",
-                    code: `
-<p role="status" aria-live="polite">
-  Laster inn innhold...
-</p>
-                    `,
-                    Example: InlineStatusExample,
+                    title: 'role="status"',
+                    href: "https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/status_role",
+                },
+                {
+                    title: "aria-busy",
+                    href: "https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-busy",
+                },
+                {
+                    title: "<progress>",
+                    href: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress",
+                },
+            ],
+            steps: [
+                {
+                    title: "Marker regionen som oppdateres",
+                    description: "Sett aria-busy på containeren som venter på data, slik at hjelpemidler forstår at innholdet er midlertidig uferdig.",
+                },
+                {
+                    title: "Legg inn en synlig og tekstlig status",
+                    description: "Bruk en liten loader eller tekstnær indikator med role=\"status\" når ventetiden er kort og lokal.",
+                },
+                {
+                    title: "Hold av plass med CSS når layouten er kjent",
+                    description: "Lag enkle skjelettblokker med HTML og CSS for kort, lister eller paneler som ellers ville hoppet når innholdet lastes inn.",
+                },
+                {
+                    title: "Oppdater tilstanden med JavaScript",
+                    description: "La JavaScript slå av aria-busy, oppdatere statustekst eller drive et progress-element når du får ny status fra nettverket.",
                 },
             ],
         },
         {
-            title: "Skjelett for listeinnhold",
-            description: "Hold plassen mens innholdet hentes.",
-            variants: [
+            designSystem: "Jøkul",
+            title: "Implementer lastetilstander i Jøkul",
+            description: (
+                <>
+                    Bruk <a href="/ds/jokul/component/loader">Loader</a> for korte, inline ventetilstander,{" "}
+                    <a href="/ds/jokul/component/skeleton">Skeleton</a> når du må holde av plass, og{" "}
+                    <a href="/ds/jokul/component/progress-bar">ProgressBar</a> når du kan vise fremdrift over tid.
+                </>
+            ),
+            liveExamples: [
+                (
+                    <PatternExampleCard
+                        key="contextual-loader-example"
+                        eyebrow="Kort ventetid"
+                        title="Vis en loader der oppdateringen skjer"
+                        description="Bruk en liten loader tett på innholdet som endres, slik at brukeren ser hva systemet jobber med."
+                        preview={<ContextualLoaderExample />}
+                        code={contextualLoaderExampleCode}
+                        codeLabel="Eksempel med Loader"
+                    />
+                ),
+                (
+                    <PatternExampleCard
+                        key="skeleton-region-example"
+                        eyebrow="Stabil layout"
+                        title="Bruk skjelett når du kjenner strukturen"
+                        description="Skjelettvisning holder av plass og reduserer hopping når kort, lister eller paneler lastes inn."
+                        preview={<SkeletonRegionExample />}
+                        code={skeletonRegionExampleCode}
+                        codeLabel="Eksempel med Skeleton"
+                    />
+                ),
+                (
+                    <PatternExampleCard
+                        key="accessible-status-example"
+                        eyebrow="Tilgjengelig status"
+                        title="Kombiner synlig melding og skjermleserstatus"
+                        description="En kort melding sammen med loaderen gjør ventetiden tydeligere og holder brukeren orientert."
+                        preview={<AccessibleStatusExample />}
+                        code={accessibleStatusExampleCode}
+                        codeLabel="Eksempel med Message og Loader"
+                    />
+                ),
+                (
+                    <PatternExampleCard
+                        key="escalated-wait-example"
+                        eyebrow="Lengre ventetid"
+                        title="Eskaler til fremdrift når det tar tid"
+                        description="Når brukeren må vente en stund, bør mønsteret gå fra vag aktivitet til konkret fremdrift og forventningsstyring."
+                        preview={<EscalatedWaitExample />}
+                        code={escalatedWaitExampleCode}
+                        codeLabel="Eksempel med ProgressBar"
+                    />
+                ),
+            ],
+            components: [
                 {
-                    label: "HTML",
-                    kind: "html",
-                    howTo: "Sett aria-busy=\"true\" paa containeren og legg til skjult tekst.",
-                    description: "Gi skjermlesere en statusmelding uten aa vise ekstra tekst.",
-                    code: `
-<div aria-busy="true" aria-live="polite">
-  <div class="skeleton skeleton--line"></div>
-  <div class="skeleton skeleton--line"></div>
-  <span class="sr-only">Laster inn innhold</span>
-</div>
-                    `,
-                    Example: SkeletonExample,
+                    title: "Loader",
+                    href: "/ds/jokul/component/loader",
+                },
+                {
+                    title: "Skeleton",
+                    href: "/ds/jokul/component/skeleton",
+                },
+                {
+                    title: "ProgressBar",
+                    href: "/ds/jokul/component/progress-bar",
                 },
             ],
-        },
-        {
-            title: "Blokkerende lasting i panel",
-            description: "Kun for handlinger som faktisk stopper videre bruk.",
-            variants: [
+            steps: [
                 {
-                    label: "HTML",
-                    kind: "html",
-                    howTo: "Marker hele regionen med aria-busy og gi en kort status.",
-                    description: "Brukes ved store sidebytter eller kritiske steg.",
-                    code: `
-<section aria-busy="true" aria-live="polite">
-  <div role="status">Laster data...</div>
-</section>
-                    `,
-                    Example: BlockingExample,
+                    title: "Velg riktig komponent",
+                    description: "Start med Loader for korte ventetider, bruk Skeleton når layouten må holdes stabil, og gå over til ProgressBar hvis du kan vise reell eller omtrentlig fremdrift.",
+                },
+                {
+                    title: "Plasser lastetilstanden der innholdet endres",
+                    description: "Legg indikatoren i samme panel, liste eller flyt som oppdateres, slik at brukeren slipper å lete etter hvilken del av grensesnittet som jobber.",
+                },
+                {
+                    title: "Koble på tilgjengelig status",
+                    description: "Kombiner synlig tekst med role=\"status\", aria-live eller aria-busy der det passer, slik at hjelpemidler fanger opp endringen uten at fokus flyttes.",
+                },
+                {
+                    title: "Eskaler hvis ventetiden blir lang",
+                    description: "Bytt fra en diskret loader til tydeligere forklaring, fremdrift eller systemmelding hvis brukeren blir ventende lenge eller ikke kan fortsette arbeidet.",
                 },
             ],
         },
     ],
-    avoid: [
+    furtherReading: [
         {
-            title: "Spinner uten forklaring",
-            description: "Uten tekst blir statusen uforstaalig for skjermlesere.",
-            variants: [
-                {
-                    label: "HTML",
-                    kind: "html",
-                    howTo: "Legg til skjult tekst eller role=\"status\" i stedet for kun ikon.",
-                    code: `
-<div class="spinner" aria-hidden="true"></div>
-                    `,
-                    Example: SpinnerOnlyExample,
-                },
-            ],
+            title: "Jøkul Loader",
+            href: "/ds/jokul/component/loader",
+            description: "Komponenten for korte lastetilstander og diskret ventestatus.",
         },
-    ],
-    accessibility: {
-        title: "Gi status uten aa flytte fokus",
-        description:
-            "Lastetilstander skal informere, ikke avbryte. Bruk live regions for korte meldinger og behold brukerens fokus der det er.",
-        ariaRoles: [
-            "role=\"status\" for korte, ikke-kritiske oppdateringer.",
-            "aria-live=\"polite\" paa regioner som oppdateres mens brukeren leser.",
-            "aria-busy=\"true\" paa containeren mens innholdet hentes.",
-        ],
-        wcag: [
-            {
-                id: "4.1.3",
-                title: "Status Messages",
-                level: "AA",
-                relevance: "Status skal annonseres uten aa flytte fokus.",
-            },
-            {
-                id: "1.3.1",
-                title: "Info and Relationships",
-                level: "A",
-                relevance: "Statusen maa knyttes til riktig innholdsomraade.",
-            },
-            {
-                id: "2.2.1",
-                title: "Timing Adjustable",
-                level: "A",
-                relevance: "Gi brukeren tid nok hvis lasting tar lang tid.",
-            },
-        ],
-        avoid: [
-            "Ikke bruk kun farge eller bevegelse for aa formidle status.",
-            "Unngaa aria-live=\"assertive\" for lengre operasjoner.",
-            "Ikke flytt fokus automatisk mens noe laster.",
-        ],
-        testing: [
-            "Start en lasting og sjekk at status leses opp i skjermleser.",
-            "Test med tastatur at fokus blir der det var da lasting startet.",
-        ],
-    },
-    resources: [
+        {
+            title: "Jøkul Skeleton",
+            href: "/ds/jokul/component/skeleton",
+            description: "Brukes for å holde layouten stabil mens innhold hentes inn.",
+        },
+        {
+            title: "Jøkul ProgressBar",
+            href: "/ds/jokul/component/progress-bar",
+            description: "Bruk når du kan vise faktisk eller omtrentlig fremdrift.",
+        },
         {
             title: "ARIA Live Regions",
             href: "https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions",
-            publisher: "MDN",
-            relevance: 4,
-            description: "Forklarer aria-live og hvordan statusmeldinger annonseres.",
+            description: "Forklarer hvordan statusmeldinger annonseres uten å flytte fokus.",
         },
         {
-            title: "WebAIM: ARIA",
-            href: "https://webaim.org/techniques/aria/",
-            publisher: "WebAIM",
-            relevance: 3,
-            description: "Generelle retningslinjer for riktig bruk av ARIA.",
+            title: "Status Messages (WCAG 4.1.3)",
+            href: "https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html",
+            description: "Beskriver kravene til statusmeldinger som oppdateres dynamisk.",
         },
     ],
 };

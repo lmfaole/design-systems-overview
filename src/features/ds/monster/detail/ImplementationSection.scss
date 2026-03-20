@@ -1,0 +1,34 @@
+@use "../../../../components/ds/cards/shared";
+
+.monster-implementation-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.monster-implementation {
+  @include shared.card-surface;
+  display: grid;
+  gap: var(--site-space-m);
+  padding: var(--site-space-l);
+}
+
+.monster-implementation-meta {
+  margin: 0;
+  color: var(--site-text-muted);
+}
+
+.monster-implementation-copy,
+.monster-implementation-group {
+  display: grid;
+  gap: var(--site-space-xs);
+}
+
+.monster-implementation-copy > *,
+.monster-implementation-group > * {
+  margin: 0;
+}
+
+.monster-example-grid-item {
+  @include shared.card-item-reset;
+}

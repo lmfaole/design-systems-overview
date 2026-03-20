@@ -1,5 +1,28 @@
 /* Component page — hero styles are provided by the shared PageHeader */
 
+.component-pattern-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: var(--jkl-spacing-m);
+    margin: 0;
+    padding: 0;
+
+    li {
+        min-inline-size: 0;
+    }
+}
+
+.component-pattern-card {
+    block-size: 100%;
+}
+
+.component-pattern-title,
+.component-pattern-description,
+.component-pattern-meta {
+    margin: 0;
+}
+
 .component-metadata {
     margin: 0;
 

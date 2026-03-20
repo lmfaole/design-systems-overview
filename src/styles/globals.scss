@@ -4,10 +4,23 @@ html {
 
 :root {
   --site-page-background: Canvas;
+  --site-body-margin: 0;
   --site-breadcrumb-block-size: 0px;
   --site-border-color: light-dark(#e5e7eb, #4b5563);
   --site-text-color: CanvasText;
   --site-text-muted: GrayText;
+  --site-success-text-color: light-dark(#166534, #86efac);
+  --site-success-border-color: light-dark(#22c55e, #4ade80);
+  --site-success-surface-color: light-dark(#dcfce7, #052e16);
+  --site-error-text-color: light-dark(#991b1b, #fca5a5);
+  --site-error-border-color: light-dark(#ef4444, #f87171);
+  --site-error-surface-color: light-dark(#fee2e2, #450a0a);
+  --site-info-text-color: light-dark(#1d4ed8, #93c5fd);
+  --site-info-border-color: light-dark(#3b82f6, #60a5fa);
+  --site-info-surface-color: light-dark(#dbeafe, #172554);
+  --site-hint-text-color: light-dark(#4b5563, #9ca3af);
+  --site-hint-border-color: light-dark(#cbd5e1, #475569);
+  --site-hint-surface-color: light-dark(#f3f4f6, #1f2937);
   --site-font-family: ui-sans-serif, system-ui, sans-serif;
   --site-max-width: 90rem;
   --page-max-width: var(--site-max-width);
@@ -17,6 +30,19 @@ html {
   --site-space-m: 1.5rem;
   --site-space-l: 2rem;
   --site-space-xl: 3rem;
+  --site-page-padding-inline: var(--site-space-s);
+  --site-heading-margin-block-start: var(--site-space-l);
+  --site-heading-margin-block-end: var(--site-space-s);
+  --site-subheading-margin-block-start: var(--site-space-m);
+  --site-subheading-margin-block-end: var(--site-space-xs);
+  --site-copy-margin-block: var(--site-space-s);
+  --site-block-margin-block: var(--site-space-m);
+  --site-list-margin-block: var(--site-space-s);
+  --site-list-padding-inline-start: var(--site-space-l);
+  --site-list-item-margin-block-start: var(--site-space-xxs);
+  --site-description-term-margin-block-start: var(--site-space-s);
+  --site-description-detail-margin-block-start: var(--site-space-xxs);
+  --site-form-gap: var(--site-space-s);
   --site-section-min-width: 12rem;
   --site-heading-1-max-width: 30ch;
   --site-heading-2-max-width: 35ch;
@@ -38,6 +64,7 @@ html {
 }
 
 body {
+  margin: var(--site-body-margin);
   background-color: var(--site-page-background);
   color: var(--site-text-color);
   font-family: var(--site-font-family);
@@ -47,7 +74,7 @@ body {
   box-sizing: border-box;
   inline-size: min(100%, var(--site-max-width));
   margin-inline: auto;
-  padding-inline: var(--site-space-s);
+  padding-inline: var(--site-page-padding-inline);
 }
 
 .bare-list {
@@ -61,6 +88,18 @@ body:has(.jkl) {
   --site-border-color: var(--jkl-color-border-subdued);
   --site-text-color: var(--jkl-color-text-default);
   --site-text-muted: var(--jkl-color-text-subdued);
+  --site-success-text-color: var(--jkl-color-text-success-strong);
+  --site-success-border-color: var(--jkl-color-border-success);
+  --site-success-surface-color: var(--jkl-color-background-surface-succes);
+  --site-error-text-color: var(--jkl-color-text-error-strong);
+  --site-error-border-color: var(--jkl-color-border-error);
+  --site-error-surface-color: var(--jkl-color-background-surface-error);
+  --site-info-text-color: var(--jkl-color-text-info-strong);
+  --site-info-border-color: var(--jkl-color-border-info);
+  --site-info-surface-color: var(--jkl-color-background-surface-info);
+  --site-hint-text-color: var(--jkl-color-text-subdued);
+  --site-hint-border-color: var(--jkl-color-border-subdued);
+  --site-hint-surface-color: var(--jkl-color-background-surface-default);
   --site-font-family: "Fremtind Grotesk", "Adjusted Arial Fallback", Arial, sans-serif;
   --site-max-width: 180ch;
   --page-max-width: var(--site-max-width);
@@ -76,6 +115,14 @@ h1,
 h2,
 h3 {
   text-wrap: balance;
+}
+
+:where(h1, h2, h3):not([class]) {
+  margin-block: var(--site-heading-margin-block-start) var(--site-heading-margin-block-end);
+}
+
+:where(h4, h5, h6):not([class]) {
+  margin-block: var(--site-subheading-margin-block-start) var(--site-subheading-margin-block-end);
 }
 
 h1 {
@@ -103,6 +150,48 @@ p,
 small,
 blockquote {
   max-width: var(--site-copy-max-width);
+}
+
+:where(p, blockquote, pre, figure, table):not([class]) {
+  margin-block: var(--site-block-margin-block);
+}
+
+:where(ul, ol, dl):not([class]) {
+  margin-block: var(--site-list-margin-block);
+}
+
+:where(ul, ol):not([class]) {
+  padding-inline-start: var(--site-list-padding-inline-start);
+}
+
+:where(ul, ol):not([class]) > li + li {
+  margin-block-start: var(--site-list-item-margin-block-start);
+}
+
+:where(dl):not([class]) > dt + dt,
+:where(dl):not([class]) > dd + dt {
+  margin-block-start: var(--site-description-term-margin-block-start);
+}
+
+:where(dl):not([class]) > dd {
+  margin-inline-start: 0;
+}
+
+:where(dl):not([class]) > dt + dd,
+:where(dl):not([class]) > dd + dd {
+  margin-block-start: var(--site-description-detail-margin-block-start);
+}
+
+:where(form, fieldset):not([class]) {
+  display: grid;
+  gap: var(--site-form-gap);
+}
+
+:where(fieldset):not([class]) {
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
 code,
@@ -147,5 +236,13 @@ hr {
 }
 
 :where(h1, h2, h3, h4, h5, p, small):last-child {
+  margin-block-end: 0;
+}
+
+:where(h6, ul, ol, dl, blockquote, pre, figure, table):not([class]):first-child {
+  margin-block-start: 0;
+}
+
+:where(h6, ul, ol, dl, blockquote, pre, figure, table):not([class]):last-child {
   margin-block-end: 0;
 }

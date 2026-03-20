@@ -1,10 +1,9 @@
-
-import { useEffect, useMemo, useState } from "react";
-import { Card } from "@fremtind/jokul/card";
-import { searchDsDocuments, type DsSearchResult } from "@/data/ds/search";
-import { Grid } from "@/components/ds/Grid";
-import { PageHeader } from "@/components/ds/PageHeader";
-import { SearchResultCard } from "@/components/ds/cards/SearchResultCard";
+import {useEffect, useMemo, useState} from "react";
+import {Card} from "@fremtind/jokul/card";
+import {type DsSearchResult, searchDsDocuments} from "@/data/ds/search";
+import {Grid} from "@/components/ds/Grid";
+import {PageHeader} from "@/components/ds/PageHeader";
+import {SearchResultCard} from "@/components/ds/cards/SearchResultCard";
 
 type SearchParams = {
     q: string;
@@ -18,10 +17,10 @@ function getQueryFromLocation() {
 }
 
 export function SearchPageClient() {
-    const [searchParams, setSearchParams] = useState<SearchParams>({ q: "" });
+    const [searchParams, setSearchParams] = useState<SearchParams>({q: ""});
 
     useEffect(() => {
-        setSearchParams({ q: getQueryFromLocation() });
+        setSearchParams({q: getQueryFromLocation()});
     }, []);
 
     const query = searchParams.q;
@@ -56,7 +55,7 @@ export function SearchPageClient() {
             {!hasQuery ? (
                 <p>Skriv inn et søk for å se resultater.</p>
             ) : totalResults === 0 ? (
-                <EmptySearchState query={query} />
+                <EmptySearchState query={query}/>
             ) : (
                 <>
                     <p>{totalResults} treff totalt.</p>
@@ -71,10 +70,10 @@ export function SearchPageClient() {
                         )}
 
                         <h2>Alt annet</h2>
-                        <SearchSection title={`Sider (${pageResults.length})`} items={pageResults} />
-                        <SearchSection title={`Komponenter (${componentResults.length})`} items={componentResults} />
-                        <SearchSection title={`Mønstre (${patternResults.length})`} items={patternResults} />
-                        <SearchSection title={`Tokens (${tokenResults.length})`} items={tokenResults} />
+                        <SearchSection title={`Mønstre (${patternResults.length})`} items={patternResults}/>
+                        <SearchSection title={`Komponenter (${componentResults.length})`} items={componentResults}/>
+                        <SearchSection title={`Tokens (${tokenResults.length})`} items={tokenResults}/>
+                        <SearchSection title={`Sider (${pageResults.length})`} items={pageResults}/>
                     </div>
                 </>
             )}
@@ -82,7 +81,7 @@ export function SearchPageClient() {
     );
 }
 
-function EmptySearchState({ query }: { query: string }) {
+function EmptySearchState({query}: { query: string }) {
     return (
         <Card padding="l">
             <h2>Ingen treff for “{query}”</h2>
@@ -98,9 +97,9 @@ function EmptySearchState({ query }: { query: string }) {
 }
 
 function SearchSection({
-    title,
-    items,
-}: {
+                           title,
+                           items,
+                       }: {
     title: string;
     items: DsSearchResult[];
 }) {
@@ -113,7 +112,7 @@ function SearchSection({
             <h3>{title}</h3>
             <Grid as="ul" columns={3} className="bare-list">
                 {items.map((item) => (
-                    <SearchResultCard key={item.doc.id} result={item} />
+                    <SearchResultCard key={item.doc.id} result={item}/>
                 ))}
             </Grid>
         </section>

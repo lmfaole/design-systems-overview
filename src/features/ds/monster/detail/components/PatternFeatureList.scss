@@ -1,0 +1,118 @@
+@use "../../../../../components/ds/cards/shared";
+
+.monster-feature-list {
+  --monster-feature-accent: var(--site-hint-text-color);
+  --monster-feature-border: var(--site-hint-border-color);
+  --monster-feature-surface: var(--site-hint-surface-color);
+  --monster-feature-marker-size: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.monster-feature-list[data-ordered="true"] {
+  counter-reset: monster-feature;
+}
+
+.monster-feature-list[data-tone="accent"] {
+  --monster-feature-accent: var(--site-info-text-color);
+  --monster-feature-border: var(--site-info-border-color);
+  --monster-feature-surface: var(--site-info-surface-color);
+}
+
+.monster-feature-list[data-tone="success"] {
+  --monster-feature-accent: var(--site-success-text-color);
+  --monster-feature-border: var(--site-success-border-color);
+  --monster-feature-surface: var(--site-success-surface-color);
+}
+
+.monster-feature-list[data-tone="error"] {
+  --monster-feature-accent: var(--site-error-text-color);
+  --monster-feature-border: var(--site-error-border-color);
+  --monster-feature-surface: var(--site-error-surface-color);
+}
+
+.monster-feature-item {
+  @include shared.card-surface;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--site-space-s);
+  align-items: start;
+  padding: var(--site-space-m);
+  min-inline-size: 0;
+  border-color: color-mix(in srgb, var(--monster-feature-border) 35%, var(--site-border-color) 65%);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--monster-feature-surface) 20%, var(--site-page-background) 80%),
+    color-mix(in srgb, var(--monster-feature-surface) 10%, var(--site-page-background) 90%)
+  );
+
+  .monster-guidance-column & {
+    border-color: color-mix(in srgb, var(--monster-guidance-border) 50%, var(--site-border-color) 50%);
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--monster-guidance-surface) 28%, var(--site-page-background) 72%),
+      color-mix(in srgb, var(--monster-guidance-surface) 14%, var(--site-page-background) 86%)
+    );
+  }
+}
+
+.monster-feature-item::before {
+  display: grid;
+  place-items: center;
+  inline-size: var(--monster-feature-marker-size);
+  block-size: var(--monster-feature-marker-size);
+  border: 1px solid var(--site-border-color);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--monster-feature-surface) 65%, var(--site-page-background) 35%);
+  color: var(--monster-feature-accent);
+  content: "→";
+
+  .monster-guidance-column & {
+    border-color: color-mix(in srgb, var(--monster-guidance-border) 60%, var(--site-border-color) 40%);
+    background: color-mix(in srgb, var(--monster-guidance-surface) 68%, var(--site-page-background) 32%);
+    color: var(--monster-guidance-accent);
+  }
+}
+
+.monster-feature-list[data-ordered="true"] .monster-feature-item {
+  counter-increment: monster-feature;
+}
+
+.monster-feature-list[data-ordered="true"] .monster-feature-item::before {
+  content: counter(monster-feature);
+}
+
+.monster-feature-list[data-tone="accent"][data-ordered="false"] .monster-feature-item::before {
+  content: "!";
+}
+
+.monster-feature-list[data-tone="success"][data-ordered="false"] .monster-feature-item::before {
+  content: "+";
+}
+
+.monster-feature-list[data-tone="error"][data-ordered="false"] .monster-feature-item::before {
+  content: "−";
+}
+
+.monster-feature-body {
+  display: grid;
+  gap: var(--site-space-xxs);
+  min-inline-size: 0;
+}
+
+.monster-feature-title {
+  margin: 0;
+  max-width: none;
+}
+
+.monster-feature-description {
+  display: grid;
+  gap: var(--site-space-xxs);
+  color: var(--site-hint-text-color);
+}
+
+.monster-feature-description > * {
+  margin: 0;
+  max-width: none;
+}

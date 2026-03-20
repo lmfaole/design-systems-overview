@@ -127,12 +127,16 @@ body:has(.jkl) {
 
 .jkl .post-prose :where(li + li),
 .jkl .post-prose-section :where(li + li) {
-  margin-block-start: var(--jkl-spacing-xs);
+  margin-block-start: var(--site-list-item-margin-block-start);
 }
 
 .jkl .article-toc {
   width: 100%;
   max-width: var(--content-max-width);
+
+  ol {
+    padding-inline-start: 0;
+  }
 }
 
 .jkl .post-prose[data-kind="pattern"] {

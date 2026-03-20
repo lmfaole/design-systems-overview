@@ -1,39 +1,24 @@
 import type { PatternPost } from "@/data/monster/patterns";
+import { PatternDoAndDontsGrid } from "./components";
+import { MONSTER_PATTERN_SECTIONS } from "./sections";
 
 interface DoAndDontsSectionProps {
-    doAndDonts: NonNullable<PatternPost["doAndDonts"]>;
+    doAndDonts: PatternPost["doAndDonts"];
 }
 
 export function DoAndDontsSection({ doAndDonts }: DoAndDontsSectionProps) {
     return (
-        <section className="monster-section" aria-labelledby="dos-and-donts">
-            <h2 id="dos-and-donts">Hvorfor bruke mønsteret</h2>
-            <div className="monster-grid" data-columns={2}>
-                <div>
-                    <h3>Hvorfor bruke</h3>
-                    <ul className="monster-list">
-                        {doAndDonts.use.map((item, index) => (
-                            <li key={index}>
-                                <strong>{item.title}</strong>
-                                <div className="monster-inline-meta">{item.description}</div>
-                                <div>{item.example}</div>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-                <div>
-                    <h3>Hvorfor ikke bruke</h3>
-                    <ul className="monster-list">
-                        {doAndDonts.avoid.map((item, index) => (
-                            <li key={index}>
-                                <strong>{item.title}</strong>
-                                <div className="monster-inline-meta">{item.description}</div>
-                                <div>{item.example}</div>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            </div>
+        <section
+            className="monster-section"
+            aria-labelledby={MONSTER_PATTERN_SECTIONS.doAndDonts.id}
+        >
+            <h2 id={MONSTER_PATTERN_SECTIONS.doAndDonts.id}>
+                {MONSTER_PATTERN_SECTIONS.doAndDonts.label}
+            </h2>
+            <PatternDoAndDontsGrid
+                dos={doAndDonts.dos}
+                donts={doAndDonts.donts}
+            />
         </section>
     );
 }

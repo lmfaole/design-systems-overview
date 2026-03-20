@@ -1,10 +1,19 @@
-import type React from "react";
-import type { ResourcePublisher, ResourceRelevance } from "@/components/ds/resource-list/types";
+import type { ReactNode } from "react";
 
-export interface PatternResource {
+/**
+ * A supporting resource linked from the "further reading" section of a pattern page.
+ */
+export interface PatternFurtherReadingItem {
+    /**
+     * Link text shown to the reader.
+     */
     title: string;
+    /**
+     * Destination URL for the resource.
+     */
     href: string;
-    publisher: ResourcePublisher;
-    relevance: ResourceRelevance;
-    description?: React.ReactNode;
+    /**
+     * Optional supporting context about why the resource is useful.
+     */
+    description?: ReactNode;
 }

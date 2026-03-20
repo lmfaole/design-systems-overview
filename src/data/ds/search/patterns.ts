@@ -1,13 +1,6 @@
 import { patternPosts, getPatternHref } from "@/data/monster/patterns";
-import type { PatternCategory } from "@/features/ds/monster/types";
+import { PATTERN_CATEGORY_LABELS } from "@/features/ds/monster/types";
 import type { DsSearchDocument } from "./types";
-
-const CATEGORY_LABELS: Record<PatternCategory, string> = {
-    handlinger: "Handlinger",
-    navigasjon: "Navigasjon",
-    tilbakemelding: "Tilbakemelding",
-    struktur: "Struktur",
-};
 
 export function getPatternSearchDocuments(): DsSearchDocument[] {
     return patternPosts.map((post) => ({
@@ -16,12 +9,18 @@ export function getPatternSearchDocuments(): DsSearchDocument[] {
         designSystemName: "Mønstre",
         kind: "pattern",
         title: post.title,
-        description: post.goals,
+        description: post.description,
         keywords: [
-            CATEGORY_LABELS[post.category],
-            ...(post.components ?? []),
+            PATTERN_CATEGORY_LABELS[post.category],
+            ...post.doAndDonts.dos.map((item) => item.title),
+            ...post.doAndDonts.donts.map((item) => item.title),
+            ...post.accessibilityConcerns.map((item) => item.title),
+            ...post.implementation.map((item) => item.designSystem),
+            ...post.implementation.map((item) => item.title),
+            ...post.implementation.flatMap((item) => item.components.map((component) => component.title)),
+            ...post.implementation.flatMap((item) => item.steps.map((step) => step.title)),
         ],
         href: getPatternHref(post),
-        meta: `Mønster · ${CATEGORY_LABELS[post.category]}`,
+        meta: `Mønster · ${PATTERN_CATEGORY_LABELS[post.category]}`,
     }));
 }

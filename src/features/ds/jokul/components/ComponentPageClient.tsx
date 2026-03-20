@@ -8,6 +8,7 @@ import { DescriptionDetail, DescriptionList, DescriptionTerm } from "@fremtind/j
 import { Message } from "@fremtind/jokul/message";
 import { Link } from "@fremtind/jokul/link";
 import type { Migration } from "@/features/ds/jokul/_component-docs/data";
+import type { PatternComponentBacklink } from "@/data/monster/patterns";
 import { getComponentDoc, getParentAndSiblings, getRelationships } from "@/features/ds/jokul/_component-docs/data";
 import type { ComponentComplexityRating } from "@/features/ds/jokul/_component-docs/docs/types";
 import { PropTable } from "@/features/ds/jokul/_component-docs/components/PropTable";
@@ -134,7 +135,49 @@ function MigrationSection({ migrations }: { migrations: Migration[] }) {
     );
 }
 
-export function ComponentPageClient({ id }: { id: string }) {
+function RelatedPatternsSection({ patterns }: { patterns: PatternComponentBacklink[] }) {
+    if (patterns.length === 0) {
+        return null;
+    }
+
+    return (
+        <Flex as="section" direction="column" gap="m">
+            <h2 id="monster-monstre">Brukes i mønstre</h2>
+            <ul className="component-pattern-list">
+                {patterns.map((pattern) => (
+                    <li key={pattern.href}>
+                        <Card padding="l" className="component-pattern-card">
+                            <Flex direction="column" gap="s">
+                                <small>{pattern.categoryLabel}</small>
+                                <h3 className="component-pattern-title">
+                                    <Link href={pattern.href}>{pattern.title}</Link>
+                                </h3>
+                                <p className="component-pattern-description">{pattern.description}</p>
+                                <p className="component-pattern-meta">
+                                    <strong>
+                                        {pattern.implementationTitles.length === 1
+                                            ? "Implementasjon"
+                                            : "Implementasjoner"}
+                                        :
+                                    </strong>{" "}
+                                    {pattern.implementationTitles.join(", ")}
+                                </p>
+                            </Flex>
+                        </Card>
+                    </li>
+                ))}
+            </ul>
+        </Flex>
+    );
+}
+
+export function ComponentPageClient({
+    id,
+    relatedPatterns,
+}: {
+    id: string;
+    relatedPatterns: PatternComponentBacklink[];
+}) {
     const doc = getComponentDoc(id);
     const { requires, alternatives, subcomponents, related } = getRelationships(id);
     const { parent, siblings, kind: parentKind } = getParentAndSiblings(id);
@@ -183,6 +226,8 @@ export function ComponentPageClient({ id }: { id: string }) {
                     {doc.example}
                 </ComponentExample>
             )}
+
+            <RelatedPatternsSection patterns={relatedPatterns} />
 
             {requiresItems.length > 0 && (
                 <Flex as="section" direction="column" gap="m">
