@@ -1,13 +1,13 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { getPatternPost, patternPosts } from "@/app/ds/monster/data";
-import { PageHeader } from "@/app/ds/_shared/components/PageHeader";
-import { ExamplesSection } from "@/app/ds/monster/[id]/_components/ExamplesSection";
-import { AvoidSection } from "@/app/ds/monster/[id]/_components/AvoidSection";
-import { DoAndDontsSection } from "@/app/ds/monster/[id]/_components/DoAndDontsSection";
-import { AccessibilitySection } from "@/app/ds/monster/[id]/_components/AccessibilitySection";
-import { ResourceSection } from "@/app/ds/monster/[id]/_components/ResourceSection";
-import { ComponentsSection } from "@/app/ds/monster/[id]/_components/ComponentsSection";
+import { getPatternPost, patternPosts } from "@/data/monster/patterns";
+import { PageHeader } from "@/components/ds/PageHeader";
+import { ExamplesSection } from "@/features/ds/monster/detail/ExamplesSection";
+import { AvoidSection } from "@/features/ds/monster/detail/AvoidSection";
+import { DoAndDontsSection } from "@/features/ds/monster/detail/DoAndDontsSection";
+import { AccessibilitySection } from "@/features/ds/monster/detail/AccessibilitySection";
+import { ResourceSection } from "@/features/ds/monster/detail/ResourceSection";
+import { ComponentsSection } from "@/features/ds/monster/detail/ComponentsSection";
 
 export function getStaticPaths() {
     return patternPosts.map((post) => ({

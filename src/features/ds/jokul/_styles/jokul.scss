@@ -1,0 +1,265 @@
+@use "@fremtind/jokul/styles/fonts/webfonts.scss";
+@use "@fremtind/jokul/styles/core/jkl";
+@use "@fremtind/jokul/styles/core/core.scss";
+@use "@fremtind/jokul/styles/core/theme/typography.scss";
+@use "@fremtind/jokul/styles/components/autosuggest/autosuggest.scss";
+@use "@fremtind/jokul/styles/components/breadcrumb/breadcrumb.scss";
+@use "@fremtind/jokul/styles/components/button/button.scss";
+@use "@fremtind/jokul/styles/components/card/card.scss";
+@use "@fremtind/jokul/styles/components/checkbox/checkbox.scss";
+@use "@fremtind/jokul/styles/components/checkbox-panel/checkbox-panel.scss";
+@use "@fremtind/jokul/styles/components/chip/chip.scss";
+@use "@fremtind/jokul/styles/components/combobox/combobox.scss";
+@use "@fremtind/jokul/styles/components/countdown/countdown.scss";
+// @use "@fremtind/jokul/styles/components/datepicker/datepicker.scss";
+@use "@fremtind/jokul/styles/components/description-list/description-list.scss";
+@use "@fremtind/jokul/styles/components/expander/expandable.scss";
+@use "@fremtind/jokul/styles/components/feedback/feedback.scss";
+@use "@fremtind/jokul/styles/components/file-input/file-input.scss";
+@use "@fremtind/jokul/styles/components/flex/flex.scss";
+@use "@fremtind/jokul/styles/components/help/help.scss";
+@use "@fremtind/jokul/styles/components/icon/icon.scss";
+@use "@fremtind/jokul/styles/components/icon-button/icon-button.scss";
+@use "@fremtind/jokul/styles/components/image/image.scss";
+@use "@fremtind/jokul/styles/components/input-group/input-group.scss";
+@use "@fremtind/jokul/styles/components/link/link.scss";
+@use "@fremtind/jokul/styles/components/link-list/link-list.scss";
+@use "@fremtind/jokul/styles/components/list/list.scss";
+@use "@fremtind/jokul/styles/components/loader/loader.scss";
+@use "@fremtind/jokul/styles/components/loader/skeleton-loader.scss";
+@use "@fremtind/jokul/styles/components/logo/logo.scss";
+@use "@fremtind/jokul/styles/components/menu/menu.scss";
+@use "@fremtind/jokul/styles/components/message/message.scss";
+@use "@fremtind/jokul/styles/components/modal/modal.scss";
+@use "@fremtind/jokul/styles/components/nav-link/nav-link.scss";
+@use "@fremtind/jokul/styles/components/pagination/pagination.scss";
+@use "@fremtind/jokul/styles/components/popover/popover.scss";
+@use "@fremtind/jokul/styles/components/progress-bar/progress-bar.scss";
+@use "@fremtind/jokul/styles/components/radio-button/radio-button.scss";
+@use "@fremtind/jokul/styles/components/radio-panel/radio-panel.scss";
+@use "@fremtind/jokul/styles/components/search/search.scss";
+@use "@fremtind/jokul/styles/components/search/search-with-submit-button.scss";
+@use "@fremtind/jokul/styles/components/segmented-control/segmented-control.scss";
+@use "@fremtind/jokul/styles/components/select/select.scss";
+@use "./patches/select-beta.scss" as select-beta;
+@use "@fremtind/jokul/styles/components/summary-table/summary-table.scss";
+@use "@fremtind/jokul/styles/components/system-message/system-message.scss";
+@use "@fremtind/jokul/styles/components/table/table.scss";
+@use "@fremtind/jokul/styles/components/table-of-contents/table-of-contents.scss";
+@use "@fremtind/jokul/styles/components/tabs/tabs.scss";
+@use "@fremtind/jokul/styles/components/tag/tag.scss";
+@use "@fremtind/jokul/styles/components/text-area/text-area.scss";
+@use "@fremtind/jokul/styles/components/text-input/text-input.scss";
+@use "@fremtind/jokul/styles/components/toast/toast.scss";
+@use "@fremtind/jokul/styles/components/toggle-switch/toggle-switch.scss";
+@use "@fremtind/jokul/styles/components/tooltip/tooltip.scss";
+
+.jkl {
+  --site-max-width: 180ch;
+  --page-max-width: var(--site-max-width);
+  --site-border-color: var(--jkl-color-border-subdued);
+  --site-text-color: var(--jkl-color-text-default);
+  --site-text-muted: var(--jkl-color-text-subdued);
+  --site-space-xxs: var(--jkl-spacing-xxs);
+  --site-space-xs: var(--jkl-spacing-xs);
+  --site-space-s: var(--jkl-spacing-s);
+  --site-space-m: var(--jkl-spacing-m);
+  --site-space-l: var(--jkl-spacing-l);
+  --site-space-xl: var(--jkl-spacing-xl);
+  --site-heading-1-max-width: 30ch;
+  --site-heading-2-max-width: 35ch;
+  --site-heading-3-max-width: 40ch;
+  --site-heading-4-max-width: 45ch;
+  --site-heading-5-max-width: 50ch;
+  --site-copy-max-width: 65ch;
+  --site-code-font-family: "Fremtind Grotesk Mono", ui-monospace, monospace;
+  --site-code-font-size: 0.875em;
+  --site-pre-padding: var(--jkl-spacing-m);
+  --site-pre-background: var(--jkl-color-background-container-low);
+  --site-pre-border-radius: var(--jkl-border-radius-s);
+  --site-quote-padding-inline-start: var(--jkl-spacing-m);
+  --site-quote-border-color: var(--jkl-color-border-ui);
+  --site-quote-text-color: var(--jkl-color-text-subdued);
+  --site-rule-color: var(--jkl-color-border-subdued);
+  --site-rule-spacing: var(--jkl-spacing-l);
+
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: clip;
+
+  background-color: var(--jkl-color-background-page);
+  color: var(--jkl-color-text-default);
+}
+
+body:has(.jkl) {
+  margin: 0;
+  padding: 0;
+}
+
+.jkl .site-layout {
+  padding-inline: 0;
+  padding-block: var(--jkl-spacing-xl);
+  padding-block-end: 0;
+  flex: 1;
+  --content-max-width: var(--site-max-width);
+}
+
+/* Prose max-width: scoped to direct children of .post-prose
+   so demo components (nested deeper) are not constrained.
+   Lists constrain the list container itself (not li) so that
+   Jøkul's list component styles are respected inside. */
+.jkl .post-prose {
+  > h1, > h2, > h3, > h4, > h5, > p, > small,
+  > ul, > ol,
+  > dl {
+    max-width: var(--content-max-width);
+  }
+}
+
+/* Jøkul List removes default ul/ol margins and does not add vertical spacing
+   between items. In prose contexts we want readable line length and a bit of
+   air between items without targeting internal `.jkl-*` class names. */
+.jkl .post-prose :where(ul, ol, dl),
+.jkl .post-prose-section :where(ul, ol, dl) {
+  max-width: var(--content-max-width);
+}
+
+.jkl .post-prose :where(li + li),
+.jkl .post-prose-section :where(li + li) {
+  margin-block-start: var(--jkl-spacing-xs);
+}
+
+.jkl .article-toc {
+  width: 100%;
+  max-width: var(--content-max-width);
+}
+
+.jkl .post-prose[data-kind="pattern"] {
+  --pattern-prose-max-width: var(--content-max-width);
+
+  font-size: var(--jkl-font-size-4);
+  line-height: var(--jkl-line-height-relaxed);
+  text-align: start;
+
+  .text {
+    width: 100%;
+    max-width: var(--pattern-prose-max-width);
+    margin-inline: 0;
+  }
+
+  .text :where(h1, h2, h3) {
+    text-wrap: balance;
+  }
+
+  .text :where(p, li) {
+    text-wrap: pretty;
+    hyphens: auto;
+  }
+
+  .text p {
+    font-size: inherit;
+    line-height: inherit;
+  }
+}
+
+// ============================================================
+// Default element typography using Jøkul mixins
+// ============================================================
+
+.jkl h1 {
+  @include jkl.text-style("heading-1");
+  max-width: var(--site-heading-1-max-width);
+}
+
+.jkl h2 {
+  @include jkl.text-style("heading-2");
+  max-width: var(--site-heading-2-max-width);
+}
+
+.jkl h3 {
+  @include jkl.text-style("heading-3");
+  max-width: var(--site-heading-3-max-width);
+}
+
+.jkl h4 {
+  @include jkl.text-style("heading-4");
+  max-width: var(--site-heading-4-max-width);
+}
+
+.jkl h5 {
+  @include jkl.text-style("heading-5");
+  max-width: var(--site-heading-5-max-width);
+}
+
+.jkl p {
+  @include jkl.text-style("paragraph-medium");
+  max-width: var(--site-copy-max-width);
+}
+
+.jkl .lead {
+  @include jkl.text-style("paragraph-large");
+  max-width: var(--site-copy-max-width);
+}
+
+.jkl small {
+  @include jkl.text-style("text-small");
+  max-width: var(--site-copy-max-width);
+}
+
+.jkl strong,
+.jkl b {
+  font-weight: jkl.$typography-weight-bold;
+}
+
+.jkl code,
+.jkl kbd,
+.jkl samp {
+  @include jkl.use-font-family("Fremtind Grotesk Mono");
+  font-size: var(--site-code-font-size);
+}
+
+.jkl pre {
+  @include jkl.use-font-family("Fremtind Grotesk Mono");
+  overflow-x: auto;
+  max-width: 80ch;
+  padding: var(--site-pre-padding);
+  background-color: var(--site-pre-background);
+  border-radius: var(--site-pre-border-radius);
+
+  code {
+    font-size: inherit;
+  }
+}
+
+.jkl blockquote {
+  @include jkl.text-style("paragraph-medium");
+  max-width: var(--site-copy-max-width);
+  margin-inline: 0;
+  padding-inline-start: var(--site-quote-padding-inline-start);
+  border-inline-start: 3px solid var(--site-quote-border-color);
+  color: var(--site-quote-text-color);
+}
+
+.jkl hr {
+  border: 0;
+  border-block-start: 1px solid var(--site-rule-color);
+  margin-block: var(--site-rule-spacing);
+}
+
+// Prevent unwanted leading space at the top of any container
+.jkl h1,
+.jkl h2,
+.jkl h3,
+.jkl h4,
+.jkl h5,
+.jkl p,
+.jkl small {
+  &:first-child {
+    margin-block-start: 0;
+  }
+
+  &:last-child {
+    margin-block-end: 0;
+  }
+}

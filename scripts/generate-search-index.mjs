@@ -9,15 +9,15 @@ const repoRoot = path.resolve(__dirname, "..");
 
 const componentDocsIndexPath = path.join(
     repoRoot,
-    "src/app/(ds)/ds/jokul/_component-docs/docs/index.ts",
+    "src/features/ds/jokul/_component-docs/docs/index.ts",
 );
 const tokenPostsIndexPath = path.join(
     repoRoot,
-    "src/app/(ds)/ds/jokul/_token/posts/index.ts",
+    "src/features/ds/jokul/_token/posts/index.ts",
 );
 const outputPath = path.join(
     repoRoot,
-    "src/app/(ds)/ds/_data/search/generated/jokul-search-documents.ts",
+    "src/data/ds/search/generated/jokul-search-documents.ts",
 );
 
 function parseTsxFile(filePath) {

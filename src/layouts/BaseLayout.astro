@@ -1,7 +1,8 @@
 ---
-import { SiteHeader } from "@/app/_shared/components/SiteHeader";
-import { SiteFooter } from "@/app/_shared/components/SiteFooter";
-import { SiteBreadcrumb } from "@/app/_shared/components/SiteBreadcrumb";
+import { SiteHeader } from "@/components/site/SiteHeader";
+import { SiteFooter } from "@/components/site/SiteFooter";
+import { SiteBreadcrumb } from "@/components/site/SiteBreadcrumb";
+import type { SiteLink } from "@/components/site/SiteHeader";
 import { DEFAULT_DESCRIPTION, SITE_NAME, SITE_URL } from "@/site/seo";
 import "@/styles/globals.scss";
 
@@ -26,7 +27,7 @@ const {
 const canonicalUrl = new URL(path, SITE_URL).toString();
 const pageTitle = title === SITE_NAME ? SITE_NAME : `${title} | ${SITE_NAME}`;
 const brand = { href: "/", label: SITE_NAME };
-const links = [];
+const links: SiteLink[] = [];
 const footerSections = [
     {
         title: "Læringsressurs",

@@ -3,7 +3,8 @@
 ## Project Intent
 
 This repo is a learning resource that collects UI patterns, design tokens, and documentation for design systems. Build
-patterns in `src/app/monster` (basic HTML + clear a11y) and design-system-specific pages under `src/app/ds/<system>`.
+patterns in the Monster feature and data modules, with Astro routes under `src/pages/ds/monster`, and keep
+design-system-specific pages under `src/pages/ds/<system>` with implementation in `src/features/ds/<system>`.
 Patterns should be focused on the design systems in scope, but also include general UI patterns that can be applied
 across systems. The goal is to create a comprehensive resource for designers and developers working with design systems,
 with a strong emphasis on accessibility and performance.
@@ -11,6 +12,8 @@ with a strong emphasis on accessibility and performance.
 ## Structure And Scope
 
 - Repo-wide rules apply everywhere.
+- Astro routes belong in `src/pages`, layouts in `src/layouts`, shared UI in `src/components`, content/data in
+  `src/data`, and route implementation in `src/features`.
 - When adding broad logic, prefer splitting into small files to keep cognitive load low.
 - Make reusable components whenever possible.
 - When working inside a design system, follow the conventions and patterns of that system as closely as possible.

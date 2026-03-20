@@ -24,7 +24,7 @@
     "url": "git+https://github.com/lmfaole/lmfaole.git"
   },
   "keywords": [
-    "nextjs",
+    "astro",
     "cloudflare-pages",
     "jokul",
     "design-system",
@@ -40,15 +40,12 @@
     "@astrojs/react": "^5.0.1",
     "@fremtind/jokul": "^4.2.0",
     "astro": "^6.0.7",
-    "next": "^16.1.6",
     "patch-package": "^8.0.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   },
   "devDependencies": {
-    "@mdx-js/loader": "^3.1.1",
-    "@mdx-js/react": "^3.1.1",
-    "@next/mdx": "^16.1.6",
+    "@astrojs/check": "^0.9.8",
     "@types/node": "^25.5.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",

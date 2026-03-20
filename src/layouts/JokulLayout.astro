@@ -1,0 +1,25 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import "@/styles/jokul.scss";
+
+interface Props {
+    title?: string;
+    description?: string;
+    path?: string;
+    type?: "website" | "article";
+    noIndex?: boolean;
+}
+
+const { title, description, path, type, noIndex } = Astro.props;
+---
+
+<BaseLayout
+    title={title}
+    description={description}
+    path={path}
+    type={type}
+    noIndex={noIndex}
+    jokulTheme={true}
+>
+    <slot />
+</BaseLayout>

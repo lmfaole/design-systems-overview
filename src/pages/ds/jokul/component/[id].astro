@@ -1,7 +1,7 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import { componentDocs, getComponentDoc } from "@/app/ds/_data/jokul-component-docs";
-import { ComponentPageClient } from "@/app/(ds)/ds/jokul/component/[id]/ComponentPageClient";
+import JokulLayout from "@/layouts/JokulLayout.astro";
+import { componentDocs, getComponentDoc } from "@/data/jokul/component-docs";
+import { ComponentPageClient } from "@/features/ds/jokul/components/ComponentPageClient";
 
 export function getStaticPaths() {
     return componentDocs.map((doc) => ({
@@ -17,11 +17,10 @@ if (!doc) {
 }
 ---
 
-<BaseLayout
+<JokulLayout
     title={`${doc.name} i Jøkul`}
     description={doc.description.long}
     path={`/ds/jokul/component/${doc.id}`}
-    jokulTheme={true}
 >
     <ComponentPageClient id={doc.id} client:only="react" />
-</BaseLayout>
+</JokulLayout>

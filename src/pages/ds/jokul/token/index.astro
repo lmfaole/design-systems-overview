@@ -1,13 +1,12 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import TokenPage from "@/app/(ds)/ds/jokul/token/page";
+import JokulLayout from "@/layouts/JokulLayout.astro";
+import TokenPage from "@/features/ds/jokul/tokens/TokenIndexPage";
 ---
 
-<BaseLayout
+<JokulLayout
     title="Jøkul designtokens"
     description="Typografi, farger, spacing og andre designtokens i Jøkul."
     path="/ds/jokul/token"
-    jokulTheme={true}
 >
     <TokenPage />
-</BaseLayout>
+</JokulLayout>

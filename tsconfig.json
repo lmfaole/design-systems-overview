@@ -28,40 +28,17 @@
     "paths": {
       "@/*": [
         "./src/*"
-      ],
-      "@/app/ds": [
-        "./src/app/(ds)/ds"
-      ],
-      "@/app/ds/*": [
-        "./src/app/(ds)/ds/*"
-      ],
-      "@/app/monster": [
-        "./src/app/(site)/monster"
-      ],
-      "@/app/monster/*": [
-        "./src/app/(site)/monster/*"
-      ],
-      "@/app/sok": [
-        "./src/app/(site)/sok"
-      ],
-      "@/app/sok/*": [
-        "./src/app/(site)/sok/*"
       ]
     },
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
     "skipLibCheck": true
   },
   "include": [
-    "next-env.d.ts",
-    ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts",
+    ".astro/types.d.ts",
+    "src/env.d.ts",
     "**/*.mts",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    "**/*.astro"
   ],
   "exclude": [
     "node_modules"
