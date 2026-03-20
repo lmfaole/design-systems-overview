@@ -2,7 +2,7 @@ import type {
     PatternExample,
     PatternAvoidExample,
     PatternExampleVariant,
-} from "@/app/monster/types";
+} from "@/app/ds/monster/types";
 
 export function getHtmlVariants(example: PatternExample | PatternAvoidExample): PatternExampleVariant[] {
     if ("variants" in example && example.variants) {

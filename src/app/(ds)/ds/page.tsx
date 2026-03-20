@@ -7,6 +7,7 @@ import {
     getUndocumentedDesignSystems,
     isDocumentedInProject,
 } from "@/app/ds/_data/overview";
+import { PageHeader } from "@/app/ds/_shared/components/PageHeader";
 import { DesignSystemExternalLinks } from "@/app/_shared/components/DesignSystemExternalLinks";
 import { createPageMetadata } from "@/app/_shared/seo";
 
@@ -62,10 +63,10 @@ export default function DesignSystemsPage() {
 
     return (
         <main className="page">
-            <header>
-                <h1>Designsystemer</h1>
-                <p>Oversikt over designsystemene som er registrert i prosjektet, og hvilke som faktisk har lokal dokumentasjon her.</p>
-            </header>
+            <PageHeader
+                title="Designsystemer"
+                description="Oversikt over designsystemene som er registrert i prosjektet, og hvilke som faktisk har lokal dokumentasjon her."
+            />
 
             <form role="search" action="/ds/sok" method="get">
                 <label htmlFor="design-system-search">Søk</label>

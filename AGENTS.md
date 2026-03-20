@@ -40,10 +40,16 @@ with a strong emphasis on accessibility and performance.
     - Prioritize making it possible to use the design systems in scope to build patterns, and avoid adding custom styles
       or logic that would not be applicable across systems.
 - CSS rules:
-    - Use nesting where it improves readability and maintainability, but avoid excessive nesting that can lead to
-      specificity issues and
+    - Use nesting where it improves readability and maintainability, and use it to avoid repeating text in class names
+      or selectors, but avoid excessive nesting that can lead to specificity issues and make the code harder to
+      understand and maintain.
     - Do not use BEM notation, and use class names that make the css less verbose and more readable. Utilize the
       cascade and specificity to write less code and make it more maintainable.
+    - Prefer using data attributes rather than classes for styling when the styles are specific to a particular state or
+      behavior, as this can improve readability and maintainability by separating styling concerns from structural
+      concerns.
+    - Use short and descriptive class names that convey the purpose and meaning of the element, rather than its
+      appearance or implementation details, to improve readability and maintainability.
     - Use logical properties.
     - Use custom properties for design tokens and theming.
     - Avoid using utility classes for styling, and instead prefer semantic class names that describe the purpose of

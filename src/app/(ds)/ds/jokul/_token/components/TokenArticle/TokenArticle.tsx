@@ -1,7 +1,7 @@
 import React from "react";
 import { Flex } from "@fremtind/jokul/flex";
 import { DataTable } from "@fremtind/jokul/table";
-import { PageHero } from "@/app/ds/jokul/_shared/components/PageHero/PageHero";
+import { PageHeader } from "@/app/ds/_shared/components/PageHeader";
 import { Article, ArticleToc } from "@/app/ds/jokul/_shared/components/Article";
 import { ScssMixinSection } from "@/app/ds/jokul/_token/components/ScssMixinSection";
 import { Section } from "@/app/ds/jokul/_token/components/Section";
@@ -26,7 +26,7 @@ export function TokenArticle({
 }: TokenArticleProps) {
     return (
         <Article>
-            <PageHero title={title} background={illustration} description={excerpt} />
+            <PageHeader title={title} background={illustration} description={excerpt} />
 
             <ArticleToc />
 

@@ -5,7 +5,6 @@ import { Flex } from "@fremtind/jokul/flex";
 import "./component-page.scss";
 import { NavTab, NavTabs } from "@fremtind/jokul/tabs";
 import { Card } from "@fremtind/jokul/card";
-import { Breadcrumb, BreadcrumbItem } from "@fremtind/jokul/breadcrumb";
 import { Help } from "@fremtind/jokul/help";
 import { DescriptionDetail, DescriptionList, DescriptionTerm } from "@fremtind/jokul/description-list";
 import { Message } from "@fremtind/jokul/message";
@@ -21,7 +20,7 @@ import { AlternativesList } from "@/app/ds/jokul/_component-docs/components/Alte
 import { SubcomponentsList } from "@/app/ds/jokul/_component-docs/components/SubcomponentsList";
 import { RelatedComponentsTable } from "@/app/ds/jokul/_component-docs/components/RelatedComponentsTable";
 import type { RelatedComponentDoc } from "@/app/ds/jokul/_shared/components/RelatedComponentCard";
-import { PageHero } from "@/app/ds/jokul/_shared/components/PageHero/PageHero";
+import { PageHeader } from "@/app/ds/_shared/components/PageHeader";
 import { DotsIllustration } from "@/app/ds/jokul/_shared/components/Illustration";
 import { Article, ArticleToc } from "@/app/ds/jokul/_shared/components/Article";
 import { CopyButton } from "@/app/ds/jokul/_shared/components/CodeBlock/CopyButton";
@@ -166,33 +165,12 @@ export default function ComponentPage() {
     const relatedItems = toRelatedItems(related);
     const siblingsAnchor = parentKind === "requires" ? "andre-komponenter" : "andre-delkomponenter";
 
-    const breadcrumb = parent
-        ? [
-            { href: "/ds/jokul/component", label: "Komponenter" },
-            { href: `/ds/jokul/component/${parent.id}`, label: parent.name },
-            { label: doc.name, current: true },
-        ]
-        : [
-            { href: "/ds/jokul/component", label: "Komponenter" },
-            { label: doc.name, current: true },
-        ];
-
-
     return (
         <Article>
-            <Breadcrumb aria-label="Komponentsti">
-                {breadcrumb.map((item) => (
-                    <BreadcrumbItem key={item.label} aria-current={item.current ? "page" : undefined}>
-                        {item.current ? <span>{item.label}</span> : <a href={item.href!}>{item.label}</a>}
-                    </BreadcrumbItem>
-                ))}
-            </Breadcrumb>
-
-            <PageHero
+            <PageHeader
                 title={doc.name}
                 description={heroDescription}
                 background={<DotsIllustration />}
-                size="compact"
             />
 
             <ArticleToc />

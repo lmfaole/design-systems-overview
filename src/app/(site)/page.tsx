@@ -27,7 +27,7 @@ export default function Home() {
                     <li><a href="/ds">Se alle designsystemer</a></li>
                     <li><a href="/ds/jokul">Gå til Jøkul</a></li>
                     <li><a href="/ds/jokul/component">Bla i komponenter</a></li>
-                    <li><a href="/monster">Utforsk UI-mønstre</a></li>
+                    <li><a href="/ds/monster">Utforsk UI-mønstre</a></li>
                 </ul>
             </section>
         </main>

@@ -1,4 +1,4 @@
-import type { PatternPost } from "@/app/monster/data";
+import type { PatternPost } from "@/app/ds/monster/data";
 
 interface DoAndDontsSectionProps {
     doAndDonts: NonNullable<PatternPost["doAndDonts"]>;

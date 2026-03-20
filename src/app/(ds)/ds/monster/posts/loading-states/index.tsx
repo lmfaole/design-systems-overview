@@ -1,4 +1,4 @@
-import type { PatternPost } from "@/app/monster/types";
+import type { PatternPost } from "@/app/ds/monster/types";
 import {
     BlockingExample,
     InlineStatusExample,

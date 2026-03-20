@@ -3,9 +3,12 @@ html {
 }
 
 :root {
+  --site-page-background: Canvas;
+  --site-breadcrumb-block-size: 0px;
   --site-border-color: light-dark(#e5e7eb, #4b5563);
   --site-text-color: CanvasText;
   --site-text-muted: GrayText;
+  --site-font-family: ui-sans-serif, system-ui, sans-serif;
   --site-max-width: 90rem;
   --page-max-width: var(--site-max-width);
   --site-space-xxs: 0.5rem;
@@ -34,11 +37,33 @@ html {
   --site-rule-spacing: var(--site-space-l);
 }
 
+body {
+  background-color: var(--site-page-background);
+  color: var(--site-text-color);
+  font-family: var(--site-font-family);
+}
+
 .page {
   box-sizing: border-box;
   inline-size: min(100%, var(--site-max-width));
   margin-inline: auto;
   padding-inline: var(--site-space-s);
+}
+
+body:has(.jkl) {
+  --site-page-background: var(--jkl-color-background-page);
+  --site-border-color: var(--jkl-color-border-subdued);
+  --site-text-color: var(--jkl-color-text-default);
+  --site-text-muted: var(--jkl-color-text-subdued);
+  --site-font-family: "Fremtind Grotesk", "Adjusted Arial Fallback", Arial, sans-serif;
+  --site-max-width: 180ch;
+  --page-max-width: var(--site-max-width);
+  --site-space-xxs: var(--jkl-spacing-xxs);
+  --site-space-xs: var(--jkl-spacing-xs);
+  --site-space-s: var(--jkl-spacing-s);
+  --site-space-m: var(--jkl-spacing-m);
+  --site-space-l: var(--jkl-spacing-l);
+  --site-space-xl: var(--jkl-spacing-xl);
 }
 
 h1,

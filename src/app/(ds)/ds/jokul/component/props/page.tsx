@@ -13,7 +13,7 @@ import {
 import { Link } from "@fremtind/jokul/link";
 import type { PropSource } from "@/app/ds/jokul/_component-docs/data";
 import { ALL_PROP_ENTRIES } from "@/app/ds/jokul/_component-docs/prop-index";
-import { PageHeader } from "@/app/ds/jokul/_shared/components/PageHeader";
+import { PageHeader } from "@/app/ds/_shared/components/PageHeader";
 import { useLocalStorage } from "@/app/_hooks/useLocalStorage";
 import "../component-index.scss";
 

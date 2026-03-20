@@ -1,0 +1,81 @@
+.ds-page-header,
+.ds-page-header .content {
+  display: grid;
+  gap: var(--site-space-s);
+}
+
+.ds-page-header .title,
+.ds-page-header .description {
+  margin: 0;
+}
+
+.ds-page-header .description {
+  color: var(--site-text-muted);
+  max-width: var(--site-copy-max-width);
+}
+
+.ds-page-header:not([data-variant="hero"]) {
+  max-width: var(--content-max-width, var(--page-max-width, var(--site-max-width)));
+}
+
+.ds-page-header[data-variant="hero"] {
+  position: relative;
+  max-width: none;
+  z-index: 0;
+  text-align: left;
+  isolation: isolate;
+
+  .background {
+    position: absolute;
+    top: min(-33%, calc(-1 * (var(--site-breadcrumb-block-size) + var(--site-space-xl))));
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+    mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+    mask-size: 100% 100%;
+    -webkit-mask-size: 100% 100%;
+
+    > * {
+      width: 100%;
+      height: 100%;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: linear-gradient(
+        to bottom,
+        var(--site-page-background) 0%,
+        color-mix(in oklab, var(--site-page-background) 70%, transparent) 35%,
+        color-mix(in oklab, var(--site-page-background) 70%, transparent) 65%,
+        var(--site-page-background) 100%
+      );
+    }
+  }
+
+  .inner {
+    position: relative;
+    z-index: 1;
+    min-height: 70svh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-block-start: var(--site-space-l);
+  }
+
+  .content {
+    text-align: left;
+    max-width: none;
+    inline-size: 100%;
+    margin-inline: 0;
+  }
+}

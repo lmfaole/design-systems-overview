@@ -1,4 +1,4 @@
-import type { PatternPost } from "@/app/monster/data";
+import type { PatternPost } from "@/app/ds/monster/data";
 import {
     RESOURCE_PUBLISHERS,
     RESOURCE_PUBLISHER_TYPE_LABELS,

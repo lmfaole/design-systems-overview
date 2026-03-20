@@ -10,7 +10,7 @@ import { componentDocs } from "@/app/ds/jokul/_component-docs/data";
 import { Grid } from "@/app/ds/jokul/_shared/components/Grid";
 import { Toolbar } from "@/app/ds/jokul/_shared/components/Toolbar";
 import { ComponentCard } from "@/app/ds/jokul/_shared/components/ComponentCard";
-import { PageHeader } from "@/app/ds/jokul/_shared/components/PageHeader";
+import { PageHeader } from "@/app/ds/_shared/components/PageHeader";
 import { useLocalStorage } from "@/app/_hooks/useLocalStorage";
 import "./component-index.scss";
 

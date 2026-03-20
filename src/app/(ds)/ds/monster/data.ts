@@ -15,7 +15,7 @@ export function getPatternPost(id: string | number): PatternPost | undefined {
 }
 
 export function getPatternHref(post: Pick<PatternPost, "id">): string {
-    return `/monster/${post.id}`;
+    return `/ds/monster/${post.id}`;
 }
 
 export type { PatternPost };

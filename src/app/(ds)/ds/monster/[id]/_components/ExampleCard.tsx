@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { PatternExampleVariant } from "@/app/monster/types";
+import type { PatternExampleVariant } from "@/app/ds/monster/types";
 
 interface ExampleCardProps {
     title: string;

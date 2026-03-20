@@ -1,4 +1,4 @@
-import type { PatternExample, PatternAvoidExample } from "@/app/monster/types";
+import type { PatternExample, PatternAvoidExample } from "@/app/ds/monster/types";
 import { getHtmlVariants } from "../_utils/getHtmlVariants";
 import { ExampleCard } from "./ExampleCard";
 

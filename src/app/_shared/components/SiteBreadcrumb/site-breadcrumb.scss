@@ -1,0 +1,35 @@
+.site-breadcrumb {
+  position: relative;
+  z-index: 2;
+  color: var(--site-text-muted);
+  padding-block: var(--site-space-xs);
+
+  .list {
+    all: unset;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--site-space-xxs);
+    list-style: none;
+  }
+
+  .item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--site-space-xxs);
+  }
+
+  .item + .item::before {
+    content: "/";
+    color: var(--site-text-muted);
+  }
+
+  .link {
+    color: var(--site-text-color);
+    text-decoration: none;
+  }
+
+  .current {
+    color: var(--site-text-muted);
+  }
+}

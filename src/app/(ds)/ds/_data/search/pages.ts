@@ -1,0 +1,61 @@
+import type { DsSearchDocument } from "./types";
+
+export function getDsPageSearchDocuments(): DsSearchDocument[] {
+    return [
+        {
+            id: "page-ds-overview",
+            designSystemId: "ds",
+            designSystemName: "Designsystemer",
+            kind: "page",
+            title: "Designsystemer",
+            description: "Oversikt over dokumenterte og uokumenterte designsystemer i prosjektet.",
+            keywords: ["designsystemer", "oversikt", "dokumenterte", "uokumenterte", "ds"],
+            href: "/ds",
+            meta: "Designsystemer · Side",
+        },
+        {
+            id: "page-jokul-home",
+            designSystemId: "jokul",
+            designSystemName: "Jøkul",
+            kind: "page",
+            title: "Jøkul",
+            description: "Startside for Jøkul med innganger til komponenter og designtokens.",
+            keywords: ["jokul", "jokul startside", "fremtind", "designsystem"],
+            href: "/ds/jokul",
+            meta: "Jøkul · Side",
+        },
+        {
+            id: "page-jokul-components",
+            designSystemId: "jokul",
+            designSystemName: "Jøkul",
+            kind: "page",
+            title: "Jøkul komponenter",
+            description: "Komponentoversikt for Jøkul med dokumentasjon, eksempler og props.",
+            keywords: ["jokul komponenter", "komponentoversikt", "props", "api"],
+            href: "/ds/jokul/component",
+            meta: "Jøkul · Side",
+        },
+        {
+            id: "page-jokul-component-props",
+            designSystemId: "jokul",
+            designSystemName: "Jøkul",
+            kind: "page",
+            title: "Jøkul props-oversikt",
+            description: "Samlet props-oversikt for Jøkul-komponenter.",
+            keywords: ["props", "api", "oversikt", "komponent props"],
+            href: "/ds/jokul/component/props",
+            meta: "Jøkul · Side",
+        },
+        {
+            id: "page-jokul-tokens",
+            designSystemId: "jokul",
+            designSystemName: "Jøkul",
+            kind: "page",
+            title: "Jøkul designtokens",
+            description: "Oversikt over Jøkuls foundation-artikler for typografi, farger, spacing og andre tokens.",
+            keywords: ["tokens", "designtokens", "foundation", "typografi", "farger", "spacing"],
+            href: "/ds/jokul/token",
+            meta: "Jøkul · Side",
+        },
+    ];
+}

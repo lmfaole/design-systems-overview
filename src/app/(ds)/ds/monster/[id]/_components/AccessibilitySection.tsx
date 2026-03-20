@@ -1,4 +1,4 @@
-import type { PatternPost } from "@/app/monster/data";
+import type { PatternPost } from "@/app/ds/monster/data";
 import { compareWcagIds } from "../_utils/compareWcagIds";
 
 interface AccessibilitySectionProps {
