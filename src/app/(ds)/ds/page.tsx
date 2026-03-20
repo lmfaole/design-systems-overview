@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { DesignSystem } from "@/app/ds/_data/design-systems";
 import {
     getComponentCountLabel,
+    getDocumentedDesignSystems,
     getDesignSystems,
     getUndocumentedDesignSystems,
     isDocumentedInProject,
@@ -56,32 +57,56 @@ function DesignSystemList({
 
 export default function DesignSystemsPage() {
     const systems = getDesignSystems();
+    const documentedSystems = getDocumentedDesignSystems();
     const undocumentedSystems = getUndocumentedDesignSystems();
 
     return (
         <main className="page">
             <header>
                 <h1>Designsystemer</h1>
-                <p>Oversikt over alle designsystemene som er registrert i prosjektet.</p>
+                <p>Oversikt over designsystemene som er registrert i prosjektet, og hvilke som faktisk har lokal dokumentasjon her.</p>
             </header>
+
+            <form role="search" action="/ds/sok" method="get">
+                <label htmlFor="design-system-search">Søk</label>
+                <input
+                    id="design-system-search"
+                    type="search"
+                    name="q"
+                    placeholder="Komponent, token eller mønster i Jøkul…"
+                />
+                <button type="submit">Søk</button>
+            </form>
+            <p>Søket gjelder Jøkul akkurat nå.</p>
 
             <section>
                 <div>
-                    <h2>Alle designsystemer</h2>
-                    <p>Dette inkluderer både systemer med lokal dokumentasjon og systemer som foreløpig peker ut til offisielle kilder.</p>
+                    <h2>Dokumenterte designsystemer</h2>
+                    <p>Disse har egne sider og lokal dokumentasjon i repoet.</p>
                 </div>
-                <DesignSystemList systems={systems} />
+                <DesignSystemList
+                    systems={documentedSystems}
+                    emptyMessage="Ingen designsystemer har lokal dokumentasjon i repoet ennå."
+                />
             </section>
 
             <section>
                 <div>
                     <h2>Uokumenterte designsystemer</h2>
-                    <p>Disse designsystemene er registrert i prosjektet, men har ikke egen dokumentasjon i repoet ennå.</p>
+                    <p>Disse designsystemene er registrert i prosjektet, men har ikke egne ruter eller lokal dokumentasjon i repoet ennå.</p>
                 </div>
                 <DesignSystemList
                     systems={undocumentedSystems}
                     emptyMessage="Alle registrerte designsystemer har lokal dokumentasjon i repoet."
                 />
+            </section>
+
+            <section>
+                <div>
+                    <h2>Alle registrerte designsystemer</h2>
+                    <p>Samlet oversikt over både lokale og eksterne dokumentasjonskilder.</p>
+                </div>
+                <DesignSystemList systems={systems} />
             </section>
         </main>
     );

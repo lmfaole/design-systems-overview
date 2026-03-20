@@ -1,65 +1,35 @@
 import type { Metadata } from "next";
-import { getComponentCountLabel, getDesignSystems } from "@/app/ds/_data/overview";
-import { DesignSystemExternalLinks } from "@/app/_shared/components/DesignSystemExternalLinks";
 import { createPageMetadata } from "@/app/_shared/seo";
 
 export const metadata: Metadata = createPageMetadata({
-    title: "Designsystemer",
-    description: "En samlet inngang til dokumentasjon, komponenter og UI-mønstre på tvers av designsystemer.",
+    title: "Læringsressurs",
+    description: "En samlet inngang til dokumentasjon, komponenter, designtokens og UI-mønstre.",
     path: "/",
 });
 
 export default function Home() {
-    const systems = getDesignSystems();
-
     return (
         <main className="page" data-ua-only>
             <header>
-                <h1>Designsystemer</h1>
+                <h1>Læringsressurs for UI</h1>
                 <p>
-                    En samlet inngang til dokumentasjon, komponenter og mønstre på tvers av designsystemer.
+                    Dokumentasjon, komponenter, tokens og mønstre samlet på ett sted. Bruk forsiden som inngang til
+                    læringsressursen, og gå til <a href="/ds">/ds</a> når du vil utforske designsystemer spesifikt.
                 </p>
             </header>
 
-            <form role="search" action="/sok" method="get">
-                <label htmlFor="frontpage-search">Søk</label>
-                <input
-                    id="frontpage-search"
-                    type="search"
-                    name="q"
-                    placeholder="Komponent, token eller mønster i Jøkul…"
-                />
-                <button type="submit">Søk</button>
-            </form>
-            <p>Søket gjelder Jøkul akkurat nå.</p>
-
             <section>
                 <div>
-                    <h2>Designsystemer i prosjektet</h2>
-                    <p>Dokumentasjon som finnes i dette repoet.</p>
+                    <h2>Snarveier</h2>
+                    <p>Velg området du vil jobbe i.</p>
                 </div>
                 <ul>
-                    {systems.map((system) => {
-                        const countLabel = getComponentCountLabel(system);
-                        return (
-                            <li key={system.docs}>
-                                <article>
-                                    <h3>
-                                        <a href={system.docs}>{system.name}</a>
-                                    </h3>
-                                    <p>{system.description}</p>
-                                    {countLabel && <p>{countLabel}</p>}
-                                    <DesignSystemExternalLinks links={system.externalLinks} />
-                                </article>
-                            </li>
-                        );
-                    })}
+                    <li><a href="/ds">Se alle designsystemer</a></li>
+                    <li><a href="/ds/jokul">Gå til Jøkul</a></li>
+                    <li><a href="/ds/jokul/component">Bla i komponenter</a></li>
+                    <li><a href="/monster">Utforsk UI-mønstre</a></li>
                 </ul>
             </section>
-
-            <p>
-                Gå til <a href="/ds/jokul">Jøkul-dokumentasjonen</a> for alt om Jøkul.
-            </p>
         </main>
     );
 }

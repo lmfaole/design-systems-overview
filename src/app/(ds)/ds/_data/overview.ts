@@ -22,6 +22,10 @@ export function getUndocumentedDesignSystems() {
     return getDesignSystems().filter((system) => !isDocumentedInProject(system));
 }
 
+export function getDocumentedDesignSystems() {
+    return getDesignSystems().filter((system) => isDocumentedInProject(system));
+}
+
 export function getComponentCountLabel(system: DesignSystem) {
     const count = system.stats?.components;
 

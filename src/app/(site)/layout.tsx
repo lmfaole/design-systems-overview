@@ -2,7 +2,7 @@ import { SiteHeader, type SiteLink } from "@/app/_shared/components/SiteHeader";
 import { SiteFooter } from "@/app/_shared/components/SiteFooter";
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
-    const brand: SiteLink = { href: "/", label: "Designsystemer" };
+    const brand: SiteLink = { href: "/", label: "lmfaole" };
     const links: SiteLink[] = [
         { href: "/ds", label: "Designsystemer" },
         { href: "/ds/jokul", label: "Jøkul" },
@@ -17,7 +17,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
             title: "Snarveier",
             links: [
                 { href: "/", label: "Forside" },
-                { href: "/sok", label: "Søk" },
+                { href: "/ds/sok", label: "Søk" },
             ],
         },
     ];
@@ -28,7 +28,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
             {children}
             <SiteFooter
                 sections={footerSections}
-                note="En uoffisiell læringsressurs for design-systemer."
+                note="En uoffisiell læringsressurs for designsystemer, komponenter og UI-mønstre."
             />
         </>
     );
