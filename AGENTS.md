@@ -46,6 +46,8 @@ with a strong emphasis on accessibility and performance.
     - Commit at a logical level of granularity, with each commit representing a single, cohesive change to the codebase
       that can be
       easily understood and reviewed by others.
+    - Separate commits for different types of changes, such as bug fixes, new features, documentation updates, and
+      refactoring, to improve the clarity and organization of the commit history.
 - CSS rules:
     - Use nesting where it improves readability and maintainability, and use it to avoid repeating text in class names
       or selectors, but avoid excessive nesting that can lead to specificity issues and make the code harder to

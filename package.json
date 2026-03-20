@@ -4,6 +4,7 @@
   "private": true,
   "description": "Jokul documentation site (components, tokens, patterns).",
   "scripts": {
+    "generate:search-index": "node scripts/generate-search-index.mjs",
     "typecheck": "tsc --noEmit",
     "dev": "next dev --turbopack",
     "predev": "npm run setup",
@@ -14,7 +15,7 @@
     "a11y:install": "puppeteer browsers install chrome",
     "test:a11y": "npm run build && npm run a11y:install && start-server-and-test \"next start -p 3001\" http://127.0.0.1:3001 \"pa11y-ci --config .pa11yci.json\"",
     "lint": "npm run typecheck",
-    "setup": "patch-package && mkdir -p public/fonts && cp node_modules/@fremtind/jokul/src/fonts/FremtindGrotesk-*.woff* public/fonts/ && cp node_modules/@fremtind/jokul/src/fonts/FremtindGroteskMono-*.woff* public/fonts/ && cp node_modules/@fremtind/jokul/src/fonts/Fremtind-Material-Symbols.woff2 public/fonts/",
+    "setup": "patch-package && mkdir -p public/fonts && cp node_modules/@fremtind/jokul/src/fonts/FremtindGrotesk-*.woff* public/fonts/ && cp node_modules/@fremtind/jokul/src/fonts/FremtindGroteskMono-*.woff* public/fonts/ && cp node_modules/@fremtind/jokul/src/fonts/Fremtind-Material-Symbols.woff2 public/fonts/ && npm run generate:search-index",
     "pages:dev": "npm run setup && npx @cloudflare/next-on-pages@1 && wrangler pages dev",
     "pages:build": "npm run setup && npx @cloudflare/next-on-pages@1",
     "pages:deploy": "npm run pages:build && npx wrangler pages deploy .vercel/output/static --project-name=lmfaole"

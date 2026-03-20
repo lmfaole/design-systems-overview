@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
-import { searchDsDocuments, type DsSearchResult } from "@/app/ds/_data/search";
-import { Grid } from "@/app/ds/_shared/components/Grid";
-import { PageHeader } from "@/app/ds/_shared/components/PageHeader";
-import { SearchResultCard } from "@/app/ds/_shared/components/cards/SearchResultCard";
-import { createPageMetadata } from "@/app/_shared/seo";
+import type {Metadata} from "next";
+import {Card} from "@fremtind/jokul/card";
+import {type DsSearchResult, searchDsDocuments} from "@/app/ds/_data/search";
+import {Grid} from "@/app/ds/_shared/components/Grid";
+import {PageHeader} from "@/app/ds/_shared/components/PageHeader";
+import {SearchResultCard} from "@/app/ds/_shared/components/cards/SearchResultCard";
+import {createPageMetadata} from "@/app/_shared/seo";
 
 export const runtime = "edge";
 
@@ -12,8 +13,8 @@ type SearchParams = {
 };
 
 export async function generateMetadata({
-    searchParams,
-}: {
+                                           searchParams,
+                                       }: {
     searchParams?: Promise<SearchParams> | SearchParams;
 }): Promise<Metadata> {
     const resolvedSearchParams = await Promise.resolve(searchParams);
@@ -30,14 +31,15 @@ export async function generateMetadata({
 }
 
 export default async function SearchPage({
-    searchParams,
-}: {
+                                             searchParams,
+                                         }: {
     searchParams?: Promise<SearchParams> | SearchParams;
 }) {
     const resolvedSearchParams = await Promise.resolve(searchParams);
     const query = typeof resolvedSearchParams?.q === "string" ? resolvedSearchParams.q.trim() : "";
     const hasQuery = query.length > 0;
     const results = hasQuery ? searchDsDocuments(query) : [];
+    const bestMatches = results.slice(0, 3);
     const pageResults = results.filter((result) => result.doc.kind === "page");
     const componentResults = results.filter((result) => result.doc.kind === "component");
     const patternResults = results.filter((result) => result.doc.kind === "pattern");
@@ -63,64 +65,82 @@ export default async function SearchPage({
                 <button type="submit">Søk</button>
             </form>
 
-            <p>
-                Søket dekker lokal `/ds`-dokumentasjon akkurat nå. Vil du bla? Gå til{" "}
-                <a href="/ds">designsystemoversikten</a>.
-            </p>
-
             {!hasQuery ? (
                 <p>Skriv inn et søk for å se resultater.</p>
             ) : (
-                <>
-                    <p>
-                        {totalResults === 0
-                            ? "Ingen treff."
-                            : `${totalResults} treff totalt.`}
-                    </p>
+                totalResults === 0 ? (
+                    <EmptySearchState query={query}/>
+                ) : (
+                    <>
+                        <p>{totalResults} treff totalt.</p>
 
-                    <div>
-                        <SearchSection
-                            title={`Sider (${pageResults.length})`}
-                            items={pageResults}
-                        />
-                        <SearchSection
-                            title={`Komponenter (${componentResults.length})`}
-                            items={componentResults}
-                        />
-                        <SearchSection
-                            title={`Mønstre (${patternResults.length})`}
-                            items={patternResults}
-                        />
-                        <SearchSection
-                            title={`Tokens (${tokenResults.length})`}
-                            items={tokenResults}
-                        />
-                    </div>
-                </>
+                        <div>
+                            <h2>Beste treff</h2>
+                            {bestMatches.length > 0 && (
+                                <SearchSection
+                                    title={`Beste treff (${bestMatches.length})`}
+                                    items={bestMatches}
+                                />
+                            )}
+
+                            <h2>Alt annet</h2>
+                            <SearchSection
+                                title={`Sider (${pageResults.length})`}
+                                items={pageResults}
+                            />
+                            <SearchSection
+                                title={`Komponenter (${componentResults.length})`}
+                                items={componentResults}
+                            />
+                            <SearchSection
+                                title={`Mønstre (${patternResults.length})`}
+                                items={patternResults}
+                            />
+                            <SearchSection
+                                title={`Tokens (${tokenResults.length})`}
+                                items={tokenResults}
+                            />
+                        </div>
+                    </>
+                )
             )}
         </main>
     );
 }
 
+function EmptySearchState({query}: { query: string }) {
+    return (
+        <Card padding="l">
+            <h2>Ingen treff for “{query}”</h2>
+            <p>Prøv et kortere søk, et komponentnavn eller et mer generelt begrep.</p>
+            <p>Du kan også gå direkte til:</p>
+            <ul>
+                <li><a href="/ds/jokul/component">Alle Jøkul-komponenter</a></li>
+                <li><a href="/ds/jokul/token">Alle Jøkul-tokens</a></li>
+                <li><a href="/ds/monster">Alle mønstre</a></li>
+            </ul>
+        </Card>
+    );
+}
+
 function SearchSection({
-    title,
-    items,
-}: {
+                           title,
+                           items,
+                       }: {
     title: string;
     items: DsSearchResult[];
 }) {
+    if (!items.length) {
+        return null;
+    }
     return (
         <section>
-            <h2>{title}</h2>
-            {items.length === 0 ? (
-                <p>Ingen treff i denne kategorien.</p>
-            ) : (
-                <Grid as="ul" columns={3} className="bare-list">
-                    {items.map((item) => (
-                        <SearchResultCard key={item.doc.id} result={item} />
-                    ))}
-                </Grid>
-            )}
+            <h3>{title}</h3>
+            <Grid as="ul" columns={3} className="bare-list">
+                {items.map((item) => (
+                    <SearchResultCard key={item.doc.id} result={item}/>
+                ))}
+            </Grid>
         </section>
     );
 }
