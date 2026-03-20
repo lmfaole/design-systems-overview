@@ -36,11 +36,9 @@ const COMPLEXITY_LABEL: Record<ComponentComplexityRating, string> = {
 function ComplexityRow({
     rating,
     note,
-    noteAriaLabel,
 }: {
     rating: ComponentComplexityRating;
     note?: string;
-    noteAriaLabel: string;
 }) {
     return (
         <Flex as="div" alignItems="center" gap="s" className="row">
@@ -270,7 +268,6 @@ export default function ComponentPage() {
                         <ComplexityRow
                             rating={doc.complexity.use}
                             note={doc.complexity.notes?.use}
-                            noteAriaLabel={`Hvorfor er brukskompleksiteten vurdert som ${COMPLEXITY_LABEL[doc.complexity.use].toLowerCase()}?`}
                         />
                     </DescriptionDetail>
                     <DescriptionTerm>Vedlikehold</DescriptionTerm>
@@ -278,7 +275,6 @@ export default function ComponentPage() {
                         <ComplexityRow
                             rating={doc.complexity.maintenance}
                             note={doc.complexity.notes?.maintenance}
-                            noteAriaLabel={`Hvorfor er vedlikeholdskompleksiteten vurdert som ${COMPLEXITY_LABEL[doc.complexity.maintenance].toLowerCase()}?`}
                         />
                     </DescriptionDetail>
                 </DescriptionList>

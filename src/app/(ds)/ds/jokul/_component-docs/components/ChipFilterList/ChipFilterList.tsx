@@ -14,7 +14,7 @@ interface ChipFilterListProps {
 
 export function ChipFilterList({ items, selected, onChange, getLabel, allLabel = "Se alle" }: ChipFilterListProps) {
     return (
-        <Flex as="ul" className="list-bare" gap="xs" wrap="wrap">
+        <Flex as="ul" className="bare-list" gap="xs" wrap="wrap">
             <li>
                 <Chip
                     variant="filter"

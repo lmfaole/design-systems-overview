@@ -15,7 +15,6 @@ export interface DsSearchDocument {
 
 export interface DsSearchMatch {
     field: DsSearchMatchField;
-    value: string;
     excerpt: string;
 }
 

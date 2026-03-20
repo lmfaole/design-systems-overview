@@ -8,7 +8,7 @@ interface SearchResultCardProps {
 export function SearchResultCard({ result }: SearchResultCardProps) {
     return (
         <li className="ds-search-result-card-item">
-            <article className="ds-search-result-card" data-kind={result.doc.kind}>
+            <article className="ds-search-result-card">
                 <p className="eyebrow">{result.doc.meta}</p>
                 <h3 className="title">
                     <a href={result.doc.href}>{result.doc.title}</a>

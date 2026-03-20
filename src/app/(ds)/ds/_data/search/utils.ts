@@ -55,7 +55,6 @@ function getMatch(query: string, doc: DsSearchDocument): { score: number; match:
             score: 120,
             match: {
                 field: "title",
-                value: doc.title,
                 excerpt: doc.title,
             },
         };
@@ -66,7 +65,6 @@ function getMatch(query: string, doc: DsSearchDocument): { score: number; match:
             score: 80,
             match: {
                 field: "title",
-                value: doc.title,
                 excerpt: doc.title,
             },
         };
@@ -77,7 +75,6 @@ function getMatch(query: string, doc: DsSearchDocument): { score: number; match:
             score: 50,
             match: {
                 field: "title",
-                value: doc.title,
                 excerpt: doc.title,
             },
         };
@@ -90,7 +87,6 @@ function getMatch(query: string, doc: DsSearchDocument): { score: number; match:
             score: 30,
             match: {
                 field: "keyword",
-                value: keyword,
                 excerpt: keyword,
             },
         };
@@ -101,7 +97,6 @@ function getMatch(query: string, doc: DsSearchDocument): { score: number; match:
             score: 20,
             match: {
                 field: "description",
-                value: doc.description,
                 excerpt: getExcerpt(doc.description, query),
             },
         };
@@ -112,7 +107,6 @@ function getMatch(query: string, doc: DsSearchDocument): { score: number; match:
             score: 15,
             match: {
                 field: "meta",
-                value: doc.meta,
                 excerpt: getExcerpt(doc.meta, query),
             },
         };

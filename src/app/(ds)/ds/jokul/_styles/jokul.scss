@@ -248,14 +248,6 @@ body:has(.jkl) {
   margin-block: var(--site-rule-spacing);
 }
 
-/* Utility: unstyled list — use when a semantic list is needed without browser defaults.
-   Prefer Jøkul's List/UnorderedList/OrderedList components for all content lists. */
-.jkl .list-bare {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
 // Prevent unwanted leading space at the top of any container
 .jkl h1,
 .jkl h2,
