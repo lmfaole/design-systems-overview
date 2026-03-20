@@ -50,6 +50,12 @@ body {
   padding-inline: var(--site-space-s);
 }
 
+.bare-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 body:has(.jkl) {
   --site-page-background: var(--jkl-color-background-page);
   --site-border-color: var(--jkl-color-border-subdued);

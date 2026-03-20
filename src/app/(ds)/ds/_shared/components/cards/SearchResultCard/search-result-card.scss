@@ -1,0 +1,36 @@
+@use "../shared";
+
+.ds-search-result-card-item {
+  @include shared.card-item-reset;
+}
+
+.ds-search-result-card {
+  @include shared.card-surface;
+  display: grid;
+  gap: var(--site-space-s);
+  block-size: 100%;
+  padding: var(--site-space-m);
+
+  .eyebrow,
+  .description,
+  .match {
+    margin: 0;
+  }
+
+  .eyebrow {
+    color: var(--site-text-muted);
+  }
+
+  .title {
+    margin: 0;
+    max-width: none;
+  }
+
+  .description {
+    color: var(--site-text-color);
+  }
+
+  .match {
+    color: var(--site-text-muted);
+  }
+}

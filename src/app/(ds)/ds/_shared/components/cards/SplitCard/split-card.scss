@@ -1,6 +1,8 @@
+@use "../shared";
+
 .ds-split-card {
+  @include shared.card-root;
   container-type: inline-size;
-  width: 100%;
 
   .container {
     display: grid;

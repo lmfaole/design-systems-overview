@@ -30,7 +30,6 @@ export function ComponentCard({doc}: ComponentCardProps) {
             onMouseLeave={() => setHovered(false)}
         >
             <SplitCard
-                previewClassName="component-card-preview"
                 preview={
                     preview ? (
                         <Flex alignItems="center" justifyContent="center">

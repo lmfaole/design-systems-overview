@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import { searchDsDocuments, type DsSearchDocument, type DsSearchDocumentKind } from "@/app/ds/_data/search";
+import { searchDsDocuments, type DsSearchResult } from "@/app/ds/_data/search";
+import { Grid } from "@/app/ds/_shared/components/Grid";
 import { PageHeader } from "@/app/ds/_shared/components/PageHeader";
+import { SearchResultCard } from "@/app/ds/_shared/components/cards/SearchResultCard";
 import { createPageMetadata } from "@/app/_shared/seo";
 
 export const runtime = "edge";
@@ -36,10 +38,10 @@ export default async function SearchPage({
     const query = typeof resolvedSearchParams?.q === "string" ? resolvedSearchParams.q.trim() : "";
     const hasQuery = query.length > 0;
     const results = hasQuery ? searchDsDocuments(query) : [];
-    const pageResults = results.filter((doc) => doc.kind === "page");
-    const componentResults = results.filter((doc) => doc.kind === "component");
-    const patternResults = results.filter((doc) => doc.kind === "pattern");
-    const tokenResults = results.filter((doc) => doc.kind === "token");
+    const pageResults = results.filter((result) => result.doc.kind === "page");
+    const componentResults = results.filter((result) => result.doc.kind === "component");
+    const patternResults = results.filter((result) => result.doc.kind === "pattern");
+    const tokenResults = results.filter((result) => result.doc.kind === "token");
     const totalResults = results.length;
 
     return (
@@ -105,7 +107,7 @@ function SearchSection({
     items,
 }: {
     title: string;
-    items: DsSearchDocument[];
+    items: DsSearchResult[];
 }) {
     return (
         <section>
@@ -113,15 +115,11 @@ function SearchSection({
             {items.length === 0 ? (
                 <p>Ingen treff i denne kategorien.</p>
             ) : (
-                <ul>
+                <Grid as="ul" columns={3} className="bare-list">
                     {items.map((item) => (
-                        <li key={item.id}>
-                            <a href={item.href}>{item.title}</a>
-                            <p>{item.description}</p>
-                            <small>{item.meta}</small>
-                        </li>
+                        <SearchResultCard key={item.doc.id} result={item} />
                     ))}
-                </ul>
+                </Grid>
             )}
         </section>
     );

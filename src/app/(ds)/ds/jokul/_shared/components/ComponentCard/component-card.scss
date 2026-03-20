@@ -1,3 +1,7 @@
+.component-card {
+    --ds-split-card-separator: var(--jkl-color-border-subdued);
+}
+
 .component-card .preview {
     background-image:
         linear-gradient(
@@ -17,7 +21,7 @@
     background-size: 32px 32px;
 }
 
-.component-card-preview {
+.component-card .preview {
     height: 14rem;
     overflow: hidden;
     padding: var(--jkl-spacing-xl);
@@ -34,7 +38,7 @@
 }
 
 @container (min-width: 22rem) {
-    .component-card-preview {
+    .component-card .preview {
         height: auto;
         min-height: 12rem;
     }

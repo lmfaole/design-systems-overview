@@ -1,3 +1,7 @@
+.related-component-card {
+    --ds-split-card-separator: var(--jkl-color-border-subdued);
+}
+
 .related-component-card .preview {
     background-image: radial-gradient(circle, color-mix(in srgb, var(--jkl-color-border-subdued) 40%, transparent) 1px, transparent 1px);
     background-size: 20px 20px;

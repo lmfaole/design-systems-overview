@@ -15,6 +15,7 @@ export function getJokulSearchDocuments(): DsSearchDocument[] {
             doc.package,
             doc.category,
             doc.description.long,
+            ...doc.props.map((prop) => prop.name),
             ...(doc.relationships?.alternatives?.map((item) => item.id) ?? []),
             ...(doc.relationships?.related?.map((item) => item.id) ?? []),
             ...(doc.relationships?.requires?.map((item) => item.id) ?? []),

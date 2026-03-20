@@ -1,0 +1,19 @@
+@mixin card-item-reset {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  inline-size: 100%;
+}
+
+@mixin card-root {
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+
+@mixin card-surface {
+  @include card-root;
+  border: 1px solid var(--site-border-color);
+  border-radius: var(--site-pre-border-radius);
+  background: color-mix(in srgb, var(--site-page-background) 94%, canvas 6%);
+}

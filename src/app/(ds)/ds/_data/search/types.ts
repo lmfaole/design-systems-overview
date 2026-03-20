@@ -1,4 +1,5 @@
 export type DsSearchDocumentKind = "page" | "component" | "token" | "pattern";
+export type DsSearchMatchField = "title" | "description" | "keyword" | "meta";
 
 export interface DsSearchDocument {
     id: string;
@@ -10,4 +11,15 @@ export interface DsSearchDocument {
     keywords: string[];
     href: string;
     meta: string;
+}
+
+export interface DsSearchMatch {
+    field: DsSearchMatchField;
+    value: string;
+    excerpt: string;
+}
+
+export interface DsSearchResult {
+    doc: DsSearchDocument;
+    match: DsSearchMatch;
 }
