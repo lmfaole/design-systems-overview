@@ -39,6 +39,13 @@ with a strong emphasis on accessibility and performance.
     - When working inside a design system, follow the conventions and patterns of that system as closely as possible.
     - Prioritize making it possible to use the design systems in scope to build patterns, and avoid adding custom styles
       or logic that would not be applicable across systems.
+    - Commit messages should be clear and descriptive, following the format of `<type>: <description>`, where `<type>`
+      is one of
+      `feat`, `fix`, `docs`, `style`, `refactor`, `test`, or `chore`, and `<description>` is a brief summary of the
+      changes made in the commit.
+    - Commit at a logical level of granularity, with each commit representing a single, cohesive change to the codebase
+      that can be
+      easily understood and reviewed by others.
 - CSS rules:
     - Use nesting where it improves readability and maintainability, and use it to avoid repeating text in class names
       or selectors, but avoid excessive nesting that can lead to specificity issues and make the code harder to
