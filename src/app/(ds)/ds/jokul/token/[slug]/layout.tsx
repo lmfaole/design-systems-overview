@@ -1,5 +1,3 @@
-export const runtime = "edge";
-
 import type { Metadata } from "next";
 import { Flex } from "@fremtind/jokul/flex";
 import { getTokenPost } from "@/app/ds/jokul/_token/data";

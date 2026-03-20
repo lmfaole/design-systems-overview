@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { getComponentDoc } from "@/app/ds/jokul/_component-docs/data";
 import { createPageMetadata } from "@/app/_shared/seo";
 
-export const runtime = "edge";
-
 type Awaitable<T> = T | Promise<T>;
 
 export async function generateMetadata({ params }: { params: Awaitable<{ id: string }> }): Promise<Metadata> {

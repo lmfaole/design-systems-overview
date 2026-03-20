@@ -6,6 +6,21 @@ const nextConfig = {
         // Keep a redirect so old links/bookmarks don't break.
         return [
             {
+                source: "/monster",
+                destination: "/ds/monster",
+                permanent: false,
+            },
+            {
+                source: "/monster/:id",
+                destination: "/ds/monster/:id",
+                permanent: false,
+            },
+            {
+                source: "/sok",
+                destination: "/ds/sok",
+                permanent: false,
+            },
+            {
                 source: "/jokul/monster",
                 destination: "/monster",
                 permanent: false,

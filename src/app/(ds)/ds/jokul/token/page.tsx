@@ -4,8 +4,6 @@ import { TokenFeature } from "@/app/ds/jokul/_shared/components/TokenFeature";
 import { PageHeader } from "@/app/ds/_shared/components/PageHeader";
 import { Grid } from "@/app/ds/jokul/_shared/components/Grid";
 
-export const runtime = "edge";
-
 export default function TokenPage() {
     return (
         <Flex as="main" className="page" direction="column" gap="2xl">

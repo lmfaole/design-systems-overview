@@ -1,31 +1,22 @@
-"use client";
-import { TokenArticle } from "@/app/ds/jokul/_token/components/TokenArticle";
-import { NotFound } from "@/app/ds/jokul/_shared/components/NotFound";
-import { useParams } from "next/navigation";
-import { getTokenPost } from "@/app/ds/jokul/_token/data";
-import "./token-article.scss";
+import { getTokenSlug, tokenPosts } from "@/app/ds/jokul/_token/data";
+import { TokenPostPageClient } from "./TokenPostPageClient";
 
-export default function TokenPostPage() {
-    const { slug } = useParams<{ slug: string }>();
-    const post = getTokenPost(slug);
+export const dynamicParams = false;
 
-    if (!post) {
-        return (
-            <NotFound
-                message="Fant ikke innlegget"
-                backHref="/ds/jokul/token"
-                backLabel="Tilbake til grunnleggende konsepter"
-            />
-        );
-    }
+type Awaitable<T> = T | Promise<T>;
 
-    return (
-        <TokenArticle
-            title={post.title}
-            excerpt={post.excerpt}
-            illustration={post.illustration}
-            tokenOverview={post.tokenOverview}
-            scssSection={post.scssSection}
-        />
-    );
+export function generateStaticParams() {
+    return tokenPosts.map((post) => ({
+        slug: getTokenSlug(post),
+    }));
+}
+
+export default async function TokenPostPage({
+    params,
+}: {
+    params: Awaitable<{ slug: string }>;
+}) {
+    const resolvedParams = await params;
+
+    return <TokenPostPageClient slug={resolvedParams.slug} />;
 }

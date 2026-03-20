@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getPatternPost } from "@/app/ds/monster/data";
+import { getPatternPost, patternPosts } from "@/app/ds/monster/data";
 import { PageHeader } from "@/app/ds/_shared/components/PageHeader";
 import { ExamplesSection } from "@/app/ds/monster/[id]/_components/ExamplesSection";
 import { AvoidSection } from "@/app/ds/monster/[id]/_components/AvoidSection";
@@ -9,13 +9,18 @@ import { ResourceSection } from "@/app/ds/monster/[id]/_components/ResourceSecti
 import { ComponentsSection } from "@/app/ds/monster/[id]/_components/ComponentsSection";
 import { createPageMetadata } from "@/app/_shared/seo";
 
-export const runtime = "edge";
+export const dynamicParams = false;
 
 type Awaitable<T> = T | Promise<T>;
 
 interface PatternPageProps {
     params: Awaitable<{ id: string }>;
-    searchParams?: Awaitable<{ id?: string }>;
+}
+
+export function generateStaticParams() {
+    return patternPosts.map((post) => ({
+        id: String(post.id),
+    }));
 }
 
 export async function generateMetadata({ params }: { params: Awaitable<{ id: string }> }): Promise<Metadata> {
@@ -39,12 +44,9 @@ export async function generateMetadata({ params }: { params: Awaitable<{ id: str
     });
 }
 
-export default async function PatternPage({ params, searchParams }: PatternPageProps) {
+export default async function PatternPage({ params }: PatternPageProps) {
     const resolvedParams = await params;
-    const resolvedSearchParams = await Promise.resolve(searchParams);
-
-    const candidates = [resolvedParams.id, resolvedSearchParams?.id].filter(Boolean) as string[];
-    const post = candidates.map((id) => getPatternPost(id)).find(Boolean);
+    const post = getPatternPost(resolvedParams.id);
 
     if (!post) {
         return (
