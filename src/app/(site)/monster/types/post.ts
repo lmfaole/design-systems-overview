@@ -1,4 +1,4 @@
-import type { ComponentId } from "@/app/ds/jokul/_component-docs/docs/types";
+import type { ComponentId } from "@/app/ds/_data/jokul-component-docs";
 import type { PatternAccessibility } from "./accessibility";
 import type { PatternDoAndDonts } from "./do-and-donts";
 import type { PatternExample, PatternAvoidExample } from "./examples";

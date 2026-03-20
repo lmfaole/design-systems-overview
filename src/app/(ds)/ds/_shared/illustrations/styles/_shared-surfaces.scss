@@ -1,0 +1,32 @@
+.fi--colors,
+.fi--spacing,
+.fi--motion,
+.fi--breakpoints,
+.fi--border-radius {
+  background: var(--fi-bg-low, canvas);
+}
+
+.fi--border-radius {
+  background:
+    radial-gradient(
+      circle at 25% 20%,
+      color-mix(in srgb, var(--fi-bg-high, canvas) 70%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 75% 75%,
+      color-mix(in srgb, var(--fi-bg-high, canvas) 50%, transparent),
+      transparent 64%
+    ),
+    var(--fi-bg-low, canvas);
+  overflow: hidden;
+}
+
+.fi__cl-grid,
+.fi__sp-grid,
+.fi__mo-grid,
+.fi__bp-stack,
+.fi__br-grid {
+  position: absolute;
+  inset: 0;
+}

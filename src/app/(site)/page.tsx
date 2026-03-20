@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { DESIGN_SYSTEMS } from "@/app/ds/_data/design-systems";
-import { componentDocs } from "@/app/ds/jokul/_component-docs/data";
+import { getComponentCountLabel, getDesignSystems } from "@/app/ds/_data/overview";
 import { DesignSystemExternalLinks } from "@/app/_shared/components/DesignSystemExternalLinks";
 import { createPageMetadata } from "@/app/_shared/seo";
 
@@ -11,14 +10,7 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 export default function Home() {
-    const jokulComponentCount = componentDocs.filter((doc) => doc.showOnOverview !== false).length;
-    const systems = DESIGN_SYSTEMS.map((system) => {
-        if (system.docs !== "/ds/jokul") return system;
-        return {
-            ...system,
-            stats: { ...system.stats, components: jokulComponentCount },
-        };
-    });
+    const systems = getDesignSystems();
 
     return (
         <main className="page" data-ua-only>
@@ -48,11 +40,7 @@ export default function Home() {
                 </div>
                 <ul>
                     {systems.map((system) => {
-                        const count = system.stats?.components;
-                        const countLabel =
-                            typeof count === "number"
-                                ? `${count} komponent${count === 1 ? "" : "er"}`
-                                : null;
+                        const countLabel = getComponentCountLabel(system);
                         return (
                             <li key={system.docs}>
                                 <article>

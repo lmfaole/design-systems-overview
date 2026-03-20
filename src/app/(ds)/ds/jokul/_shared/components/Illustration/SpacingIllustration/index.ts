@@ -1,1 +1,0 @@
-export { SpacingIllustration } from "./SpacingIllustration";

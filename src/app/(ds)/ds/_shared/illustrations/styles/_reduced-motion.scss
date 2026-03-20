@@ -1,0 +1,31 @@
+@media (prefers-reduced-motion: reduce) {
+  .fi__cl-swatch,
+  .fi__mo-card,
+  .fi__bp-bar,
+  .fi__br-shape,
+  .fi__ty-inner,
+  .fi__dot {
+    animation: none;
+  }
+
+  .fi__cl-swatch,
+  .fi__mo-card,
+  .fi__br-shape,
+  .fi__bp-bar {
+    opacity: 1;
+    transform: none;
+  }
+
+  .fi__sp-grid {
+    animation: none;
+  }
+
+  .fi__sp-item {
+    transform: translate(calc(var(--sp-sx, 0) * 24px), calc(var(--sp-sy, 0) * 24px));
+  }
+
+  .fi__dot {
+    opacity: 0.7;
+    transform: rotate(45deg);
+  }
+}

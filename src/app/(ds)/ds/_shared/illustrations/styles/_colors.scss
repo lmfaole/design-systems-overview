@@ -1,0 +1,26 @@
+.fi__cl-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 55cqi);
+  grid-template-rows: repeat(2, 55cqb);
+  place-content: center;
+  gap: max(0.5rem, 2cqi);
+}
+
+.fi__cl-swatch {
+  background: var(--cl-bg, var(--fi-bg-high, canvas));
+  border: 1px solid var(--fi-border, transparent);
+  border-radius: var(--fi-radius, 0.75rem);
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  will-change: opacity;
+  animation: fi-swatch-appear 6s calc(var(--cl-i, 0) * -1s) var(--fi-ease, ease) infinite;
+}
+
+@keyframes fi-swatch-appear {
+  0% { opacity: 0; }
+  15% { opacity: 1; }
+  70% { opacity: 1; }
+  90% { opacity: 0; }
+  100% { opacity: 0; }
+}

@@ -1,1 +1,0 @@
-export { ColorIllustration } from "./ColorIllustration";

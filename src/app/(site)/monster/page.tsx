@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { patternPosts, getPatternHref } from "@/app/monster/data";
-import { getComponentDoc } from "@/app/ds/jokul/_component-docs/data";
+import { getComponentDoc } from "@/app/ds/_data/jokul-component-docs";
 import type { PatternCategory } from "@/app/monster/types";
 import { createPageMetadata } from "@/app/_shared/seo";
 

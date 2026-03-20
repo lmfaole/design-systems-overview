@@ -2,7 +2,7 @@ import type { PatternPost } from "@/app/monster/data";
 import {
     RESOURCE_PUBLISHERS,
     RESOURCE_PUBLISHER_TYPE_LABELS,
-} from "@/app/ds/jokul/_shared/components/ResourceList/types";
+} from "@/app/ds/_shared/resource-list/types";
 
 interface ResourceSectionProps {
     items: PatternPost["resources"];

@@ -1,4 +1,4 @@
-import type { ComponentId } from "@/app/ds/jokul/_component-docs/docs/types";
+import type { ComponentId } from "@/app/ds/_data/jokul-component-docs";
 
 interface ComponentsSectionProps {
     components: ComponentId[];
