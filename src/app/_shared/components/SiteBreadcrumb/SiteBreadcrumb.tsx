@@ -1,16 +1,17 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { resolveSiteBreadcrumbItems } from "./resolveItems";
 import "./site-breadcrumb.scss";
 
 export function SiteBreadcrumb() {
-    const pathname = usePathname();
+    const [pathname, setPathname] = useState("/");
     const rootRef = useRef<HTMLElement | null>(null);
     const items = resolveSiteBreadcrumbItems(pathname);
 
     useEffect(() => {
+        setPathname(window.location.pathname);
+
         const element = rootRef.current;
 
         if (!element) return;

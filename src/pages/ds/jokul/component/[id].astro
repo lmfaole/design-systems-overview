@@ -1,0 +1,27 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { componentDocs, getComponentDoc } from "@/app/ds/_data/jokul-component-docs";
+import { ComponentPageClient } from "@/app/(ds)/ds/jokul/component/[id]/ComponentPageClient";
+
+export function getStaticPaths() {
+    return componentDocs.map((doc) => ({
+        params: { id: doc.id },
+    }));
+}
+
+const { id } = Astro.params;
+const doc = getComponentDoc(id ?? "");
+
+if (!doc) {
+    throw new Error(`Missing component for id "${id}"`);
+}
+---
+
+<BaseLayout
+    title={`${doc.name} i Jøkul`}
+    description={doc.description.long}
+    path={`/ds/jokul/component/${doc.id}`}
+    jokulTheme={true}
+>
+    <ComponentPageClient id={doc.id} client:only="react" />
+</BaseLayout>

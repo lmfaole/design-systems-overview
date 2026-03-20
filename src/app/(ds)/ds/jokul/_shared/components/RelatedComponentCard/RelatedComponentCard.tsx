@@ -5,7 +5,6 @@ import {Flex} from "@fremtind/jokul/flex";
 import type {ComponentDoc} from "@/app/ds/jokul/_component-docs/docs/types";
 import {PreviewHoverContext} from "@/app/ds/jokul/_component-docs/components/PreviewHoverContext";
 import {Card} from "@fremtind/jokul/card";
-import Link from "next/link";
 import {SplitCard} from "@/app/ds/jokul/_shared/components/SplitCard";
 import "./related-component-card.scss";
 
@@ -24,7 +23,7 @@ export function RelatedComponentCard({doc, description, layout = "auto"}: Relate
     return (
         <Card
             clickable
-            as={Link}
+            as="a"
             href={`/ds/jokul/component/${doc.id}`}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}

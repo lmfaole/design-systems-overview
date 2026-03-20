@@ -1,0 +1,8 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { SearchExperience } from "@/site/search/SearchExperience";
+---
+
+<BaseLayout title="Søk" description="Søk etter sider, komponenter, mønstre og designtokens i /ds." path="/ds/sok" noIndex={true}>
+    <SearchExperience client:load />
+</BaseLayout>

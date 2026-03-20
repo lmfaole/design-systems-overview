@@ -1,0 +1,13 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PropIndexPage from "@/app/(ds)/ds/jokul/component/props/page";
+---
+
+<BaseLayout
+    title="Props-oversikt i Jøkul"
+    description="Samlet props-oversikt for Jøkul-komponenter."
+    path="/ds/jokul/component/props"
+    jokulTheme={true}
+>
+    <PropIndexPage client:load />
+</BaseLayout>

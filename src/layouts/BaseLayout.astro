@@ -1,0 +1,90 @@
+---
+import { SiteHeader } from "@/app/_shared/components/SiteHeader";
+import { SiteFooter } from "@/app/_shared/components/SiteFooter";
+import { SiteBreadcrumb } from "@/app/_shared/components/SiteBreadcrumb";
+import { DEFAULT_DESCRIPTION, SITE_NAME, SITE_URL } from "@/site/seo";
+import "@/styles/globals.scss";
+
+interface Props {
+    title?: string;
+    description?: string;
+    path?: string;
+    type?: "website" | "article";
+    noIndex?: boolean;
+    jokulTheme?: boolean;
+}
+
+const {
+    title = SITE_NAME,
+    description = DEFAULT_DESCRIPTION,
+    path = "/",
+    type = "website",
+    noIndex = false,
+    jokulTheme = false,
+} = Astro.props;
+
+const canonicalUrl = new URL(path, SITE_URL).toString();
+const pageTitle = title === SITE_NAME ? SITE_NAME : `${title} | ${SITE_NAME}`;
+const brand = { href: "/", label: SITE_NAME };
+const links = [];
+const footerSections = [
+    {
+        title: "Læringsressurs",
+        links: [
+            { href: "/", label: "Forside" },
+            { href: "/ds", label: "Designsystemer" },
+            { href: "/ds/sok", label: "Søk" },
+        ],
+    },
+    {
+        title: "Jøkul",
+        links: [
+            { href: "/ds/jokul", label: "Oversikt" },
+            { href: "/ds/jokul/component", label: "Komponenter" },
+            { href: "/ds/jokul/token", label: "Designtokens" },
+        ],
+    },
+    {
+        title: "Mønstre",
+        links: [
+            { href: "/ds/monster", label: "Alle mønstre" },
+        ],
+    },
+];
+---
+
+<html lang="no">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{pageTitle}</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:site_name" content={SITE_NAME} />
+        <meta property="og:locale" content="nb_NO" />
+        <meta property="og:type" content={type} />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <link rel="icon" href="/favicon.ico" />
+        {noIndex && <meta name="robots" content="noindex,follow" />}
+    </head>
+    <body>
+        <SiteHeader brand={brand} links={links} />
+        <SiteBreadcrumb client:load />
+        {jokulTheme ? (
+            <div class="jkl site-layout" data-theme="auto">
+                <slot />
+            </div>
+        ) : (
+            <slot />
+        )}
+        <SiteFooter
+            sections={footerSections}
+            note="En uoffisiell læringsressurs for designsystemer, komponenter og UI-mønstre."
+        />
+    </body>
+</html>
