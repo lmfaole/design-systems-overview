@@ -16,7 +16,7 @@ export function ResourceSection({
 
     return (
         <section aria-labelledby={headingId}>
-            <div className="pattern-prose__text">
+            <div className="text">
                 <Flex direction="column" gap="s">
                     <h2 id={headingId}>{heading}</h2>
                     <ResourceList items={items} />

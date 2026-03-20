@@ -319,10 +319,10 @@ function JsonControl({ control, rows, onChange, inline, label }: JsonControlProp
                     <Button variant="secondary" onClick={addRow}>
                         Legg til
                     </Button>
-                    {error && <span className="component-example__json-error">{error}</span>}
+                    {error && <span className="json-error">{error}</span>}
                 </Flex>
             )}
-            {!allowRowActions && error && <span className="component-example__json-error">{error}</span>}
+            {!allowRowActions && error && <span className="json-error">{error}</span>}
         </Flex>
     );
 
@@ -692,7 +692,7 @@ export function ComponentExample({ titleId = "eksempel", children, controls }: C
     }, [visibleControls, exampleProps, isMobile]);
 
     const propsControlsContent = (
-        <Flex gap="m" wrap="wrap" alignItems="start" className="component-example__props-inline">
+        <Flex gap="m" wrap="wrap" alignItems="start" className="props-inline">
             {propControls.fieldControls}
             {propControls.groupControls}
             {propControls.booleanControls.length > 0 && (
@@ -712,12 +712,12 @@ export function ComponentExample({ titleId = "eksempel", children, controls }: C
                 <Flex direction="column" gap="xs">
                     <Card>
                         <div
-                            className="component-page-example__area"
+                            className="area"
                             data-theme={exampleTheme === "auto" ? undefined : exampleTheme}
                             data-size={exampleSize}
                         >
                             <Flex
-                                className="component-page-example__area__inner"
+                                className="inner"
                                 alignItems="center"
                                 justifyContent="center"
                             >
@@ -742,7 +742,7 @@ export function ComponentExample({ titleId = "eksempel", children, controls }: C
                     </Card>
                     <Card data-size="small" asChild padding="l">
                         {isMobile ? (
-                            <Flex gap="m" wrap="wrap" className="component-example__toolbar component-example__toolbar--mobile">
+                            <Flex gap="m" wrap="wrap" className="toolbar" data-layout="mobile">
                                 <Popover open={displayOpen} onOpenChange={setDisplayOpen} clickOptions={{ enabled: true }}>
                                     <Popover.Trigger asChild>
                                         <Button variant="secondary">Visning</Button>
@@ -767,8 +767,8 @@ export function ComponentExample({ titleId = "eksempel", children, controls }: C
                         )}
                     </Flex>
                 ) : (
-                            <Flex gap="m" wrap="wrap" className="component-example__toolbar" justifyContent="space-between" alignItems="start">
-                                <Flex gap="m" wrap="wrap" alignItems="start" className="component-example__controls-inline">
+                            <Flex gap="m" wrap="wrap" className="toolbar" justifyContent="space-between" alignItems="start">
+                                <Flex gap="m" wrap="wrap" alignItems="start" className="controls-inline">
                                     {displayControls}
                                     {showProps && propsControlsContent}
                                 </Flex>

@@ -26,12 +26,12 @@ export function MigrationExample({ migration }: MigrationExampleProps) {
             )}
 
             <Grid columns={2} gap="m">
-                <Flex direction="column" gap="xs" className="migration-example__block">
-                    <span className="migration-example__block-label muted">Før</span>
+                <Flex direction="column" gap="xs" className="block">
+                    <span className="block-label muted">Før</span>
                     <CodeBlock code={migration.before} />
                 </Flex>
-                <Flex direction="column" gap="xs" className="migration-example__block">
-                    <span className="migration-example__block-label muted">Etter</span>
+                <Flex direction="column" gap="xs" className="block">
+                    <span className="block-label muted">Etter</span>
                     <CodeBlock code={migration.after} />
                 </Flex>
             </Grid>

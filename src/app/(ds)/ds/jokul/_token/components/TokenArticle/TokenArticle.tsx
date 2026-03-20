@@ -25,12 +25,12 @@ export function TokenArticle({
     scssSection,
 }: TokenArticleProps) {
     return (
-        <Article>
+        <Article className="token-article">
             <PageHeader title={title} background={illustration} description={excerpt} />
 
             <ArticleToc />
 
-            {meta && <div className="token-article__meta">{meta}</div>}
+            {meta && <div className="meta">{meta}</div>}
 
             <Flex className="post-prose" direction="column" gap="xl">
                 {tokenOverview && (

@@ -133,14 +133,14 @@ export function TypographyPitfalls() {
     return (
         <div className="ty-pitfalls">
             {pitfalls.map(({ id, title, problem, why, badCode, goodCode, note }) => (
-                <div key={id} className="ty-pitfalls__item">
-                    <h3 className="ty-pitfalls__title">{title}</h3>
-                    <p className="ty-pitfalls__problem">{problem}</p>
-                    <Message variant="info" className="ty-pitfalls__why">
+                <div key={id} className="item">
+                    <h3 className="title">{title}</h3>
+                    <p className="problem">{problem}</p>
+                    <Message variant="info" className="why">
                         <strong>Hvorfor:</strong> {why}
                     </Message>
                     {(badCode || goodCode) && (
-                        <div className="ty-pitfalls__code-pair">
+                        <div className="code-pair">
                             {badCode && <ProseCodeBlock code={badCode} />}
                             {goodCode && <ProseCodeBlock code={goodCode} />}
                         </div>

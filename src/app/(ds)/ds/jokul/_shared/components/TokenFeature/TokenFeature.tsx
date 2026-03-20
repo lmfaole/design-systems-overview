@@ -20,12 +20,12 @@ export function TokenFeature({ post }: TokenFeatureProps) {
         >
             <div className="token-feature">
                 {post.illustration && (
-                    <div className="token-feature__bg" aria-hidden="true">
+                    <div className="background" aria-hidden="true">
                         {post.illustration}
                     </div>
                 )}
-                <Flex className="token-feature__content" alignItems="center" justifyContent="center">
-                    <strong className="token-feature__title">{post.title}</strong>
+                <Flex className="content" alignItems="center" justifyContent="center">
+                    <strong className="title">{post.title}</strong>
                 </Flex>
             </div>
         </Card>

@@ -35,13 +35,11 @@ export function RelatedComponentCard({doc, description, layout = "auto"}: Relate
             <SplitCard
                 minWidth="36rem"
                 layout={layout === "horizontal" ? "horizontal" : "auto"}
-                previewClassName="related-component-card__preview"
-                contentClassName="related-component-card__content"
                 preview={
                     preview ? (
                         <Flex alignItems="center" justifyContent="center">
                             <PreviewHoverContext value={hovered}>
-                                <div className="related-component-card__preview-inner">
+                                <div className="inner">
                                     {preview}
                                 </div>
                             </PreviewHoverContext>
@@ -51,7 +49,7 @@ export function RelatedComponentCard({doc, description, layout = "auto"}: Relate
                 content={(
                     <Flex direction="column" gap="xs">
                         <p className="h5">{doc.name}</p>
-                        <p className="related-component-card__description">{description}</p>
+                        <p className="description">{description}</p>
                     </Flex>
                 )}
             />

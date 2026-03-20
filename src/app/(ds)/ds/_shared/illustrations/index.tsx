@@ -215,12 +215,12 @@ export function ColorIllustration({ swatches, ...tokens }: ColorIllustrationProp
     const palette = swatches.length > 0 ? swatches : Array.from(DEFAULT_COLOR_SWATCHES);
 
     return (
-        <div className="fi fi--colors" style={getSurfaceVars(tokens)} aria-hidden="true">
-            <div className="fi__cl-grid">
+        <div className="fi" data-kind="colors" style={getSurfaceVars(tokens)} aria-hidden="true">
+            <div className="color-grid">
                 {palette.map((swatch, index) => (
                     <div
                         key={`${swatch}-${index}`}
-                        className="fi__cl-swatch"
+                        className="swatch"
                         style={{
                             "--cl-i": index,
                             "--cl-bg": swatch,
@@ -234,12 +234,12 @@ export function ColorIllustration({ swatches, ...tokens }: ColorIllustrationProp
 
 export function SpacingIllustration(tokens: SpacingIllustrationProps) {
     return (
-        <div className="fi fi--spacing" style={getSurfaceVars(tokens)} aria-hidden="true">
-            <div className="fi__sp-grid">
+        <div className="fi" data-kind="spacing" style={getSurfaceVars(tokens)} aria-hidden="true">
+            <div className="space-grid">
                 {SPACING_ITEMS.map(({ sx, sy }, index) => (
                     <div
                         key={index}
-                        className="fi__sp-item"
+                        className="space-item"
                         style={{
                             "--sp-sx": sx,
                             "--sp-sy": sy,
@@ -253,12 +253,12 @@ export function SpacingIllustration(tokens: SpacingIllustrationProps) {
 
 export function MotionIllustration(tokens: MotionIllustrationProps) {
     return (
-        <div className="fi fi--motion" style={getSurfaceVars(tokens)} aria-hidden="true">
-            <div className="fi__mo-grid">
+        <div className="fi" data-kind="motion" style={getSurfaceVars(tokens)} aria-hidden="true">
+            <div className="motion-grid">
                 {MOTION_CARDS.map((index) => (
                     <div
                         key={index}
-                        className="fi__mo-card"
+                        className="motion-card"
                         style={{ "--mo-i": index } as IllustrationVars}
                     />
                 ))}
@@ -269,12 +269,12 @@ export function MotionIllustration(tokens: MotionIllustrationProps) {
 
 export function BreakpointsIllustration(tokens: BreakpointsIllustrationProps) {
     return (
-        <div className="fi fi--breakpoints" style={getSurfaceVars(tokens)} aria-hidden="true">
-            <div className="fi__bp-stack">
+        <div className="fi" data-kind="breakpoints" style={getSurfaceVars(tokens)} aria-hidden="true">
+            <div className="breakpoint-stack">
                 {BREAKPOINT_STEPS.map(({ width, delay }, index) => (
                     <div
                         key={index}
-                        className="fi__bp-bar"
+                        className="breakpoint-bar"
                         style={{
                             "--bp-w": `${width}cqi`,
                             "--bp-delay": `${delay}s`,
@@ -289,7 +289,8 @@ export function BreakpointsIllustration(tokens: BreakpointsIllustrationProps) {
 export function DotsIllustration({ dotColor, dotSubduedColor }: DotsIllustrationProps) {
     return (
         <div
-            className="fi fi--dots"
+            className="fi"
+            data-kind="dots"
             style={{
                 "--fi-dot-color": dotColor ?? DEFAULT_BORDER,
                 "--fi-dot-subdued": dotSubduedColor ?? DEFAULT_BORDER_SUBDUED,
@@ -299,7 +300,7 @@ export function DotsIllustration({ dotColor, dotSubduedColor }: DotsIllustration
             {DOTS.map((index) => (
                 <div
                     key={index}
-                    className="fi__dot"
+                    className="dot"
                     style={{ "--dot-i": index } as IllustrationVars}
                 />
             ))}
@@ -316,12 +317,12 @@ export function BorderRadiusIllustration({
     const accentPalette = accents.length > 0 ? accents : Array.from(DEFAULT_ACCENTS);
 
     return (
-        <div className="fi fi--border-radius" style={getSurfaceVars(tokens)} aria-hidden="true">
-            <div className="fi__br-grid">
+        <div className="fi" data-kind="border-radius" style={getSurfaceVars(tokens)} aria-hidden="true">
+            <div className="radius-grid">
                 {radiusScale.map((radius, index) => (
                     <div
                         key={`${radius}-${index}`}
-                        className="fi__br-shape"
+                        className="shape"
                         style={{
                             "--br-radius": radius,
                             "--br-delay": `${index * -1.5}s`,
@@ -339,17 +340,17 @@ export function TypographyIllustration(props: TypographyIllustrationProps) {
     const accents = props.accents && props.accents.length > 0 ? props.accents : Array.from(TYPOGRAPHY_ACCENTS);
 
     return (
-        <div className="fi fi--typography" style={getSurfaceVars(props)} aria-hidden="true">
+        <div className="fi" data-kind="typography" style={getSurfaceVars(props)} aria-hidden="true">
             {rows.map((row, index) => (
                 <div
                     key={`${row.content.slice(0, 16)}-${index}`}
-                    className="fi__ty-row"
+                    className="type-row"
                     style={{
                         "--ty-accent": accents[index % accents.length],
                     } as IllustrationVars}
                 >
                     <div
-                        className="fi__ty-inner"
+                        className="type-inner"
                         style={{
                             "--fi-font-family": props.fontFamily,
                             "--ty-size": row.size,

@@ -1,4 +1,4 @@
-.fi__sp-grid {
+.space-grid {
   display: grid;
   gap: 0;
   grid-template-columns: repeat(3, 55cqi);
@@ -22,7 +22,7 @@
   100% { --sp-d: 0px; }
 }
 
-.fi__sp-item {
+.space-item {
   border: 1px solid var(--fi-border, transparent);
   border-radius: var(--fi-radius, 0.75rem);
   background: var(--fi-bg-high, canvas);

@@ -15,11 +15,11 @@
     width: 100%;
   }
 
-  &--small {
+  &[data-size="small"] {
     max-width: 18.75rem;
   }
 
-  &__caption,
+  .caption,
   figcaption {
     color: var(--jkl-color-text-subdued);
     font-size: var(--jkl-font-size-s);

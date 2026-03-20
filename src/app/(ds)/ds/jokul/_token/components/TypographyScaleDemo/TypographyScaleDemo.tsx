@@ -17,12 +17,11 @@ import {
 export function TypographyScaleDemo() {
     return (
         <div className="ty-scale-demo">
-
             <Section
                 heading="Størrelseskala"
                 description={<>Ti trinn fra <code>--jkl-font-size-1</code> (minst) til <code>--jkl-font-size-10</code> (størst). Responsive kontekster bruker ett hakk ned.</>}
             >
-                <div className="ty-scale-demo__scale">
+                <div className="scale">
                     {fontSizeSteps.map((step) => <FontSizeRow key={step.token} {...step} />)}
                 </div>
             </Section>
@@ -31,7 +30,7 @@ export function TypographyScaleDemo() {
                 heading="Navngitte tekststiler"
                 description="Jøkul kombinerer størrelse, linjehøyde og vekt i navngitte stilroller. Bruk tokenene direkte i CSS — ikke hardkod verdiene."
             >
-                <div className="ty-scale-demo__styles">
+                <div className="styles">
                     {namedStyles.map((style) => <NamedStyleRow key={style.name} {...style} />)}
                 </div>
             </Section>
@@ -40,7 +39,7 @@ export function TypographyScaleDemo() {
                 heading="Skriftvekt"
                 description="Jøkul eksponerer to vektnivåer. Bruk aldri hardkodede tallverdier — benytt tokens."
             >
-                <div className="ty-scale-demo__weights">
+                <div className="weights">
                     {weightSteps.map((step) => <WeightRow key={step.token} {...step} />)}
                 </div>
             </Section>
@@ -49,13 +48,12 @@ export function TypographyScaleDemo() {
                 heading="Linjehøyde"
                 description="Tre nivåer dekker alle brukstilfeller — fra tett displaytekst til luftig brødtekst."
             >
-                <div className="ty-scale-demo__lh-grid">
+                <div className="line-height-grid">
                     {lineHeightSteps.map((step) => (
                         <LineHeightCard key={step.token} {...step} sampleText={LINE_HEIGHT_SAMPLE} />
                     ))}
                 </div>
             </Section>
-
         </div>
     );
 }

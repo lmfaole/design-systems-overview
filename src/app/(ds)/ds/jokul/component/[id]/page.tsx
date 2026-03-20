@@ -43,8 +43,8 @@ function ComplexityRow({
     noteAriaLabel: string;
 }) {
     return (
-        <Flex as="div" alignItems="center" gap="s" className="component-complexity__row">
-            <span className="component-complexity__value">
+        <Flex as="div" alignItems="center" gap="s" className="row">
+            <span className="value">
                 <Flex alignItems="center" gap="xs">
                     <span>{COMPLEXITY_LABEL[rating]}</span>
                     {note && <Help buttonText="Hvorfor?">{note}</Help>}

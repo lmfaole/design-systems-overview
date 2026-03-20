@@ -43,7 +43,7 @@ export default async function TokenPostLayout({
         <Flex className="page" direction="column" gap="xl">
             {children}
             {post?.resources && post.resources.length > 0 && (
-                <div className="post-prose post-prose--pattern">
+                <div className="post-prose" data-kind="pattern">
                     <ResourceSection
                         items={post.resources.map((resource) => ({
                             title: resource.title,

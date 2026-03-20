@@ -1,4 +1,4 @@
-.fi__cl-grid {
+.color-grid {
   display: grid;
   grid-template-columns: repeat(3, 55cqi);
   grid-template-rows: repeat(2, 55cqb);
@@ -6,7 +6,7 @@
   gap: max(0.5rem, 2cqi);
 }
 
-.fi__cl-swatch {
+.swatch {
   background: var(--cl-bg, var(--fi-bg-high, canvas));
   border: 1px solid var(--fi-border, transparent);
   border-radius: var(--fi-radius, 0.75rem);

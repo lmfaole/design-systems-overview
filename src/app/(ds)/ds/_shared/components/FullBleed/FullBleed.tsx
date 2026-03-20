@@ -19,15 +19,16 @@ export function FullBleed<E extends ElementType = "div">({
     ...props
 }: FullBleedProps<E>) {
     const Tag = (as ?? "div") as ElementType;
-    const dotClass =
-        dots === "fade-top" ? "ds-full-bleed--dots-fade-top"
-        : dots === "fade-bottom" ? "ds-full-bleed--dots-fade-bottom"
-        : dots ? "ds-full-bleed--dots"
+    const dotVariant =
+        dots === "fade-top" ? "fade-top"
+        : dots === "fade-bottom" ? "fade-bottom"
+        : dots ? "on"
         : undefined;
 
     return (
         <Tag
-            className={["ds-full-bleed", dotClass, className].filter(Boolean).join(" ")}
+            className={["ds-full-bleed", className].filter(Boolean).join(" ")}
+            data-dots={dotVariant}
             style={{
                 ...(dotColor ? { "--ds-full-bleed-dot-color": dotColor } : {}),
                 ...style,

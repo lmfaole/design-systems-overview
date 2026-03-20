@@ -26,14 +26,14 @@
   margin-inline: calc(50% - 50vw);
 }
 
-.ds-full-bleed--dots {
+.ds-full-bleed[data-dots="on"] {
   @include dot-grid();
 }
 
-.ds-full-bleed--dots-fade-top {
+.ds-full-bleed[data-dots="fade-top"] {
   @include dot-grid($mask: linear-gradient(to bottom, transparent 0%, black 10rem));
 }
 
-.ds-full-bleed--dots-fade-bottom {
+.ds-full-bleed[data-dots="fade-bottom"] {
   @include dot-grid($mask: linear-gradient(to bottom, black 60%, transparent 100%));
 }

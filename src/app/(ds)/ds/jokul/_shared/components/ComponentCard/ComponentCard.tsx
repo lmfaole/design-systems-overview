@@ -31,12 +31,11 @@ export function ComponentCard({doc}: ComponentCardProps) {
         >
             <SplitCard
                 previewClassName="component-card-preview"
-                contentClassName="component-card__content"
                 preview={
                     preview ? (
                         <Flex alignItems="center" justifyContent="center">
                             <PreviewHoverContext value={hovered}>
-                                <div className="component-card-preview__inner">
+                                <div className="inner">
                                     {preview}
                                 </div>
                             </PreviewHoverContext>

@@ -4,19 +4,19 @@
   border-radius: var(--jkl-border-radius-medium);
   background: var(--jkl-color-background-container-high);
 
-  &__content {
+  .content {
     position: relative;
     padding: var(--jkl-spacing-m);
   }
 
-  &__copy {
+  .copy {
     position: absolute;
     top: var(--jkl-spacing-xs);
     right: var(--jkl-spacing-xs);
     z-index: 1;
   }
 
-  &__pre {
+  .pre {
     margin: 0;
     max-width: none;
     background: none;
@@ -26,7 +26,6 @@
     overflow-x: auto;
     overflow-y: hidden;
     max-width: 100%;
-    // Pad right side so long lines don't run under the copy button
     padding-inline-end: var(--jkl-spacing-2xl);
   }
 }

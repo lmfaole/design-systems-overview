@@ -7,7 +7,7 @@ import type { ScaleStep, TextStyle, WeightStep, LineHeightStep } from "./typogra
 interface TokenChipProps { token: string }
 
 export function TokenChip({ token }: TokenChipProps) {
-    return <code className="ty-scale-demo__chip">{token}</code>;
+    return <code className="chip">{token}</code>;
 }
 
 // ─── Section ─────────────────────────────────────────────────────────────────
@@ -21,9 +21,9 @@ interface SectionProps {
 
 export function Section({ heading, description, children }: SectionProps) {
     return (
-        <section className="ty-scale-demo__section">
-            <h3 className="ty-scale-demo__section-heading">{heading}</h3>
-            {description && <p className="ty-scale-demo__section-desc">{description}</p>}
+        <section className="section">
+            <h3 className="section-heading">{heading}</h3>
+            {description && <p className="section-desc">{description}</p>}
             {children}
         </section>
     );
@@ -34,16 +34,16 @@ export function Section({ heading, description, children }: SectionProps) {
 
 export function FontSizeRow({ token, label, sample }: ScaleStep) {
     return (
-        <div className="ty-scale-demo__row">
+        <div className="row">
             <span
-                className="ty-scale-demo__sample"
+                className="sample"
                 style={{ fontSize: `var(${token})`, lineHeight: "var(--jkl-line-height-tight)" }}
             >
                 {sample}
             </span>
-            <span className="ty-scale-demo__row-meta">
-                <code className="ty-scale-demo__token">{token}</code>
-                <span className="ty-scale-demo__label">{label}</span>
+            <span className="row-meta">
+                <code className="token">{token}</code>
+                <span className="label">{label}</span>
             </span>
         </div>
     );
@@ -54,9 +54,9 @@ export function FontSizeRow({ token, label, sample }: ScaleStep) {
 
 export function NamedStyleRow({ name, sizeToken, lineHeightToken, weightToken, sample }: TextStyle) {
     return (
-        <div className="ty-scale-demo__style-row">
+        <div className="style-row">
             <p
-                className="ty-scale-demo__style-sample"
+                className="style-sample"
                 style={{
                     fontSize: `var(${sizeToken})`,
                     lineHeight: `var(${lineHeightToken})`,
@@ -65,9 +65,9 @@ export function NamedStyleRow({ name, sizeToken, lineHeightToken, weightToken, s
             >
                 {sample}
             </p>
-            <div className="ty-scale-demo__style-meta">
-                <code className="ty-scale-demo__style-name">{name}</code>
-                <div className="ty-scale-demo__style-tokens">
+            <div className="style-meta">
+                <code className="style-name">{name}</code>
+                <div className="style-tokens">
                     <TokenChip token={sizeToken} />
                     <TokenChip token={lineHeightToken} />
                     <TokenChip token={weightToken} />
@@ -82,16 +82,16 @@ export function NamedStyleRow({ name, sizeToken, lineHeightToken, weightToken, s
 
 export function WeightRow({ token, label, sample }: WeightStep) {
     return (
-        <div className="ty-scale-demo__weight-row">
+        <div className="weight-row">
             <span
-                className="ty-scale-demo__weight-sample"
+                className="weight-sample"
                 style={{ fontWeight: `var(${token})` }}
             >
                 {sample}
             </span>
-            <span className="ty-scale-demo__row-meta">
-                <code className="ty-scale-demo__token">{token}</code>
-                <span className="ty-scale-demo__label">{label}</span>
+            <span className="row-meta">
+                <code className="token">{token}</code>
+                <span className="label">{label}</span>
             </span>
         </div>
     );
@@ -104,13 +104,13 @@ interface LineHeightCardProps extends LineHeightStep { sampleText: string }
 
 export function LineHeightCard({ token, label, description, sampleText }: LineHeightCardProps) {
     return (
-        <div className="ty-scale-demo__lh-card">
-            <p className="ty-scale-demo__lh-sample" style={{ lineHeight: `var(${token})` }}>
+        <div className="line-height-card">
+            <p className="line-height-sample" style={{ lineHeight: `var(${token})` }}>
                 {sampleText}
             </p>
-            <code className="ty-scale-demo__token">{token}</code>
-            <span className="ty-scale-demo__label">{label}</span>
-            <span className="ty-scale-demo__label">{description}</span>
+            <code className="token">{token}</code>
+            <span className="label">{label}</span>
+            <span className="label">{description}</span>
         </div>
     );
 }

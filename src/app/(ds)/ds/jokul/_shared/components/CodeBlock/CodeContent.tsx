@@ -10,11 +10,11 @@ export function CodeContent({ code }: CodeContentProps) {
     const trimmed = code.trim();
 
     return (
-        <div className="code-block__content">
-            <div className="code-block__copy">
+        <div className="content">
+            <div className="copy">
                 <CopyButton code={trimmed} />
             </div>
-            <pre className="code-block__pre">
+            <pre className="pre">
                 <code>{trimmed}</code>
             </pre>
         </div>

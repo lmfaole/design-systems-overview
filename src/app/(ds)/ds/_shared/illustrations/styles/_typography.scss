@@ -1,4 +1,4 @@
-.fi--typography {
+.fi[data-kind="typography"] {
   background:
     radial-gradient(
       circle at 20% 25%,
@@ -21,18 +21,18 @@
   perspective-origin: 50% 45%;
 }
 
-.fi__ty-row {
+.type-row {
   overflow: hidden;
   transform: rotateX(14deg);
   transform-style: preserve-3d;
   opacity: 0.9;
 }
 
-.fi__ty-row:nth-child(odd) {
+.type-row:nth-child(odd) {
   opacity: 0.75;
 }
 
-.fi__ty-inner {
+.type-inner {
   display: inline-block;
   white-space: nowrap;
   font-family: var(--fi-font-family, sans-serif);

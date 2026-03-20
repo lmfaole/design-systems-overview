@@ -1,28 +1,28 @@
-.related-component-card__preview {
+.related-component-card .preview {
     background-image: radial-gradient(circle, color-mix(in srgb, var(--jkl-color-border-subdued) 40%, transparent) 1px, transparent 1px);
     background-size: 20px 20px;
     height: 12rem;
     overflow: hidden;
     padding: var(--jkl-spacing-l);
 
-    &-inner {
+    .inner {
         pointer-events: none;
         user-select: none;
         zoom: 0.6;
     }
 }
 
-.related-component-card__content {
+.related-component-card .content {
     padding: var(--jkl-spacing-s);
 }
 
-.related-component-card__description {
+.related-component-card .description {
     color: var(--jkl-color-text-subdued);
     margin: 0;
 }
 
 @container (min-width: 36rem) {
-    .related-component-card__preview {
+    .related-component-card .preview {
         height: auto;
         min-height: 10rem;
     }

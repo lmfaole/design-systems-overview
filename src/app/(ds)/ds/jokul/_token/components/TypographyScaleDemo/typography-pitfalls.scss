@@ -1,33 +1,27 @@
 .ty-pitfalls {
     display: grid;
     gap: 5rem;
-}
 
-.ty-pitfalls__item {
-    display: grid;
-    gap: var(--jkl-spacing-m);
-    padding-block-end: 5rem;
-    border-block-end: 1px solid var(--jkl-color-border-ui);
+    .item {
+        display: grid;
+        gap: var(--jkl-spacing-m);
+        padding-block-end: 5rem;
+        border-block-end: 1px solid var(--jkl-color-border-ui);
 
-    &:last-child {
-        border-block-end: none;
-        padding-block-end: 0;
+        &:last-child {
+            border-block-end: none;
+            padding-block-end: 0;
+        }
     }
-}
 
-.ty-pitfalls__title {
-    margin: 0;
-}
+    .title,
+    .problem,
+    .why {
+        margin: 0;
+    }
 
-.ty-pitfalls__problem {
-    margin: 0;
-}
-
-.ty-pitfalls__why {
-    margin: 0;
-}
-
-.ty-pitfalls__code-pair {
-    display: grid;
-    gap: var(--jkl-spacing-s);
+    .code-pair {
+        display: grid;
+        gap: var(--jkl-spacing-s);
+    }
 }

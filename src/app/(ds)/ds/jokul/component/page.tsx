@@ -55,7 +55,7 @@ export default function ComponentsPage() {
                 />
                 <SkeletonAnimation textDescription="Laster innstillinger…">
                     <SkeletonElement width="20rem" height="2.5rem" />
-                    <SkeletonElement width="100%" height="12rem" className="component-index__skeleton-gap" />
+                    <SkeletonElement width="100%" height="12rem" className="skeleton-gap" />
                 </SkeletonAnimation>
             </Flex>
         );

@@ -34,13 +34,13 @@ export function SplitCard({
             } as CSSProperties}
             {...rest}
         >
-            <div className="ds-split-card__container">
+            <div className="container">
                 {preview && (
-                    <div className={["ds-split-card__preview", previewClassName].filter(Boolean).join(" ")}>
+                    <div className={["preview", previewClassName].filter(Boolean).join(" ")}>
                         {preview}
                     </div>
                 )}
-                <div className={["ds-split-card__content", contentClassName].filter(Boolean).join(" ")}>
+                <div className={["content", contentClassName].filter(Boolean).join(" ")}>
                     {content}
                 </div>
             </div>

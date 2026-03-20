@@ -1,4 +1,4 @@
-.fi__mo-grid {
+.motion-grid {
   display: grid;
   grid-template-columns: repeat(3, 42cqi);
   grid-template-rows: repeat(5, 22cqi);
@@ -7,7 +7,7 @@
   place-content: center;
 }
 
-.fi__mo-card {
+.motion-card {
   border: 1px solid var(--fi-border, transparent);
   border-radius: var(--fi-radius, 0.75rem);
   background: var(--fi-bg-high, canvas);

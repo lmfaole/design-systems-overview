@@ -1,64 +1,61 @@
 .component-page-example {
-    .component-example__toolbar {
+    .toolbar {
         border-radius: var(--jkl-border-radius-medium);
         border: 1px solid var(--jkl-color-border-subdued);
     }
 
-    .component-example__toolbar--mobile {
+    .toolbar[data-layout="mobile"] {
         flex-direction: row;
         align-items: center;
     }
 
-    .component-example__props {
+    .props {
         padding-left: var(--jkl-spacing-l);
     }
 
-    .component-example__controls-inline {
+    .controls-inline {
         width: 100%;
     }
 
-    .component-example__props-inline {
+    .props-inline {
         width: 100%;
     }
 
-    .component-example__json-error {
+    .json-error {
         color: var(--jkl-color-text-danger);
     }
 
     @media (max-width: 48rem) {
-        .component-example__toolbar {
+        .toolbar {
             flex-direction: column;
             align-items: stretch;
         }
 
-        .component-example__toolbar--mobile {
+        .toolbar[data-layout="mobile"] {
             flex-direction: row;
             align-items: center;
         }
 
-        .component-example__props {
+        .props {
             padding-left: 0;
             border-top: 1px solid var(--jkl-color-border-subdued);
             padding-top: var(--jkl-spacing-s);
         }
 
-        .component-example__controls-inline {
+        .controls-inline {
             flex-direction: column;
         }
     }
 
-    /* Establish a stable height floor that content can't shrink */
-    &__area {
+    .area {
         position: relative;
         min-height: 70svh;
         background-color: var(--jkl-color-background-page);
         color: var(--jkl-color-text-default);
 
-        /* Absolute child fills the area without influencing its height */
-        &__inner {
+        .inner {
             position: absolute;
             inset: 0;
-            /* Allow overlays (popovers, tooltips) to escape the bounds */
             overflow: visible;
         }
     }

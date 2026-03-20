@@ -1,168 +1,161 @@
 .ty-scale-demo {
     display: grid;
     gap: 5rem;
-}
 
-/* Section wrapper */
-.ty-scale-demo__section {
-    display: grid;
-    gap: var(--jkl-spacing-l);
-}
-
-.ty-scale-demo__section-heading {
-    margin: 0;
-}
-
-.ty-scale-demo__section-desc {
-    margin: 0;
-    color: var(--jkl-color-text-subdued);
-}
-
-/* Shared meta column (token + label stacked) */
-.ty-scale-demo__row-meta {
-    display: grid;
-    gap: var(--jkl-unit-02);
-    flex-shrink: 0;
-    align-items: flex-end;
-}
-
-/* Shared token + label typography */
-.ty-scale-demo__token {
-    font-size: var(--jkl-font-size-1);
-    color: var(--jkl-color-text-subdued);
-    white-space: nowrap;
-    font-family: "Fremtind Grotesk Mono", monospace;
-}
-
-.ty-scale-demo__label {
-    font-size: var(--jkl-font-size-1);
-    color: var(--jkl-color-text-subdued);
-}
-
-/* ─── 1. Font size scale ─────────────────────────────────── */
-.ty-scale-demo__scale {
-    display: grid;
-}
-
-.ty-scale-demo__row {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    gap: var(--jkl-spacing-l);
-    padding-block: var(--jkl-spacing-s);
-    border-block-end: 1px solid var(--jkl-color-border-ui);
-
-    &:last-child {
-        border-block-end: none;
+    .section {
+        display: grid;
+        gap: var(--jkl-spacing-l);
     }
-}
 
-.ty-scale-demo__sample {
-    line-height: var(--jkl-line-height-tight);
-    color: var(--jkl-color-text-default);
-}
-
-/* ─── 2. Named text styles ───────────────────────────────── */
-.ty-scale-demo__styles {
-    display: grid;
-}
-
-.ty-scale-demo__style-row {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: var(--jkl-spacing-l);
-    align-items: center;
-    padding-block: var(--jkl-spacing-m);
-    border-block-end: 1px solid var(--jkl-color-border-ui);
-
-    &:last-child {
-        border-block-end: none;
+    .section-heading {
+        margin: 0;
     }
-}
 
-.ty-scale-demo__style-sample {
-    margin: 0;
-    color: var(--jkl-color-text-default);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.ty-scale-demo__style-meta {
-    display: grid;
-    align-items: flex-end;
-    gap: var(--jkl-spacing-xxs);
-    flex-shrink: 0;
-}
-
-.ty-scale-demo__style-name {
-    font-size: var(--jkl-font-size-2);
-    font-family: "Fremtind Grotesk Mono", monospace;
-    color: var(--jkl-color-text-default);
-    font-weight: var(--jkl-typography-font-weight-bold);
-}
-
-.ty-scale-demo__style-tokens {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(5rem, max-content));
-    gap: var(--jkl-spacing-xxs);
-    justify-content: end;
-}
-
-.ty-scale-demo__chip {
-    font-size: var(--jkl-font-size-1);
-    font-family: "Fremtind Grotesk Mono", monospace;
-    color: var(--jkl-color-text-subdued);
-    background: var(--jkl-color-background-container);
-    border: 1px solid var(--jkl-color-border-ui);
-    border-radius: var(--jkl-border-radius-small);
-    padding-block: 1px;
-    padding-inline: var(--jkl-spacing-xxs);
-    white-space: nowrap;
-}
-
-/* ─── 3. Font weight ─────────────────────────────────────── */
-.ty-scale-demo__weights {
-    display: grid;
-}
-
-.ty-scale-demo__weight-row {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    gap: var(--jkl-spacing-l);
-    padding-block: var(--jkl-spacing-m);
-    border-block-end: 1px solid var(--jkl-color-border-ui);
-
-    &:last-child {
-        border-block-end: none;
+    .section-desc {
+        margin: 0;
+        color: var(--jkl-color-text-subdued);
     }
-}
 
-.ty-scale-demo__weight-sample {
-    font-size: var(--jkl-font-size-6);
-    line-height: var(--jkl-line-height-tight);
-    color: var(--jkl-color-text-default);
-}
+    .row-meta {
+        display: grid;
+        gap: var(--jkl-unit-02);
+        flex-shrink: 0;
+        align-items: flex-end;
+    }
 
-/* ─── 4. Line height ─────────────────────────────────────── */
-.ty-scale-demo__lh-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
-    gap: var(--jkl-spacing-l);
-}
+    .token {
+        font-size: var(--jkl-font-size-1);
+        color: var(--jkl-color-text-subdued);
+        white-space: nowrap;
+        font-family: "Fremtind Grotesk Mono", monospace;
+    }
 
-.ty-scale-demo__lh-card {
-    display: grid;
-    gap: var(--jkl-spacing-xxs);
-    padding: var(--jkl-spacing-l);
-    border: 1px solid var(--jkl-color-border-ui);
-    border-radius: var(--jkl-border-radius-medium);
-    background: var(--jkl-color-background-container);
-}
+    .label {
+        font-size: var(--jkl-font-size-1);
+        color: var(--jkl-color-text-subdued);
+    }
 
-.ty-scale-demo__lh-sample {
-    font-size: var(--jkl-font-size-3);
-    color: var(--jkl-color-text-default);
-    margin: 0 0 var(--jkl-spacing-xs);
+    .scale {
+        display: grid;
+    }
+
+    .row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: var(--jkl-spacing-l);
+        padding-block: var(--jkl-spacing-s);
+        border-block-end: 1px solid var(--jkl-color-border-ui);
+
+        &:last-child {
+            border-block-end: none;
+        }
+    }
+
+    .sample {
+        line-height: var(--jkl-line-height-tight);
+        color: var(--jkl-color-text-default);
+    }
+
+    .styles {
+        display: grid;
+    }
+
+    .style-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: var(--jkl-spacing-l);
+        align-items: center;
+        padding-block: var(--jkl-spacing-m);
+        border-block-end: 1px solid var(--jkl-color-border-ui);
+
+        &:last-child {
+            border-block-end: none;
+        }
+    }
+
+    .style-sample {
+        margin: 0;
+        color: var(--jkl-color-text-default);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .style-meta {
+        display: grid;
+        align-items: flex-end;
+        gap: var(--jkl-spacing-xxs);
+        flex-shrink: 0;
+    }
+
+    .style-name {
+        font-size: var(--jkl-font-size-2);
+        font-family: "Fremtind Grotesk Mono", monospace;
+        color: var(--jkl-color-text-default);
+        font-weight: var(--jkl-typography-font-weight-bold);
+    }
+
+    .style-tokens {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(5rem, max-content));
+        gap: var(--jkl-spacing-xxs);
+        justify-content: end;
+    }
+
+    .chip {
+        font-size: var(--jkl-font-size-1);
+        font-family: "Fremtind Grotesk Mono", monospace;
+        color: var(--jkl-color-text-subdued);
+        background: var(--jkl-color-background-container);
+        border: 1px solid var(--jkl-color-border-ui);
+        border-radius: var(--jkl-border-radius-small);
+        padding-block: 1px;
+        padding-inline: var(--jkl-spacing-xxs);
+        white-space: nowrap;
+    }
+
+    .weights {
+        display: grid;
+    }
+
+    .weight-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: var(--jkl-spacing-l);
+        padding-block: var(--jkl-spacing-m);
+        border-block-end: 1px solid var(--jkl-color-border-ui);
+
+        &:last-child {
+            border-block-end: none;
+        }
+    }
+
+    .weight-sample {
+        font-size: var(--jkl-font-size-6);
+        line-height: var(--jkl-line-height-tight);
+        color: var(--jkl-color-text-default);
+    }
+
+    .line-height-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+        gap: var(--jkl-spacing-l);
+    }
+
+    .line-height-card {
+        display: grid;
+        gap: var(--jkl-spacing-xxs);
+        padding: var(--jkl-spacing-l);
+        border: 1px solid var(--jkl-color-border-ui);
+        border-radius: var(--jkl-border-radius-medium);
+        background: var(--jkl-color-background-container);
+    }
+
+    .line-height-sample {
+        font-size: var(--jkl-font-size-3);
+        color: var(--jkl-color-text-default);
+        margin: 0 0 var(--jkl-spacing-xs);
+    }
 }

@@ -1,12 +1,12 @@
-.fi--colors,
-.fi--spacing,
-.fi--motion,
-.fi--breakpoints,
-.fi--border-radius {
+.fi[data-kind="colors"],
+.fi[data-kind="spacing"],
+.fi[data-kind="motion"],
+.fi[data-kind="breakpoints"],
+.fi[data-kind="border-radius"] {
   background: var(--fi-bg-low, canvas);
 }
 
-.fi--border-radius {
+.fi[data-kind="border-radius"] {
   background:
     radial-gradient(
       circle at 25% 20%,
@@ -22,11 +22,11 @@
   overflow: hidden;
 }
 
-.fi__cl-grid,
-.fi__sp-grid,
-.fi__mo-grid,
-.fi__bp-stack,
-.fi__br-grid {
+.color-grid,
+.space-grid,
+.motion-grid,
+.breakpoint-stack,
+.radius-grid {
   position: absolute;
   inset: 0;
 }

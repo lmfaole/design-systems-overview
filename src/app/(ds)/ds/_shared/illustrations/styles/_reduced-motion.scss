@@ -1,30 +1,30 @@
 @media (prefers-reduced-motion: reduce) {
-  .fi__cl-swatch,
-  .fi__mo-card,
-  .fi__bp-bar,
-  .fi__br-shape,
-  .fi__ty-inner,
-  .fi__dot {
+  .swatch,
+  .motion-card,
+  .breakpoint-bar,
+  .shape,
+  .type-inner,
+  .dot {
     animation: none;
   }
 
-  .fi__cl-swatch,
-  .fi__mo-card,
-  .fi__br-shape,
-  .fi__bp-bar {
+  .swatch,
+  .motion-card,
+  .shape,
+  .breakpoint-bar {
     opacity: 1;
     transform: none;
   }
 
-  .fi__sp-grid {
+  .space-grid {
     animation: none;
   }
 
-  .fi__sp-item {
+  .space-item {
     transform: translate(calc(var(--sp-sx, 0) * 24px), calc(var(--sp-sy, 0) * 24px));
   }
 
-  .fi__dot {
+  .dot {
     opacity: 0.7;
     transform: rotate(45deg);
   }

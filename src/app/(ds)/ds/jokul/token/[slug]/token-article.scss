@@ -1,4 +1,6 @@
-.token-article__meta {
-    padding-block: var(--jkl-spacing-m);
-    border-block: 1px solid var(--jkl-color-border-subdued);
+.token-article {
+    .meta {
+        padding-block: var(--jkl-spacing-m);
+        border-block: 1px solid var(--jkl-color-border-subdued);
+    }
 }

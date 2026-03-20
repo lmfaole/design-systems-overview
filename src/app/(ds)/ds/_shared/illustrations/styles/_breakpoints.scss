@@ -1,4 +1,4 @@
-.fi__bp-stack {
+.breakpoint-stack {
   display: grid;
   align-content: center;
   gap: 3cqb;
@@ -6,7 +6,7 @@
   padding-block: max(0.75rem, 3cqi);
 }
 
-.fi__bp-bar {
+.breakpoint-bar {
   height: 14cqb;
   width: var(--bp-w, 60cqi);
   flex-shrink: 0;

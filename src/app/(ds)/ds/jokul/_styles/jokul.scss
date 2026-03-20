@@ -136,29 +136,29 @@ body:has(.jkl) {
   max-width: var(--content-max-width);
 }
 
-.jkl .post-prose--pattern {
+.jkl .post-prose[data-kind="pattern"] {
   --pattern-prose-max-width: var(--content-max-width);
 
   font-size: var(--jkl-font-size-4);
   line-height: var(--jkl-line-height-relaxed);
   text-align: start;
 
-  .pattern-prose__text {
+  .text {
     width: 100%;
     max-width: var(--pattern-prose-max-width);
     margin-inline: 0;
   }
 
-  .pattern-prose__text :where(h1, h2, h3) {
+  .text :where(h1, h2, h3) {
     text-wrap: balance;
   }
 
-  .pattern-prose__text :where(p, li) {
+  .text :where(p, li) {
     text-wrap: pretty;
     hyphens: auto;
   }
 
-  .pattern-prose__text p {
+  .text p {
     font-size: inherit;
     line-height: inherit;
   }
