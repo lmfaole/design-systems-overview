@@ -109,12 +109,16 @@ describe("TokenArticle", () => {
             <TokenArticle
                 title="Skygger"
                 excerpt="Skyggevariabler"
-                illustration={<div data-token-illustration="skygger"><div data-shadow-surface="hover"/></div>}
+                illustration={
+                    <div data-token-illustration="skygger" data-token-illustration-bleed="true">
+                        <span data-token-specimen="skygger" />
+                    </div>
+                }
             />,
         );
 
         expect(html).toContain('data-page-header-background=""');
         expect(html).toContain('data-token-illustration="skygger"');
-        expect(html).toContain('data-shadow-surface="hover"');
+        expect(html).toContain('data-token-specimen="skygger"');
     });
 });

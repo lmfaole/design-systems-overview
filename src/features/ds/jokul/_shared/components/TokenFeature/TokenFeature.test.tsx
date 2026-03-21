@@ -54,8 +54,7 @@ describe("TokenFeature", () => {
 
         expect(html).toContain('class="background"');
         expect(html).toContain('data-token-illustration="skygger"');
-        expect(html).toContain('data-shadow-surface="navigation"');
-        expect(html).toContain('data-shadow-surface="task"');
-        expect(html).toContain('data-shadow-surface="hover"');
+        expect(html).toContain('data-token-illustration-bleed="true"');
+        expect(html).toContain('data-token-specimen="skygger"');
     });
 });

@@ -26,6 +26,7 @@ describe("token overview data", () => {
                 href: `/ds/jokul/token/${getTokenSlug(post)}`,
             });
             expect(marker).toBeDefined();
+            expect(illustrationMarkup).toContain('data-token-illustration-bleed="true"');
             expect(countOccurrences(illustrationMarkup, 'data-token-card-specimen="')).toBe(1);
             expect(illustrationMarkup).toContain(
                 `data-token-card-specimen="${getTokenSlug(post)}"`,

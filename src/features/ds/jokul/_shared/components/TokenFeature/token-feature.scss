@@ -30,18 +30,9 @@
   }
 
   &[data-static-illustration] {
-    .background :where(.swatch, .motion-card, .breakpoint-bar, .shape, .type-inner, .dot, .space-grid) {
+    .background .token-specimen {
       animation: none;
-    }
-
-    .background :where(.swatch, .motion-card, .breakpoint-bar, .shape) {
-      opacity: 1;
       transform: none;
-    }
-
-    .background .dot {
-      opacity: 0.7;
-      transform: rotate(45deg);
     }
   }
 }

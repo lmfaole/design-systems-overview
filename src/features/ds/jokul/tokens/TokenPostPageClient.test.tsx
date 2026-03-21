@@ -76,13 +76,17 @@ describe("TokenPostPageClient", () => {
         dataMocks.getTokenPost.mockReturnValue({
             title: "Skygger",
             excerpt: "Skygger i Jøkul",
-            illustration: <div data-token-illustration="skygger"><div data-shadow-surface="task"/></div>,
+            illustration: (
+                <div data-token-illustration="skygger" data-token-illustration-bleed="true">
+                    <span data-token-specimen="skygger" />
+                </div>
+            ),
         });
 
         const html = renderToStaticMarkup(<TokenPostPageClient slug="skygger"/>);
 
         expect(html).toContain('data-token-article=""');
         expect(html).toContain('data-token-illustration="skygger"');
-        expect(html).toContain('data-shadow-surface="task"');
+        expect(html).toContain('data-token-specimen="skygger"');
     });
 });

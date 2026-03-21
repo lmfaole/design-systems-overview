@@ -207,6 +207,39 @@ describe("Jokul token docs integrity", () => {
         expect(issues).toEqual([]);
     });
 
+    it("uses the shared single-specimen illustration system for token page headers", () => {
+        const issues: string[] = [];
+
+        for (const post of tokenPosts) {
+            if (!post.illustration || !isValidElement(post.illustration)) {
+                issues.push(`${post.id}: missing renderable illustration`);
+                continue;
+            }
+
+            const slug = getTokenSlug(post);
+            const illustrationMarkup = renderToStaticMarkup(post.illustration);
+            const specimenMatches = illustrationMarkup.match(/data-token-specimen="[^"]+"/g) ?? [];
+
+            if (!illustrationMarkup.includes('data-token-illustration-bleed="true"')) {
+                issues.push(`${post.id}: illustration does not enable bleed`);
+            }
+
+            if (!illustrationMarkup.includes(`data-token-illustration="${slug}"`)) {
+                issues.push(`${post.id}: illustration marker does not match slug "${slug}"`);
+            }
+
+            if (specimenMatches.length !== 1) {
+                issues.push(`${post.id}: expected exactly one token specimen, got ${specimenMatches.length}`);
+            }
+
+            if (!illustrationMarkup.includes(`data-token-specimen="${slug}"`)) {
+                issues.push(`${post.id}: illustration specimen does not match slug "${slug}"`);
+            }
+        }
+
+        expect(issues).toEqual([]);
+    });
+
     it("keeps every token table populated with a rendered example of the token value", () => {
         const issues: string[] = [];
 

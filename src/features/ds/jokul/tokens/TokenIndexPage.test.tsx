@@ -25,7 +25,7 @@ function countOccurrences(html: string, marker: string) {
 }
 
 function getIllustrationMarker(html: string) {
-    const marker = html.match(/<div class="token-mini" data-token-card-illustration="[^"]+">/)?.[0];
+    const marker = html.match(/<div class="token-illustration" data-surface="card" data-token-illustration-bleed="true" data-token-card-illustration="[^"]+">/)?.[0];
 
     if (marker) {
         return marker;
@@ -35,7 +35,7 @@ function getIllustrationMarker(html: string) {
 }
 
 function getSpecimenMarker(html: string) {
-    return html.match(/<(?:span|strong) class="token-mini__specimen" data-token-card-specimen="[^"]+">/)?.[0];
+    return html.match(/<(?:span|strong) class="token-specimen" data-token-card-specimen="[^"]+">/)?.[0];
 }
 
 describe("TokenIndexPage", () => {
