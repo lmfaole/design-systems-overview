@@ -1,6 +1,6 @@
 ---
 import JokulLayout from "@/layouts/JokulLayout.astro";
-import PropIndexPage from "@/features/ds/jokul/components/PropIndexPage";
+import PropIndexPage from "@/features/ds/jokul/components/PropIndexPage/Page.astro";
 ---
 
 <JokulLayout
@@ -8,5 +8,5 @@ import PropIndexPage from "@/features/ds/jokul/components/PropIndexPage";
     description="Samlet props-oversikt for Jøkul-komponenter."
     path="/ds/jokul/component/props"
 >
-    <PropIndexPage client:load />
+    <PropIndexPage />
 </JokulLayout>

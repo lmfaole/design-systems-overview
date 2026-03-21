@@ -1,0 +1,21 @@
+---
+import type { ComponentDoc } from "@/data/jokul/component-docs";
+
+interface Props {
+    items: Array<{ doc: Pick<ComponentDoc, "id" | "name">; description: string }>;
+    columns?: number;
+}
+
+const { items, columns = 4 } = Astro.props;
+---
+
+<ul class="bare-list ds-grid component-relationship-grid" data-columns={columns}>
+    {items.map(({ doc, description }) => (
+        <li>
+            <a class="site-card site-card-link component-relationship-card" href={`/ds/jokul/component/${doc.id}`}>
+                <strong>{doc.name}</strong>
+                <p class="component-relationship-description">{description}</p>
+            </a>
+        </li>
+    ))}
+</ul>

@@ -1,14 +1,24 @@
 .component-index {
-    .skeleton-gap {
-        margin-block-start: var(--jkl-spacing-xl);
-    }
-
-    .tags-label {
-        font-size: var(--jkl-font-size-1);
-    }
-
     .count {
         margin: 0;
         font-size: var(--jkl-font-size-s);
+    }
+
+    .component-index-toolbar {
+        margin-block-end: var(--jkl-spacing-s);
+    }
+
+    .field {
+        display: grid;
+        gap: var(--jkl-spacing-2xs);
+        min-inline-size: 0;
+    }
+
+    .field-query {
+        inline-size: 100%;
+    }
+
+    .component-index-results {
+        align-items: start;
     }
 }

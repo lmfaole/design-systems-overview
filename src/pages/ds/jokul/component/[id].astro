@@ -2,7 +2,7 @@
 import JokulLayout from "@/layouts/JokulLayout.astro";
 import { componentDocs, getComponentDoc } from "@/data/jokul/component-docs";
 import { getPatternBacklinksForComponentHref } from "@/data/monster/patterns";
-import { ComponentPageClient } from "@/features/ds/jokul/components/ComponentPageClient";
+import ComponentDetailPage from "@/features/ds/jokul/components/ComponentDetailPage/Page.astro";
 
 export function getStaticPaths() {
     return componentDocs.map((doc) => ({
@@ -25,5 +25,5 @@ const relatedPatterns = getPatternBacklinksForComponentHref(`/ds/jokul/component
     description={doc.description.long}
     path={`/ds/jokul/component/${doc.id}`}
 >
-    <ComponentPageClient id={doc.id} relatedPatterns={relatedPatterns} client:load />
+    <ComponentDetailPage doc={doc} relatedPatterns={relatedPatterns} />
 </JokulLayout>

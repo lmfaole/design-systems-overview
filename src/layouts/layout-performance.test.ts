@@ -27,6 +27,22 @@ const searchPageSource = readFileSync(
     path.resolve(process.cwd(), "src/pages/ds/sok/index.astro"),
     "utf8",
 );
+const componentIndexPageSource = readFileSync(
+    path.resolve(process.cwd(), "src/pages/ds/jokul/component/index.astro"),
+    "utf8",
+);
+const componentPropsPageSource = readFileSync(
+    path.resolve(process.cwd(), "src/pages/ds/jokul/component/props/index.astro"),
+    "utf8",
+);
+const componentDetailRouteSource = readFileSync(
+    path.resolve(process.cwd(), "src/pages/ds/jokul/component/[id].astro"),
+    "utf8",
+);
+const componentDetailPageSource = readFileSync(
+    path.resolve(process.cwd(), "src/features/ds/jokul/components/ComponentDetailPage/Page.astro"),
+    "utf8",
+);
 const dsOverviewPageSource = readFileSync(
     path.resolve(process.cwd(), "src/features/ds/overview/DesignSystemsPage.astro"),
     "utf8",
@@ -72,6 +88,22 @@ describe("Layout performance wiring", () => {
     it("renders the search page without React islands", () => {
         expect(searchPageSource).not.toContain("client:load");
         expect(searchPageSource).not.toContain("SearchPageClient");
+    });
+
+    it("keeps the component index routes island-free and hydrates only the live example on detail pages", () => {
+        expect(componentIndexPageSource).toContain(
+            'import ComponentIndexPage from "@/features/ds/jokul/components/ComponentIndexPage/Page.astro";',
+        );
+        expect(componentPropsPageSource).toContain(
+            'import PropIndexPage from "@/features/ds/jokul/components/PropIndexPage/Page.astro";',
+        );
+        expect(componentIndexPageSource).not.toContain("client:load");
+        expect(componentPropsPageSource).not.toContain("client:load");
+        expect(componentDetailRouteSource).toContain(
+            'import ComponentDetailPage from "@/features/ds/jokul/components/ComponentDetailPage/Page.astro";',
+        );
+        expect(componentDetailRouteSource).not.toContain("ComponentPageClient");
+        expect(componentDetailPageSource).toContain('<ComponentExampleIsland id={doc.id} client:only="react" />');
     });
 
     it("keeps the /ds and /ds/jokul landing pages in Astro instead of React wrappers", () => {

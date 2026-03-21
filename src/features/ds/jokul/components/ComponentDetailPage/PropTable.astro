@@ -1,0 +1,124 @@
+---
+import type { Migration, PropDef } from "@/features/ds/jokul/_component-docs/data";
+import PropShapeTable from "./PropShapeTable.astro";
+import {
+    createMigrationAnchorMap,
+    getPropStatusLabel,
+    getPropTypeDetails,
+    sortProps,
+} from "./prop-table";
+
+interface Props {
+    props: PropDef[];
+    migrations?: Migration[];
+}
+
+const { props, migrations = [] } = Astro.props;
+const migrationAnchors = createMigrationAnchorMap(migrations);
+const rows = sortProps(props).map((prop) => ({
+    prop,
+    migrationAnchor: migrationAnchors.get(prop.name),
+    typeDetails: getPropTypeDetails(prop),
+    popoverId: `prop-type-${prop.name.replace(/[^a-z0-9_-]+/giu, "-").replace(/^-+|-+$/gu, "").toLowerCase()}`,
+}));
+---
+
+<div class="site-table-wrap">
+    <table class="site-table component-prop-table">
+        <thead>
+            <tr>
+                <th scope="col">Navn</th>
+                <th scope="col">Type</th>
+                <th scope="col">Påkrevd</th>
+                <th scope="col">Standard</th>
+                <th scope="col">Status</th>
+                <th scope="col">Beskrivelse</th>
+            </tr>
+        </thead>
+        <tbody>
+            {rows.map(({ prop, migrationAnchor, typeDetails, popoverId }) => (
+                <tr>
+                    <th scope="row">
+                        {migrationAnchor && prop.status === "deprecated" ? (
+                            <a href={migrationAnchor}>
+                                <code>{prop.name}</code>
+                            </a>
+                        ) : (
+                            <code>{prop.name}</code>
+                        )}
+                    </th>
+                    <td>
+                        {typeDetails.hasDetails ? (
+                            <>
+                                <button
+                                    type="button"
+                                    class="site-button site-button-quiet component-type-button"
+                                    data-popover-target={popoverId}
+                                    aria-haspopup="dialog"
+                                    aria-expanded="false"
+                                >
+                                    <code>{typeDetails.summary}</code>
+                                </button>
+                                <div
+                                    id={popoverId}
+                                    popover="auto"
+                                    class="site-popover component-type-popover"
+                                    role="dialog"
+                                    aria-labelledby={`${popoverId}-title`}
+                                >
+                                    <div class="component-type-popover-header">
+                                        <p id={`${popoverId}-title`} class="component-type-popover-title">
+                                            <strong>{prop.name}</strong>
+                                        </p>
+                                        <button
+                                            type="button"
+                                            class="site-button site-button-quiet"
+                                            data-popover-close={popoverId}
+                                        >
+                                            Lukk
+                                        </button>
+                                    </div>
+
+                                    <p class="component-type-description">{prop.description}</p>
+
+                                    <pre class="component-type-signature"><code>{typeDetails.rawType}</code></pre>
+
+                                    <PropShapeTable items={typeDetails.params} title="Parametere" />
+
+                                    {typeDetails.returnType && (
+                                        <p class="component-type-return">
+                                            <strong>Returnerer:</strong> <code>{typeDetails.returnType}</code>
+                                        </p>
+                                    )}
+
+                                    <PropShapeTable items={typeDetails.optionsFields} title="options" />
+                                    <PropShapeTable items={typeDetails.objectFields} title="Felter" />
+                                    <PropShapeTable
+                                        items={typeDetails.commonFields}
+                                        title={typeDetails.commonLabel ?? "Felles props"}
+                                    />
+                                </div>
+                            </>
+                        ) : (
+                            <code>{prop.type}</code>
+                        )}
+                    </td>
+                    <td>{prop.required ? "Ja" : "Nei"}</td>
+                    <td>{prop.default ? <code>{prop.default}</code> : "—"}</td>
+                    <td>
+                        <span class:list={[
+                            "component-prop-status",
+                            prop.status !== "stable" && `component-prop-status-${prop.status}`,
+                        ]}>
+                            {getPropStatusLabel(prop.status)}
+                        </span>
+                        {prop.status !== "stable" && prop.statusDescription && (
+                            <small class="muted component-prop-status-note">{prop.statusDescription}</small>
+                        )}
+                    </td>
+                    <td>{prop.description || "—"}</td>
+                </tr>
+            ))}
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,233 @@
+---
+import type { ComponentDoc } from "@/data/jokul/component-docs";
+import { getParentAndSiblings, getRelationships } from "@/data/jokul/component-docs";
+import type { PatternComponentBacklink } from "@/data/monster/patterns";
+import { DotsIllustration } from "@/features/ds/jokul/_shared/components/Illustration";
+import { PageHeader } from "@/components/ds/PageHeader";
+import ComponentExampleIsland from "@/features/ds/jokul/components/ComponentExampleIsland";
+import CodeSnippet from "./CodeSnippet.astro";
+import PropTable from "./PropTable.astro";
+import RelationshipDefinitionList from "./RelationshipDefinitionList.astro";
+import RelationshipGrid from "./RelationshipGrid.astro";
+import {
+    createDetailTocItems,
+    createMigrationEntries,
+    formatComplexity,
+    getStatusLabel,
+} from "./page";
+import "./styles.scss";
+
+interface Props {
+    doc: ComponentDoc;
+    relatedPatterns: PatternComponentBacklink[];
+}
+
+const { doc, relatedPatterns } = Astro.props;
+const { requires, alternatives, subcomponents, related } = getRelationships(doc.id);
+const { parent, siblings, kind: parentKind } = getParentAndSiblings(doc.id);
+const siblingsAnchor = parentKind === "requires" ? "andre-komponenter" : "andre-delkomponenter";
+const migrationEntries = createMigrationEntries(doc.migrations ?? []);
+const tocItems = createDetailTocItems({
+    hasExample: Boolean(doc.example),
+    hasPatterns: relatedPatterns.length > 0,
+    hasRequires: requires.length > 0,
+    hasMigrations: migrationEntries.length > 0,
+    hasSubcomponents: subcomponents.length > 0,
+    hasAlternatives: alternatives.length > 0,
+    hasSiblings: siblings.length > 0,
+    siblingsLabel: siblingsAnchor,
+    hasRelated: related.length > 0,
+});
+
+const toRelatedItems = (items: typeof requires) =>
+    items.map(({ doc: relatedDoc, description }) => ({
+        doc: { id: relatedDoc.id, name: relatedDoc.name, preview: relatedDoc.preview },
+        description,
+    }));
+
+const requiresItems = toRelatedItems(requires);
+const siblingsItems = toRelatedItems(siblings);
+const relatedItems = toRelatedItems(related);
+const firstMigrationAnchor = migrationEntries[0]?.anchorId ?? "migrering";
+---
+
+<main class="page component-detail-page">
+    <PageHeader
+        title={doc.name}
+        description={doc.description.long}
+        background={DotsIllustration}
+    />
+
+    {tocItems.length > 0 && (
+        <nav class="article-toc" aria-labelledby="component-toc-title">
+            <h2 id="component-toc-title">Innhold</h2>
+            <ol>
+                {tocItems.map((item) => (
+                    <li><a href={`#${item.id}`}>{item.label}</a></li>
+                ))}
+            </ol>
+        </nav>
+    )}
+
+    {doc.status === "deprecated" && migrationEntries.length > 0 && (
+        <aside class="site-card component-warning" aria-labelledby="deprecated-notice-title">
+            <p id="deprecated-notice-title" class="component-warning-title"><strong>Deprecated</strong></p>
+            <p class="component-warning-body">
+                Denne komponenten er deprecated. <a href={`#${firstMigrationAnchor}`}>Se migrering</a>.
+            </p>
+        </aside>
+    )}
+
+    {doc.example && (
+        <section class="component-example-section" aria-labelledby="eksempel">
+            <h2 id="eksempel">Eksempel</h2>
+            <ComponentExampleIsland id={doc.id} client:only="react" />
+        </section>
+    )}
+
+    {relatedPatterns.length > 0 && (
+        <section class="component-section" aria-labelledby="monster-monstre">
+            <h2 id="monster-monstre">Brukes i mønstre</h2>
+            <ul class="component-pattern-list">
+                {relatedPatterns.map((pattern) => (
+                    <li>
+                        <article class="site-card component-pattern-card">
+                            <small>{pattern.categoryLabel}</small>
+                            <h3 class="component-pattern-title">
+                                <a href={pattern.href}>{pattern.title}</a>
+                            </h3>
+                            <p class="component-pattern-description">{pattern.description}</p>
+                            <p class="component-pattern-meta">
+                                <strong>
+                                    {pattern.implementationTitles.length === 1
+                                        ? "Implementasjon"
+                                        : "Implementasjoner"}
+                                    :
+                                </strong>{" "}
+                                {pattern.implementationTitles.join(", ")}
+                            </p>
+                        </article>
+                    </li>
+                ))}
+            </ul>
+        </section>
+    )}
+
+    {requiresItems.length > 0 && (
+        <section class="component-section" aria-labelledby="krever">
+            <h2 id="krever">Krever</h2>
+            <RelationshipGrid items={requiresItems} />
+        </section>
+    )}
+
+    <section class="component-section" aria-labelledby="props">
+        <h2 id="props">Props</h2>
+        <PropTable props={doc.props} migrations={doc.migrations} />
+    </section>
+
+    {migrationEntries.length > 0 && (
+        <section class="component-section" aria-labelledby="migrering">
+            <h2 id="migrering">Migreringsguider</h2>
+            <div class="migration-list">
+                {migrationEntries.map(({ anchorId, displayName, migration }) => (
+                    <div class="site-card" id={anchorId}>
+                        <h3 class="migration-heading">{displayName}</h3>
+                        {migration.description && <p class="small muted">{migration.description}</p>}
+
+                        {migration.replacedBy && (
+                            <p class="small muted">
+                                Erstattes av:{" "}
+                                {migration.replacedBy.map((item, index) => (
+                                    <span>
+                                        {index > 0 && ", "}
+                                        <code>{item.name}</code>
+                                    </span>
+                                ))}
+                            </p>
+                        )}
+
+                        <div class="ds-grid" data-columns={2}>
+                            <div>
+                                <p class="small muted">Før</p>
+                                <CodeSnippet code={migration.before} />
+                            </div>
+                            <div>
+                                <p class="small muted">Etter</p>
+                                <CodeSnippet code={migration.after} />
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </section>
+    )}
+
+    {subcomponents.length > 0 && (
+        <section class="component-section" aria-labelledby="delkomponenter">
+            <h2 id="delkomponenter">Delkomponenter</h2>
+            <RelationshipDefinitionList items={subcomponents} />
+        </section>
+    )}
+
+    {alternatives.length > 0 && (
+        <section class="component-section" aria-labelledby="alternativer">
+            <h2 id="alternativer">Alternativer</h2>
+            <RelationshipGrid items={alternatives} />
+        </section>
+    )}
+
+    {siblingsItems.length > 0 && (
+        <section class="component-section" aria-labelledby={siblingsAnchor}>
+            <h2 id={siblingsAnchor}>
+                {parentKind === "requires"
+                    ? `Andre komponenter som krever ${parent?.name}`
+                    : `Andre delkomponenter i ${parent?.name}`}
+            </h2>
+            {parentKind === "requires" ? (
+                <RelationshipGrid items={siblingsItems} />
+            ) : (
+                <RelationshipDefinitionList items={siblings} />
+            )}
+        </section>
+    )}
+
+    {relatedItems.length > 0 && (
+        <section class="component-section" aria-labelledby="relaterte-komponenter">
+            <h2 id="relaterte-komponenter">Relaterte komponenter</h2>
+            <RelationshipGrid items={relatedItems} />
+        </section>
+    )}
+
+    <section class="component-section" aria-labelledby="metadata">
+        <h2 id="metadata">Metadata</h2>
+        <dl class="component-definition-list component-metadata">
+            <dt>Status</dt>
+            <dd>{getStatusLabel(doc.status)}</dd>
+
+            <dt>Kategori</dt>
+            <dd>{doc.category}</dd>
+
+            <dt>Import</dt>
+            <dd>
+                <code>{doc.package}</code>{" "}
+                <button type="button" class="component-copy-button" data-copy-code={doc.package} data-copy-state="idle">
+                    <span data-copy-label>Kopier</span>
+                </button>
+            </dd>
+
+            <dt>Bruk</dt>
+            <dd>{formatComplexity(doc.complexity.use, doc.complexity.notes?.use)}</dd>
+
+            <dt>Vedlikehold</dt>
+            <dd>
+                {formatComplexity(doc.complexity.maintenance, doc.complexity.notes?.maintenance)}
+            </dd>
+        </dl>
+    </section>
+
+    <script>
+        import { initComponentDetailPage } from "./page";
+
+        initComponentDetailPage();
+    </script>
+</main>

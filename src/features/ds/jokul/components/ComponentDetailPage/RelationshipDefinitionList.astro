@@ -1,0 +1,18 @@
+---
+import type { ComponentDoc } from "@/data/jokul/component-docs";
+
+interface Props {
+    items: Array<{ doc: Pick<ComponentDoc, "id" | "name">; description: string }>;
+}
+
+const { items } = Astro.props;
+---
+
+<dl class="component-definition-list">
+    {items.map(({ doc, description }) => (
+        <>
+            <dt><a href={`/ds/jokul/component/${doc.id}`}>{doc.name}</a></dt>
+            <dd>{description}</dd>
+        </>
+    ))}
+</dl>

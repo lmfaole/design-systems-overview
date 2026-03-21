@@ -1,6 +1,6 @@
 ---
 import JokulLayout from "@/layouts/JokulLayout.astro";
-import ComponentsPage from "@/features/ds/jokul/components/ComponentIndexPage";
+import ComponentIndexPage from "@/features/ds/jokul/components/ComponentIndexPage/Page.astro";
 ---
 
 <JokulLayout
@@ -8,5 +8,5 @@ import ComponentsPage from "@/features/ds/jokul/components/ComponentIndexPage";
     description="Komponentdokumentasjon for Jøkul med API, props og levende eksempler."
     path="/ds/jokul/component"
 >
-    <ComponentsPage client:load />
+    <ComponentIndexPage />
 </JokulLayout>

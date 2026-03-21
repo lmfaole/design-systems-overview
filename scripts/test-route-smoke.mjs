@@ -6,7 +6,7 @@ const baseUrl = process.argv[2] ?? "http://127.0.0.1:3001";
 const routeChecks = [
     {
         path: "/ds",
-        expectNoIslands: true,
+        expectedAstroIslandCount: 0,
         assert() {
             const searchForm = document.querySelector('form[role="search"][action="/ds/sok"]');
 
@@ -19,7 +19,7 @@ const routeChecks = [
     },
     {
         path: "/ds/jokul",
-        expectNoIslands: true,
+        expectedAstroIslandCount: 0,
         assert() {
             return document.querySelector('a[href="/ds/jokul/formatter"]')
                 ? null
@@ -28,7 +28,7 @@ const routeChecks = [
     },
     {
         path: "/ds/jokul/formatter",
-        expectNoIslands: true,
+        expectedAstroIslandCount: 0,
         assert() {
             return document.querySelector('a[href="/ds/jokul/formatter/format-valuta"]')
                 ? null
@@ -36,8 +36,153 @@ const routeChecks = [
         },
     },
     {
+        path: "/ds/jokul/component",
+        expectedAstroIslandCount: 0,
+        async run(page) {
+            const hiddenStateBeforeToggle = await page.evaluate(() => {
+                const card = document.querySelector('[data-component-id="table-cell"]');
+                if (!(card instanceof HTMLElement)) {
+                    return null;
+                }
+
+                const styles = window.getComputedStyle(card);
+                return styles.display === "none" || styles.visibility === "hidden";
+            });
+
+            if (hiddenStateBeforeToggle !== true) {
+                return "Expected table-cell to stay hidden before the show-all toggle is enabled.";
+            }
+
+            await page.click("[data-component-index-show-all]");
+
+            const hiddenStateAfterToggle = await page.evaluate(() => {
+                const card = document.querySelector('[data-component-id="table-cell"]');
+                if (!(card instanceof HTMLElement)) {
+                    return null;
+                }
+
+                const styles = window.getComputedStyle(card);
+                return styles.display === "none" || styles.visibility === "hidden";
+            });
+
+            if (hiddenStateAfterToggle !== false) {
+                return "Expected show-all toggle to reveal components hidden from the overview by default.";
+            }
+
+            await page.select("[data-component-index-status]", "deprecated");
+
+            const state = await page.evaluate(() => {
+                const countText = document.querySelector("[data-component-index-count]")?.textContent?.trim() ?? "";
+                const visibleCards = Array.from(document.querySelectorAll("[data-component-card]"))
+                    .filter((card) => {
+                        if (!(card instanceof HTMLElement)) {
+                            return false;
+                        }
+
+                        const styles = window.getComputedStyle(card);
+                        return styles.display !== "none" && styles.visibility !== "hidden";
+                    })
+                    .map((card) => ({
+                        id: card.getAttribute("data-component-id") ?? "",
+                        status: card.getAttribute("data-component-status") ?? "",
+                    }));
+
+                return {
+                    count: Number.parseInt(countText, 10),
+                    visibleCards,
+                };
+            });
+
+            if (!Number.isFinite(state.count)) {
+                return "Expected component index to keep a numeric visible result count after filtering.";
+            }
+
+            if (state.visibleCards.length === 0) {
+                return "Expected component index filtering to leave at least one visible card.";
+            }
+
+            if (state.count !== state.visibleCards.length) {
+                return `Expected count ${state.count} to match ${state.visibleCards.length} visible cards.`;
+            }
+
+            return state.visibleCards.every((card) => card.status === "deprecated")
+                ? null
+                : `Expected only deprecated cards to remain visible, got ${state.visibleCards.map((card) => `${card.id}:${card.status}`).join(", ")}.`;
+        },
+        assert() {
+            const queryInput = document.querySelector('[data-component-index-query]');
+            const buttonCard = document.querySelector('[data-component-id="button"]');
+
+            if (!(queryInput instanceof HTMLInputElement)) {
+                return "Expected component index to expose a search input.";
+            }
+
+            return buttonCard ? null : "Expected component index to render the Button card.";
+        },
+    },
+    {
+        path: "/ds/jokul/component/props",
+        expectedAstroIslandCount: 0,
+        assert() {
+            return document.querySelector("[data-prop-entry]")
+                ? null
+                : "Expected prop index to render at least one prop row.";
+        },
+    },
+    {
+        path: "/ds/jokul/component/button",
+        expectedAstroIslandCount: 1,
+        async run(page) {
+            await page.click(".component-type-button");
+
+            const popoverState = await page.evaluate(() => {
+                const popover = document.querySelector(".component-type-popover");
+
+                if (!(popover instanceof HTMLElement)) {
+                    return null;
+                }
+
+                const styles = window.getComputedStyle(popover);
+
+                return {
+                    open: styles.display !== "none" && styles.visibility !== "hidden",
+                    hasTable: Boolean(popover.querySelector("table")),
+                };
+            });
+
+            if (!popoverState) {
+                return "Expected component detail pages to render a prop type popover.";
+            }
+
+            if (!popoverState.open) {
+                return "Expected component detail prop type button to open its popover.";
+            }
+
+            return popoverState.hasTable
+                ? null
+                : "Expected component detail prop type popover to render nested type details in a table.";
+        },
+        assert() {
+            const exampleHeading = Array.from(document.querySelectorAll("h2")).find((heading) =>
+                heading.textContent?.trim() === "Eksempel",
+            );
+            const propSection = document.getElementById("props");
+            const exampleButton = document.querySelector(".component-example-section button:not([data-copy-code])");
+
+            if (!exampleHeading) {
+                return "Expected component detail pages to render an example section.";
+            }
+
+            if (!(exampleButton instanceof HTMLButtonElement)) {
+                return "Expected component detail pages to render live example content inside the example island.";
+            }
+
+            return propSection ? null : "Expected component detail pages to render a props section.";
+        },
+    },
+    {
         path: "/ds/monster",
-        expectNoIslands: true,
+        expectedAstroIslandCount: 0,
         assert() {
             return document.querySelector('a[href="/ds/monster/lastetilstander"]')
                 ? null
@@ -46,7 +191,7 @@ const routeChecks = [
     },
     {
         path: "/ds/monster/lastetilstander",
-        expectNoIslands: true,
+        expectedAstroIslandCount: 0,
         assert() {
             return document.querySelector('nav[aria-label], nav[aria-labelledby]')
                 ? null
@@ -55,7 +200,7 @@ const routeChecks = [
     },
     {
         path: "/ds/sok?q=button",
-        expectNoIslands: true,
+        expectedAstroIslandCount: 0,
         assert() {
             const input = document.querySelector('input[name="q"]');
             const resultLink = document.querySelector('a[href="/ds/jokul/component/button"]');
@@ -87,7 +232,7 @@ try {
             waitUntil: "networkidle0",
         });
 
-        const state = await page.evaluate(({ expectNoIslands }) => {
+        const state = await page.evaluate(() => {
             const main = document.querySelector("main");
             const h1s = Array.from(document.querySelectorAll("h1"));
             const unlabeledNavCount = Array.from(document.querySelectorAll("nav")).filter((nav) => {
@@ -113,9 +258,9 @@ try {
                 mainText: main?.textContent?.trim() ?? "",
                 h1Count: h1s.length,
                 unlabeledNavCount,
-                hasAstroIsland: Boolean(document.querySelector("astro-island")),
+                astroIslandCount: document.querySelectorAll("astro-island").length,
             };
-        }, { expectNoIslands: routeCheck.expectNoIslands });
+        });
 
         if (!state.title.trim()) {
             throw new Error(`Expected ${url} to render a document title.`);
@@ -137,8 +282,17 @@ try {
             throw new Error(`Expected ${url} to avoid unlabeled navigation landmarks, found ${state.unlabeledNavCount}.`);
         }
 
-        if (routeCheck.expectNoIslands && state.hasAstroIsland) {
-            throw new Error(`Expected ${url} to render without hydrated islands.`);
+        if (state.astroIslandCount !== routeCheck.expectedAstroIslandCount) {
+            throw new Error(
+                `Expected ${url} to render ${routeCheck.expectedAstroIslandCount} hydrated island(s), got ${state.astroIslandCount}.`,
+            );
+        }
+
+        if (routeCheck.run) {
+            const routeRunFailure = await routeCheck.run(page);
+            if (routeRunFailure) {
+                throw new Error(`${routeRunFailure} (${url})`);
+            }
         }
 
         const routeSpecificFailure = await page.evaluate(routeCheck.assert);
