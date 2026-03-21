@@ -75,7 +75,7 @@ body {
   padding: 0;
 }
 
-body:has(.jkl) {
+body:has(.jkl-site) {
   --site-page-background: var(--jkl-color-background-page);
   --site-border-color: var(--jkl-color-border-subdued);
   --site-text-color: var(--jkl-color-text-default);
