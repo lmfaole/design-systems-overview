@@ -6,6 +6,7 @@
 
 .ds-page-header {
   --ds-page-header-min-block-size: 48svh;
+
   align-content: center;
   padding-block: var(--site-space-l);
   min-block-size: var(--ds-page-header-min-block-size);
@@ -43,11 +44,8 @@
     pointer-events: none;
     overflow: hidden;
     mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
     mask-repeat: no-repeat;
-    -webkit-mask-repeat: no-repeat;
     mask-size: 100% 100%;
-    -webkit-mask-size: 100% 100%;
 
     > * {
       width: 100%;

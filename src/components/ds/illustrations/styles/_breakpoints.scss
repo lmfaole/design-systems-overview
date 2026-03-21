@@ -20,9 +20,28 @@
 }
 
 @keyframes fi-bar-appear {
-  0% { opacity: 0; transform: scaleX(0.85); }
-  20% { opacity: 1; transform: scaleX(1); }
-  75% { opacity: 1; transform: scaleX(1); }
-  95% { opacity: 0; transform: scaleX(1); }
-  100% { opacity: 0; transform: scaleX(0.85); }
+  0% {
+    opacity: 0;
+    transform: scaleX(0.85);
+  }
+
+  20% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  75% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  95% {
+    opacity: 0;
+    transform: scaleX(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scaleX(0.85);
+  }
 }

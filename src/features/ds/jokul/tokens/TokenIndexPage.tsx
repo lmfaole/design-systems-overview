@@ -20,7 +20,6 @@ export default function TokenPage() {
                             data-kind="token"
                             data-layout="illustrated"
                             data-overview-card="token"
-                            data-static-illustration="true"
                             href={entry.href}
                         >
                             {entry.illustration && (

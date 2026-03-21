@@ -22,6 +22,7 @@
 
 .monster-pattern-link {
   @include shared.card-surface;
+
   display: grid;
   gap: var(--site-space-xs);
   padding: var(--site-space-m);

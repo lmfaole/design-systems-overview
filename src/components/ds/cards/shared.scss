@@ -13,6 +13,7 @@
 
 @mixin card-surface {
   @include card-root;
+
   border: 1px solid var(--site-border-color);
   border-radius: var(--site-pre-border-radius);
   background: color-mix(in srgb, var(--site-page-background) 94%, canvas 6%);

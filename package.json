@@ -10,7 +10,7 @@
     "predev": "npm run setup",
     "build": "npm run setup && astro build",
     "start": "astro preview",
-    "test": "npm run typecheck && npm run test:unit && npm run test:browser",
+    "test": "npm run lint && npm run test:unit && npm run test:browser",
     "test:unit": "vitest run",
     "browser:install": "puppeteer browsers install chrome",
     "test:browser": "npm run build && npm run browser:install && start-server-and-test \"astro preview --host 127.0.0.1 --port 3001\" http://127.0.0.1:3001 \"npm run test:a11y:run && npm run test:lighthouse:run\"",

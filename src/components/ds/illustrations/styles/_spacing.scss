@@ -10,16 +10,27 @@
 @property --sp-d {
   syntax: "<length>";
   inherits: true;
-  initial-value: 0px;
+  initial-value: 0;
 }
 
 @keyframes fi-spacing-breathe {
-  0%, 8% { --sp-d: 0px; }
-  18%, 28% { --sp-d: 72px; }
-  38%, 48% { --sp-d: 12px; }
-  58%, 68% { --sp-d: 112px; }
-  78%, 88% { --sp-d: 18px; }
-  100% { --sp-d: 0px; }
+  0%, 8% {
+ --sp-d: 0; }
+
+  18%, 28% {
+ --sp-d: 72px; }
+
+  38%, 48% {
+ --sp-d: 12px; }
+
+  58%, 68% {
+ --sp-d: 112px; }
+
+  78%, 88% {
+ --sp-d: 18px; }
+
+  100% {
+ --sp-d: 0; }
 }
 
 .space-item {

@@ -27,8 +27,23 @@
 }
 
 @keyframes fi-dot-spin {
-  0% { opacity: 0.2; transform: rotate(45deg) scale(0); }
-  30% { opacity: 1; transform: rotate(135deg) scale(1); }
-  70% { opacity: 0.2; transform: rotate(225deg) scale(0); }
-  100% { opacity: 0.2; transform: rotate(225deg) scale(0); }
+  0% {
+    opacity: 0.2;
+    transform: rotate(45deg) scale(0);
+  }
+
+  30% {
+    opacity: 1;
+    transform: rotate(135deg) scale(1);
+  }
+
+  70% {
+    opacity: 0.2;
+    transform: rotate(225deg) scale(0);
+  }
+
+  100% {
+    opacity: 0.2;
+    transform: rotate(225deg) scale(0);
+  }
 }

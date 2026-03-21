@@ -3,6 +3,10 @@ import { describe, expect, it } from "vitest";
 import { getTokenSlug, tokenPosts } from "@/features/ds/jokul/_token/data";
 import { tokenOverviewEntries, visibleTokenCount } from "./token-overview-data";
 
+function countOccurrences(html: string, matcher: string) {
+    return (html.match(new RegExp(matcher, "g")) || []).length;
+}
+
 describe("token overview data", () => {
     it("keeps the visible token count in sync with the token docs registry", () => {
         expect(visibleTokenCount).toBe(tokenPosts.length);
@@ -22,6 +26,10 @@ describe("token overview data", () => {
                 href: `/ds/jokul/token/${getTokenSlug(post)}`,
             });
             expect(marker).toBeDefined();
+            expect(countOccurrences(illustrationMarkup, 'data-token-card-specimen="')).toBe(1);
+            expect(illustrationMarkup).toContain(
+                `data-token-card-specimen="${getTokenSlug(post)}"`,
+            );
         }
     });
 });

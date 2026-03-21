@@ -25,13 +25,17 @@ function countOccurrences(html: string, marker: string) {
 }
 
 function getIllustrationMarker(html: string) {
-    const marker = html.match(/data-token-card-illustration="[^"]+"/)?.[0];
+    const marker = html.match(/<div class="token-mini" data-token-card-illustration="[^"]+">/)?.[0];
 
     if (marker) {
         return marker;
     }
 
     return html.match(/data-token-illustration="[^"]+"/)?.[0];
+}
+
+function getSpecimenMarker(html: string) {
+    return html.match(/<(?:span|strong) class="token-mini__specimen" data-token-card-specimen="[^"]+">/)?.[0];
 }
 
 describe("TokenIndexPage", () => {
@@ -42,7 +46,8 @@ describe("TokenIndexPage", () => {
         expect(html).toContain("Fundamentene i Jøkul");
         expect(countOccurrences(html, 'data-overview-card="token"')).toBe(tokenOverviewEntries.length);
         expect(countOccurrences(html, 'class="overview-card" data-kind="token" data-layout="illustrated"')).toBe(tokenOverviewEntries.length);
-        expect(countOccurrences(html, 'data-static-illustration="true"')).toBe(tokenOverviewEntries.length);
+        expect(countOccurrences(html, 'data-token-card-specimen="')).toBe(tokenOverviewEntries.length);
+        expect(countOccurrences(html, 'data-static-illustration="true"')).toBe(0);
 
         for (const entry of tokenOverviewEntries) {
             expect(html).toContain(`href="${entry.href}"`);
@@ -50,9 +55,12 @@ describe("TokenIndexPage", () => {
 
             const illustrationMarkup = renderToStaticMarkup(entry.illustration);
             const illustrationMarker = getIllustrationMarker(illustrationMarkup);
+            const specimenMarker = getSpecimenMarker(illustrationMarkup);
 
             expect(illustrationMarker).toBeDefined();
+            expect(specimenMarker).toBeDefined();
             expect(countOccurrences(html, illustrationMarker as string)).toBe(1);
+            expect(countOccurrences(html, specimenMarker as string)).toBe(1);
         }
     });
 });

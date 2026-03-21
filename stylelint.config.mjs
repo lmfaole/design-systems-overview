@@ -15,22 +15,45 @@ export default {
     ],
     extends: ["stylelint-config-standard-scss"],
     rules: {
-        "at-rule-empty-line-before": null,
-        "custom-property-empty-line-before": null,
-        "declaration-block-single-line-max-declarations": null,
-        "declaration-empty-line-before": null,
-        "length-zero-no-unit": null,
+        "at-rule-empty-line-before": [
+            "always",
+            {
+                except: ["blockless-after-same-name-blockless", "first-nested"],
+                ignore: ["after-comment"],
+            },
+        ],
+        "custom-property-empty-line-before": [
+            "always",
+            {
+                except: ["after-custom-property", "first-nested"],
+                ignore: ["after-comment"],
+            },
+        ],
+        "declaration-block-single-line-max-declarations": 1,
+        "declaration-empty-line-before": [
+            "always",
+            {
+                except: ["after-declaration", "first-nested"],
+                ignore: ["after-comment"],
+            },
+        ],
+        "length-zero-no-unit": true,
         "media-feature-range-notation": null,
-        "no-descending-specificity": null,
+        "no-descending-specificity": true,
         "no-empty-source": null,
-        "property-no-vendor-prefix": null,
+        "property-no-vendor-prefix": true,
         "scss/at-mixin-argumentless-call-parentheses": null,
         "scss/double-slash-comment-empty-line-before": null,
         "scss/load-partial-extension": null,
-        "selector-class-pattern": null,
+        "selector-class-pattern": [
+            "^(?!.*__)[a-z0-9]+(?:-[a-z0-9]+)*(?:--[a-z0-9]+(?:-[a-z0-9]+)*)*$",
+            {
+                resolveNestedSelectors: true,
+            },
+        ],
         "selector-not-notation": null,
         "selector-pseudo-class-no-unknown": [true, { ignorePseudoClasses: ["global"] }],
-        "value-keyword-case": null,
+        "value-keyword-case": "lower",
     },
     overrides: [
         {

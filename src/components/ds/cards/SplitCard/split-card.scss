@@ -2,17 +2,20 @@
 
 .ds-split-card {
   @include shared.card-root;
+
   container-type: inline-size;
 
   .container {
     display: grid;
+
     --ds-split-card-template-columns: 1fr;
     --ds-split-card-template-rows: auto auto;
-    --ds-split-card-separator: color-mix(in srgb, currentColor 10%, transparent);
+    --ds-split-card-separator: color-mix(in srgb, currentcolor 10%, transparent);
     --ds-split-card-preview-border-bottom: 1px solid var(--ds-split-card-separator);
     --ds-split-card-preview-border-right: 0;
     --ds-split-card-content-display: block;
     --ds-split-card-content-align: stretch;
+
     grid-template-columns: var(--ds-split-card-template-columns);
     grid-template-rows: var(--ds-split-card-template-rows);
     align-items: stretch;

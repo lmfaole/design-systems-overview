@@ -45,7 +45,7 @@
     --site-heading-4-max-width: 45ch;
     --site-heading-5-max-width: 50ch;
     --site-copy-max-width: 65ch;
-    --site-code-font-family: ui-monospace, "SFMono-Regular", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    --site-code-font-family: ui-monospace, "SFMono-Regular", "SF Mono", consolas, "Liberation Mono", menlo, monospace;
     --site-code-font-size: 0.875em;
     --site-pre-padding: var(--site-space-m);
     --site-pre-background: light-dark(#f3f4f6, #1f2937);
@@ -87,7 +87,7 @@
     --site-error-color: var(--jkl-color-text-error-strong);
     --site-info-color: var(--jkl-color-text-info-strong);
     --site-hint-color: var(--jkl-color-text-subdued);
-    --site-font-family: "Fremtind Grotesk", "Adjusted Arial Fallback", Arial, sans-serif;
+    --site-font-family: "Fremtind Grotesk", "Adjusted Arial Fallback", arial, sans-serif;
     --site-max-width: 180ch;
     --page-max-width: var(--site-max-width);
     --site-space-xxs: var(--jkl-spacing-xxs);

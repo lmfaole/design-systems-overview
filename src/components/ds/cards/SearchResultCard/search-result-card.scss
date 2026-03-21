@@ -6,6 +6,7 @@
 
 .ds-search-result-card {
   @include shared.card-surface;
+
   display: grid;
   gap: var(--site-space-s);
   block-size: 100%;

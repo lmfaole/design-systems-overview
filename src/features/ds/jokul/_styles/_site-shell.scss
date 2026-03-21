@@ -36,7 +36,6 @@
     display: flex;
     flex-direction: column;
     overflow-x: clip;
-
     background-color: var(--jkl-color-background-page);
     color: var(--jkl-color-text-default);
   }
@@ -51,6 +50,7 @@
     padding-block: var(--jkl-spacing-xl);
     padding-block-end: 0;
     flex: 1;
+
     --content-max-width: var(--site-max-width);
   }
 
@@ -81,6 +81,54 @@
     }
   }
 
+  .jkl-site h1:not([class]) {
+    @include jkl.text-style("heading-1");
+
+    max-width: var(--site-heading-1-max-width);
+  }
+
+  .jkl-site h2:not([class]) {
+    @include jkl.text-style("heading-2");
+
+    max-width: var(--site-heading-2-max-width);
+  }
+
+  .jkl-site h3:not([class]) {
+    @include jkl.text-style("heading-3");
+
+    max-width: var(--site-heading-3-max-width);
+  }
+
+  .jkl-site h4:not([class]) {
+    @include jkl.text-style("heading-4");
+
+    max-width: var(--site-heading-4-max-width);
+  }
+
+  .jkl-site h5:not([class]) {
+    @include jkl.text-style("heading-5");
+
+    max-width: var(--site-heading-5-max-width);
+  }
+
+  .jkl-site p:not([class]) {
+    @include jkl.text-style("paragraph-medium");
+
+    max-width: var(--site-copy-max-width);
+  }
+
+  .jkl-site .lead {
+    @include jkl.text-style("paragraph-large");
+
+    max-width: var(--site-copy-max-width);
+  }
+
+  .jkl-site small:not([class]) {
+    @include jkl.text-style("text-small");
+
+    max-width: var(--site-copy-max-width);
+  }
+
   .jkl-site .post-prose[data-kind="pattern"] {
     --pattern-prose-max-width: var(--content-max-width);
 
@@ -109,46 +157,6 @@
     }
   }
 
-  .jkl-site h1:not([class]) {
-    @include jkl.text-style("heading-1");
-    max-width: var(--site-heading-1-max-width);
-  }
-
-  .jkl-site h2:not([class]) {
-    @include jkl.text-style("heading-2");
-    max-width: var(--site-heading-2-max-width);
-  }
-
-  .jkl-site h3:not([class]) {
-    @include jkl.text-style("heading-3");
-    max-width: var(--site-heading-3-max-width);
-  }
-
-  .jkl-site h4:not([class]) {
-    @include jkl.text-style("heading-4");
-    max-width: var(--site-heading-4-max-width);
-  }
-
-  .jkl-site h5:not([class]) {
-    @include jkl.text-style("heading-5");
-    max-width: var(--site-heading-5-max-width);
-  }
-
-  .jkl-site p:not([class]) {
-    @include jkl.text-style("paragraph-medium");
-    max-width: var(--site-copy-max-width);
-  }
-
-  .jkl-site .lead {
-    @include jkl.text-style("paragraph-large");
-    max-width: var(--site-copy-max-width);
-  }
-
-  .jkl-site small:not([class]) {
-    @include jkl.text-style("text-small");
-    max-width: var(--site-copy-max-width);
-  }
-
   .jkl-site strong,
   .jkl-site b {
     font-weight: jkl.$typography-weight-bold;
@@ -158,11 +166,13 @@
   .jkl-site kbd:not([class]),
   .jkl-site samp:not([class]) {
     @include jkl.use-font-family("Fremtind Grotesk Mono");
+
     font-size: var(--site-code-font-size);
   }
 
   .jkl-site pre:not([class]) {
     @include jkl.use-font-family("Fremtind Grotesk Mono");
+
     overflow-x: auto;
     max-width: 80ch;
     padding: var(--site-pre-padding);
@@ -176,6 +186,7 @@
 
   .jkl-site blockquote:not([class]) {
     @include jkl.text-style("paragraph-medium");
+
     max-width: var(--site-copy-max-width);
     margin-inline: 0;
     padding-inline-start: var(--site-quote-padding-inline-start);

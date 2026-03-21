@@ -15,6 +15,7 @@
   background: var(--jkl-color-background-action);
   animation: slide-dot var(--preview-timing) var(--preview-easing) infinite alternate;
   animation-play-state: paused;
+
   @media (prefers-reduced-motion: reduce) {
     animation: none;
     top: 50%;
@@ -26,6 +27,9 @@
 }
 
 @keyframes slide-dot {
-  from { top: 0; }
-  to   { top: calc(100% - 8px); }
+  from {
+ top: 0; }
+
+  to   {
+ top: calc(100% - 8px); }
 }

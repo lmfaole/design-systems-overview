@@ -14,6 +14,7 @@
     --site-space-l: var(--jkl-spacing-l);
     --site-space-xl: var(--jkl-spacing-xl);
     --site-copy-max-width: 65ch;
+
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -32,6 +33,7 @@
     padding-block: var(--jkl-spacing-xl);
     padding-block-end: 0;
     flex: 1;
+
     --content-max-width: var(--site-max-width);
   }
 }

@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 @use "sass:color";
 @use "sass:math";
 @use "@fremtind/jokul/styles/core/jkl/index" as jkl;
@@ -8,11 +9,14 @@
   --color: var(--jkl-color-text-default);
   --background-color: transparent;
   --border-color: var(--jkl-color-border-input);
-  display: block;
-  --button-padding: calc(var(--jkl-unit-15) - var(--border-width));
-  position: relative;
-  --arrow-right: #{jkl.$unit-02};
 
+  display: block;
+
+  --button-padding: calc(var(--jkl-unit-15) - var(--border-width));
+
+  position: relative;
+
+  --arrow-right: #{jkl.$unit-02};
   --box-shadow: 0 0 0 jkl.rem(1px) transparent;
   --border-width: #{jkl.rem(1px)};
 
