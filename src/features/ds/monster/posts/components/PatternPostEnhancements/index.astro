@@ -1,0 +1,163 @@
+---
+import type { PatternPostEnhancementsProps } from "./types";
+import "./styles.scss";
+
+const {} = Astro.props as PatternPostEnhancementsProps;
+---
+
+<script is:inline>
+    const buttonTimers = new WeakMap();
+    const getTabButtons = (root) =>
+        Array.from(root.querySelectorAll("[data-code-tab-button]")).filter(
+            (button) => button instanceof HTMLButtonElement,
+        );
+
+    const getTabPanels = (root) =>
+        Array.from(root.querySelectorAll("[data-code-tab-panel]")).filter(
+            (panel) => panel instanceof HTMLElement,
+        );
+
+    const activateTab = (button, { focus = false } = {}) => {
+        const root = button.closest("[data-code-tabs]");
+
+        if (!(root instanceof HTMLElement)) {
+            return;
+        }
+
+        const targetId = button.dataset.codeTabTarget;
+
+        if (!targetId) {
+            return;
+        }
+
+        getTabButtons(root).forEach((tabButton) => {
+            const isActive = tabButton === button;
+
+            tabButton.setAttribute("aria-selected", String(isActive));
+            tabButton.tabIndex = isActive ? 0 : -1;
+            tabButton.dataset.state = isActive ? "active" : "inactive";
+        });
+
+        getTabPanels(root).forEach((panel) => {
+            panel.hidden = panel.id !== targetId;
+        });
+
+        if (focus) {
+            button.focus();
+        }
+    };
+
+    const getActiveCodeSource = (root) =>
+        root?.querySelector("[data-code-tab-panel]:not([hidden]) [data-copy-code-source]") ||
+        root?.querySelector("[data-copy-code-source]");
+
+    const restoreButtonLabel = (button) => {
+        const defaultLabel = button.dataset.copyCodeDefault || "Kopier kode";
+
+        button.dataset.state = "idle";
+        button.textContent = defaultLabel;
+        button.setAttribute("aria-label", defaultLabel);
+    };
+
+    document.addEventListener("click", async (event) => {
+        const target = event.target;
+
+        if (!(target instanceof Element)) {
+            return;
+        }
+
+        const tabButton = target.closest("[data-code-tab-button]");
+
+        if (tabButton instanceof HTMLButtonElement) {
+            activateTab(tabButton, { focus: false });
+            return;
+        }
+
+        const button = target.closest("[data-copy-code-button]");
+
+        if (!(button instanceof HTMLButtonElement)) {
+            return;
+        }
+
+        const root = button.closest("[data-copy-code-root]");
+        const source = getActiveCodeSource(root);
+        const code = source?.textContent?.trim();
+
+        if (!code) {
+            return;
+        }
+
+        const successLabel = button.dataset.copyCodeSuccess || "Kopiert";
+        const errorLabel = button.dataset.copyCodeError || "Kunne ikke kopiere";
+        const previousTimer = buttonTimers.get(button);
+
+        if (previousTimer) {
+            clearTimeout(previousTimer);
+        }
+
+        try {
+            await navigator.clipboard.writeText(code);
+            button.dataset.state = "copied";
+            button.textContent = successLabel;
+            button.setAttribute("aria-label", successLabel);
+        } catch {
+            button.dataset.state = "error";
+            button.textContent = errorLabel;
+            button.setAttribute("aria-label", errorLabel);
+        }
+
+        const nextTimer = window.setTimeout(() => restoreButtonLabel(button), 2000);
+        buttonTimers.set(button, nextTimer);
+    });
+
+    document.addEventListener("keydown", (event) => {
+        const target = event.target;
+
+        if (!(target instanceof Element)) {
+            return;
+        }
+
+        const currentTab = target.closest("[data-code-tab-button]");
+
+        if (!(currentTab instanceof HTMLButtonElement)) {
+            return;
+        }
+
+        const root = currentTab.closest("[data-code-tabs]");
+
+        if (!(root instanceof HTMLElement)) {
+            return;
+        }
+
+        const buttons = getTabButtons(root);
+        const currentIndex = buttons.indexOf(currentTab);
+
+        if (currentIndex === -1) {
+            return;
+        }
+
+        let nextIndex = currentIndex;
+
+        switch (event.key) {
+            case "ArrowLeft":
+            case "ArrowUp":
+                nextIndex = (currentIndex - 1 + buttons.length) % buttons.length;
+                break;
+            case "ArrowRight":
+            case "ArrowDown":
+                nextIndex = (currentIndex + 1) % buttons.length;
+                break;
+            case "Home":
+                nextIndex = 0;
+                break;
+            case "End":
+                nextIndex = buttons.length - 1;
+                break;
+            default:
+                return;
+        }
+
+        event.preventDefault();
+        activateTab(buttons[nextIndex], { focus: true });
+    });
+</script>

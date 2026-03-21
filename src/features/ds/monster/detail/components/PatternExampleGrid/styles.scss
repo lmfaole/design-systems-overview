@@ -1,0 +1,5 @@
+@use "../../../../../../components/ds/cards/shared";
+
+.monster-example-grid-item {
+  @include shared.card-item-reset;
+}

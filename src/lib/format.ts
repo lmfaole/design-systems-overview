@@ -11,8 +11,16 @@ export function toPascalCase(id: string): string {
 
 /**
  * Converts a string to a URL-safe slug for use as an anchor ID.
- * e.g. "Grunnleggende kort" → "grunnleggende-kort"
+ * e.g. "Bekreftelse på søknad" → "bekreftelse-pa-soknad"
  */
 export function slugify(text: string): string {
-    return text.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]/g, "");
+    return text
+        .toLowerCase()
+        .replace(/æ/g, "ae")
+        .replace(/ø/g, "o")
+        .replace(/å/g, "a")
+        .normalize("NFKD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
 }

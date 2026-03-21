@@ -2,7 +2,12 @@
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { SiteBreadcrumb } from "@/components/site/SiteBreadcrumb";
-import type { SiteLink } from "@/components/site/SiteHeader";
+import {
+    siteBrand,
+    siteFooterNote,
+    siteFooterSections,
+    siteHeaderLinks,
+} from "@/data/site/navigation";
 import { DEFAULT_DESCRIPTION, SITE_NAME, SITE_URL } from "@/site/seo";
 import "@/styles/globals.scss";
 
@@ -26,32 +31,6 @@ const {
 
 const canonicalUrl = new URL(path, SITE_URL).toString();
 const pageTitle = title === SITE_NAME ? SITE_NAME : `${title} | ${SITE_NAME}`;
-const brand = { href: "/", label: SITE_NAME };
-const links: SiteLink[] = [];
-const footerSections = [
-    {
-        title: "Læringsressurs",
-        links: [
-            { href: "/", label: "Forside" },
-            { href: "/ds", label: "Designsystemer" },
-            { href: "/ds/sok", label: "Søk" },
-        ],
-    },
-    {
-        title: "Jøkul",
-        links: [
-            { href: "/ds/jokul", label: "Oversikt" },
-            { href: "/ds/jokul/component", label: "Komponenter" },
-            { href: "/ds/jokul/token", label: "Designtokens" },
-        ],
-    },
-    {
-        title: "Mønstre",
-        links: [
-            { href: "/ds/monster", label: "Alle mønstre" },
-        ],
-    },
-];
 ---
 
 <html lang="no">
@@ -74,7 +53,7 @@ const footerSections = [
         {noIndex && <meta name="robots" content="noindex,follow" />}
     </head>
     <body>
-        <SiteHeader brand={brand} links={links} />
+        <SiteHeader brand={siteBrand} links={siteHeaderLinks} />
         <SiteBreadcrumb client:load />
         {jokulTheme ? (
             <div class="jkl site-layout" data-theme="auto">
@@ -84,8 +63,8 @@ const footerSections = [
             <slot />
         )}
         <SiteFooter
-            sections={footerSections}
-            note="En uoffisiell læringsressurs for designsystemer, komponenter og UI-mønstre."
+            sections={siteFooterSections}
+            note={siteFooterNote}
         />
     </body>
 </html>

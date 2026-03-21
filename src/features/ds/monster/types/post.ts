@@ -1,6 +1,5 @@
 import type { PatternAccessibilityConcern } from "./accessibility";
 import type { PatternDoAndDonts } from "./do-and-donts";
-import type { PatternIllustration } from "./illustration";
 import type { PatternImplementation } from "./implementation";
 import type { PatternFurtherReadingItem } from "./resources";
 
@@ -24,11 +23,8 @@ export const PATTERN_CATEGORY_LABELS: Record<PatternCategory, string> = {
  */
 export interface PatternPost {
     /**
-     * Stable route id for the pattern page.
-     */
-    id: number;
-    /**
      * Pattern title shown in listings, breadcrumbs, and the detail page.
+     * The public URL slug is derived from this title.
      */
     title: string;
     /**
@@ -39,10 +35,6 @@ export interface PatternPost {
      * Short summary used in page metadata, overview cards, and search.
      */
     description: string;
-    /**
-     * Visual signature shown in pattern listings and on the pattern page itself.
-     */
-    illustration: PatternIllustration;
     /**
      * Recommended and discouraged ways to use the pattern.
      */

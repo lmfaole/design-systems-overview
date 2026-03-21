@@ -1,0 +1,24 @@
+.monster-toc {
+  padding-block: var(--site-space-s);
+}
+
+.monster-toc-title {
+  margin: 0;
+  color: var(--site-hint-color);
+}
+
+.monster-toc-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.monster-toc-item {
+  min-inline-size: 0;
+}
+
+.monster-toc-link {
+  display: block;
+  block-size: 100%;
+  padding: var(--site-space-xxs) 0;
+}

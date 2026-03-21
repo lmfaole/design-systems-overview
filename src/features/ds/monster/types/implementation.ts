@@ -6,20 +6,6 @@ import type { ReactNode } from "react";
 export const BASE_PATTERN_IMPLEMENTATION_DESIGN_SYSTEM = "HTML, CSS og JS";
 
 /**
- * One step in a concrete implementation guide for a design system.
- */
-export interface PatternImplementationGuideStep {
-    /**
-     * Short step heading used in the ordered implementation guide.
-     */
-    title: string;
-    /**
-     * Detailed explanation of what the team should do in this step.
-     */
-    description: ReactNode;
-}
-
-/**
  * A component reference used by a design-system-specific implementation.
  */
 export interface PatternImplementationComponentReference {
@@ -67,8 +53,4 @@ export interface PatternImplementation {
      * Component documentation references for the components used in this implementation.
      */
     components: PatternImplementationComponentReference[];
-    /**
-     * Ordered guide describing how to build the implementation step by step.
-     */
-    steps: PatternImplementationGuideStep[];
 }

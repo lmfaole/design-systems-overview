@@ -38,13 +38,13 @@ export const vanillaInlineStatusExampleCssCode = `
     display: inline-flex;
     gap: 0.5rem;
     align-items: center;
-    color: var(--site-info-text-color);
+    color: var(--site-info-color);
 }
 
 .monster-vanilla-spinner {
     inline-size: 1rem;
     block-size: 1rem;
-    border: 2px solid color-mix(in srgb, var(--site-info-border-color) 45%, transparent);
+    border: 2px solid color-mix(in srgb, var(--site-info-color) 28%, var(--site-border-color) 72%);
     border-top-color: currentColor;
     border-radius: 999px;
     animation: spin 0.9s linear infinite;
@@ -88,9 +88,9 @@ export const vanillaSkeletonExampleCssCode = `
     background:
         linear-gradient(
             90deg,
-            color-mix(in srgb, var(--site-hint-surface-color) 75%, var(--site-page-background) 25%) 25%,
-            color-mix(in srgb, var(--site-info-surface-color) 65%, var(--site-page-background) 35%) 50%,
-            color-mix(in srgb, var(--site-hint-surface-color) 75%, var(--site-page-background) 25%) 75%
+            color-mix(in srgb, var(--site-hint-color) 14%, var(--site-page-background) 86%) 25%,
+            color-mix(in srgb, var(--site-info-color) 18%, var(--site-page-background) 82%) 50%,
+            color-mix(in srgb, var(--site-hint-color) 14%, var(--site-page-background) 86%) 75%
         );
     background-size: 200% 100%;
     animation: shimmer 1.4s linear infinite;
@@ -145,7 +145,7 @@ export const vanillaProgressExampleCssCode = `
 .monster-vanilla-progress {
     inline-size: 100%;
     block-size: 0.875rem;
-    accent-color: var(--site-info-text-color);
+    accent-color: var(--site-info-color);
 }
 `;
 

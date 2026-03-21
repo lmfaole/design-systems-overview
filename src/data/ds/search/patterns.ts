@@ -1,10 +1,10 @@
-import { patternPosts, getPatternHref } from "@/data/monster/patterns";
+import { patternPosts, getPatternHref, getPatternSlug } from "@/data/monster/patterns";
 import { PATTERN_CATEGORY_LABELS } from "@/features/ds/monster/types";
 import type { DsSearchDocument } from "./types";
 
 export function getPatternSearchDocuments(): DsSearchDocument[] {
     return patternPosts.map((post) => ({
-        id: `pattern-${post.id}`,
+        id: `pattern-${getPatternSlug(post)}`,
         designSystemId: "patterns",
         designSystemName: "Mønstre",
         kind: "pattern",
@@ -18,7 +18,6 @@ export function getPatternSearchDocuments(): DsSearchDocument[] {
             ...post.implementation.map((item) => item.designSystem),
             ...post.implementation.map((item) => item.title),
             ...post.implementation.flatMap((item) => item.components.map((component) => component.title)),
-            ...post.implementation.flatMap((item) => item.steps.map((step) => step.title)),
         ],
         href: getPatternHref(post),
         meta: `Mønster · ${PATTERN_CATEGORY_LABELS[post.category]}`,

@@ -2,7 +2,7 @@
 import React, {useState} from "react";
 import {Flex} from "@fremtind/jokul/flex";
 import type {ComponentDoc} from "@/features/ds/jokul/_component-docs/docs/types";
-import {PreviewHoverContext} from "@/features/ds/jokul/_component-docs/components/PreviewHoverContext";
+import {PreviewHoverContext} from "@/features/ds/jokul/_component-docs/components/PreviewContainer";
 import {Card} from "@fremtind/jokul/card";
 import {SplitCard} from "@/features/ds/jokul/_shared/components/SplitCard";
 import "./related-component-card.scss";

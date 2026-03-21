@@ -1,7 +1,7 @@
-import { patternPosts, getPatternHref } from "@/data/monster/patterns";
-import { Grid } from "@/components/ds/Grid";
-import { PageHeader } from "@/components/ds/PageHeader";
-import { PATTERN_CATEGORY_LABELS } from "@/features/ds/monster/types";
+import {getPatternHref, getPatternSlug, patternPosts} from "@/data/monster/patterns";
+import {Grid} from "@/components/ds/Grid";
+import {PageHeader} from "@/components/ds/PageHeader";
+import {PATTERN_CATEGORY_LABELS} from "@/features/ds/monster/types";
 import "../detail/monster-detail.scss";
 
 export default function PatternIndexPage() {
@@ -11,12 +11,12 @@ export default function PatternIndexPage() {
 
     return (
         <>
-            <div className="monster-hero">
+            <section className="monster-hero">
                 <PageHeader
                     title="Mønster"
                     description="Anbefalte løsninger på gjentakende UI-problemer. Bruk disse for å få konsistent, tilgjengelig og forutsigbar oppførsel på tvers av designsystemer."
                 />
-            </div>
+            </section>
 
             {categories.map((category) => {
                 const posts = patternPosts.filter((post) => post.category === category);
@@ -31,24 +31,12 @@ export default function PatternIndexPage() {
                             className="bare-list monster-patterns"
                         >
                             {posts.map((post) => {
-                                const Illustration = post.illustration.component;
-
                                 return (
-                                    <li key={post.id} className="monster-pattern">
-                                        <div>
-                                            <div
-                                                className="monster-pattern-illustration"
-                                                role={post.illustration.label ? "img" : undefined}
-                                                aria-label={post.illustration.label}
-                                                aria-hidden={post.illustration.label ? undefined : true}
-                                            >
-                                                <Illustration />
-                                            </div>
-                                            <h3>
-                                                <a href={getPatternHref(post)}>{post.title}</a>
-                                            </h3>
+                                    <li key={getPatternSlug(post)} className="monster-pattern">
+                                        <a href={getPatternHref(post)} className="monster-pattern-link">
+                                            <h3>{post.title}</h3>
                                             <p>{post.description}</p>
-                                        </div>
+                                        </a>
                                     </li>
                                 );
                             })}

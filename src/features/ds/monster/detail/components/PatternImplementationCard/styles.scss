@@ -1,0 +1,25 @@
+.monster-implementation {
+  display: grid;
+  gap: var(--site-space-l);
+}
+
+.monster-implementation > article {
+  display: grid;
+  gap: var(--site-space-m);
+}
+
+.monster-implementation-meta {
+  margin: 0;
+  color: var(--site-text-muted);
+}
+
+.monster-implementation-copy,
+.monster-implementation-group {
+  display: grid;
+  gap: var(--site-space-xs);
+}
+
+.monster-implementation-copy > *,
+.monster-implementation-group > * {
+  margin: 0;
+}

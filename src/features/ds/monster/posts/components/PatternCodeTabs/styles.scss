@@ -1,0 +1,52 @@
+.monster-code-tabs {
+  min-inline-size: 0;
+  overflow: hidden;
+  border-radius: var(--site-pre-border-radius);
+  background: var(--site-pre-background);
+}
+
+.monster-code-tabs-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--site-space-s);
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--site-space-s) var(--site-space-m) 0;
+}
+
+.monster-code-tablist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--site-space-xxs);
+}
+
+.monster-code-tab {
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--site-hint-color);
+  cursor: pointer;
+  font: inherit;
+  padding: var(--site-space-xxs) var(--site-space-s);
+}
+
+.monster-code-tab[data-state="active"],
+.monster-code-tab[aria-selected="true"] {
+  background: color-mix(in srgb, var(--site-page-background) 82%, var(--site-text-color) 18%);
+  color: var(--site-text-color);
+}
+
+.monster-code-tab:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.monster-code-tabpanel {
+  padding-block-start: var(--site-space-xs);
+}
+
+.monster-code-tabs-meta {
+  margin: 0;
+  padding-inline: var(--site-space-m);
+}

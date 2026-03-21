@@ -1,0 +1,73 @@
+.monster-code-block {
+  margin: 0;
+  min-inline-size: 0;
+  overflow: hidden;
+  border-radius: var(--site-pre-border-radius);
+  background: var(--site-pre-background);
+}
+
+.monster-code-block-toolbar {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--site-space-xs);
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--site-space-s) var(--site-space-m);
+  background: color-mix(in srgb, var(--site-pre-background) 94%, var(--site-page-background) 6%);
+}
+
+.monster-code-block-meta {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--site-space-xs);
+  align-items: center;
+}
+
+.monster-code-block-label,
+.monster-code-block-language {
+  margin: 0;
+}
+
+.monster-code-block-language {
+  color: var(--site-hint-color);
+}
+
+.monster-copy-button {
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--site-page-background) 84%, var(--site-text-color) 16%);
+  color: var(--site-text-color);
+  cursor: pointer;
+  font: inherit;
+  padding-block: var(--site-space-xxs);
+  padding-inline: var(--site-space-s);
+}
+
+.monster-copy-button[data-state="copied"] {
+  background: color-mix(in srgb, var(--site-page-background) 76%, var(--site-text-color) 24%);
+}
+
+.monster-copy-button[data-state="error"] {
+  background: color-mix(in srgb, var(--site-page-background) 72%, var(--site-text-color) 28%);
+}
+
+.monster-copy-button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.monster-code-block-pre {
+  margin: 0;
+  max-width: none;
+  overflow-x: auto;
+  padding: var(--site-pre-padding);
+  background: none;
+  border-radius: 0;
+}
+
+.monster-code-block-code {
+  display: block;
+}

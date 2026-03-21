@@ -1,0 +1,84 @@
+.monster-feature-list {
+  --monster-feature-accent: var(--site-hint-color);
+  --monster-feature-marker-size: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.monster-feature-list[data-ordered="true"] {
+  counter-reset: monster-feature;
+}
+
+.monster-feature-list[data-tone="accent"] {
+  --monster-feature-accent: var(--site-info-color);
+}
+
+.monster-feature-list[data-tone="success"] {
+  --monster-feature-accent: var(--site-success-color);
+}
+
+.monster-feature-list[data-tone="error"] {
+  --monster-feature-accent: var(--site-error-color);
+}
+
+.monster-feature-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--site-space-s);
+  align-items: start;
+  min-inline-size: 0;
+}
+
+.monster-feature-item::before {
+  display: block;
+  inline-size: var(--monster-feature-marker-size);
+  block-size: var(--monster-feature-marker-size);
+  min-inline-size: 0;
+  padding-block-start: var(--site-space-xxs);
+  color: var(--monster-feature-accent);
+  content: "→";
+}
+
+.monster-feature-list[data-ordered="true"] .monster-feature-item {
+  counter-increment: monster-feature;
+}
+
+.monster-feature-list[data-ordered="true"] .monster-feature-item::before {
+  content: counter(monster-feature);
+}
+
+.monster-feature-list[data-tone="accent"][data-ordered="false"] .monster-feature-item::before {
+  content: "!";
+}
+
+.monster-feature-list[data-tone="success"][data-ordered="false"] .monster-feature-item::before {
+  content: "+";
+}
+
+.monster-feature-list[data-tone="error"][data-ordered="false"] .monster-feature-item::before {
+  content: "−";
+}
+
+.monster-feature-body {
+  margin: 0;
+  display: grid;
+  gap: var(--site-space-xxs);
+  min-inline-size: 0;
+}
+
+.monster-feature-title {
+  margin: 0;
+  max-width: none;
+}
+
+.monster-feature-description {
+  display: grid;
+  gap: var(--site-space-xxs);
+  color: var(--site-hint-color);
+}
+
+.monster-feature-description > * {
+  margin: 0;
+  max-width: none;
+}

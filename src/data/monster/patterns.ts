@@ -3,9 +3,30 @@ import {
     PATTERN_CATEGORY_LABELS,
     type PatternPost,
 } from "@/features/ds/monster/types";
+import { slugify } from "@/lib/format";
+import actionConfirmation from "@/features/ds/monster/posts/action-confirmation";
+import emptyStates from "@/features/ds/monster/posts/empty-states";
 import loadingStates from "@/features/ds/monster/posts/loading-states";
 
-function validatePatternPost(post: PatternPost): PatternPost {
+export function getPatternSlug(post: Pick<PatternPost, "title">): string {
+    return slugify(post.title);
+}
+
+function validatePatternPost(post: PatternPost, seenSlugs: Map<string, string>): PatternPost {
+    const slug = getPatternSlug(post);
+
+    if (!slug) {
+        throw new Error(`Pattern "${post.title}" must have a title that can be converted to a URL slug.`);
+    }
+
+    const existingTitle = seenSlugs.get(slug);
+
+    if (existingTitle) {
+        throw new Error(`Pattern "${post.title}" conflicts with "${existingTitle}" because they share the slug "${slug}".`);
+    }
+
+    seenSlugs.set(slug, post.title);
+
     const firstImplementation = post.implementation[0];
 
     if (!firstImplementation) {
@@ -21,21 +42,31 @@ function validatePatternPost(post: PatternPost): PatternPost {
     return post;
 }
 
-export const patternPosts: PatternPost[] = [loadingStates].map(validatePatternPost);
+function createPatternPosts(posts: PatternPost[]): PatternPost[] {
+    const seenSlugs = new Map<string, string>();
 
-export function getPatternPost(id: string | number): PatternPost | undefined {
-    const raw = decodeURIComponent(String(id)).split(/[?#]/)[0];
-    const match = raw.match(/^\d+$/);
-    if (!match) {
+    return posts.map((post) => validatePatternPost(post, seenSlugs));
+}
+
+export const patternPosts: PatternPost[] = createPatternPosts([
+    loadingStates,
+    emptyStates,
+    actionConfirmation,
+]);
+
+export function getPatternPost(slug: string): PatternPost | undefined {
+    const raw = decodeURIComponent(slug).split(/[?#]/)[0];
+    const normalizedSlug = slugify(raw);
+
+    if (!normalizedSlug) {
         return undefined;
     }
 
-    const numericId = Number(match[0]);
-    return patternPosts.find((p) => p.id === numericId);
+    return patternPosts.find((post) => getPatternSlug(post) === normalizedSlug);
 }
 
-export function getPatternHref(post: Pick<PatternPost, "id">): string {
-    return `/ds/monster/${post.id}`;
+export function getPatternHref(post: Pick<PatternPost, "title">): string {
+    return `/ds/monster/${getPatternSlug(post)}`;
 }
 
 /**
@@ -124,8 +155,6 @@ export type {
     PatternDoAndDonts,
     PatternDoAndDontsItem,
     PatternFurtherReadingItem,
-    PatternIllustration,
     PatternImplementation,
     PatternImplementationComponentReference,
-    PatternImplementationGuideStep,
 } from "@/features/ds/monster/types";

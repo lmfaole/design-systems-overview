@@ -1,0 +1,14 @@
+.component-index {
+    .skeleton-gap {
+        margin-block-start: var(--jkl-spacing-xl);
+    }
+
+    .tags-label {
+        font-size: var(--jkl-font-size-1);
+    }
+
+    .count {
+        margin: 0;
+        font-size: var(--jkl-font-size-s);
+    }
+}

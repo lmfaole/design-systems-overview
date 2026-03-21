@@ -77,14 +77,14 @@ function resolveJokulTokenItems(tokenSlug: string): SiteBreadcrumbItem[] {
     ]);
 }
 
-function resolveMonsterItems(patternId: string): SiteBreadcrumbItem[] {
-    const post = getPatternPost(patternId);
+function resolveMonsterItems(patternSlug: string): SiteBreadcrumbItem[] {
+    const post = getPatternPost(patternSlug);
 
     return withCurrent([
         { href: "/", label: "Forside" },
         { href: "/ds", label: "Designsystemer" },
         { href: "/ds/monster", label: "Mønster" },
-        { label: post?.title ?? humanizeSegment(patternId) },
+        { label: post?.title ?? humanizeSegment(patternSlug) },
     ]);
 }
 
