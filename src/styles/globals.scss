@@ -12,6 +12,7 @@
     --site-border-color: light-dark(#e5e7eb, #4b5563);
     --site-text-color: CanvasText;
     --site-text-muted: GrayText;
+    --site-text-muted-strong: color-mix(in srgb, var(--site-text-color) 72%, var(--site-page-background));
     --site-success-color: light-dark(#166534, #86efac);
     --site-error-color: light-dark(#991b1b, #fca5a5);
     --site-info-color: light-dark(#1d4ed8, #93c5fd);
@@ -192,6 +193,11 @@
     display: none;
   }
 
+  .site-popover[popover]:not(:popover-open) {
+    display: none;
+    pointer-events: none;
+  }
+
   .site-popover[popover]:popover-open {
     display: grid;
   }
@@ -235,6 +241,7 @@
     --site-border-color: var(--jkl-color-border-subdued);
     --site-text-color: var(--jkl-color-text-default);
     --site-text-muted: var(--jkl-color-text-subdued);
+    --site-text-muted-strong: color-mix(in srgb, var(--site-text-color) 72%, var(--site-page-background));
     --site-success-color: var(--jkl-color-text-success-strong);
     --site-error-color: var(--jkl-color-text-error-strong);
     --site-info-color: var(--jkl-color-text-info-strong);

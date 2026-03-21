@@ -58,7 +58,7 @@ export function formatPropCount(count: number): string {
 export function initPropIndexPage(root: ParentNode = document): void {
     if (typeof window === "undefined") return;
 
-    const form = root.querySelector<HTMLFormElement>("[data-prop-index-form]");
+    const form = root.querySelector<HTMLElement>("[data-prop-index-form]");
     const tbody = root.querySelector<HTMLElement>("[data-prop-index-body]");
     const count = root.querySelector<HTMLElement>("[data-prop-index-count]");
     const empty = root.querySelector<HTMLElement>("[data-prop-index-empty]");
@@ -137,11 +137,6 @@ export function initPropIndexPage(root: ParentNode = document): void {
         sortSelect.value = normalizePropSort(params.get("sort"));
         apply();
     };
-
-    form.addEventListener("submit", (event) => {
-        event.preventDefault();
-        apply();
-    });
 
     queryInput.addEventListener("input", apply);
     sortSelect.addEventListener("change", apply);

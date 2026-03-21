@@ -23,7 +23,7 @@ const categories = Array.from(new Set(allDocs.map((doc) => doc.category))).sort(
 
     <section aria-label="Filtrer komponenter">
 
-        <form class="ds-toolbar component-index-toolbar" data-component-index-form>
+        <div class="ds-toolbar component-index-toolbar" data-component-index-form>
             <label class="site-field site-field-fill" for="component-query">
                 <span>Søk etter komponent</span>
                 <input
@@ -75,7 +75,7 @@ const categories = Array.from(new Set(allDocs.map((doc) => doc.category))).sort(
                 />
                 <span>Vis alle komponenter</span>
             </label>
-        </form>
+        </div>
 
         <p class="count" data-component-index-count>{visibleDocs.length} komponenter</p>
     </section>

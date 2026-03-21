@@ -1,11 +1,16 @@
-import type React from "react";
-import { TokenCardIllustration } from "@/features/ds/jokul/_shared/components/TokenIllustration/TokenIllustration";
-
+export type TokenIllustrationSlug =
+    | "animasjon"
+    | "breakpoints"
+    | "farger"
+    | "kantradiuser"
+    | "skygger"
+    | "spacing"
+    | "typografi";
 export interface TokenOverviewEntry {
     id: number;
     title: string;
     href: string;
-    illustration: React.ReactNode;
+    illustrationSlug: TokenIllustrationSlug;
 }
 
 export const tokenOverviewEntries: TokenOverviewEntry[] = [
@@ -13,43 +18,43 @@ export const tokenOverviewEntries: TokenOverviewEntry[] = [
         id: 13,
         title: "Animasjon",
         href: "/ds/jokul/token/animasjon",
-        illustration: <TokenCardIllustration slug="animasjon" />,
+        illustrationSlug: "animasjon",
     },
     {
         id: 14,
         title: "Breakpoints",
         href: "/ds/jokul/token/breakpoints",
-        illustration: <TokenCardIllustration slug="breakpoints" />,
+        illustrationSlug: "breakpoints",
     },
     {
         id: 11,
         title: "Farger",
         href: "/ds/jokul/token/farger",
-        illustration: <TokenCardIllustration slug="farger" />,
+        illustrationSlug: "farger",
     },
     {
         id: 20,
         title: "Kantradiuser",
         href: "/ds/jokul/token/kantradiuser",
-        illustration: <TokenCardIllustration slug="kantradiuser" />,
+        illustrationSlug: "kantradiuser",
     },
     {
         id: 21,
         title: "Skygger",
         href: "/ds/jokul/token/skygger",
-        illustration: <TokenCardIllustration slug="skygger" />,
+        illustrationSlug: "skygger",
     },
     {
         id: 12,
         title: "Spacing",
         href: "/ds/jokul/token/spacing",
-        illustration: <TokenCardIllustration slug="spacing" />,
+        illustrationSlug: "spacing",
     },
     {
         id: 10,
         title: "Typografi",
         href: "/ds/jokul/token/typografi",
-        illustration: <TokenCardIllustration slug="typografi" />,
+        illustrationSlug: "typografi",
     },
 ];
 

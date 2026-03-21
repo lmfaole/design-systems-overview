@@ -83,6 +83,29 @@ const routeChecks = [
         },
     },
     {
+        path: "/ds/jokul/token",
+        expectedAstroIslandCount: 0,
+        assert() {
+            return document.querySelector('a[href="/ds/jokul/token/farger"]')
+                ? null
+                : "Expected token index to link to the Farger token page.";
+        },
+    },
+    {
+        path: "/ds/jokul/token/farger",
+        expectedAstroIslandCount: 0,
+        assert() {
+            const tokenTable = document.querySelector(".token-article table.site-table");
+            const toc = document.querySelector('.token-article nav[aria-labelledby="token-toc-title"]');
+
+            if (!(tokenTable instanceof HTMLTableElement)) {
+                return "Expected token detail pages to render native token tables.";
+            }
+
+            return toc ? null : "Expected token detail pages to render a table of contents.";
+        },
+    },
+    {
         path: "/ds/jokul/component",
         expectedAstroIslandCount: 0,
         async run(page) {
@@ -171,6 +194,24 @@ const routeChecks = [
         path: "/ds/jokul/component/props",
         expectedAstroIslandCount: 0,
         assert() {
+            const table = document.querySelector(".component-index table.site-table");
+            const caption = table?.querySelector("caption")?.textContent?.trim();
+            const headers = Array.from(table?.querySelectorAll('th[scope="col"]') ?? [])
+                .map((header) => header.textContent?.trim())
+                .filter(Boolean);
+
+            if (!(table instanceof HTMLTableElement)) {
+                return "Expected prop index to render a native props table.";
+            }
+
+            if (caption !== "Props-oversikt") {
+                return `Expected prop index table caption to be "Props-oversikt", got "${caption ?? ""}".`;
+            }
+
+            if (headers.join("|") !== "Prop|Kilde|Brukt i") {
+                return `Expected prop index table headers to be Prop, Kilde, Brukt i; got ${headers.join(", ")}.`;
+            }
+
             return document.querySelector("[data-prop-entry]")
                 ? null
                 : "Expected prop index to render at least one prop row.";
@@ -180,6 +221,25 @@ const routeChecks = [
         path: "/ds/jokul/component/button",
         expectedAstroIslandCount: 1,
         async run(page) {
+            const hiddenPopoverState = await page.evaluate(() =>
+                Array.from(document.querySelectorAll(".component-type-popover"))
+                    .map((popover) => ({
+                        id: popover.id,
+                        open: popover.matches(":popover-open"),
+                        display: window.getComputedStyle(popover).display,
+                    }))
+            );
+
+            if (hiddenPopoverState.length === 0) {
+                return "Expected component detail pages to render at least one prop type popover.";
+            }
+
+            const visibleClosedPopover = hiddenPopoverState.find((popover) => popover.open || popover.display !== "none");
+
+            if (visibleClosedPopover) {
+                return `Expected closed popovers to stay hidden before interaction, but ${visibleClosedPopover.id} was ${visibleClosedPopover.display}.`;
+            }
+
             await page.click(".component-type-button");
 
             const popoverState = await page.evaluate(() => {
@@ -190,10 +250,15 @@ const routeChecks = [
                 }
 
                 const styles = window.getComputedStyle(popover);
+                const labelledBy = popover.getAttribute("aria-labelledby");
+                const title = labelledBy ? document.getElementById(labelledBy) : null;
 
                 return {
                     open: styles.display !== "none" && styles.visibility !== "hidden",
                     hasTable: Boolean(popover.querySelector("table")),
+                    role: popover.getAttribute("role"),
+                    labelled: Boolean(title?.textContent?.trim()),
+                    triggerHasPopup: document.querySelector(".component-type-button")?.getAttribute("aria-haspopup"),
                 };
             });
 
@@ -203,6 +268,18 @@ const routeChecks = [
 
             if (!popoverState.open) {
                 return "Expected component detail prop type button to open its popover.";
+            }
+
+            if (popoverState.role !== "dialog") {
+                return `Expected component detail prop type popover to expose role="dialog", got "${popoverState.role ?? ""}".`;
+            }
+
+            if (popoverState.triggerHasPopup !== "dialog") {
+                return `Expected component detail prop type trigger to expose aria-haspopup="dialog", got "${popoverState.triggerHasPopup ?? ""}".`;
+            }
+
+            if (!popoverState.labelled) {
+                return "Expected component detail prop type popover to have an accessible title.";
             }
 
             return popoverState.hasTable

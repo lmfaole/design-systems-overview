@@ -1,0 +1,180 @@
+---
+import { slugify } from "@/lib/format";
+import PageHeader from "@/components/ds/PageHeader/PageHeader.astro";
+import type { TokenPost } from "@/data/jokul/tokens";
+import "@/features/ds/jokul/_shared/components/CodeBlock/code-block.scss";
+import { serializeTokenPost } from "./render";
+import "./token-article.scss";
+
+interface Props {
+    post: TokenPost;
+}
+
+const { post } = Astro.props;
+const serializedPost = serializeTokenPost(post);
+
+const tableOfContentsItems = [
+    ...(serializedPost.tokenOverview.length > 0 ? [{ id: "tokens", label: "Tokens" }] : []),
+    ...(serializedPost.scssSection.length > 0 ? [{ id: "scss-mixins", label: "SCSS-mixins" }] : []),
+    ...(serializedPost.resources.length > 0 ? [{ id: "videre-lesning", label: "Videre lesning" }] : []),
+];
+---
+
+<main class="page">
+    <article class="token-article">
+        <PageHeader
+            title={serializedPost.title}
+            description={serializedPost.excerpt}
+            backgroundHtml={serializedPost.illustrationHtml}
+        />
+
+        {tableOfContentsItems.length > 0 && (
+            <nav class="article-toc" aria-labelledby="token-toc-title">
+                <h2 id="token-toc-title" class="sr-only">Innhold</h2>
+                <ol>
+                    {tableOfContentsItems.map((item) => (
+                        <li><a href={`#${item.id}`}>{item.label}</a></li>
+                    ))}
+                </ol>
+            </nav>
+        )}
+
+        <div class="post-prose">
+            {serializedPost.tokenOverview.length > 0 && (
+                <section class="post-prose-section" aria-labelledby="tokens">
+                    <h2 id="tokens">Tokens</h2>
+                    <div class="token-content-stack">
+                        {serializedPost.tokenOverview.map((table) => (
+                            <section
+                                class="token-table-section"
+                                aria-labelledby={serializedPost.tokenOverview.length > 1 ? slugify(table.heading ?? table.caption) : undefined}
+                            >
+                                {serializedPost.tokenOverview.length > 1 && (
+                                    <h3 id={slugify(table.heading ?? table.caption)}>{table.heading ?? table.caption}</h3>
+                                )}
+                                {table.description && <p>{table.description}</p>}
+                                <div class="site-table-wrap">
+                                    <table class="site-table">
+                                        <caption>{table.caption}</caption>
+                                        <thead>
+                                            <tr>
+                                                {table.columns.map((column) => (
+                                                    <th scope="col">{column}</th>
+                                                ))}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {table.rows.map((row) => (
+                                                <tr>
+                                                    {row.map((cell) => (
+                                                        <td><Fragment set:html={cell} /></td>
+                                                    ))}
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </section>
+                        ))}
+                    </div>
+                </section>
+            )}
+
+            {serializedPost.scssSection.length > 0 && (
+                <section class="post-prose-section" aria-labelledby="scss-mixins">
+                    <h2 id="scss-mixins">SCSS-mixins</h2>
+                    <div class="token-content-stack">
+                        {serializedPost.scssSection.map((mixin) => (
+                            <section aria-labelledby={slugify(mixin.name)}>
+                                <h3 id={slugify(mixin.name)}>{mixin.name}</h3>
+                                <p>{mixin.description}</p>
+                                {mixin.arguments && mixin.arguments.length > 0 && (
+                                    <div class="site-table-wrap">
+                                        <table class="site-table">
+                                            <caption>{`Argumenter: ${mixin.name}`}</caption>
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Navn</th>
+                                                    <th scope="col">Type</th>
+                                                    <th scope="col">Påkrevd</th>
+                                                    <th scope="col">Beskrivelse</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {mixin.arguments.map((arg) => (
+                                                    <tr>
+                                                        <td><code>{arg.name}</code></td>
+                                                        <td><code>{arg.type}</code></td>
+                                                        <td>{arg.optional ? "Nei" : "Ja"}</td>
+                                                        <td>
+                                                            {arg.description}
+                                                            {arg.defaultValue && (
+                                                                <>
+                                                                    {" "}
+                                                                    <span class="muted">Standard:</span>{" "}
+                                                                    <code>{arg.defaultValue}</code>
+                                                                </>
+                                                            )}
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                )}
+                                {mixin.properties && mixin.properties.length > 0 && (
+                                    <div class="site-table-wrap">
+                                        <table class="site-table">
+                                            <caption>{`Påvirker / setter: ${mixin.name}`}</caption>
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">CSS</th>
+                                                    <th scope="col">Beskrivelse</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {mixin.properties.map((property) => (
+                                                    <tr>
+                                                        <td><code>{property.name}</code></td>
+                                                        <td>{property.description}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                )}
+                                <div class="code-block" data-size="small">
+                                    <div class="content">
+                                        <pre class="pre"><code>{mixin.example.trim()}</code></pre>
+                                    </div>
+                                </div>
+                            </section>
+                        ))}
+                    </div>
+                </section>
+            )}
+
+            {serializedPost.resources.length > 0 && (
+                <section class="post-prose-section" aria-labelledby="videre-lesning">
+                    <h2 id="videre-lesning">Videre lesning</h2>
+                    <ul>
+                        {serializedPost.resources.map((item) => (
+                            <li>
+                                <a href={item.href}>{item.title}</a>
+                                {(item.meta || item.descriptionHtml) && (
+                                    <p class="muted">
+                                        <small>
+                                            {item.meta}
+                                            {item.meta && item.descriptionHtml ? " · " : ""}
+                                            {item.descriptionHtml && <Fragment set:html={item.descriptionHtml} />}
+                                        </small>
+                                    </p>
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+                </section>
+            )}
+        </div>
+    </article>
+</main>

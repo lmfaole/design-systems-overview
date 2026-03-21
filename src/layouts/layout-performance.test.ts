@@ -23,8 +23,20 @@ const jokulTokenIndexPageSource = readFileSync(
     path.resolve(process.cwd(), "src/pages/ds/jokul/token/index.astro"),
     "utf8",
 );
+const jokulTokenDetailPageSource = readFileSync(
+    path.resolve(process.cwd(), "src/pages/ds/jokul/token/[slug].astro"),
+    "utf8",
+);
 const searchPageSource = readFileSync(
     path.resolve(process.cwd(), "src/pages/ds/sok/index.astro"),
+    "utf8",
+);
+const monsterIndexPageSource = readFileSync(
+    path.resolve(process.cwd(), "src/pages/ds/monster/index.astro"),
+    "utf8",
+);
+const monsterDetailRouteSource = readFileSync(
+    path.resolve(process.cwd(), "src/pages/ds/monster/[slug].astro"),
     "utf8",
 );
 const componentIndexPageSource = readFileSync(
@@ -49,6 +61,22 @@ const dsOverviewPageSource = readFileSync(
 );
 const jokulHomePageSource = readFileSync(
     path.resolve(process.cwd(), "src/features/ds/jokul/overview/JokulHomePage.astro"),
+    "utf8",
+);
+const jokulTokenIndexSource = readFileSync(
+    path.resolve(process.cwd(), "src/features/ds/jokul/tokens/TokenIndexPage.astro"),
+    "utf8",
+);
+const jokulTokenDetailSource = readFileSync(
+    path.resolve(process.cwd(), "src/features/ds/jokul/tokens/TokenPostPage.astro"),
+    "utf8",
+);
+const monsterOverviewPageSource = readFileSync(
+    path.resolve(process.cwd(), "src/features/ds/monster/overview/PatternIndexPage.astro"),
+    "utf8",
+);
+const monsterDetailPageSource = readFileSync(
+    path.resolve(process.cwd(), "src/features/ds/monster/detail/Page.astro"),
     "utf8",
 );
 
@@ -77,6 +105,7 @@ describe("Layout performance wiring", () => {
         expect(dsIndexPageSource).toContain('import DesignSystemsPage from "@/features/ds/overview/DesignSystemsPage.astro";');
         expect(jokulIndexPageSource).toContain('import JokulHomePage from "@/features/ds/jokul/overview/JokulHomePage.astro";');
         expect(jokulTokenIndexPageSource).toContain('import JokulOverviewLayout from "@/layouts/JokulOverviewLayout.astro";');
+        expect(jokulTokenIndexPageSource).toContain('import TokenIndexPage from "@/features/ds/jokul/tokens/TokenIndexPage.astro";');
     });
 
     it("uses Fremtind Grotesk for the Jøkul overview theme", () => {
@@ -115,5 +144,31 @@ describe("Layout performance wiring", () => {
         expect(jokulHomePageSource).toContain("<main class=\"page overview-page overview-nav-page\">");
         expect(jokulHomePageSource).not.toContain('import type React');
         expect(jokulHomePageSource).not.toContain("className=");
+    });
+
+    it("keeps the token routes Astro-native", () => {
+        expect(jokulTokenIndexPageSource).toContain('import TokenIndexPage from "@/features/ds/jokul/tokens/TokenIndexPage.astro";');
+        expect(jokulTokenDetailPageSource).toContain('import TokenPostPage from "@/features/ds/jokul/tokens/TokenPostPage.astro";');
+        expect(jokulTokenIndexPageSource).not.toContain("TokenPage");
+        expect(jokulTokenDetailPageSource).not.toContain("TokenPostPageClient");
+        expect(jokulTokenIndexSource).toContain("<PageHeader");
+        expect(jokulTokenIndexSource).not.toContain("className=");
+        expect(jokulTokenDetailSource).toContain("<main class=\"page\">");
+        expect(jokulTokenDetailSource).toContain("<article class=\"token-article\">");
+        expect(jokulTokenDetailSource).toContain("<table class=\"site-table\">");
+        expect(jokulTokenDetailSource).not.toContain("TokenArticle");
+    });
+
+    it("keeps the monster routes Astro-native", () => {
+        expect(monsterIndexPageSource).toContain('import PatternIndexPage from "@/features/ds/monster/overview/PatternIndexPage.astro";');
+        expect(monsterDetailRouteSource).toContain('import PatternDetailPage from "@/features/ds/monster/detail/Page.astro";');
+        expect(monsterIndexPageSource).not.toContain('import PatternIndexPage from "@/features/ds/monster/overview/PatternIndexPage";');
+        expect(monsterDetailRouteSource).not.toContain("PatternTableOfContents");
+        expect(monsterDetailRouteSource).not.toContain("DoAndDontsSection");
+        expect(monsterOverviewPageSource).toContain("<PageHeader");
+        expect(monsterOverviewPageSource).not.toContain("className=");
+        expect(monsterDetailPageSource).toContain("<main class=\"page\">");
+        expect(monsterDetailPageSource).toContain("serializePatternPost(post)");
+        expect(monsterDetailPageSource).toContain("<Fragment set:html={exampleHtml} />");
     });
 });

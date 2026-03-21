@@ -1,0 +1,86 @@
+---
+import "@/features/ds/jokul/_shared/components/TokenIllustration/token-illustration.scss";
+
+type TokenIllustrationSlug =
+    | "animasjon"
+    | "breakpoints"
+    | "farger"
+    | "kantradiuser"
+    | "skygger"
+    | "spacing"
+    | "typografi";
+
+interface Props {
+    slug: TokenIllustrationSlug;
+    surface?: "card" | "page";
+}
+
+const tokenIllustrationVariants = {
+    animasjon: {
+        specimenTag: "span",
+        showcaseProperties: ["transform"],
+    },
+    breakpoints: {
+        specimenTag: "span",
+        showcaseProperties: ["inline-size"],
+    },
+    farger: {
+        specimenTag: "span",
+        showcaseProperties: ["background-color"],
+    },
+    kantradiuser: {
+        specimenTag: "span",
+        showcaseProperties: ["border-radius"],
+    },
+    skygger: {
+        specimenTag: "span",
+        showcaseProperties: ["box-shadow"],
+    },
+    spacing: {
+        specimenTag: "span",
+        showcaseProperties: ["inline-size", "block-size"],
+    },
+    typografi: {
+        specimenTag: "strong",
+        label: "Ag",
+        showcaseProperties: ["font-size", "line-height"],
+    },
+} as const;
+
+const { slug, surface = "card" } = Astro.props;
+const variant = tokenIllustrationVariants[slug];
+const label = "label" in variant ? variant.label : undefined;
+const specimenDataAttribute =
+    surface === "page" ? { "data-token-specimen": slug } : { "data-token-card-specimen": slug };
+const illustrationDataAttribute =
+    surface === "page"
+        ? { "data-token-illustration": slug }
+        : { "data-token-card-illustration": slug };
+---
+
+<div
+    class="token-illustration"
+    data-surface={surface}
+    data-token-illustration-bleed="true"
+    {...illustrationDataAttribute}
+>
+    {variant.specimenTag === "strong" ? (
+        <strong
+            class="token-specimen"
+            data-token-group={slug}
+            data-token-overflow="large"
+            {...specimenDataAttribute}
+        >
+            {label}
+        </strong>
+    ) : (
+        <span
+            class="token-specimen"
+            data-token-group={slug}
+            data-token-overflow="large"
+            {...specimenDataAttribute}
+        >
+            {label}
+        </span>
+    )}
+</div>

@@ -17,7 +17,7 @@ const entries = [...ALL_PROP_ENTRIES].sort((left, right) => left.propName.locale
 
     <section aria-label="Filtrer props">
 
-        <form class="ds-toolbar component-index-toolbar" data-prop-index-form>
+        <div class="ds-toolbar component-index-toolbar" data-prop-index-form>
             <label class="site-field site-field-fill" for="prop-query">
                 <span>Filtrer props</span>
                 <input
@@ -39,7 +39,7 @@ const entries = [...ALL_PROP_ENTRIES].sort((left, right) => left.propName.locale
                     <option value="used-by-desc">Mest brukt</option>
                 </select>
             </label>
-        </form>
+        </div>
 
         <p class="count" data-prop-index-count>{entries.length} props</p>
     </section>

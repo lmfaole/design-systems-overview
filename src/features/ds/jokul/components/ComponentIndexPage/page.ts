@@ -81,7 +81,7 @@ export function formatComponentCount(count: number): string {
 export function initComponentIndexPage(root: ParentNode = document): void {
     if (typeof window === "undefined") return;
 
-    const form = root.querySelector<HTMLFormElement>("[data-component-index-form]");
+    const form = root.querySelector<HTMLElement>("[data-component-index-form]");
     const results = root.querySelector<HTMLElement>("[data-component-index-results]");
     const count = root.querySelector<HTMLElement>("[data-component-index-count]");
     const empty = root.querySelector<HTMLElement>("[data-component-index-empty]");
@@ -178,11 +178,6 @@ export function initComponentIndexPage(root: ParentNode = document): void {
         sortSelect.value = normalizeComponentSort(params.get("sort"));
         apply();
     };
-
-    form.addEventListener("submit", (event) => {
-        event.preventDefault();
-        apply();
-    });
 
     queryInput.addEventListener("input", apply);
     categorySelect.addEventListener("change", apply);

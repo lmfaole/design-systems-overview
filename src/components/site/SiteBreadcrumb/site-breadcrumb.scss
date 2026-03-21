@@ -1,7 +1,7 @@
 .site-breadcrumb {
   position: relative;
   z-index: 2;
-  color: var(--site-text-muted);
+  color: var(--site-text-color);
   padding-block: var(--site-space-xs);
 
   .list {
@@ -21,7 +21,7 @@
 
   .item + .item::before {
     content: "/";
-    color: var(--site-text-muted);
+    color: var(--site-text-color);
   }
 
   .link {
@@ -30,6 +30,6 @@
   }
 
   .current {
-    color: var(--site-text-muted);
+    color: var(--site-text-color);
   }
 }

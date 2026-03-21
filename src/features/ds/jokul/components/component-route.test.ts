@@ -30,6 +30,14 @@ const componentDetailPropTableSource = readFileSync(
     path.resolve(process.cwd(), "src/features/ds/jokul/components/ComponentDetailPage/PropTable.astro"),
     "utf8",
 );
+const componentDetailStylesSource = readFileSync(
+    path.resolve(process.cwd(), "src/features/ds/jokul/components/ComponentDetailPage/styles.scss"),
+    "utf8",
+);
+const globalStylesSource = readFileSync(
+    path.resolve(process.cwd(), "src/styles/globals.scss"),
+    "utf8",
+);
 
 describe("Jøkul component routes", () => {
     it("renders the index and props routes through Astro page components with native markup", () => {
@@ -44,6 +52,10 @@ describe("Jøkul component routes", () => {
         expect(componentIndexPageSource).toContain('class="site-card site-card-link"');
         expect(componentIndexPageSource).not.toContain('import { Card }');
         expect(propIndexPageSource).toContain('<table class="site-table">');
+        expect(propIndexPageSource).toContain("<caption>Props-oversikt</caption>");
+        expect(propIndexPageSource).toContain('<th scope="col">Prop</th>');
+        expect(propIndexPageSource).toContain('<th scope="col">Kilde</th>');
+        expect(propIndexPageSource).toContain('<th scope="col">Brukt i</th>');
         expect(propIndexPageSource).not.toContain("PropIndexTable");
         expect(propIndexPageSource).not.toContain('@fremtind/jokul/table');
     });
@@ -68,10 +80,18 @@ describe("Jøkul component routes", () => {
         expect(componentDetailPageSource).not.toContain("AlternativesList");
         expect(componentDetailPageSource).toContain('class="site-card component-pattern-card"');
         expect(componentDetailPropTableSource).toContain('<table class="site-table component-prop-table">');
+        expect(componentDetailPropTableSource).toContain('<th scope="col">Navn</th>');
+        expect(componentDetailPropTableSource).toContain('<th scope="col">Type</th>');
+        expect(componentDetailPropTableSource).toContain('aria-haspopup="dialog"');
+        expect(componentDetailPropTableSource).toContain('role="dialog"');
+        expect(componentDetailPropTableSource).toContain('aria-labelledby={`${popoverId}-title`}');
         expect(componentDetailPropTableSource).toContain('popover="auto"');
         expect(componentDetailPropTableSource).toContain("popovertarget={popoverId}");
         expect(componentDetailPropTableSource).toContain('popovertargetaction="hide"');
         expect(componentDetailPropTableSource).not.toContain("data-popover-target");
         expect(componentDetailPropTableSource).not.toContain("data-popover-close");
+        expect(componentDetailStylesSource).not.toContain(".component-detail-page .component-type-popover {\n    display: grid;");
+        expect(globalStylesSource).toContain(".site-popover[popover]:not(:popover-open)");
+        expect(globalStylesSource).toContain("pointer-events: none;");
     });
 });

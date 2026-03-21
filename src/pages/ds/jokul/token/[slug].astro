@@ -1,9 +1,7 @@
 ---
 import JokulLayout from "@/layouts/JokulLayout.astro";
-import { Flex } from "@fremtind/jokul/flex";
 import { getTokenPost, getTokenSlug, tokenPosts } from "@/data/jokul/tokens";
-import { TokenPostPageClient } from "@/features/ds/jokul/tokens/TokenPostPageClient";
-import { ResourceSection } from "@/features/ds/jokul/tokens/ResourceSection";
+import TokenPostPage from "@/features/ds/jokul/tokens/TokenPostPage.astro";
 
 export function getStaticPaths() {
     return tokenPosts.map((post) => ({
@@ -25,20 +23,5 @@ if (!post) {
     path={`/ds/jokul/token/${slug}`}
     type="article"
 >
-    <Flex className="page" direction="column" gap="xl">
-        <TokenPostPageClient slug={slug!} />
-        {post.resources && post.resources.length > 0 && (
-            <div class="post-prose" data-kind="pattern">
-                <ResourceSection
-                    items={post.resources.map((resource) => ({
-                        title: resource.title,
-                        href: resource.url,
-                        publisher: resource.publisher,
-                        relevance: resource.relevance,
-                        description: resource.description,
-                    }))}
-                />
-            </div>
-        )}
-    </Flex>
+    <TokenPostPage post={post} />
 </JokulLayout>

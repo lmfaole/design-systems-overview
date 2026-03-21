@@ -1,15 +1,8 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getPatternHref, getPatternPost, getPatternSlug, patternPosts } from "@/data/monster/patterns";
-import { PageHeader } from "@/components/ds/PageHeader";
-import { PatternTableOfContents } from "@/features/ds/monster/detail/components";
-import { DoAndDontsSection } from "@/features/ds/monster/detail/DoAndDontsSection";
-import { AccessibilitySection } from "@/features/ds/monster/detail/AccessibilitySection";
-import { ImplementationSection } from "@/features/ds/monster/detail/ImplementationSection";
-import { ResourceSection } from "@/features/ds/monster/detail/ResourceSection";
-import { MONSTER_PATTERN_SECTIONS } from "@/features/ds/monster/detail/sections";
+import PatternDetailPage from "@/features/ds/monster/detail/Page.astro";
 import PatternPostEnhancements from "@/features/ds/monster/posts/components/PatternPostEnhancements/index.astro";
-import "@/features/ds/monster/detail/monster-detail.scss";
 
 export function getStaticPaths() {
     return patternPosts.map((post) => ({
@@ -23,19 +16,6 @@ const post = getPatternPost(slug ?? "");
 if (!post) {
     throw new Error(`Missing pattern for slug "${slug}"`);
 }
-
-const tableOfContentsItems = [
-    MONSTER_PATTERN_SECTIONS.doAndDonts,
-    ...(post.accessibilityConcerns.length > 0
-        ? [MONSTER_PATTERN_SECTIONS.accessibility]
-        : []),
-    ...(post.implementation.length > 0
-        ? [MONSTER_PATTERN_SECTIONS.implementation]
-        : []),
-    ...(post.furtherReading.length > 0
-        ? [MONSTER_PATTERN_SECTIONS.furtherReading]
-        : []),
-];
 ---
 
 <BaseLayout
@@ -44,14 +24,6 @@ const tableOfContentsItems = [
     path={getPatternHref(post)}
     type="article"
 >
-    <main class="page">
-        <PageHeader title={post.title} description={post.description} />
-        <PatternTableOfContents items={tableOfContentsItems} />
-
-        <DoAndDontsSection doAndDonts={post.doAndDonts} />
-        <AccessibilitySection concerns={post.accessibilityConcerns} />
-        <ImplementationSection implementations={post.implementation} />
-        <ResourceSection items={post.furtherReading} />
-    </main>
+    <PatternDetailPage post={post} />
     <PatternPostEnhancements />
 </BaseLayout>

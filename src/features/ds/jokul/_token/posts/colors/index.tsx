@@ -167,9 +167,11 @@ const post: TokenPost = {
                     fontWeight: token.includes("default") ? "700" : undefined,
                     background: token.includes("inverted")
                         ? "var(--jkl-color-background-container-inverted)"
+                        : token.includes("on-action")
+                            ? "var(--jkl-color-background-action)"
                         : undefined,
-                    padding: token.includes("inverted") ? "0 0.25rem" : undefined,
-                    borderRadius: token.includes("inverted")
+                    padding: token.includes("inverted") || token.includes("on-action") ? "0 0.25rem" : undefined,
+                    borderRadius: token.includes("inverted") || token.includes("on-action")
                         ? "var(--jkl-border-radius-xs)"
                         : undefined,
                 }, "text-color"),
