@@ -11,8 +11,8 @@
 
   .copy {
     position: absolute;
-    top: var(--jkl-spacing-xs);
-    right: var(--jkl-spacing-xs);
+    inset-block-start: var(--jkl-spacing-xs);
+    inset-inline-end: var(--jkl-spacing-xs);
     z-index: 1;
   }
 

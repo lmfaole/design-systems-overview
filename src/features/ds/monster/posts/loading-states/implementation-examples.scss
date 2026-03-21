@@ -41,7 +41,7 @@
   inline-size: 1rem;
   block-size: 1rem;
   border: 2px solid color-mix(in srgb, var(--site-info-color) 28%, var(--site-border-color) 72%);
-  border-top-color: currentcolor;
+  border-block-start-color: currentcolor;
   border-radius: 999px;
 }
 
@@ -69,12 +69,12 @@
   background-size: 200% 100%;
 }
 
-.monster-vanilla-skeleton-line--title {
+.monster-vanilla-skeleton-line.title {
   block-size: 1.25rem;
   inline-size: 55%;
 }
 
-.monster-vanilla-skeleton-line--body {
+.monster-vanilla-skeleton-line.body {
   inline-size: 100%;
 
   &.short {

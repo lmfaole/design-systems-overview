@@ -1,7 +1,7 @@
 .home {
     .hero {
         padding-block-end: var(--jkl-spacing-2xl);
-        border-bottom: 1px solid var(--jkl-color-border-subdued);
+        border-block-end: 1px solid var(--jkl-color-border-subdued);
 
         .description {
             color: var(--jkl-color-text-subdued);
@@ -12,10 +12,10 @@
 
     .section {
         padding-block-end: var(--jkl-spacing-2xl);
-        border-bottom: 1px solid var(--jkl-color-border-subdued);
+        border-block-end: 1px solid var(--jkl-color-border-subdued);
 
         &:last-child {
-            border-bottom: none;
+            border-block-end: none;
             padding-block-end: 0;
         }
     }

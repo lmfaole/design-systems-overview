@@ -1,6 +1,5 @@
 import { Flex } from "@fremtind/jokul/flex";
 import { CodeBlock } from "@/features/ds/jokul/_shared/components/CodeBlock";
-import { Grid } from "@/features/ds/jokul/_shared/components/Grid";
 import type { Migration } from "@/features/ds/jokul/_component-docs/docs/types";
 import "./migration-example.scss";
 
@@ -25,7 +24,7 @@ export function MigrationExample({ migration }: MigrationExampleProps) {
                 </p>
             )}
 
-            <Grid columns={2} gap="m">
+            <div className="ds-grid" data-columns={2}>
                 <Flex direction="column" gap="xs" className="block">
                     <span className="block-label muted">Før</span>
                     <CodeBlock code={migration.before} />
@@ -34,7 +33,7 @@ export function MigrationExample({ migration }: MigrationExampleProps) {
                     <span className="block-label muted">Etter</span>
                     <CodeBlock code={migration.after} />
                 </Flex>
-            </Grid>
+            </div>
         </Flex>
     );
 }

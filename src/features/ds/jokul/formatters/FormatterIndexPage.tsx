@@ -1,5 +1,4 @@
 import { PageHeader } from "@/components/ds/PageHeader";
-import { Grid } from "@/features/ds/jokul/_shared/components/Grid";
 import { overviewInlineStyles } from "@/features/ds/jokul/overview/overview-inline-styles";
 import { formatterOverviewGroups } from "./formatter-overview-data";
 
@@ -25,7 +24,7 @@ export default function FormatterIndexPage() {
                             <h2 id={`formatter-group-${group.id}`}>{group.label}</h2>
                             <p>{group.description}</p>
                         </div>
-                        <Grid columns={3} gap="m">
+                        <div className="ds-grid" data-columns={3}>
                             {group.docs.map((doc) => (
                                 <a
                                     key={doc.id}
@@ -38,7 +37,7 @@ export default function FormatterIndexPage() {
                                     <small className="overview-card-description">{doc.description.short}</small>
                                 </a>
                             ))}
-                        </Grid>
+                        </div>
                     </section>
                 ))}
             </main>

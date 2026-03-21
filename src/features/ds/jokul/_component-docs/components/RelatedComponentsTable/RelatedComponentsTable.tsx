@@ -1,5 +1,4 @@
 import type { RelatedComponentDoc } from "@/features/ds/jokul/_shared/components/RelatedComponentCard";
-import { Grid } from "@/features/ds/jokul/_shared/components/Grid";
 import { RelatedComponentCard } from "@/features/ds/jokul/_shared/components/RelatedComponentCard";
 
 interface RelatedComponentsTableProps {
@@ -8,10 +7,10 @@ interface RelatedComponentsTableProps {
 
 export function RelatedComponentsTable({ items }: RelatedComponentsTableProps) {
     return (
-        <Grid columns={4}>
+        <div className="ds-grid" data-columns={4}>
             {items.map(({ doc, description }) => (
                 <RelatedComponentCard key={doc.id} doc={doc} description={description} />
             ))}
-        </Grid>
+        </div>
     );
 }

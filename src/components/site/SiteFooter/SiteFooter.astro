@@ -1,0 +1,54 @@
+---
+import type { SiteFooterSection, SiteLink } from "../types";
+import "./site-footer.scss";
+
+interface Props {
+    links?: SiteLink[];
+    sections?: SiteFooterSection[];
+    rootLink?: SiteLink;
+    note: string;
+}
+
+const {
+    links = [],
+    sections,
+    rootLink = { href: "/", label: "Til forsiden" },
+    note,
+} = Astro.props;
+
+const footerSections = sections && sections.length > 0
+    ? sections
+    : [{ title: "Navigasjon", links }];
+const [firstSection, ...restSections] = footerSections;
+const firstSectionLinks = firstSection.links.some((link) => link.href === rootLink.href)
+    ? firstSection.links
+    : [rootLink, ...firstSection.links];
+const normalizedSections = [
+    { ...firstSection, links: firstSectionLinks },
+    ...restSections,
+].filter((section) => section.links.length > 0);
+---
+
+<footer class="site-footer">
+    <div class="page content">
+        {normalizedSections.length > 0 && (
+            <section class="nav">
+                {normalizedSections.map((section) => (
+                    <nav aria-label={section.title} class="section">
+                        <small class="title">
+                            <strong>{section.title}</strong>
+                        </small>
+                        <ul class="links">
+                            {section.links.map((link) => (
+                                <li>
+                                    <a class="link" href={link.href}>{link.label}</a>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
+                ))}
+            </section>
+        )}
+        <small class="note">{note}</small>
+    </div>
+</footer>

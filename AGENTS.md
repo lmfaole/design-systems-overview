@@ -55,32 +55,20 @@ with a strong emphasis on accessibility and performance.
     - Use nesting where it improves readability and maintainability, and use it to avoid repeating text in class names
       or selectors, but avoid excessive nesting that can lead to specificity issues and make the code harder to
       understand and maintain.
-    - Do not use BEM notation, and use class names that make the css less verbose and more readable. Utilize the
-      cascade and specificity to write less code and make it more maintainable.
     - Prefer using data attributes rather than classes for styling when the styles are specific to a particular state or
       behavior, as this can improve readability and maintainability by separating styling concerns from structural
       concerns.
     - Use short and descriptive class names that convey the purpose and meaning of the element, rather than its
       appearance or implementation details, to improve readability and maintainability.
     - Use logical properties.
-    - Use custom properties for design tokens and theming.
     - Avoid using utility classes for styling, and instead prefer semantic class names that describe the purpose of
       the element.
-    - Avoid using inline styles, and instead prefer using CSS classes to separate styling from markup and behavior.
-    - Use CSS variables for design tokens and theming, and avoid hardcoding values in CSS rules to improve
-      maintainability and flexibility.
     - Use media, feature queries, and container queries to create responsive designs that adapt to different screen
       sizes and contexts.
     - Avoid using CSS frameworks or libraries that add unnecessary bloat and complexity to the codebase, and instead
       prefer writing custom CSS that is tailored to the specific needs of the project.
     - Use CSS preprocessors or postprocessors if necessary to improve the maintainability and organization of CSS
       code, but avoid adding unnecessary complexity or dependencies to the project.
-    - NEVER override fonts, colors, gaps, margins, or other design tokens in CSS. If a design system has a semantic
-      token or a
-      mixin for a
-      property or properties, use it. If it doesn't exist, add
-      it to the design system and use it. This ensures consistency and maintainability across patterns and design
-      systems.
 - JavaScript rules:
     - Favor server-side solutions where possible.
     - Use modern JavaScript features and syntax to improve readability and maintainability, while ensuring compatibility
@@ -112,11 +100,8 @@ with a strong emphasis on accessibility and performance.
 
 ## Tooling
 
-- Use the newest available npm, Node, and OS versions.
 - Use `gh` for issue management and PRs.
-- Use `eslint` and `prettier` for code formatting and linting.
-- Use `vitest` for testing and `axe-core` for a11y testing.
-- Use `cloudflare pages` for hosting and deployment.
+- Use the repo scripts and checked-in config files as the source of truth for linting, testing, and deployment tooling.
 
 ## Issue Reporting
 

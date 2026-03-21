@@ -7,8 +7,8 @@
 
 .dot {
   position: absolute;
-  left: 0;
-  top: 0;
+  inset-block-start: 0;
+  inset-inline-start: 0;
   width: 8px;
   height: 8px;
   border-radius: 50%;
@@ -18,7 +18,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     animation: none;
-    top: 50%;
+    inset-block-start: 50%;
   }
 }
 
@@ -28,8 +28,10 @@
 
 @keyframes slide-dot {
   from {
- top: 0; }
+    inset-block-start: 0;
+  }
 
-  to   {
- top: calc(100% - 8px); }
+  to {
+    inset-block-start: calc(100% - 8px);
+  }
 }

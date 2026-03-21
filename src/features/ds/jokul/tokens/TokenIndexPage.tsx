@@ -1,5 +1,4 @@
 import { PageHeader } from "@/components/ds/PageHeader";
-import { Grid } from "@/features/ds/jokul/_shared/components/Grid";
 import { overviewInlineStyles } from "@/features/ds/jokul/overview/overview-inline-styles";
 import { tokenOverviewEntries } from "./token-overview-data";
 
@@ -12,7 +11,7 @@ export default function TokenPage() {
                     title="Designtokens"
                     description="Fundamentene i Jøkul — typografi, farger og spacing. Les disse for å forstå designsystemets kjerneprinsipper."
                 />
-                <Grid columns={3} gap="m">
+                <div className="ds-grid" data-columns={3}>
                     {tokenOverviewEntries.map((entry) => (
                         <a
                             key={entry.id}
@@ -32,7 +31,7 @@ export default function TokenPage() {
                             </div>
                         </a>
                     ))}
-                </Grid>
+                </div>
             </main>
         </>
     );

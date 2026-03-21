@@ -1,4 +1,3 @@
-import { Grid } from "@/components/ds/Grid";
 import { PatternFeatureList } from "../PatternFeatureList";
 import "./styles.scss";
 import type { PatternDoAndDontsGridProps } from "./types";
@@ -8,7 +7,7 @@ export function PatternDoAndDontsGrid({
     donts,
 }: PatternDoAndDontsGridProps) {
     return (
-        <Grid columns={2} gap="var(--site-space-m)" className="monster-guidance-grid">
+        <div className="ds-grid monster-guidance-grid" data-columns={2}>
             <section
                 className="monster-guidance-column"
                 data-tone="success"
@@ -29,6 +28,6 @@ export function PatternDoAndDontsGrid({
                 </h3>
                 <PatternFeatureList items={donts} tone="error" />
             </section>
-        </Grid>
+        </div>
     );
 }

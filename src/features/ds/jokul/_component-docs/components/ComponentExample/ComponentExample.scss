@@ -10,7 +10,7 @@
     }
 
     .props {
-        padding-left: var(--jkl-spacing-l);
+        padding-inline-start: var(--jkl-spacing-l);
     }
 
     .controls-inline {
@@ -37,9 +37,9 @@
         }
 
         .props {
-            padding-left: 0;
-            border-top: 1px solid var(--jkl-color-border-subdued);
-            padding-top: var(--jkl-spacing-s);
+            padding-inline-start: 0;
+            border-block-start: 1px solid var(--jkl-color-border-subdued);
+            padding-block-start: var(--jkl-spacing-s);
         }
 
         .controls-inline {

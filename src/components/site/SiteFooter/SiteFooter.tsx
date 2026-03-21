@@ -1,11 +1,6 @@
 import type { ComponentPropsWithoutRef, ElementType, ReactNode } from "react";
-import type { SiteLink } from "../SiteHeader";
+import type { SiteFooterSection, SiteLink } from "../types";
 import "./site-footer.scss";
-
-export type SiteFooterSection = {
-    title: string;
-    links: SiteLink[];
-};
 
 interface SiteFooterProps<
     LayoutComponent extends ElementType = "div",

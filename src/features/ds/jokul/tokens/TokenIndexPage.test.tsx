@@ -13,14 +13,6 @@ vi.mock("@/components/ds/PageHeader", () => ({
     ),
 }));
 
-vi.mock("@/features/ds/jokul/_shared/components/Grid", () => ({
-    Grid: ({ children, columns, gap }: any) => (
-        <div data-grid="" data-columns={columns} data-gap={gap}>
-            {children}
-        </div>
-    ),
-}));
-
 function countOccurrences(html: string, marker: string) {
     return (html.match(new RegExp(marker, "g")) || []).length;
 }
@@ -45,6 +37,7 @@ describe("TokenIndexPage", () => {
 
         expect(html).toContain("Designtokens");
         expect(html).toContain("Fundamentene i Jøkul");
+        expect(html).toContain('class="ds-grid" data-columns="3"');
         expect(countOccurrences(html, 'data-overview-card="token"')).toBe(tokenOverviewEntries.length);
         expect(countOccurrences(html, 'class="overview-card" data-kind="token" data-layout="illustrated"')).toBe(tokenOverviewEntries.length);
         expect(countOccurrences(html, 'data-token-card-specimen="')).toBe(tokenOverviewEntries.length);

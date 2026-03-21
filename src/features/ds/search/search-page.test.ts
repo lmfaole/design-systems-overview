@@ -61,6 +61,7 @@ describe("search-page", () => {
         expect(html).toContain("Tokens (1)");
         expect(html).toContain("Sider (1)");
         expect(html).toContain("&lt;button&gt;");
+        expect(html).not.toContain('style="');
     });
 
     it("renders a loading placeholder when the current URL already has a query", () => {

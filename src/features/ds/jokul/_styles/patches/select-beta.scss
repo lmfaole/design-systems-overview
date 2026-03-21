@@ -54,7 +54,7 @@
     overflow: hidden;
     padding: var(--button-padding);
     padding-inline-end: calc(var(--button-padding) + 1.3em);
-    text-align: left;
+    text-align: start;
     text-overflow: ellipsis;
     transition-property: color, border-color, box-shadow;
     white-space: nowrap;

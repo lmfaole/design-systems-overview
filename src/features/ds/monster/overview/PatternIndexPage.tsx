@@ -1,5 +1,4 @@
 import {getPatternHref, getPatternSlug, patternPosts} from "@/data/monster/patterns";
-import {Grid} from "@/components/ds/Grid";
 import {PageHeader} from "@/components/ds/PageHeader";
 import {PATTERN_CATEGORY_LABELS} from "@/features/ds/monster/types";
 import "../detail/monster-detail.scss";
@@ -24,12 +23,7 @@ export default function PatternIndexPage() {
                 return (
                     <section key={category} className="monster-section" aria-labelledby={`kategori-${category}`}>
                         <h2 id={`kategori-${category}`}>{PATTERN_CATEGORY_LABELS[category]}</h2>
-                        <Grid
-                            as="ul"
-                            columns={2}
-                            gap="var(--site-space-m)"
-                            className="bare-list monster-patterns"
-                        >
+                        <ul className="ds-grid bare-list monster-patterns" data-columns={2}>
                             {posts.map((post) => {
                                 return (
                                     <li key={getPatternSlug(post)} className="monster-pattern">
@@ -40,7 +34,7 @@ export default function PatternIndexPage() {
                                     </li>
                                 );
                             })}
-                        </Grid>
+                        </ul>
                     </section>
                 );
             })}

@@ -1,9 +1,5 @@
 {
   "mcpServers": {
-    "Astro docs": {
-      "type": "http",
-      "url": "https://mcp.docs.astro.build/mcp"
-    },
     "chrome-devtools": {
       "command": "npx",
       "args": [
@@ -11,14 +7,25 @@
         "chrome-devtools-mcp@latest"
       ]
     },
-    "browserbase": {
-      "type": "http",
-      "url": "your-smithery-url.com"
-    },
     "lighthouse": {
       "command": "npx",
       "args": [
         "@danielsogl/lighthouse-mcp@latest"
+      ]
+    },
+    "Astro docs": {
+      "type": "http",
+      "url": "https://mcp.docs.astro.build/mcp"
+    },
+    "browserbase": {
+      "type": "http",
+      "url": "your-smithery-url.com"
+    },
+    "Stylelint": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "stylelint-mcp@latest"
       ]
     }
   }

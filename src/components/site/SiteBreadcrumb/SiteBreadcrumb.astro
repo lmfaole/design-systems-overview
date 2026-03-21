@@ -1,0 +1,27 @@
+---
+import { resolveSiteBreadcrumbItems } from "./resolveItems";
+import "./site-breadcrumb.scss";
+
+interface Props {
+    pathname?: string;
+}
+
+const { pathname = "/" } = Astro.props;
+const items = resolveSiteBreadcrumbItems(pathname);
+---
+
+<nav class="site-breadcrumb" aria-label="Brødsmulesti">
+    <div class="page">
+        <ol class="list">
+            {items.map((item) => (
+                <li class="item">
+                    {item.current ? (
+                        <span aria-current="page" class="current">{item.label}</span>
+                    ) : (
+                        <a class="link" href={item.href}>{item.label}</a>
+                    )}
+                </li>
+            ))}
+        </ol>
+    </div>
+</nav>

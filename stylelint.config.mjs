@@ -39,14 +39,22 @@ export default {
         ],
         "length-zero-no-unit": true,
         "media-feature-range-notation": null,
+        "declaration-property-value-disallowed-list": {
+            "text-align": ["left", "right"],
+        },
         "no-descending-specificity": true,
         "no-empty-source": null,
+        "property-disallowed-list": [
+            /^(margin|padding)-(left|right)$/,
+            /^border-(top|right|bottom|left)(?:-(color|style|width))?$/,
+            /^(top|right|bottom|left)$/,
+        ],
         "property-no-vendor-prefix": true,
         "scss/at-mixin-argumentless-call-parentheses": null,
         "scss/double-slash-comment-empty-line-before": null,
         "scss/load-partial-extension": null,
         "selector-class-pattern": [
-            "^(?!.*__)[a-z0-9]+(?:-[a-z0-9]+)*(?:--[a-z0-9]+(?:-[a-z0-9]+)*)*$",
+            "^(?!.*(__|--))[a-z0-9]+(?:-[a-z0-9]+)*$",
             {
                 resolveNestedSelectors: true,
             },
@@ -56,6 +64,12 @@ export default {
         "value-keyword-case": "lower",
     },
     overrides: [
+        {
+            files: ["src/features/ds/jokul/_styles/patches/select-beta.scss"],
+            rules: {
+                "selector-class-pattern": null,
+            },
+        },
         {
             files: [
                 "src/components/ds/FullBleed/**/*.{css,scss}",

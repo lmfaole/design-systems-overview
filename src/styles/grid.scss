@@ -1,0 +1,12 @@
+@layer site {
+  .ds-grid {
+    display: grid;
+    gap: var(--site-space-m);
+    grid-template-columns: 1fr;
+
+    &[data-columns] {
+      /* stylelint-disable-next-line scss/operator-no-unspaced -- attr() type syntax uses <number> */
+      grid-template-columns: repeat(attr(data-columns type(<number>), 1), minmax(0, 1fr));
+    }
+  }
+}

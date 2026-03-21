@@ -73,9 +73,9 @@ export const vanillaSkeletonExampleHtmlCode = `
     aria-live="polite"
 >
     <div class="monster-vanilla-stack monster-vanilla-skeleton">
-        <span class="monster-vanilla-skeleton-line monster-vanilla-skeleton-line--title"></span>
-        <span class="monster-vanilla-skeleton-line monster-vanilla-skeleton-line--body"></span>
-        <span class="monster-vanilla-skeleton-line monster-vanilla-skeleton-line--body short"></span>
+        <span class="monster-vanilla-skeleton-line title"></span>
+        <span class="monster-vanilla-skeleton-line body"></span>
+        <span class="monster-vanilla-skeleton-line body short"></span>
     </div>
 </section>
 `;
@@ -96,16 +96,16 @@ export const vanillaSkeletonExampleCssCode = `
     animation: shimmer 1.4s linear infinite;
 }
 
-.monster-vanilla-skeleton-line--title {
+.monster-vanilla-skeleton-line.title {
     block-size: 1.25rem;
     inline-size: 55%;
 }
 
-.monster-vanilla-skeleton-line--body {
+.monster-vanilla-skeleton-line.body {
     inline-size: 100%;
 }
 
-.monster-vanilla-skeleton-line--body.short {
+.monster-vanilla-skeleton-line.body.short {
     inline-size: 72%;
 }
 
@@ -266,9 +266,9 @@ export function VanillaSkeletonExample() {
     return (
         <section className="monster-vanilla-demo" aria-busy="true" aria-live="polite">
             <div className="monster-vanilla-stack monster-vanilla-skeleton">
-                <span className="monster-vanilla-skeleton-line monster-vanilla-skeleton-line--title"></span>
-                <span className="monster-vanilla-skeleton-line monster-vanilla-skeleton-line--body"></span>
-                <span className="monster-vanilla-skeleton-line monster-vanilla-skeleton-line--body short"></span>
+                <span className="monster-vanilla-skeleton-line title"></span>
+                <span className="monster-vanilla-skeleton-line body"></span>
+                <span className="monster-vanilla-skeleton-line body short"></span>
             </div>
         </section>
     );

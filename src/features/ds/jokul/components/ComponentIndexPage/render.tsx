@@ -4,7 +4,6 @@ import { Search } from "@fremtind/jokul/search";
 import { BETA_Select as Select } from "@fremtind/jokul/select";
 import { NavLink } from "@fremtind/jokul/nav-link";
 import { componentDocs } from "@/features/ds/jokul/_component-docs/data";
-import { Grid } from "@/features/ds/jokul/_shared/components/Grid";
 import { Toolbar } from "@/features/ds/jokul/_shared/components/Toolbar";
 import { ComponentCard } from "@/features/ds/jokul/_shared/components/ComponentCard";
 import { PageHeader } from "@/components/ds/PageHeader";
@@ -101,11 +100,11 @@ export default function ComponentIndexPage() {
             {filtered.length === 0 ? (
                 <p className="muted">Ingen komponenter samsvarer med søket.</p>
             ) : (
-                <Grid columns={4}>
+                <div className="ds-grid" data-columns={4}>
                     {filtered.map((doc) => (
                         <ComponentCard key={doc.id} doc={doc} />
                     ))}
-                </Grid>
+                </div>
             )}
         </Flex>
     );

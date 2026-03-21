@@ -1,8 +1,8 @@
 ---
 import "@fremtind/jokul/styles/fonts/webfonts.scss";
-import { SiteHeader } from "@/components/site/SiteHeader";
-import { SiteFooter } from "@/components/site/SiteFooter";
-import { SiteBreadcrumb } from "@/components/site/SiteBreadcrumb";
+import SiteHeader from "@/components/site/SiteHeader/SiteHeader.astro";
+import SiteFooter from "@/components/site/SiteFooter/SiteFooter.astro";
+import SiteBreadcrumb from "@/components/site/SiteBreadcrumb/SiteBreadcrumb.astro";
 import {
     siteBrand,
     siteFooterNote,
@@ -10,6 +10,7 @@ import {
     siteHeaderLinks,
 } from "@/data/site/navigation";
 import { DEFAULT_DESCRIPTION, SITE_NAME, SITE_URL } from "@/site/seo";
+import "@/styles/grid.scss";
 import { jokulOverviewThemeStyles } from "./jokulOverviewThemeStyles";
 
 interface Props {

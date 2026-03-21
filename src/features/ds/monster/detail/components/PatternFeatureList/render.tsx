@@ -1,4 +1,3 @@
-import { Grid } from "@/components/ds/Grid";
 import "./styles.scss";
 import type { PatternFeatureListProps } from "./types";
 
@@ -10,11 +9,8 @@ export function PatternFeatureList({
     const ListTag = ordered ? "ol" : "ul";
 
     return (
-        <Grid
-            as={ListTag}
-            columns={1}
-            gap="var(--site-space-m)"
-            className="monster-feature-list"
+        <ListTag
+            className="ds-grid monster-feature-list"
             data-ordered={ordered}
             data-tone={tone}
         >
@@ -30,6 +26,6 @@ export function PatternFeatureList({
                     </article>
                 </li>
             ))}
-        </Grid>
+        </ListTag>
     );
 }

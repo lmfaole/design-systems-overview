@@ -1,10 +1,6 @@
 import type { ComponentPropsWithoutRef, ElementType, ReactNode } from "react";
+import type { SiteLink } from "../types";
 import "./site-header.scss";
-
-export type SiteLink = {
-    href: string;
-    label: string;
-};
 
 interface SiteHeaderProps<
     LayoutComponent extends ElementType = "div",

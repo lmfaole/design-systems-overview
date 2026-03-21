@@ -12,14 +12,6 @@ vi.mock("@/components/ds/PageHeader", () => ({
     ),
 }));
 
-vi.mock("@/features/ds/jokul/_shared/components/Grid", () => ({
-    Grid: ({ children, columns, gap }: any) => (
-        <div data-grid="" data-columns={columns} data-gap={gap}>
-            {children}
-        </div>
-    ),
-}));
-
 function countOccurrences(html: string, marker: string) {
     return (html.match(new RegExp(marker, "g")) || []).length;
 }
@@ -32,6 +24,7 @@ describe("FormatterIndexPage", () => {
         expect(html).toContain("Formattere");
         expect(html).toContain("Jøkul har små, praktiske utilities");
         expect(countOccurrences(html, 'class="overview-card" data-kind="formatter"')).toBe(docCount);
+        expect(countOccurrences(html, 'class="ds-grid" data-columns="3"')).toBe(formatterOverviewGroups.length);
 
         for (const group of formatterOverviewGroups) {
             expect(html).toContain(`formatter-group-${group.id}`);

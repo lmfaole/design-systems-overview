@@ -39,10 +39,6 @@ vi.mock("@fremtind/jokul/nav-link", () => ({
     NavLink: ({href, children}: any) => <a data-nav-link="" href={href}>{children}</a>,
 }));
 
-vi.mock("@/features/ds/jokul/_shared/components/Grid", () => ({
-    Grid: ({children, columns}: any) => <div data-grid="" data-columns={columns}>{children}</div>,
-}));
-
 vi.mock("@/features/ds/jokul/_shared/components/Toolbar", () => ({
     Toolbar: ({children}: any) => <div data-toolbar="">{children}</div>,
 }));
@@ -80,6 +76,7 @@ describe("ComponentIndexPage", () => {
         const visibleComponents = componentDocs.filter((doc) => doc.showOnOverview !== false);
 
         expect(html).toContain("Komponentdokumentasjon");
+        expect(html).toContain('class="ds-grid" data-columns="4"');
         expect(countOccurrences(html, 'data-component-card="')).toBe(visibleComponents.length);
 
         for (const doc of visibleComponents) {
@@ -100,6 +97,7 @@ describe("ComponentIndexPage", () => {
         expect(html).toContain("Kategori");
         expect(html).toContain("Status");
         expect(html).toContain("Sorter");
+        expect(html).toContain('class="ds-grid" data-columns="4"');
         expect(countOccurrences(html, 'data-component-card="')).toBe(visibleComponents.length);
 
         if (hiddenComponent) {

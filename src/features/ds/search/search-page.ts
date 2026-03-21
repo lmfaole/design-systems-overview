@@ -13,8 +13,6 @@ export interface SearchPageModel {
     sections: SearchPageSection[];
 }
 
-const GRID_STYLE = "--ds-grid-col-min: 20rem; --ds-grid-cols: 3;";
-
 export function getSearchQuery(search: string): string {
     return new URLSearchParams(search).get("q")?.trim() ?? "";
 }
@@ -134,7 +132,7 @@ function renderSection(title: string, items: DsSearchResult[]): string {
     return [
         "<section>",
         `<h3>${escapeHtml(title)}</h3>`,
-        `<ul class="ds-grid bare-list" data-columns="3" style="${GRID_STYLE}">`,
+        '<ul class="ds-grid bare-list" data-columns="3">',
         items.map((item) => renderResultCard(item)).join(""),
         "</ul>",
         "</section>",

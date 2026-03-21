@@ -39,15 +39,14 @@
   max-width: none;
   padding-block-start: 0;
   z-index: 0;
-  text-align: left;
+  text-align: start;
   isolation: isolate;
 
   .background {
     position: absolute;
-    top: min(-33%, calc(-1 * (var(--site-breadcrumb-block-size) + var(--site-space-xl))));
-    bottom: 0;
-    left: 0;
-    width: 100vw;
+    inset-block: min(-33%, calc(-1 * (var(--site-breadcrumb-block-size) + var(--site-space-xl)))) 0;
+    inset-inline-start: 0;
+    inline-size: 100vw;
     z-index: -1;
     pointer-events: none;
     overflow: hidden;
@@ -95,7 +94,7 @@
   }
 
   .content {
-    text-align: left;
+    text-align: start;
     max-width: none;
     inline-size: 100%;
     margin-inline: 0;
