@@ -63,7 +63,12 @@ function MigrationSection({ migrations }: MigrationSectionProps) {
     });
 
     const [active, setActive] = useState<string>(withAltNames[0]?.displayName ?? "");
+    const [mounted, setMounted] = useState(false);
     const pendingScroll = useRef<string | null>(null);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     useEffect(() => {
         if (pendingScroll.current) {
@@ -103,6 +108,21 @@ function MigrationSection({ migrations }: MigrationSectionProps) {
     function selectTab(name: string) {
         pendingScroll.current = name;
         setActive(name);
+    }
+
+    if (!mounted) {
+        const initialMigration = withAltNames[0];
+
+        return (
+            <Flex as="section" direction="column" gap="m">
+                <h3 id="migrering">Migreringsguider</h3>
+                {initialMigration && (
+                    <Card padding="l" id={initialMigration.anchorId}>
+                        <MigrationExample migration={initialMigration.migration} />
+                    </Card>
+                )}
+            </Flex>
+        );
     }
 
     return (
@@ -171,6 +191,11 @@ export function ComponentPageClient({ id, relatedPatterns }: ComponentPageClient
     const doc = getComponentDoc(id);
     const { requires, alternatives, subcomponents, related } = getRelationships(id);
     const { parent, siblings, kind: parentKind } = getParentAndSiblings(id);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     if (!doc) {
         return (
@@ -209,7 +234,7 @@ export function ComponentPageClient({ id, relatedPatterns }: ComponentPageClient
                 </Message>
             )}
 
-            {doc.example && (
+            {mounted && doc.example && (
                 <ComponentExample
                     controls={doc.exampleControls ?? buildExampleControls(doc.props, doc.exampleControlsConfig)}
                 >

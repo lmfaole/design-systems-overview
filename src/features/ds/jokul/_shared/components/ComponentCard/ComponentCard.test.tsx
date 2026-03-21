@@ -46,7 +46,7 @@ vi.mock("@/features/ds/jokul/_shared/components/SplitCard", () => ({
 import { ComponentCard } from "./ComponentCard";
 
 describe("ComponentCard", () => {
-    it("renders the component name, description, and link target", () => {
+    it("renders the component name, description, and link target without preview content on the server", () => {
         const html = renderToStaticMarkup(
             <ComponentCard
                 doc={{
@@ -62,7 +62,7 @@ describe("ComponentCard", () => {
         expect(html).toContain('aria-label="Button"');
         expect(html).toContain(">Button<");
         expect(html).toContain("Kort beskrivelse");
-        expect(html).toContain("Forhåndsvisning");
+        expect(html).not.toContain("Forhåndsvisning");
     });
 
     it("omits preview content when the component has no preview", () => {

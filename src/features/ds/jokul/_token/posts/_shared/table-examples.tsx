@@ -53,6 +53,14 @@ function parseNumericValue(value: string): number {
   return match ? Number(match[0]) : 0;
 }
 
+function isLiteralZeroLength(value: string): boolean {
+  return /^0(?:\.0+)?(?:[a-z%]+)?$/i.test(value.trim());
+}
+
+function isZeroTokenReference(value: string): boolean {
+  return /^var\(--[a-z0-9-]*(?:-none|-0)\)$/i.test(value.replace(/\s+/g, ""));
+}
+
 function convertShadowValueToCss(value: string): string {
   return value.replace(/ru\.rem\(([\d.]+)px\)/g, (_, px: string) => `${Number(px) / 16}rem`);
 }
@@ -116,7 +124,7 @@ export function createLengthBarExample(
   const kind = options?.kind ?? "length";
   const thickness = options?.thickness ?? "0.75rem";
   const color = options?.color ?? "var(--jkl-color-background-action)";
-  const isZero = parseNumericValue(length) === 0;
+  const isZero = isLiteralZeroLength(length) || isZeroTokenReference(length);
 
   return createTableExample(
     kind,

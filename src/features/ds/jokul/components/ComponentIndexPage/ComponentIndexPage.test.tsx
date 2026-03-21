@@ -39,13 +39,6 @@ vi.mock("@fremtind/jokul/nav-link", () => ({
     NavLink: ({href, children}: any) => <a data-nav-link="" href={href}>{children}</a>,
 }));
 
-vi.mock("@fremtind/jokul/loader", () => ({
-    SkeletonAnimation: ({children, textDescription}: any) => (
-        <div data-skeleton-animation={textDescription}>{children}</div>
-    ),
-    SkeletonElement: (props: any) => <div data-skeleton-element="" {...props} />,
-}));
-
 vi.mock("@/features/ds/jokul/_shared/components/Grid", () => ({
     Grid: ({children, columns}: any) => <div data-grid="" data-columns={columns}>{children}</div>,
 }));
@@ -55,7 +48,11 @@ vi.mock("@/features/ds/jokul/_shared/components/Toolbar", () => ({
 }));
 
 vi.mock("@/features/ds/jokul/_shared/components/ComponentCard", () => ({
-    ComponentCard: ({doc}: any) => <article data-component-card={doc.id}>{doc.name}</article>,
+    ComponentCard: ({doc}: any) => (
+        <a data-component-card={doc.id} href={`/ds/jokul/component/${doc.id}`}>
+            {doc.name}
+        </a>
+    ),
 }));
 
 vi.mock("@/components/ds/PageHeader", () => ({
@@ -76,13 +73,19 @@ describe("ComponentIndexPage", () => {
         vi.clearAllMocks();
     });
 
-    it("renders a skeleton state while local preferences are loading", () => {
+    it("renders visible component docs with default sorting while local preferences are loading", () => {
         hookMocks.useLocalStorage.mockReturnValue(["az", vi.fn(), false]);
 
         const html = renderToStaticMarkup(<ComponentIndexPage/>);
+        const visibleComponents = componentDocs.filter((doc) => doc.showOnOverview !== false);
 
-        expect(html).toContain('data-skeleton-animation="Laster innstillinger…"');
         expect(html).toContain("Komponentdokumentasjon");
+        expect(countOccurrences(html, 'data-component-card="')).toBe(visibleComponents.length);
+
+        for (const doc of visibleComponents) {
+            expect(html).toContain(`href="/ds/jokul/component/${doc.id}"`);
+            expect(html).toContain(`>${doc.name}<`);
+        }
     });
 
     it("renders visible component docs, filters, and the props overview link", () => {

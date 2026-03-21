@@ -175,12 +175,14 @@ export const overviewInlineStyles = `
     inset: 0;
     overflow: hidden;
     pointer-events: none;
+    isolation: isolate;
 }
 
 .overview-card-illustration::after {
     content: "";
     position: absolute;
     inset: 0;
+    z-index: 0;
     background: linear-gradient(
         180deg,
         transparent 0%,
@@ -190,6 +192,8 @@ export const overviewInlineStyles = `
 }
 
 .overview-card-illustration > * {
+    position: relative;
+    z-index: 1;
     width: 100%;
     height: 100%;
 }

@@ -1,5 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
+import { overviewInlineStyles } from "@/features/ds/jokul/overview/overview-inline-styles";
 import TokenIndexPage from "./TokenIndexPage";
 import { tokenOverviewEntries } from "./token-overview-data";
 
@@ -35,7 +36,7 @@ function getIllustrationMarker(html: string) {
 }
 
 function getSpecimenMarker(html: string) {
-    return html.match(/<(?:span|strong) class="token-specimen" data-token-card-specimen="[^"]+">/)?.[0];
+    return html.match(/<(?:span|strong) class="token-specimen"[^>]*data-token-card-specimen="[^"]+"[^>]*>/)?.[0];
 }
 
 describe("TokenIndexPage", () => {
@@ -62,5 +63,15 @@ describe("TokenIndexPage", () => {
             expect(countOccurrences(html, illustrationMarker as string)).toBe(1);
             expect(countOccurrences(html, specimenMarker as string)).toBe(1);
         }
+    });
+
+    it("keeps token illustrations above the card overlay mask", () => {
+        expect(overviewInlineStyles).toContain(".overview-card-illustration {");
+        expect(overviewInlineStyles).toContain("isolation: isolate;");
+        expect(overviewInlineStyles).toContain(".overview-card-illustration::after {");
+        expect(overviewInlineStyles).toContain("z-index: 0;");
+        expect(overviewInlineStyles).toContain(".overview-card-illustration > * {");
+        expect(overviewInlineStyles).toContain("position: relative;");
+        expect(overviewInlineStyles).toContain("z-index: 1;");
     });
 });

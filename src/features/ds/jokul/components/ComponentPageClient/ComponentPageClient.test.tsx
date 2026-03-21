@@ -206,12 +206,13 @@ describe("ComponentPageClient", () => {
 
         expect(html).toContain('data-message="warning"');
         expect(html).toContain("Denne komponenten er deprecated.");
-        expect(html).toContain('data-component-example=""');
-        expect(html).toContain('data-controls="[&quot;generated-controls&quot;]"');
+        expect(html).not.toContain('data-component-example=""');
+        expect(html).toContain('data-migration-example=""');
+        expect(html).not.toContain('data-nav-tabs=""');
         expect(html).toContain("Brukes i mønstre");
         expect(html).toContain('href="/ds/monster/lastetilstander"');
         expect(html).toContain("HTML, CSS og JS, Jøkul");
-        expect(exampleControlMocks.buildExampleControls).toHaveBeenCalledWith(doc.props, undefined);
+        expect(exampleControlMocks.buildExampleControls).not.toHaveBeenCalled();
     });
 
     it("renders relationship sections and sibling headings for requires-based parents", () => {

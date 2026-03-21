@@ -25,5 +25,5 @@ const relatedPatterns = getPatternBacklinksForComponentHref(`/ds/jokul/component
     description={doc.description.long}
     path={`/ds/jokul/component/${doc.id}`}
 >
-    <ComponentPageClient id={doc.id} relatedPatterns={relatedPatterns} client:only="react" />
+    <ComponentPageClient id={doc.id} relatedPatterns={relatedPatterns} client:load />
 </JokulLayout>

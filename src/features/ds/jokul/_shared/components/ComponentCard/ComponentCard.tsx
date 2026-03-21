@@ -1,5 +1,4 @@
-
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Card} from "@fremtind/jokul/card";
 import {Flex} from "@fremtind/jokul/flex";
 import type {ComponentDoc} from "@/features/ds/jokul/_component-docs/docs/types";
@@ -14,7 +13,12 @@ interface ComponentCardProps {
 export function ComponentCard({doc}: ComponentCardProps) {
     const preview = doc.preview;
     const [hovered, setHovered] = useState(false);
+    const [mounted, setMounted] = useState(false);
     const description = doc.description.short;
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     return (
         <Card
@@ -30,7 +34,7 @@ export function ComponentCard({doc}: ComponentCardProps) {
         >
             <SplitCard
                 preview={
-                    preview ? (
+                    preview && mounted ? (
                         <Flex alignItems="center" justifyContent="center">
                             <PreviewHoverContext value={hovered}>
                                 <div className="inner">

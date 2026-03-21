@@ -11,7 +11,7 @@ export const jokulOverviewThemeStyles = `
   --site-error-color: light-dark(#991b1b, #fca5a5);
   --site-info-color: light-dark(#1d4ed8, #93c5fd);
   --site-hint-color: light-dark(#4b5563, #9ca3af);
-  --site-font-family: ui-sans-serif, system-ui, sans-serif;
+  --site-font-family: "Fremtind Grotesk", "Adjusted Arial Fallback", arial, sans-serif;
   --site-max-width: 90rem;
   --page-max-width: var(--site-max-width);
   --site-space-xxs: 0.5rem;
@@ -82,7 +82,7 @@ body:has(.jkl-site) {
   --site-error-color: var(--jkl-color-text-default);
   --site-info-color: var(--jkl-color-text-default);
   --site-hint-color: var(--jkl-color-text-subdued);
-  --site-font-family: ui-sans-serif, system-ui, sans-serif;
+  --site-font-family: "Fremtind Grotesk", "Adjusted Arial Fallback", arial, sans-serif;
   --site-max-width: 180ch;
   --page-max-width: var(--site-max-width);
   --site-space-xxs: var(--jkl-spacing-xxs);

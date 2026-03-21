@@ -30,13 +30,6 @@ vi.mock("@fremtind/jokul/nav-link", () => ({
     NavLink: ({href, children}: any) => <a data-nav-link="" href={href}>{children}</a>,
 }));
 
-vi.mock("@fremtind/jokul/loader", () => ({
-    SkeletonAnimation: ({children, textDescription}: any) => (
-        <div data-skeleton-animation={textDescription}>{children}</div>
-    ),
-    SkeletonElement: (props: any) => <div data-skeleton-element="" {...props} />,
-}));
-
 vi.mock("@fremtind/jokul/table", () => ({
     Table: ({children, caption}: any) => (
         <table data-table="">
@@ -81,13 +74,13 @@ describe("PropIndexPage", () => {
         vi.clearAllMocks();
     });
 
-    it("renders a skeleton state while local preferences are loading", () => {
+    it("renders the prop overview table while local preferences are loading", () => {
         hookMocks.useLocalStorage.mockReturnValue(["name", vi.fn(), false]);
 
         const html = renderToStaticMarkup(<PropIndexPage/>);
 
-        expect(html).toContain('data-skeleton-animation="Laster innstillinger…"');
         expect(html).toContain("Komponentdokumentasjon");
+        expect(countOccurrences(html, 'data-table-row=""')).toBe(ALL_PROP_ENTRIES.length + 1);
     });
 
     it("renders the prop overview table and component links", () => {

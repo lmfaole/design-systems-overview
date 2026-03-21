@@ -1,12 +1,13 @@
-import { visibleTokenCount } from "@/features/ds/jokul/tokens/token-overview-data";
-import { visibleComponentCount } from "./component-overview-data";
-import { overviewInlineStyles } from "./overview-inline-styles";
+import {visibleTokenCount} from "@/features/ds/jokul/tokens/token-overview-data";
+import {visibleComponentCount} from "./component-overview-data";
+import {overviewInlineStyles} from "./overview-inline-styles";
 
 export default function Home() {
     return (
         <>
             <style>{overviewInlineStyles}</style>
             <main className="page overview-page overview-nav-page">
+                <h1>Jøkul</h1>
                 <div className="overview-nav-grid">
                     <a
                         className="overview-card"

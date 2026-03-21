@@ -1,5 +1,5 @@
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Flex} from "@fremtind/jokul/flex";
 import type {ComponentDoc} from "@/features/ds/jokul/_component-docs/docs/types";
 import {PreviewHoverContext} from "@/features/ds/jokul/_component-docs/components/PreviewContainer";
@@ -18,6 +18,11 @@ interface RelatedComponentCardProps {
 export function RelatedComponentCard({doc, description, layout = "auto"}: RelatedComponentCardProps) {
     const preview = doc.preview;
     const [hovered, setHovered] = useState(false);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     return (
         <Card
@@ -34,7 +39,7 @@ export function RelatedComponentCard({doc, description, layout = "auto"}: Relate
                 minWidth="36rem"
                 layout={layout === "horizontal" ? "horizontal" : "auto"}
                 preview={
-                    preview ? (
+                    preview && mounted ? (
                         <Flex alignItems="center" justifyContent="center">
                             <PreviewHoverContext value={hovered}>
                                 <div className="inner">

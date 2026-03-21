@@ -59,6 +59,7 @@ describe("RelatedComponentCard", () => {
         expect(html).toContain("Brukes sammen med feltet.");
         expect(html).toContain('data-layout="auto"');
         expect(html).toContain('data-min-width="36rem"');
+        expect(html).not.toContain("Preview");
     });
 
     it("passes through the horizontal layout variant", () => {

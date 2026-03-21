@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
+import { jokulOverviewThemeStyles } from "./jokulOverviewThemeStyles";
 
 const baseLayoutSource = readFileSync(
     path.resolve(process.cwd(), "src/layouts/BaseLayout.astro"),
@@ -26,6 +27,7 @@ describe("Layout performance wiring", () => {
     });
 
     it("uses the lightweight Jøkul overview layout on overview-style pages", () => {
+        expect(jokulOverviewLayoutSource).toContain('import "@fremtind/jokul/styles/fonts/webfonts.scss";');
         expect(jokulOverviewLayoutSource).toContain("import { jokulOverviewThemeStyles } from \"./jokulOverviewThemeStyles\";");
         expect(jokulOverviewLayoutSource).toContain("<style is:inline set:html={jokulOverviewThemeStyles} />");
         expect(jokulOverviewLayoutSource).not.toContain('import "@/styles/globals.scss";');
@@ -33,5 +35,11 @@ describe("Layout performance wiring", () => {
         expect(jokulOverviewLayoutSource).toContain("<SiteBreadcrumb pathname={path} />");
         expect(jokulIndexPageSource).toContain('import JokulOverviewLayout from "@/layouts/JokulOverviewLayout.astro";');
         expect(jokulTokenIndexPageSource).toContain('import JokulOverviewLayout from "@/layouts/JokulOverviewLayout.astro";');
+    });
+
+    it("uses Fremtind Grotesk for the Jøkul overview theme", () => {
+        expect(jokulOverviewThemeStyles).toContain(
+            '--site-font-family: "Fremtind Grotesk", "Adjusted Arial Fallback", arial, sans-serif;',
+        );
     });
 });

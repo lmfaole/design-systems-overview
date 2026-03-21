@@ -1,7 +1,18 @@
 import type { ImageMetadata } from "astro";
+import { readFileSync } from "node:fs";
+import path from "node:path";
 import { renderToStaticMarkup } from "react-dom/server";
+import { compileString } from "sass";
 import { describe, expect, it } from "vitest";
 import { PageHeader } from "./PageHeader";
+
+const pageHeaderStylesSource = readFileSync(
+    path.resolve(process.cwd(), "src/components/ds/PageHeader/page-header.scss"),
+    "utf8",
+);
+const compiledPageHeaderStyles = compileString(pageHeaderStylesSource, {
+    loadPaths: [path.resolve(process.cwd(), "node_modules")],
+}).css.toString();
 
 function BackgroundGraphic() {
     return <svg data-background-graphic="true" />;
@@ -66,5 +77,20 @@ describe("PageHeader", () => {
         expect(html).toContain('alt="Bakgrunn"');
         expect(html).toContain('loading="lazy"');
         expect(html).toContain('class="hero-image"');
+    });
+
+    it("applies Jøkul typography to the page title and description", () => {
+        expect(pageHeaderStylesSource).toContain('@use "@fremtind/jokul/styles/core/jkl";');
+        expect(pageHeaderStylesSource).toContain('@include jkl.text-style("heading-1");');
+        expect(pageHeaderStylesSource).toContain('@include jkl.text-style("paragraph-large");');
+        expect(compiledPageHeaderStyles).toMatch(
+            /\.ds-page-header \.title\s*\{[^}]*font-size: var\(--jkl-font-size-8\);[^}]*line-height: var\(--jkl-line-height-tight\);[^}]*font-weight: 400;[^}]*\}/s,
+        );
+        expect(compiledPageHeaderStyles).not.toMatch(
+            /\.ds-page-header \.title\s*\{[^}]*font-weight:\s*(?:700|bold);/s,
+        );
+        expect(compiledPageHeaderStyles).toMatch(
+            /\.ds-page-header \.description\s*\{[^}]*font-size: var\(--jkl-font-size-5\);[^}]*line-height: var\(--jkl-line-height-relaxed\);[^}]*font-weight: 400;[^}]*\}/s,
+        );
     });
 });

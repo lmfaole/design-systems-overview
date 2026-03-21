@@ -77,9 +77,19 @@ const jokulShadowScssSource = readFileSync(
     path.join(jokulStylesRoot, "core", "jkl", "_shadows.scss"),
     "utf8",
 );
+const jokulThemeSpacingScssSource = readFileSync(
+    path.join(jokulStylesRoot, "core", "theme", "_spacing.scss"),
+    "utf8",
+);
 const validJokulCssCustomProperties = new Set(
     Array.from(jokulStylesSource.matchAll(/--jkl-[a-z0-9-]+/gi), (match) => match[0]),
 );
+const validJokulSemanticSpacingCustomProperties = Array.from(
+    new Set(Array.from(jokulThemeSpacingScssSource.matchAll(/(--jkl-spacing-[a-z0-9-]+)(?=:)/gi), (match) => match[1])),
+).filter((token) => /[a-z]/i.test(token.replace("--jkl-spacing-", ""))).sort((a, b) => a.localeCompare(b, "nb"));
+const validJokulUnitCustomProperties = Array.from(
+    new Set(Array.from(jokulThemeSpacingScssSource.matchAll(/(--jkl-unit-[a-z0-9-]+)(?=:)/gi), (match) => match[1])),
+).sort((a, b) => a.localeCompare(b, "nb"));
 
 const documentedCssCustomProperties = [
     ...primitiveColorTokens.map(({token}) => token),
@@ -314,6 +324,27 @@ describe("Jokul token docs integrity", () => {
 
     it("documents every public token export from @fremtind/jokul/core", () => {
         expect(documentedPublicTokenExportPaths).toEqual(publicTokenExportPaths);
+    });
+
+    it("documents the complete spacing token set from the installed Jøkul theme", () => {
+        const spacingPost = getTokenPost("spacing");
+
+        expect(spacingPost).toBeDefined();
+        expect(spacingPost?.tokenOverview).toHaveLength(4);
+        expect(spacingPost?.tokenOverview?.[0]?.rows).toHaveLength(exportedSpacingScaleTokens.length);
+        expect(spacingPost?.tokenOverview?.[1]?.rows).toHaveLength(exportedSemanticSpacingTokens.length);
+        expect(spacingPost?.tokenOverview?.[2]?.rows).toHaveLength(validJokulSemanticSpacingCustomProperties.length);
+        expect(spacingPost?.tokenOverview?.[3]?.rows).toHaveLength(validJokulUnitCustomProperties.length);
+
+        const documentedSemanticSpacingCustomProperties = Array.from(
+            new Set(spacingTokens.map(({token}) => token)),
+        ).sort((a, b) => a.localeCompare(b, "nb"));
+        const documentedUnitCustomProperties = Array.from(
+            new Set(unitTokens.map(({token}) => token)),
+        ).sort((a, b) => a.localeCompare(b, "nb"));
+
+        expect(documentedSemanticSpacingCustomProperties).toEqual(validJokulSemanticSpacingCustomProperties);
+        expect(documentedUnitCustomProperties).toEqual(validJokulUnitCustomProperties);
     });
 
     it("keeps a bespoke illustration assigned to every token page", () => {

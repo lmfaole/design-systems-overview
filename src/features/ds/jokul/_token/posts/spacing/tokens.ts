@@ -15,6 +15,12 @@ export interface UnitToken {
 }
 
 export const spacingTokens: SpacingToken[] = [
+    {
+        name: "none",
+        token: "--jkl-spacing-none",
+        px: "0px",
+        usage: "Ingen avstand når et API forventer et semantisk spacing-token"
+    },
     {name: "xxs", token: "--jkl-spacing-xxs", px: "4px", usage: "Intern padding i kompakte komponenter som Tags"},
     {
         name: "xs",
@@ -46,6 +52,7 @@ export const spacingTokens: SpacingToken[] = [
 
 export const unitTokens: UnitToken[] = [
     {token: "--jkl-unit-0", multiplier: "0×", px: "0px", rem: "0rem"},
+    {token: "--jkl-unit-base", multiplier: "1× base", px: "8px", rem: "0.5rem"},
     {token: "--jkl-unit-02", multiplier: "0.25×", px: "2px", rem: "0.125rem"},
     {token: "--jkl-unit-05", multiplier: "0.5×", px: "4px", rem: "0.25rem"},
     {token: "--jkl-unit-10", multiplier: "1×", px: "8px", rem: "0.5rem"},

@@ -1,3 +1,5 @@
+@use "@fremtind/jokul/styles/core/jkl";
+
 .ds-page-header,
 .ds-page-header .content {
   display: grid;
@@ -17,7 +19,13 @@
   margin: 0;
 }
 
+.ds-page-header .title {
+  @include jkl.text-style("heading-1");
+}
+
 .ds-page-header .description {
+  @include jkl.text-style("paragraph-large");
+
   color: var(--site-text-muted);
   max-width: var(--site-copy-max-width);
 }

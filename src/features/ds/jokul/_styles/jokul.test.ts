@@ -75,4 +75,21 @@ describe("Jokul site shell styling", () => {
         expect(jokulSiteShellSource).not.toMatch(/^\s*\.jkl-site h4\s*\{/m);
         expect(jokulSiteShellSource).not.toMatch(/^\s*\.jkl-site h5\s*\{/m);
     });
+
+    it("uses Jøkul mixins and tokens for default prose elements inside /jokul", () => {
+        expect(jokulSiteShellSource).toContain('@include jkl.use-font-family("Fremtind Grotesk");');
+        expect(jokulSiteShellSource).toContain('--site-heading-margin-block-start: var(--jkl-spacing-xl);');
+        expect(jokulSiteShellSource).toContain('--site-list-padding-inline-start: var(--jkl-spacing-l);');
+        expect(jokulSiteShellSource).toContain('--site-form-gap: var(--jkl-spacing-s);');
+        expect(jokulSiteShellSource).toContain('--site-quote-border-width: var(--jkl-border-width-3);');
+        expect(jokulSiteShellSource).toContain('.jkl-site :where(h1, h2, h3):not([class])');
+        expect(jokulSiteShellSource).toContain('.jkl-site :where(h4, h5, h6):not([class])');
+        expect(jokulSiteShellSource).toContain('.jkl-site h6:not([class])');
+        expect(jokulSiteShellSource).toContain('@include jkl.text-style("heading-1");');
+        expect(jokulSiteShellSource).toContain('@include jkl.text-style("paragraph-medium");');
+        expect(jokulSiteShellSource).toContain('@include jkl.text-style("text-medium");');
+        expect(jokulSiteShellSource).toContain('.jkl-site :where(ul, ol, dl):not([class]):not([aria-labelledby])');
+        expect(jokulSiteShellSource).toContain('.jkl-site :where(form, fieldset):not([class])');
+        expect(jokulSiteShellSource).toContain('.jkl-site :where(code, kbd, samp, pre):not([class])');
+    });
 });

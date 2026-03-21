@@ -3,7 +3,6 @@ import { Flex } from "@fremtind/jokul/flex";
 import { Search } from "@fremtind/jokul/search";
 import { BETA_Select as Select } from "@fremtind/jokul/select";
 import { NavLink } from "@fremtind/jokul/nav-link";
-import { SkeletonAnimation, SkeletonElement } from "@fremtind/jokul/loader";
 import { componentDocs } from "@/features/ds/jokul/_component-docs/data";
 import { Grid } from "@/features/ds/jokul/_shared/components/Grid";
 import { Toolbar } from "@/features/ds/jokul/_shared/components/Toolbar";
@@ -20,7 +19,7 @@ export default function ComponentIndexPage() {
     const [query, setQuery] = useState("");
     const [activeCategory, setActiveCategory] = useState<string | null>(null);
     const [activeStatus, setActiveStatus] = useState<"stable" | "beta" | "deprecated" | null>(null);
-    const [sortBy, setSortBy, ready] = useLocalStorage("comp-sort", "az");
+    const [sortBy, setSortBy] = useLocalStorage("comp-sort", "az");
 
     const filtered = useMemo(() => {
         const q = query.toLowerCase();
@@ -43,21 +42,6 @@ export default function ComponentIndexPage() {
             return a.name.localeCompare(b.name, "nb");
         });
     }, [query, activeCategory, activeStatus, sortBy]);
-
-    if (!ready) {
-        return (
-            <Flex as="main" className="page" direction="column" gap="xl">
-                <PageHeader
-                    title="Komponentdokumentasjon"
-                    description="Detaljert API-dokumentasjon, prop-tabeller og levende eksempler for komponenter fra Jøkul. Bruk dette som referanse når du bygger med designsystemet."
-                />
-                <SkeletonAnimation textDescription="Laster innstillinger…">
-                    <SkeletonElement width="20rem" height="2.5rem" />
-                    <SkeletonElement width="100%" height="12rem" className="skeleton-gap" />
-                </SkeletonAnimation>
-            </Flex>
-        );
-    }
 
     return (
         <Flex as="main" className="page" direction="column" gap="xl">

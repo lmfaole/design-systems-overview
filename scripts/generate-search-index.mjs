@@ -245,7 +245,12 @@ export const jokulSearchDocuments = ${JSON.stringify(searchDocs, null, 4)} as co
 `;
 
     fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+    if (fs.existsSync(outputPath) && fs.readFileSync(outputPath, "utf8") === content) {
+        console.log("Search index unchanged.");
+        return;
+    }
     fs.writeFileSync(outputPath, content);
+    console.log("Search index updated.");
 }
 
 writeOutput([
