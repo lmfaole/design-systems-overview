@@ -1,21 +1,28 @@
-import type { ComponentDoc } from "../types";
-import { ExpandablePanelContentPreview } from "./preview";
+import type {ComponentDoc} from "../types";
+import {ExpandablePanelContentPreview} from "./preview";
 
 const doc: ComponentDoc = {
     id: "expandable-panel-content",
     name: "ExpandablePanel.Content",
-    package: "@fremtind/jokul/expandable-panel",
+    package: "@fremtind/jokul/expander",
     category: "Visning",
     status: "stable",
-    complexity: { use: "medium", maintenance: "medium" },
+    complexity: {use: "medium", maintenance: "medium"},
     showOnOverview: false,
     description: {
         short: "Innholdsområdet som vises og skjules.",
         long: "Innholdsområdet som vises og skjules.",
     },
-    preview: <ExpandablePanelContentPreview />,
+    preview: <ExpandablePanelContentPreview/>,
     props: [
-        { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Innholdet som vises når panelet er åpent." },
+        {
+            name: "children",
+            type: "React.ReactNode",
+            required: true,
+            source: "react",
+            status: "stable",
+            description: "Innholdet som vises når panelet er åpent."
+        },
     ],
 };
 

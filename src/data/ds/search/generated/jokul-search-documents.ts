@@ -1518,7 +1518,7 @@ export const jokulSearchDocuments = [
         "description": "Klikkbar header som viser skjuler innholdet.",
         "keywords": [
             "expandable-panel-header",
-            "@fremtind/jokul/expandable-panel",
+            "@fremtind/jokul/expander",
             "Visning",
             "Klikkbar header som viser/skjuler innholdet. Rendres som en knapp.",
             "children",
@@ -1539,7 +1539,7 @@ export const jokulSearchDocuments = [
         "description": "Innholdsområdet som vises og skjules.",
         "keywords": [
             "expandable-panel-content",
-            "@fremtind/jokul/expandable-panel",
+            "@fremtind/jokul/expander",
             "Visning",
             "Innholdsområdet som vises og skjules.",
             "children",
@@ -1582,7 +1582,7 @@ export const jokulSearchDocuments = [
         "description": "Freeform rektangulær eller sirkulær plassholder med tilpassbar størrelse.",
         "keywords": [
             "skeleton-element",
-            "@fremtind/jokul/skeleton",
+            "@fremtind/jokul/loader",
             "Tilbakemelding",
             "Freeform rektangulær eller sirkulær plassholder med tilpassbar størrelse. Bruk for alt som ikke har en dedikert Skeleton-variant.",
             "textDescription",
@@ -1601,7 +1601,7 @@ export const jokulSearchDocuments = [
         "description": "Plassholder som matcher bredde og høyde på et TextInput-felt.",
         "keywords": [
             "skeleton-input",
-            "@fremtind/jokul/skeleton",
+            "@fremtind/jokul/loader",
             "Tilbakemelding",
             "Plassholder som matcher bredde og høyde på et TextInput-felt.",
             "textDescription",
@@ -1620,7 +1620,7 @@ export const jokulSearchDocuments = [
         "description": "Plassholder som matcher bredde og høyde på en Button.",
         "keywords": [
             "skeleton-button",
-            "@fremtind/jokul/skeleton",
+            "@fremtind/jokul/loader",
             "Tilbakemelding",
             "Plassholder som matcher bredde og høyde på en Button.",
             "textDescription",
@@ -1639,7 +1639,7 @@ export const jokulSearchDocuments = [
         "description": "Plassholder som matcher bredde og høyde på et TextArea-felt.",
         "keywords": [
             "skeleton-text-area",
-            "@fremtind/jokul/skeleton",
+            "@fremtind/jokul/loader",
             "Tilbakemelding",
             "Plassholder som matcher bredde og høyde på et TextArea-felt.",
             "textDescription",
@@ -1658,7 +1658,7 @@ export const jokulSearchDocuments = [
         "description": "Plassholder for en gruppe avkrysningsbokser.",
         "keywords": [
             "skeleton-checkbox-group",
-            "@fremtind/jokul/skeleton",
+            "@fremtind/jokul/loader",
             "Tilbakemelding",
             "Plassholder for en gruppe avkrysningsbokser.",
             "textDescription",
@@ -1677,7 +1677,7 @@ export const jokulSearchDocuments = [
         "description": "Plassholder for en gruppe radioknapper.",
         "keywords": [
             "skeleton-radio-button-group",
-            "@fremtind/jokul/skeleton",
+            "@fremtind/jokul/loader",
             "Tilbakemelding",
             "Plassholder for en gruppe radioknapper.",
             "textDescription",

@@ -1,0 +1,192 @@
+import {readdirSync, readFileSync} from "node:fs";
+import path from "node:path";
+import {compileString} from "sass";
+import {describe, expect, it} from "vitest";
+import {getComponentDoc} from "@/features/ds/jokul/_component-docs/data";
+import {borderRadiusTokens} from "@/features/ds/jokul/_token/posts/border-radius/tokens";
+import {breakpointMixins} from "@/features/ds/jokul/_token/posts/breakpoints/mixins";
+import {breakpointTokens} from "@/features/ds/jokul/_token/posts/breakpoints/tokens";
+import {colorMixins} from "@/features/ds/jokul/_token/posts/colors/mixins";
+import {
+    backgroundTokens,
+    borderTokens,
+    feedbackSurfaceTokens,
+    primitiveColorTokens,
+    textTokens,
+} from "@/features/ds/jokul/_token/posts/colors/tokens";
+import {motionMixins} from "@/features/ds/jokul/_token/posts/motion/mixins";
+import {easingTokens, timingTokens} from "@/features/ds/jokul/_token/posts/motion/tokens";
+import {spacingMixins} from "@/features/ds/jokul/_token/posts/spacing/mixins";
+import {spacingTokens, unitTokens} from "@/features/ds/jokul/_token/posts/spacing/tokens";
+import {getTokenPost, getTokenPostById, getTokenSlug, tokenPosts} from "./data";
+import {typographyMixins} from "@/features/ds/jokul/_token/posts/typography/mixins";
+import {
+    fontSizeReference,
+    fontWeightReference,
+    lineHeightReference,
+} from "@/features/ds/jokul/_token/posts/typography/tokens";
+
+function collectFiles(dir: string, predicate: (file: string) => boolean, files: string[] = []): string[] {
+    for (const entry of readdirSync(dir, {withFileTypes: true})) {
+        const fullPath = path.join(dir, entry.name);
+
+        if (entry.isDirectory()) {
+            collectFiles(fullPath, predicate, files);
+            continue;
+        }
+
+        if (predicate(fullPath)) {
+            files.push(fullPath);
+        }
+    }
+
+    return files;
+}
+
+const jokulStylesRoot = path.resolve(process.cwd(), "node_modules/@fremtind/jokul/styles");
+const jokulStylesSource = collectFiles(
+    jokulStylesRoot,
+    (file) => file.endsWith(".scss") || file.endsWith(".css"),
+).map((file) => readFileSync(file, "utf8")).join("\n");
+const jokulCoreScssSource = collectFiles(
+    path.join(jokulStylesRoot, "core", "jkl"),
+    (file) => file.endsWith(".scss"),
+).map((file) => readFileSync(file, "utf8")).join("\n");
+
+const documentedCssCustomProperties = [
+    ...primitiveColorTokens.map(({token}) => token),
+    ...backgroundTokens.map(({token}) => token),
+    ...textTokens.map(({token}) => token),
+    ...borderTokens.map(({token}) => token),
+    ...feedbackSurfaceTokens.map(({token}) => token),
+    ...fontSizeReference.map(({token}) => token),
+    ...lineHeightReference.map(({token}) => token),
+    ...fontWeightReference.map(({token}) => token),
+    ...spacingTokens.map(({token}) => token),
+    ...unitTokens.map(({token}) => token),
+    ...timingTokens.map(({token}) => token),
+    ...easingTokens.map(({token}) => token),
+    ...borderRadiusTokens.map(({token}) => token),
+];
+
+const documentedScssVariables = breakpointTokens.map(({variable}) => variable);
+
+const documentedMixins = [
+    ...colorMixins,
+    ...typographyMixins,
+    ...breakpointMixins,
+    ...spacingMixins,
+    ...motionMixins,
+];
+
+describe("Jokul token docs integrity", () => {
+    it("keeps token pages complete, unique, and routable", () => {
+        const issues: string[] = [];
+        const seenIds = new Set<number>();
+        const seenSlugs = new Set<string>();
+
+        for (const post of tokenPosts) {
+            const slug = getTokenSlug(post);
+
+            if (seenIds.has(post.id)) {
+                issues.push(`${post.title}: duplicate id ${post.id}`);
+            }
+            seenIds.add(post.id);
+
+            if (seenSlugs.has(slug)) {
+                issues.push(`${post.title}: duplicate slug ${slug}`);
+            }
+            seenSlugs.add(slug);
+
+            if (!post.title.trim()) issues.push(`${post.id}: missing title`);
+            if (!post.excerpt.trim()) issues.push(`${post.id}: missing excerpt`);
+            if (!post.illustration) issues.push(`${post.id}: missing illustration`);
+            if (!getTokenPost(slug)) issues.push(`${post.id}: getTokenPost(${slug}) did not resolve`);
+            if (!getTokenPostById(post.id)) issues.push(`${post.id}: getTokenPostById(${post.id}) did not resolve`);
+
+            const hasTokens = Boolean(post.tokenOverview && post.tokenOverview.length > 0);
+            const hasMixins = Boolean(post.scssSection && post.scssSection.length > 0);
+
+            if (!hasTokens && !hasMixins) {
+                issues.push(`${post.id}: missing both tokenOverview and scssSection`);
+            }
+
+            for (const table of post.tokenOverview ?? []) {
+                if (!table.caption.trim()) issues.push(`${post.id}: table missing caption`);
+                if (table.columns.length === 0) issues.push(`${post.id}: ${table.caption} has no columns`);
+                if (table.rows.length === 0) issues.push(`${post.id}: ${table.caption} has no rows`);
+
+                for (const [rowIndex, row] of table.rows.entries()) {
+                    if (row.length !== table.columns.length) {
+                        issues.push(
+                            `${post.id}: ${table.caption} row ${rowIndex + 1} has ${row.length} cells for ${table.columns.length} columns`,
+                        );
+                    }
+                }
+            }
+
+            for (const mixin of post.scssSection ?? []) {
+                if (!mixin.name.trim()) issues.push(`${post.id}: mixin missing name`);
+                if (!mixin.description.trim()) issues.push(`${post.id}: ${mixin.name} missing description`);
+                if (!mixin.example.trim()) issues.push(`${post.id}: ${mixin.name} missing example`);
+                if (!mixin.example.includes('@fremtind/jokul/styles/core/jkl')) {
+                    issues.push(`${post.id}: ${mixin.name} example does not import Jøkul`);
+                }
+                if (!mixin.example.includes(`jkl.${mixin.name}`)) {
+                    issues.push(`${post.id}: ${mixin.name} example does not demonstrate the documented mixin`);
+                }
+            }
+
+            for (const relatedComponentId of post.relatedComponents ?? []) {
+                if (!getComponentDoc(relatedComponentId)) {
+                    issues.push(`${post.id}: related component "${relatedComponentId}" does not exist`);
+                }
+            }
+
+            for (const resource of post.resources ?? []) {
+                if (!resource.title.trim()) issues.push(`${post.id}: resource missing title`);
+                if (!resource.url.startsWith("https://")) {
+                    issues.push(`${post.id}: resource "${resource.title}" must use https`);
+                }
+            }
+        }
+
+        expect(issues).toEqual([]);
+    });
+
+    it("documents only CSS custom properties that exist in the installed Jøkul styles", () => {
+        const missingTokens = Array.from(new Set(documentedCssCustomProperties))
+            .filter((token) => !jokulStylesSource.includes(token));
+
+        expect(missingTokens).toEqual([]);
+    });
+
+    it("documents only SCSS variables and mixins that exist in the installed Jøkul styles", () => {
+        const missingVariables = documentedScssVariables
+            .filter((variable) => !jokulCoreScssSource.includes(`${variable}:`))
+            .map((variable) => `variable:${variable}`);
+        const missingMixins = documentedMixins
+            .map(({name}) => name)
+            .filter((name) => !jokulCoreScssSource.includes(`@mixin ${name}`))
+            .map((name) => `mixin:${name}`);
+
+        expect([...missingVariables, ...missingMixins]).toEqual([]);
+    });
+
+    it("keeps every documented Jøkul mixin example compilable", () => {
+        const failedExamples: string[] = [];
+
+        for (const mixin of documentedMixins) {
+            try {
+                compileString(mixin.example, {
+                    loadPaths: [path.resolve(process.cwd(), "node_modules")],
+                });
+            } catch (error) {
+                const message = error instanceof Error ? error.message : String(error);
+                failedExamples.push(`${mixin.name}: ${message}`);
+            }
+        }
+
+        expect(failedExamples).toEqual([]);
+    });
+});
