@@ -1,54 +1,43 @@
-
-import { tokenPosts } from "@/features/ds/jokul/_token/data";
-import { componentDocs } from "@/features/ds/jokul/_component-docs/data";
-import { TokenFeature } from "@/features/ds/jokul/_shared/components/TokenFeature";
-import { ComponentCard } from "@/features/ds/jokul/_shared/components/ComponentCard";
-import { Grid } from "@/features/ds/jokul/_shared/components/Grid";
-import { PageHeader } from "@/components/ds/PageHeader";
-import { Link } from "@fremtind/jokul/link";
-import { Flex } from "@fremtind/jokul/flex";
-import "../_styles/home.scss";
+import { visibleTokenCount } from "@/features/ds/jokul/tokens/token-overview-data";
+import { visibleComponentCount } from "./component-overview-data";
+import { overviewInlineStyles } from "./overview-inline-styles";
 
 export default function Home() {
     return (
-        <Flex as="main" className="page home" direction="column" gap="2xl">
-            <div className="hero">
-                <PageHeader
-                    title={<>Bygg bedre<br />med Jøkul</>}
-                    description={(
-                        <>
-                            Artikler, veiledninger og komponentdokumentasjon for deg som bygger
-                            med Fremtinds designsystem.
-                        </>
-                    )}
-                />
-            </div>
-
-            <Flex as="section" className="section" direction="column" gap="l">
-                <Flex className="section-header" direction="column" gap="xs">
-                    <h2><Link href="/ds/jokul/component">Komponenter</Link></h2>
-                    <p>Prop-tabeller og kodeeksempler for alle Jøkul-komponenter.</p>
-                </Flex>
-                <Grid columns={3} gap="m">
-                    {componentDocs.filter((d) => d.showOnOverview !== false).slice(0, 8).map((doc) => (
-                        <ComponentCard key={doc.id} doc={doc} />
-                    ))}
-                </Grid>
-                <Link href="/ds/jokul/component">Se
-                    alle {componentDocs.filter((d) => d.showOnOverview !== false).length} komponenter</Link>
-            </Flex>
-
-            <Flex as="section" className="section" direction="column" gap="l">
-                <Flex className="section-header" direction="column" gap="xs">
-                    <h2><Link href="/ds/jokul/token">Designtokens</Link></h2>
-                    <p>Fundamentene i Jøkul — typografi, farger og designtokens.</p>
-                </Flex>
-                <Grid columns={3} gap="m">
-                    {tokenPosts.map((post) => (
-                        <TokenFeature key={post.id} post={post} />
-                    ))}
-                </Grid>
-            </Flex>
-        </Flex>
+        <>
+            <style>{overviewInlineStyles}</style>
+            <main className="page overview-page overview-nav-page">
+                <div className="overview-nav-grid">
+                    <a
+                        className="overview-card"
+                        data-kind="component"
+                        data-layout="feature"
+                        data-overview-card="component"
+                        href="/ds/jokul/component"
+                    >
+                        <span className="overview-card-meta">{visibleComponentCount} komponenter</span>
+                        <strong className="overview-card-title">Komponenter</strong>
+                        <small className="overview-card-description">
+                            Utforsk alle komponentene samlet, med prop-tabeller, interaktive eksempler og
+                            dokumentasjon for bruk i praksis.
+                        </small>
+                    </a>
+                    <a
+                        className="overview-card"
+                        data-kind="token"
+                        data-layout="feature"
+                        data-overview-card="token"
+                        href="/ds/jokul/token"
+                    >
+                        <span className="overview-card-meta">{visibleTokenCount} tokenområder</span>
+                        <strong className="overview-card-title">Designtokens</strong>
+                        <small className="overview-card-description">
+                            Se alle fundamentene samlet, med illustrerte kort for typografi, farger,
+                            spacing, bevegelse og resten av tokensystemet.
+                        </small>
+                    </a>
+                </div>
+            </main>
+        </>
     );
 }

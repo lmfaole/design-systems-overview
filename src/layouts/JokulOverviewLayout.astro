@@ -9,7 +9,7 @@ import {
     siteHeaderLinks,
 } from "@/data/site/navigation";
 import { DEFAULT_DESCRIPTION, SITE_NAME, SITE_URL } from "@/site/seo";
-import "@/styles/globals.scss";
+import { jokulOverviewThemeStyles } from "./jokulOverviewThemeStyles";
 
 interface Props {
     title?: string;
@@ -17,7 +17,6 @@ interface Props {
     path?: string;
     type?: "website" | "article";
     noIndex?: boolean;
-    jokulTheme?: boolean;
 }
 
 const {
@@ -26,7 +25,6 @@ const {
     path = "/",
     type = "website",
     noIndex = false,
-    jokulTheme = false,
 } = Astro.props;
 
 const canonicalUrl = new URL(path, SITE_URL).toString();
@@ -51,17 +49,14 @@ const pageTitle = title === SITE_NAME ? SITE_NAME : `${title} | ${SITE_NAME}`;
         <meta name="twitter:description" content={description} />
         <link rel="icon" href="/favicon.ico" />
         {noIndex && <meta name="robots" content="noindex,follow" />}
+        <style is:inline set:html={jokulOverviewThemeStyles} />
     </head>
     <body>
         <SiteHeader brand={siteBrand} links={siteHeaderLinks} />
         <SiteBreadcrumb pathname={path} />
-        {jokulTheme ? (
-            <div class="jkl-site site-layout" data-theme="auto">
-                <slot />
-            </div>
-        ) : (
+        <div class="jkl-site site-layout" data-theme="auto">
             <slot />
-        )}
+        </div>
         <SiteFooter
             sections={siteFooterSections}
             note={siteFooterNote}

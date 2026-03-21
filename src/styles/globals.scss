@@ -8,7 +8,7 @@
   :root {
     --site-page-background: Canvas;
     --site-body-margin: 0;
-    --site-breadcrumb-block-size: 0px;
+    --site-breadcrumb-block-size: calc(1lh + (var(--site-space-xs) * 2));
     --site-border-color: light-dark(#e5e7eb, #4b5563);
     --site-text-color: CanvasText;
     --site-text-muted: GrayText;

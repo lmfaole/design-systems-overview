@@ -1,60 +1,31 @@
-import {renderToStaticMarkup} from "react-dom/server";
-import {describe, expect, it, vi} from "vitest";
-import {componentDocs} from "@/features/ds/jokul/_component-docs/data";
-import {tokenPosts} from "@/features/ds/jokul/_token/data";
+import { renderToStaticMarkup } from "react-dom/server";
+import { describe, expect, it } from "vitest";
+import { visibleTokenCount } from "@/features/ds/jokul/tokens/token-overview-data";
+import { visibleComponentCount } from "./component-overview-data";
 import JokulHomePage from "./JokulHomePage";
 
-vi.mock("@fremtind/jokul/flex", () => ({
-    Flex: ({as: Tag = "div", children, direction, gap, ...props}: any) => (
-        <Tag data-flex="" data-direction={direction} data-gap={gap} {...props}>
-            {children}
-        </Tag>
-    ),
-}));
-
-vi.mock("@fremtind/jokul/link", () => ({
-    Link: ({href, children}: any) => <a href={href}>{children}</a>,
-}));
-
-vi.mock("@/components/ds/PageHeader", () => ({
-    PageHeader: ({title, description}: any) => (
-        <header data-page-header="">
-            <h1>{title}</h1>
-            <p>{description}</p>
-        </header>
-    ),
-}));
-
-vi.mock("@/features/ds/jokul/_shared/components/Grid", () => ({
-    Grid: ({children, columns, gap}: any) => (
-        <div data-grid="" data-columns={columns} data-gap={gap}>
-            {children}
-        </div>
-    ),
-}));
-
-vi.mock("@/features/ds/jokul/_shared/components/ComponentCard", () => ({
-    ComponentCard: ({doc}: any) => <article data-component-card={doc.id}>{doc.name}</article>,
-}));
-
-vi.mock("@/features/ds/jokul/_shared/components/TokenFeature", () => ({
-    TokenFeature: ({post}: any) => <article data-token-feature={post.id}>{post.title}</article>,
-}));
+function countMatches(html: string, matcher: RegExp) {
+    return (html.match(matcher) || []).length;
+}
 
 function countOccurrences(html: string, marker: string) {
     return (html.match(new RegExp(marker, "g")) || []).length;
 }
 
 describe("JokulHomePage", () => {
-    it("renders the Jøkul home sections with overview component and token links", () => {
-        const html = renderToStaticMarkup(<JokulHomePage/>);
-        const visibleComponents = componentDocs.filter((doc) => doc.showOnOverview !== false);
+    it("renders the Jøkul home page as two navigation cards", () => {
+        const html = renderToStaticMarkup(<JokulHomePage />);
 
-        expect(html).toContain("Bygg bedre");
         expect(html).toContain('href="/ds/jokul/component"');
         expect(html).toContain('href="/ds/jokul/token"');
-        expect(html).toContain(`Se alle ${visibleComponents.length} komponenter`);
-        expect(countOccurrences(html, 'data-component-card="')).toBe(Math.min(8, visibleComponents.length));
-        expect(countOccurrences(html, 'data-token-feature="')).toBe(tokenPosts.length);
+        expect(html).toContain(`${visibleComponentCount} komponenter`);
+        expect(html).toContain(">Komponenter<");
+        expect(html).toContain(`${visibleTokenCount} tokenområder`);
+        expect(html).toContain(">Designtokens<");
+        expect(countOccurrences(html, 'data-overview-card="component"')).toBe(1);
+        expect(countOccurrences(html, 'data-overview-card="token"')).toBe(1);
+        expect(countOccurrences(html, 'class="overview-card" data-kind=')).toBe(2);
+        expect(countMatches(html, /data-kind="component" data-layout="feature" data-overview-card="component"/g)).toBe(1);
+        expect(countMatches(html, /data-kind="token" data-layout="feature" data-overview-card="token"/g)).toBe(1);
     });
 });

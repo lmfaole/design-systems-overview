@@ -1,40 +1,16 @@
 
-import { useEffect, useRef, useState } from "react";
 import { resolveSiteBreadcrumbItems } from "./resolveItems";
 import "./site-breadcrumb.scss";
 
-export function SiteBreadcrumb() {
-    const [pathname, setPathname] = useState("/");
-    const rootRef = useRef<HTMLElement | null>(null);
+interface SiteBreadcrumbProps {
+    pathname?: string;
+}
+
+export function SiteBreadcrumb({ pathname = "/" }: SiteBreadcrumbProps) {
     const items = resolveSiteBreadcrumbItems(pathname);
 
-    useEffect(() => {
-        setPathname(window.location.pathname);
-
-        const element = rootRef.current;
-
-        if (!element) return;
-
-        const updateHeight = () => {
-            document.documentElement.style.setProperty(
-                "--site-breadcrumb-block-size",
-                `${element.getBoundingClientRect().height}px`,
-            );
-        };
-
-        updateHeight();
-
-        const observer = new ResizeObserver(updateHeight);
-        observer.observe(element);
-
-        return () => {
-            observer.disconnect();
-            document.documentElement.style.removeProperty("--site-breadcrumb-block-size");
-        };
-    }, []);
-
     return (
-        <nav className="site-breadcrumb" aria-label="Brødsmulesti" ref={rootRef}>
+        <nav className="site-breadcrumb" aria-label="Brødsmulesti">
             <div className="page">
                 <ol className="list">
                     {items.map((item) => (

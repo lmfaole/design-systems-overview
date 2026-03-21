@@ -10,6 +10,18 @@ const jokulStylesSource = readFileSync(
     path.resolve(process.cwd(), "src/features/ds/jokul/_styles/jokul.scss"),
     "utf8",
 );
+const jokulOverviewStylesSource = readFileSync(
+    path.resolve(process.cwd(), "src/features/ds/jokul/_styles/jokul-overview.scss"),
+    "utf8",
+);
+const jokulSiteShellSource = readFileSync(
+    path.resolve(process.cwd(), "src/features/ds/jokul/_styles/_site-shell.scss"),
+    "utf8",
+);
+const jokulOverviewSiteShellSource = readFileSync(
+    path.resolve(process.cwd(), "src/features/ds/jokul/_styles/_site-shell-overview.scss"),
+    "utf8",
+);
 const globalStylesSource = readFileSync(
     path.resolve(process.cwd(), "src/styles/globals.scss"),
     "utf8",
@@ -19,13 +31,18 @@ describe("Jokul site shell styling", () => {
     it("scopes site-only root styles away from portaled Jøkul components", () => {
         expect(baseLayoutSource).toContain('class="jkl-site site-layout"');
         expect(globalStylesSource).toContain("@layer site, jokul.components, jokul.theme;");
-        expect(jokulStylesSource).toContain("@layer site, jokul.components, jokul.theme;");
+        expect(jokulSiteShellSource).toContain("@layer site, jokul.components, jokul.theme;");
         expect(globalStylesSource).toContain("@layer site {");
-        expect(jokulStylesSource).toContain("@layer site {");
-        expect(jokulStylesSource).toContain(".jkl-site {");
-        expect(jokulStylesSource).toContain("body:has(.jkl-site)");
+        expect(jokulSiteShellSource).toContain("@layer site {");
+        expect(jokulSiteShellSource).toContain(".jkl-site {");
+        expect(jokulOverviewSiteShellSource).toContain(".jkl-site {");
+        expect(jokulSiteShellSource).toContain("body:has(.jkl-site)");
+        expect(jokulOverviewSiteShellSource).toContain("body:has(.jkl-site)");
+        expect(jokulStylesSource).toContain('@use "./site-shell.scss";');
+        expect(jokulOverviewStylesSource).toContain('@use "./site-shell-overview.scss";');
         expect(globalStylesSource).toContain("body:has(.jkl-site)");
-        expect(jokulStylesSource).not.toMatch(/^\s*\.jkl(?=[\s{.:#[])/m);
+        expect(jokulSiteShellSource).not.toMatch(/^\s*\.jkl(?=[\s{.:#[])/m);
+        expect(jokulOverviewSiteShellSource).not.toMatch(/^\s*\.jkl(?=[\s{.:#[])/m);
         expect(globalStylesSource).not.toContain("body:has(.jkl)");
     });
 
@@ -47,15 +64,15 @@ describe("Jokul site shell styling", () => {
         expect(globalStylesSource).not.toMatch(/^\s*h3\s*\{/m);
         expect(globalStylesSource).not.toMatch(/^\s*h4\s*\{/m);
         expect(globalStylesSource).not.toMatch(/^\s*h5\s*\{/m);
-        expect(jokulStylesSource).toContain(".jkl-site hr:not([class])");
-        expect(jokulStylesSource).toContain(".jkl-site blockquote:not([class])");
-        expect(jokulStylesSource).toContain(".jkl-site pre:not([class])");
-        expect(jokulStylesSource).not.toMatch(/^\s*\.jkl-site hr\s*\{/m);
-        expect(jokulStylesSource).not.toMatch(/^\s*\.jkl-site p\s*\{/m);
-        expect(jokulStylesSource).not.toMatch(/^\s*\.jkl-site h1\s*\{/m);
-        expect(jokulStylesSource).not.toMatch(/^\s*\.jkl-site h2\s*\{/m);
-        expect(jokulStylesSource).not.toMatch(/^\s*\.jkl-site h3\s*\{/m);
-        expect(jokulStylesSource).not.toMatch(/^\s*\.jkl-site h4\s*\{/m);
-        expect(jokulStylesSource).not.toMatch(/^\s*\.jkl-site h5\s*\{/m);
+        expect(jokulSiteShellSource).toContain(".jkl-site hr:not([class])");
+        expect(jokulSiteShellSource).toContain(".jkl-site blockquote:not([class])");
+        expect(jokulSiteShellSource).toContain(".jkl-site pre:not([class])");
+        expect(jokulSiteShellSource).not.toMatch(/^\s*\.jkl-site hr\s*\{/m);
+        expect(jokulSiteShellSource).not.toMatch(/^\s*\.jkl-site p\s*\{/m);
+        expect(jokulSiteShellSource).not.toMatch(/^\s*\.jkl-site h1\s*\{/m);
+        expect(jokulSiteShellSource).not.toMatch(/^\s*\.jkl-site h2\s*\{/m);
+        expect(jokulSiteShellSource).not.toMatch(/^\s*\.jkl-site h3\s*\{/m);
+        expect(jokulSiteShellSource).not.toMatch(/^\s*\.jkl-site h4\s*\{/m);
+        expect(jokulSiteShellSource).not.toMatch(/^\s*\.jkl-site h5\s*\{/m);
     });
 });
