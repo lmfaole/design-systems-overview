@@ -56,6 +56,8 @@ describe("Jøkul component routes", () => {
         );
         expect(componentDetailRouteSource).not.toContain("ComponentPageClient");
         expect(componentDetailRouteSource).not.toContain("client:load");
+        expect(componentDetailPageSource).toContain('const exampleHydrationMode = getExampleHydrationMode(doc.id);');
+        expect(componentDetailPageSource).toContain('<ComponentExampleIsland id={doc.id} client:load />');
         expect(componentDetailPageSource).toContain('<ComponentExampleIsland id={doc.id} client:only="react" />');
         expect(componentDetailPageSource).not.toContain("ComponentPageClient");
         expect(componentDetailPageSource).not.toContain("@fremtind/jokul/table");
@@ -67,5 +69,9 @@ describe("Jøkul component routes", () => {
         expect(componentDetailPageSource).toContain('class="site-card component-pattern-card"');
         expect(componentDetailPropTableSource).toContain('<table class="site-table component-prop-table">');
         expect(componentDetailPropTableSource).toContain('popover="auto"');
+        expect(componentDetailPropTableSource).toContain("popovertarget={popoverId}");
+        expect(componentDetailPropTableSource).toContain('popovertargetaction="hide"');
+        expect(componentDetailPropTableSource).not.toContain("data-popover-target");
+        expect(componentDetailPropTableSource).not.toContain("data-popover-close");
     });
 });

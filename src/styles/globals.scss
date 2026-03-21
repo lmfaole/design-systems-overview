@@ -192,8 +192,7 @@
     display: none;
   }
 
-  .site-popover[popover]:popover-open,
-  .site-popover[data-popover-open="true"] {
+  .site-popover[popover]:popover-open {
     display: grid;
   }
 

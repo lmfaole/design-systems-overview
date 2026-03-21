@@ -13,6 +13,7 @@ import {
     createDetailTocItems,
     createMigrationEntries,
     formatComplexity,
+    getExampleHydrationMode,
     getStatusLabel,
 } from "./page";
 import "./styles.scss";
@@ -49,6 +50,7 @@ const requiresItems = toRelatedItems(requires);
 const siblingsItems = toRelatedItems(siblings);
 const relatedItems = toRelatedItems(related);
 const firstMigrationAnchor = migrationEntries[0]?.anchorId ?? "migrering";
+const exampleHydrationMode = getExampleHydrationMode(doc.id);
 ---
 
 <main class="page component-detail-page">
@@ -81,7 +83,9 @@ const firstMigrationAnchor = migrationEntries[0]?.anchorId ?? "migrering";
     {doc.example && (
         <section class="component-example-section" aria-labelledby="eksempel">
             <h2 id="eksempel">Eksempel</h2>
-            <ComponentExampleIsland id={doc.id} client:only="react" />
+            {exampleHydrationMode === "load"
+                ? <ComponentExampleIsland id={doc.id} client:load />
+                : <ComponentExampleIsland id={doc.id} client:only="react" />}
         </section>
     )}
 

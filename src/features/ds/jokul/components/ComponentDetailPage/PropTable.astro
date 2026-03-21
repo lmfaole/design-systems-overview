@@ -53,9 +53,10 @@ const rows = sortProps(props).map((prop) => ({
                                 <button
                                     type="button"
                                     class="site-button site-button-quiet component-type-button"
-                                    data-popover-target={popoverId}
+                                    popovertarget={popoverId}
+                                    popovertargetaction="toggle"
+                                    aria-controls={popoverId}
                                     aria-haspopup="dialog"
-                                    aria-expanded="false"
                                 >
                                     <code>{typeDetails.summary}</code>
                                 </button>
@@ -73,7 +74,8 @@ const rows = sortProps(props).map((prop) => ({
                                         <button
                                             type="button"
                                             class="site-button site-button-quiet"
-                                            data-popover-close={popoverId}
+                                            popovertarget={popoverId}
+                                            popovertargetaction="hide"
                                         >
                                             Lukk
                                         </button>

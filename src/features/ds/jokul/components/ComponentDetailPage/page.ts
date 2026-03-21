@@ -29,6 +29,15 @@ export const COMPLEXITY_LABEL = {
     hard: "Vanskelig",
 } as const;
 
+const EXAMPLE_CLIENT_ONLY_IDS = new Set([
+    "nav-tab",
+    "nav-tabs",
+    "tab",
+    "tab-list",
+    "tab-panel",
+    "tabs",
+]);
+
 export function getStatusLabel(status: "stable" | "beta" | "deprecated"): string {
     if (status === "stable") return "Stabil";
     if (status === "beta") return "Beta";
@@ -40,6 +49,10 @@ export function formatComplexity(rating: keyof typeof COMPLEXITY_LABEL, note?: s
     const label = COMPLEXITY_LABEL[rating];
 
     return note ? `${label} (${note})` : label;
+}
+
+export function getExampleHydrationMode(id: string): "load" | "only" {
+    return EXAMPLE_CLIENT_ONLY_IDS.has(id) ? "only" : "load";
 }
 
 export function createMigrationEntries(migrations: Migration[]): MigrationEntry[] {
@@ -80,57 +93,6 @@ export function initComponentDetailPage(root: ParentNode = document): void {
     if (typeof window === "undefined") return;
 
     const buttons = root.querySelectorAll<HTMLButtonElement>("[data-copy-code]");
-    const popoverButtons = root.querySelectorAll<HTMLButtonElement>("[data-popover-target]");
-    const popoverCloseButtons = root.querySelectorAll<HTMLButtonElement>("[data-popover-close]");
-
-    const getPopover = (id: string) => root.querySelector<HTMLElement>(`#${CSS.escape(id)}`);
-    const isNativePopover = (element: HTMLElement) => typeof (element as HTMLElement & { showPopover?: () => void }).showPopover === "function";
-    const isPopoverOpen = (element: HTMLElement) => {
-        try {
-            return element.matches(":popover-open") || element.dataset.popoverOpen === "true";
-        } catch {
-            return element.dataset.popoverOpen === "true";
-        }
-    };
-    const setExpandedState = (id: string, expanded: boolean) => {
-        popoverButtons.forEach((button) => {
-            if (button.dataset.popoverTarget === id) {
-                button.setAttribute("aria-expanded", expanded ? "true" : "false");
-            }
-        });
-    };
-    const closePopover = (element: HTMLElement) => {
-        if (isNativePopover(element)) {
-            const popover = element as HTMLElement & { hidePopover: () => void };
-
-            if (isPopoverOpen(popover)) {
-                popover.hidePopover();
-            }
-        } else {
-            delete element.dataset.popoverOpen;
-        }
-
-        setExpandedState(element.id, false);
-    };
-    const openPopover = (element: HTMLElement) => {
-        root.querySelectorAll<HTMLElement>("[popover]").forEach((popover) => {
-            if (popover !== element) {
-                closePopover(popover);
-            }
-        });
-
-        if (isNativePopover(element)) {
-            const popover = element as HTMLElement & { showPopover: () => void };
-
-            if (!isPopoverOpen(popover)) {
-                popover.showPopover();
-            }
-        } else {
-            element.dataset.popoverOpen = "true";
-        }
-
-        setExpandedState(element.id, true);
-    };
 
     buttons.forEach((button) => {
         button.addEventListener("click", async () => {
@@ -158,85 +120,6 @@ export function initComponentDetailPage(root: ParentNode = document): void {
                 }, 2000);
             } catch {
                 button.dataset.copyState = "error";
-            }
-        });
-    });
-
-    popoverButtons.forEach((button) => {
-        button.addEventListener("click", (event) => {
-            event.preventDefault();
-
-            const targetId = button.dataset.popoverTarget;
-            if (!targetId) {
-                return;
-            }
-
-            const popover = getPopover(targetId);
-            if (!popover) {
-                return;
-            }
-
-            if (isPopoverOpen(popover)) {
-                closePopover(popover);
-                return;
-            }
-
-            openPopover(popover);
-        });
-    });
-
-    popoverCloseButtons.forEach((button) => {
-        button.addEventListener("click", (event) => {
-            event.preventDefault();
-
-            const targetId = button.dataset.popoverClose;
-            if (!targetId) {
-                return;
-            }
-
-            const popover = getPopover(targetId);
-            if (popover) {
-                closePopover(popover);
-            }
-        });
-    });
-
-    root.querySelectorAll<HTMLElement>("[popover]").forEach((popover) => {
-        popover.addEventListener("toggle", () => {
-            setExpandedState(popover.id, isPopoverOpen(popover));
-        });
-    });
-
-    document.addEventListener("click", (event) => {
-        const target = event.target;
-
-        if (!(target instanceof Node)) {
-            return;
-        }
-
-        root.querySelectorAll<HTMLElement>("[popover]").forEach((popover) => {
-            if (!popover.dataset.popoverOpen) {
-                return;
-            }
-
-            const trigger = Array.from(popoverButtons).find((button) => button.dataset.popoverTarget === popover.id);
-            const clickedInsidePopover = popover.contains(target);
-            const clickedTrigger = trigger?.contains(target) ?? false;
-
-            if (!clickedInsidePopover && !clickedTrigger) {
-                closePopover(popover);
-            }
-        });
-    });
-
-    document.addEventListener("keydown", (event) => {
-        if (event.key !== "Escape") {
-            return;
-        }
-
-        root.querySelectorAll<HTMLElement>("[popover]").forEach((popover) => {
-            if (isPopoverOpen(popover)) {
-                closePopover(popover);
             }
         });
     });

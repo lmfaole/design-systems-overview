@@ -1,7 +1,54 @@
+import fs from "node:fs";
+import path from "node:path";
 import process from "node:process";
 import puppeteer from "puppeteer";
 
 const baseUrl = process.argv[2] ?? "http://127.0.0.1:3001";
+const componentDistDir = path.resolve("dist/ds/jokul/component");
+
+function getComponentExampleRoutes() {
+    if (!fs.existsSync(componentDistDir)) {
+        throw new Error(`Expected built component pages at ${componentDistDir}.`);
+    }
+
+    return fs.readdirSync(componentDistDir, { withFileTypes: true })
+        .filter((entry) => entry.isDirectory() && entry.name !== "props")
+        .map((entry) => {
+            const htmlPath = path.join(componentDistDir, entry.name, "index.html");
+            if (!fs.existsSync(htmlPath)) {
+                return null;
+            }
+
+            const html = fs.readFileSync(htmlPath, "utf8");
+
+            return html.includes("component-example-section")
+                ? `/ds/jokul/component/${entry.name}`
+                : null;
+        })
+        .filter(Boolean);
+}
+
+function assertBuiltExampleMarkup() {
+    const buttonHtmlPath = path.join(componentDistDir, "button", "index.html");
+
+    if (!fs.existsSync(buttonHtmlPath)) {
+        throw new Error(`Expected built component detail page at ${buttonHtmlPath}.`);
+    }
+
+    const buttonHtml = fs.readFileSync(buttonHtmlPath, "utf8");
+
+    if (!buttonHtml.includes('client="load"')) {
+        throw new Error("Expected the built Button detail page to server-render its example island with client:load.");
+    }
+
+    if (!buttonHtml.includes('class="component-page-example"')) {
+        throw new Error("Expected the built Button detail page HTML to include the rendered example UI.");
+    }
+
+    if (!buttonHtml.includes("Send inn")) {
+        throw new Error('Expected the built Button detail page HTML to include the "Send inn" example content.');
+    }
+}
 
 const routeChecks = [
     {
@@ -223,6 +270,8 @@ const browser = await puppeteer.launch({
 });
 
 try {
+    assertBuiltExampleMarkup();
+
     const page = await browser.newPage();
 
     for (const routeCheck of routeChecks) {
@@ -319,6 +368,38 @@ try {
         );
 
         console.log(`Route smoke test passed: ${url} (${navLabels.join(", ") || "no navs"})`);
+    }
+
+    for (const route of getComponentExampleRoutes()) {
+        const url = new URL(route, `${baseUrl}/`).toString();
+
+        await page.goto(url, {
+            waitUntil: "networkidle0",
+        });
+
+        await page.waitForSelector(".component-example-section", { timeout: 10000 });
+
+        const exampleState = await page.evaluate(() => {
+            const exampleRoot = document.querySelector(".component-page-example");
+            const exampleArea = document.querySelector(".component-page-example .area .inner");
+
+            return {
+                hasExampleRoot: exampleRoot instanceof HTMLElement,
+                hasExampleContent:
+                    exampleArea instanceof HTMLElement &&
+                    (exampleArea.children.length > 0 || exampleArea.textContent?.trim().length > 0),
+            };
+        });
+
+        if (!exampleState.hasExampleRoot) {
+            throw new Error(`Expected ${url} to hydrate the component example UI.`);
+        }
+
+        if (!exampleState.hasExampleContent) {
+            throw new Error(`Expected ${url} to render live example content inside the component example UI.`);
+        }
+
+        console.log(`Component example smoke test passed: ${url}`);
     }
 } finally {
     await browser.close();

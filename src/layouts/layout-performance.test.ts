@@ -103,6 +103,8 @@ describe("Layout performance wiring", () => {
             'import ComponentDetailPage from "@/features/ds/jokul/components/ComponentDetailPage/Page.astro";',
         );
         expect(componentDetailRouteSource).not.toContain("ComponentPageClient");
+        expect(componentDetailPageSource).toContain('const exampleHydrationMode = getExampleHydrationMode(doc.id);');
+        expect(componentDetailPageSource).toContain('<ComponentExampleIsland id={doc.id} client:load />');
         expect(componentDetailPageSource).toContain('<ComponentExampleIsland id={doc.id} client:only="react" />');
     });
 

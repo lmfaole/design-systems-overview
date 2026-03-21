@@ -4,6 +4,7 @@ import {
     createDetailTocItems,
     createMigrationEntries,
     formatComplexity,
+    getExampleHydrationMode,
     getStatusLabel,
 } from "./page";
 
@@ -64,5 +65,12 @@ describe("ComponentDetailPage helpers", () => {
         expect(getStatusLabel("deprecated")).toBe("Deprecated");
         expect(formatComplexity("medium", "Krever litt oppsett")).toBe("Middels (Krever litt oppsett)");
         expect(formatComplexity("easy")).toBe("Enkel");
+    });
+
+    it("server-renders SSR-safe examples and keeps known tabs examples client-only", () => {
+        expect(getExampleHydrationMode("button")).toBe("load");
+        expect(getExampleHydrationMode("select")).toBe("load");
+        expect(getExampleHydrationMode("nav-tab")).toBe("only");
+        expect(getExampleHydrationMode("tabs")).toBe("only");
     });
 });
