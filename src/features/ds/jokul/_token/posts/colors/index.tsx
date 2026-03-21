@@ -1,5 +1,18 @@
 import {ColorIllustration} from "@/features/ds/jokul/_shared/components/Illustration";
-import {backgroundTokens, borderTokens, feedbackSurfaceTokens, primitiveColorTokens, textTokens,} from "./tokens";
+import {
+    backgroundTokens,
+    borderTokens,
+    exportedAlertBackgroundTokens,
+    exportedBackgroundTokens,
+    exportedBorderTokens,
+    exportedFunctionalColorTokens,
+    exportedPrimitiveColorTokens,
+    exportedTextTokens,
+    feedbackSurfaceTokens,
+    formatPublicColorTokenPath,
+    primitiveColorTokens,
+    textTokens,
+} from "./tokens";
 import {colorMixins} from "./mixins";
 import type {TokenPost} from "../types";
 
@@ -11,12 +24,115 @@ const SWATCH: React.CSSProperties = {
     flexShrink: 0,
 };
 
+function DualSwatch({light, dark}: { light: string; dark: string }) {
+    return (
+        <div style={{display: "inline-flex", gap: "4px"}}>
+            <div style={{...SWATCH, background: light}}/>
+            <div style={{...SWATCH, background: dark}}/>
+        </div>
+    );
+}
+
 const post: TokenPost = {
     id: 11,
     title: "Farger",
     excerpt:
         "En fullstendig referanse til Jøkuls fargesystem: primitive tokens, semantiske tokens, fargeroller, lys/mørk tema og kontrastkrav.",
     tokenOverview: [
+        {
+            heading: "Eksporterte primitive farger",
+            description:
+                "Disse tokenene eksporteres fra `@fremtind/jokul/core` som `tokens.color.brand.*`. De er rå merkevarefarger uten semantikk.",
+            caption: "Eksporterte primitive fargetokens fra Jøkul core",
+            columns: ["Forhåndsvisning", "Eksport", "Verdi", "Navn"],
+            rows: exportedPrimitiveColorTokens.map(({path, value, label}) => [
+                <div key={`${path}-s`} style={{...SWATCH, background: value}}/>,
+                <code key={`${path}-c`}>{formatPublicColorTokenPath(path)}</code>,
+                value,
+                label,
+            ]),
+        },
+        {
+            heading: "Eksporterte funksjonelle farger",
+            description:
+                "Jøkul eksporterer også funksjonelle statusfarger som rå verdier. De brukes blant annet som grunnlag for semantiske feedback-farger.",
+            caption: "Eksporterte funksjonelle farger fra Jøkul core",
+            columns: ["Forhåndsvisning", "Eksport", "Lys", "Mørk", "Bruksområde"],
+            rows: exportedFunctionalColorTokens.map(({
+                                                         name,
+                                                         lightPath,
+                                                         darkPath,
+                                                         lightValue,
+                                                         darkValue,
+                                                         description
+                                                     }) => [
+                <DualSwatch key={`${name}-s`} light={lightValue} dark={darkValue}/>,
+                <span key={`${name}-c`}>
+                    <code>{formatPublicColorTokenPath(lightPath)}</code>
+                    <br/>
+                    <code>{formatPublicColorTokenPath(darkPath)}</code>
+                </span>,
+                lightValue,
+                darkValue,
+                description,
+            ]),
+        },
+        {
+            heading: "Eksporterte bakgrunnsroller",
+            description:
+                "Semantiske bakgrunnstokens i `tokens.color.background.*`. Hver rad dokumenterer både lys og mørk verdi.",
+            caption: "Eksporterte bakgrunnstokens fra Jøkul core",
+            columns: ["Forhåndsvisning", "Eksport", "Lys", "Mørk", "Bruksområde"],
+            rows: exportedBackgroundTokens.map(({path, lightValue, darkValue, description}) => [
+                <DualSwatch key={`${path}-s`} light={lightValue} dark={darkValue}/>,
+                <code key={`${path}-c`}>{formatPublicColorTokenPath(path)}</code>,
+                lightValue,
+                darkValue,
+                description,
+            ]),
+        },
+        {
+            heading: "Eksporterte alert-flater",
+            description:
+                "Statusflater for meldinger og varsler. Disse finnes som egne eksporterte bakgrunnstokens i Jøkul core.",
+            caption: "Eksporterte alert-bakgrunner fra Jøkul core",
+            columns: ["Forhåndsvisning", "Eksport", "Lys", "Mørk", "Bruksområde"],
+            rows: exportedAlertBackgroundTokens.map(({path, lightValue, darkValue, description}) => [
+                <DualSwatch key={`${path}-s`} light={lightValue} dark={darkValue}/>,
+                <code key={`${path}-c`}>{formatPublicColorTokenPath(path)}</code>,
+                lightValue,
+                darkValue,
+                description,
+            ]),
+        },
+        {
+            heading: "Eksporterte tekstroller",
+            description:
+                "Semantiske tekstfarger fra `tokens.color.text.*`. Bruk disse når du jobber direkte mot Jøkul-tokenobjektet i JS eller TS.",
+            caption: "Eksporterte tekstfarger fra Jøkul core",
+            columns: ["Forhåndsvisning", "Eksport", "Lys", "Mørk", "Bruksområde"],
+            rows: exportedTextTokens.map(({path, lightValue, darkValue, description}) => [
+                <DualSwatch key={`${path}-s`} light={lightValue} dark={darkValue}/>,
+                <code key={`${path}-c`}>{formatPublicColorTokenPath(path)}</code>,
+                lightValue,
+                darkValue,
+                description,
+            ]),
+        },
+        {
+            heading: "Eksporterte kantroller",
+            description:
+                "Semantiske kant- og separatorfarger fra `tokens.color.border.*`.",
+            caption: "Eksporterte kantfarger fra Jøkul core",
+            columns: ["Forhåndsvisning", "Eksport", "Lys", "Mørk", "Bruksområde"],
+            rows: exportedBorderTokens.map(({path, lightValue, darkValue, description}) => [
+                <DualSwatch key={`${path}-s`} light={lightValue} dark={darkValue}/>,
+                <code key={`${path}-c`}>{formatPublicColorTokenPath(path)}</code>,
+                lightValue,
+                darkValue,
+                description,
+            ]),
+        },
         {
             heading: "Primitive",
             description:

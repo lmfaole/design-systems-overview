@@ -3,13 +3,19 @@ import path from "node:path";
 import {compileString} from "sass";
 import {describe, expect, it} from "vitest";
 import {getComponentDoc} from "@/features/ds/jokul/_component-docs/data";
-import {borderRadiusTokens} from "@/features/ds/jokul/_token/posts/border-radius/tokens";
+import {borderRadiusTokens, borderWidthTokens} from "@/features/ds/jokul/_token/posts/border-radius/tokens";
 import {breakpointMixins} from "@/features/ds/jokul/_token/posts/breakpoints/mixins";
-import {breakpointTokens} from "@/features/ds/jokul/_token/posts/breakpoints/tokens";
+import {breakpointTokens, exportedBreakpointTokens} from "@/features/ds/jokul/_token/posts/breakpoints/tokens";
 import {colorMixins} from "@/features/ds/jokul/_token/posts/colors/mixins";
 import {
     backgroundTokens,
     borderTokens,
+    exportedAlertBackgroundTokens,
+    exportedBackgroundTokens,
+    exportedBorderTokens,
+    exportedFunctionalColorTokens,
+    exportedPrimitiveColorTokens,
+    exportedTextTokens,
     feedbackSurfaceTokens,
     primitiveColorTokens,
     textTokens,
@@ -17,14 +23,26 @@ import {
 import {motionMixins} from "@/features/ds/jokul/_token/posts/motion/mixins";
 import {easingTokens, timingTokens} from "@/features/ds/jokul/_token/posts/motion/tokens";
 import {spacingMixins} from "@/features/ds/jokul/_token/posts/spacing/mixins";
-import {spacingTokens, unitTokens} from "@/features/ds/jokul/_token/posts/spacing/tokens";
+import {
+    exportedSemanticSpacingTokens,
+    exportedSpacingScaleTokens,
+    spacingTokens,
+    unitTokens,
+} from "@/features/ds/jokul/_token/posts/spacing/tokens";
 import {getTokenPost, getTokenPostById, getTokenSlug, tokenPosts} from "./data";
 import {typographyMixins} from "@/features/ds/jokul/_token/posts/typography/mixins";
 import {
+    exportedFontSizeTokens,
+    exportedFontWeightTokens,
+    exportedIconWeightTokens,
+    exportedLineHeightStepTokens,
+    exportedSemanticLineHeightTokens,
+    exportedTypographyStyleTokens,
     fontSizeReference,
     fontWeightReference,
     lineHeightReference,
 } from "@/features/ds/jokul/_token/posts/typography/tokens";
+import {publicTokenExportPaths} from "@/features/ds/jokul/_token/posts/_shared/public-tokens";
 
 function collectFiles(dir: string, predicate: (file: string) => boolean, files: string[] = []): string[] {
     for (const entry of readdirSync(dir, {withFileTypes: true})) {
@@ -78,6 +96,28 @@ const documentedMixins = [
     ...spacingMixins,
     ...motionMixins,
 ];
+
+const documentedPublicTokenExportPaths = Array.from(new Set([
+    ...exportedPrimitiveColorTokens.flatMap(({exportPaths}) => exportPaths),
+    ...exportedFunctionalColorTokens.flatMap(({exportPaths}) => exportPaths),
+    ...exportedBackgroundTokens.flatMap(({exportPaths}) => exportPaths),
+    ...exportedAlertBackgroundTokens.flatMap(({exportPaths}) => exportPaths),
+    ...exportedTextTokens.flatMap(({exportPaths}) => exportPaths),
+    ...exportedBorderTokens.flatMap(({exportPaths}) => exportPaths),
+    ...timingTokens.flatMap(({exportPaths}) => exportPaths),
+    ...easingTokens.flatMap(({exportPaths}) => exportPaths),
+    ...exportedSpacingScaleTokens.flatMap(({exportPaths}) => exportPaths),
+    ...exportedSemanticSpacingTokens.flatMap(({exportPaths}) => exportPaths),
+    ...borderRadiusTokens.flatMap(({exportPaths}) => exportPaths),
+    ...borderWidthTokens.flatMap(({exportPaths}) => exportPaths),
+    ...exportedBreakpointTokens.flatMap(({exportPaths}) => exportPaths),
+    ...exportedFontSizeTokens.flatMap(({exportPaths}) => exportPaths),
+    ...exportedLineHeightStepTokens.flatMap(({exportPaths}) => exportPaths),
+    ...exportedSemanticLineHeightTokens.flatMap(({exportPaths}) => exportPaths),
+    ...exportedFontWeightTokens.flatMap(({exportPaths}) => exportPaths),
+    ...exportedIconWeightTokens.flatMap(({exportPaths}) => exportPaths),
+    ...exportedTypographyStyleTokens.flatMap(({exportPaths}) => exportPaths),
+])).sort((a, b) => a.localeCompare(b, "nb"));
 
 describe("Jokul token docs integrity", () => {
     it("keeps token pages complete, unique, and routable", () => {
@@ -171,6 +211,10 @@ describe("Jokul token docs integrity", () => {
             .map((name) => `mixin:${name}`);
 
         expect([...missingVariables, ...missingMixins]).toEqual([]);
+    });
+
+    it("documents every public token export from @fremtind/jokul/core", () => {
+        expect(documentedPublicTokenExportPaths).toEqual(publicTokenExportPaths);
     });
 
     it("keeps every documented Jøkul mixin example compilable", () => {

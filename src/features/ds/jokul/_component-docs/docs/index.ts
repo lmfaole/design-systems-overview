@@ -2,6 +2,8 @@ import buttonDoc from "./button";
 import comboboxDoc from "./combobox";
 import datepickerDoc from "./datepicker";
 import feedbackDoc from "./feedback";
+import cookieConsentDoc from "./cookie-consent";
+import fileDoc from "./file";
 import fileInputDoc from "./file-input";
 import messageDoc from "./message";
 import formErrorMessageDoc from "./form-error-message";
@@ -107,12 +109,14 @@ export const componentDocs: ComponentDoc[] = [
     chipDoc,
     comboboxDoc,
     countdownDoc,
+    cookieConsentDoc,
     datepickerDoc,
     descriptionListDoc,
     expandablePanelDoc,
     expanderDoc,
     feedbackDoc,
     fieldGroupDoc,
+    fileDoc,
     fileInputDoc,
     flexDoc,
     iconDoc,

@@ -1,8 +1,8 @@
-import { MotionIllustration } from "@/features/ds/jokul/_shared/components/Illustration";
-import { MotionPreview } from "@/features/ds/jokul/_token/components/MotionPreview";
-import { easingTokens, timingTokens } from "./tokens";
-import { motionMixins } from "./mixins";
-import type { TokenPost } from "../types";
+import {MotionIllustration} from "@/features/ds/jokul/_shared/components/Illustration";
+import {MotionPreview} from "@/features/ds/jokul/_token/components/MotionPreview";
+import {easingTokens, formatPublicMotionTokenPath, timingTokens} from "./tokens";
+import {motionMixins} from "./mixins";
+import type {TokenPost} from "../types";
 
 const post: TokenPost = {
     id: 13,
@@ -15,9 +15,10 @@ const post: TokenPost = {
             description:
                 "Fem navngitte varigheter fra øyeblikkelig til rolig. Velg timing basert på hvor mye oppmerksomhet interaksjonen fortjener.",
             caption: "Timing-tokens — varighet i millisekunder",
-            columns: ["Animasjon", "Token", "Verdi", "Bruksområde"],
-            rows: timingTokens.map(({ token, value, usage }) => [
-                <MotionPreview key={`${token}-prev`} timing={token} easing="--jkl-motion-easing-entrance" />,
+            columns: ["Animasjon", "Eksport", "CSS-variabel", "Verdi", "Bruksområde"],
+            rows: timingTokens.map(({path, token, value, usage}) => [
+                <MotionPreview key={`${token}-prev`} timing={token} easing="--jkl-motion-easing-entrance"/>,
+                <code key={`${path}-public`}>{formatPublicMotionTokenPath(path)}</code>,
                 <code key={`${token}-code`}>{token}</code>,
                 value,
                 usage,
@@ -28,9 +29,10 @@ const post: TokenPost = {
             description:
                 "Fire navngitte kurver som gir bevegelse karakter og retning. Kombinér alltid en easing-token med en timing-token.",
             caption: "Easing-tokens — animasjonskurver",
-            columns: ["Animasjon", "Token", "Kurve", "Bruksområde"],
-            rows: easingTokens.map(({ token, curve, usage }) => [
-                <MotionPreview key={`${token}-prev`} timing="--jkl-motion-timing-expressive" easing={token} />,
+            columns: ["Animasjon", "Eksport", "CSS-variabel", "Kurve", "Bruksområde"],
+            rows: easingTokens.map(({path, token, curve, usage}) => [
+                <MotionPreview key={`${token}-prev`} timing="--jkl-motion-timing-expressive" easing={token}/>,
+                <code key={`${path}-public`}>{formatPublicMotionTokenPath(path)}</code>,
                 <code key={`${token}-code`}>{token}</code>,
                 curve,
                 usage,
@@ -38,7 +40,7 @@ const post: TokenPost = {
         },
     ],
     scssSection: motionMixins,
-    illustration: <MotionIllustration />,
+    illustration: <MotionIllustration/>,
     relatedComponents: [],
     resources: [
         {

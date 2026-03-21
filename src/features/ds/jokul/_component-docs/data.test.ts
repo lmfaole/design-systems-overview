@@ -1,8 +1,25 @@
+import {createRequire} from "node:module";
 import {createElement, Fragment} from "react";
 import {renderToStaticMarkup} from "react-dom/server";
 import {afterAll, beforeAll, describe, expect, it, vi} from "vitest";
 import {buildExampleControls} from "./utils/example-controls";
 import {componentDocs, getComponentDoc} from "./data";
+
+const require = createRequire(import.meta.url);
+const jokulPackage = require("@fremtind/jokul/package.json") as {
+    exports: Record<string, string | { import?: { default?: string } }>;
+};
+
+const PUBLIC_COMPONENT_EXPORTS = Object.entries(jokulPackage.exports)
+    .filter(([key]) => key.startsWith("./") && !key.startsWith("./styles") && key !== "./package.json")
+    .map(([key, value]) => ({key: key.slice(2), value}))
+    .filter(({key, value}) => {
+        if (["core", "hooks", "utilities", "tailwind", "tailwind/v4"].includes(key)) return false;
+        const importPath = typeof value === "string" ? value : value?.import?.default;
+        return typeof importPath === "string" && (importPath.includes("/components/") || importPath.includes("/components-beta/"));
+    })
+    .map(({key}) => key)
+    .sort((a, b) => a.localeCompare(b, "nb"));
 
 function getControlDefaultValue(control: ReturnType<typeof buildExampleControls>[number]) {
     switch (control.kind) {
@@ -148,6 +165,19 @@ describe("Jokul component docs integrity", () => {
         });
 
         expect(invalidRelationships).toEqual([]);
+    });
+
+    it("tracks which public Jøkul component exports still lack local docs", () => {
+        const documentedPackages = new Set(
+            componentDocs.map((doc) => doc.package.replace("@fremtind/jokul/", "")),
+        );
+        const documentedIds = new Set<string>(componentDocs.map((doc) => doc.id));
+
+        const undocumentedExports = PUBLIC_COMPONENT_EXPORTS.filter(
+            (exportName) => !documentedPackages.has(exportName) && !documentedIds.has(exportName),
+        );
+
+        expect(undocumentedExports).toEqual([]);
     });
 
     it("renders every documented preview and example server-side", () => {

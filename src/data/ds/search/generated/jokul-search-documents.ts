@@ -114,6 +114,55 @@ export const jokulSearchDocuments = [
         "meta": "Jøkul · Komponent · Visning"
     },
     {
+        "id": "component-cookie-consent",
+        "designSystemId": "jokul",
+        "designSystemName": "Jøkul",
+        "kind": "component",
+        "title": "Cookie Consent",
+        "description": "Samtykkedialog for valgfrie informasjonskapsler.",
+        "keywords": [
+            "cookie-consent",
+            "@fremtind/jokul/cookie-consent",
+            "Overlegg",
+            "CookieConsent viser en modal for samtykke til valgfrie informasjonskapsler. Komponenten må brukes sammen med CookieConsentProvider fra samme pakke, og åpnes enten automatisk når samtykke mangler eller manuelt via useCookieConsent().",
+            "aboutPage",
+            "blocking",
+            "onAccept",
+            "modal",
+            "toast"
+        ],
+        "href": "/ds/jokul/component/cookie-consent",
+        "meta": "Jøkul · Komponent · Overlegg"
+    },
+    {
+        "id": "component-file",
+        "designSystemId": "jokul",
+        "designSystemName": "Jøkul",
+        "kind": "component",
+        "title": "File",
+        "description": "Viser en opplastet fil med navn, størrelse og status.",
+        "keywords": [
+            "file",
+            "@fremtind/jokul/file",
+            "Visning",
+            "File viser metadata for en enkelt opplastet fil, med støtte for visningsvariant, feilmelding, innlastingsstatus og fjerning. Komponenten brukes ofte sammen med FileInput, men kan også brukes alene når du allerede håndterer opplasting og validering selv.",
+            "fileName",
+            "fileType",
+            "fileSize",
+            "path",
+            "errorLabel",
+            "state",
+            "variant",
+            "file",
+            "onRemove",
+            "className",
+            "file-input",
+            "image"
+        ],
+        "href": "/ds/jokul/component/file",
+        "meta": "Jøkul · Komponent · Visning"
+    },
+    {
         "id": "component-file-input",
         "designSystemId": "jokul",
         "designSystemName": "Jøkul",
@@ -134,6 +183,7 @@ export const jokulSearchDocuments = [
             "variant",
             "helpLabel",
             "errorLabel",
+            "file",
             "text-input"
         ],
         "href": "/ds/jokul/component/file-input",

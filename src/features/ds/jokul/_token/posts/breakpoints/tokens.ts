@@ -1,70 +1,104 @@
+import {type DocumentedPublicToken, formatPublicTokenPath, getPublicTokenValue,} from "../_shared/public-tokens";
+
 export interface BreakpointToken {
-  /** SCSS variable name */
-  variable: string;
-  /** px value */
-  value: string;
-  /** Named range that starts at this breakpoint */
-  range: string;
-  /** Typical device type */
-  devices: string;
+    /** SCSS variable name */
+    variable: string;
+    /** px value */
+    value: string;
+    /** Named range that starts at this breakpoint */
+    range: string;
+    /** Typical device type */
+    devices: string;
 }
 
 export interface BreakpointRange {
-  name: string;
-  min: string;
-  max: string;
-  mixin: string;
-  usage: string;
+    name: string;
+    min: string;
+    max: string;
+    mixin: string;
+    usage: string;
 }
 
 export const breakpointTokens: BreakpointToken[] = [
-  {
-    variable: "$breakpoint--medium",
-    value: "680px",
-    range: "medium og større",
-    devices: "Nettbrett i stående modus, mellomstore nettlesere",
-  },
-  {
-    variable: "$breakpoint--large",
-    value: "1200px",
-    range: "large og større",
-    devices: "Desktop, bærbare og stasjonære datamaskiner",
-  },
-  {
-    variable: "$breakpoint--xl",
-    value: "1600px",
-    range: "xl",
-    devices: "Ekstra brede desktopskjermer og TV",
-  },
+    {
+        variable: "$breakpoint--medium",
+        value: "680px",
+        range: "medium og større",
+        devices: "Nettbrett i stående modus, mellomstore nettlesere",
+    },
+    {
+        variable: "$breakpoint--large",
+        value: "1200px",
+        range: "large og større",
+        devices: "Desktop, bærbare og stasjonære datamaskiner",
+    },
+    {
+        variable: "$breakpoint--xl",
+        value: "1600px",
+        range: "xl",
+        devices: "Ekstra brede desktopskjermer og TV",
+    },
 ];
 
 export const breakpointRanges: BreakpointRange[] = [
-  {
-    name: "small",
-    min: "0px",
-    max: "679px",
-    mixin: "small-device",
-    usage: "Mobil og kompakte flater — én kolonne, forenklet navigasjon",
-  },
-  {
-    name: "medium",
-    min: "680px",
-    max: "1199px",
-    mixin: "medium-device",
-    usage: "Nettbrett og brede mobilvisninger — to kolonner, utvidet innhold",
-  },
-  {
-    name: "large",
-    min: "1200px",
-    max: "1599px",
-    mixin: "large-device",
-    usage: "Desktop — full layout, sidepaneler og komplekse grids",
-  },
-  {
-    name: "xl",
-    min: "1600px",
-    max: "∞",
-    mixin: "xl-device",
-    usage: "Ekstra bredt — bruk sparsomt, vurder maks-bredde-begrensning",
-  },
+    {
+        name: "small",
+        min: "0px",
+        max: "679px",
+        mixin: "small-device",
+        usage: "Mobil og kompakte flater — én kolonne, forenklet navigasjon",
+    },
+    {
+        name: "medium",
+        min: "680px",
+        max: "1199px",
+        mixin: "medium-device",
+        usage: "Nettbrett og brede mobilvisninger — to kolonner, utvidet innhold",
+    },
+    {
+        name: "large",
+        min: "1200px",
+        max: "1599px",
+        mixin: "large-device",
+        usage: "Desktop — full layout, sidepaneler og komplekse grids",
+    },
+    {
+        name: "xl",
+        min: "1600px",
+        max: "∞",
+        mixin: "xl-device",
+        usage: "Ekstra bredt — bruk sparsomt, vurder maks-bredde-begrensning",
+    },
 ];
+
+export interface ExportedBreakpointToken extends DocumentedPublicToken {
+    path: string;
+    value: string;
+    range: string;
+    devices: string;
+}
+
+function createExportedBreakpointToken(
+    path: string,
+    range: string,
+    devices: string,
+): ExportedBreakpointToken {
+    return {
+        path,
+        value: getPublicTokenValue(path),
+        range,
+        devices,
+        exportPaths: [path],
+    };
+}
+
+export const exportedBreakpointTokens: ExportedBreakpointToken[] = [
+    createExportedBreakpointToken("breakpoint.small", "small og større", "Mobil og kompakte flater"),
+    createExportedBreakpointToken("breakpoint.medium", "medium og større", "Nettbrett i stående modus, mellomstore nettlesere"),
+    createExportedBreakpointToken("breakpoint.large", "large og større", "Desktop, bærbare og stasjonære datamaskiner"),
+    createExportedBreakpointToken("breakpoint.xl", "xl", "Ekstra brede desktopskjermer og TV"),
+];
+
+export function formatPublicBreakpointTokenPath(path: string): string {
+    return formatPublicTokenPath(path);
+}
