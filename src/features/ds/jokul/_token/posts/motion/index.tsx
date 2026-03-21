@@ -2,6 +2,7 @@ import {MotionIllustration} from "@/features/ds/jokul/_shared/components/Illustr
 import {MotionPreview} from "@/features/ds/jokul/_token/components/MotionPreview";
 import {easingTokens, formatPublicMotionTokenPath, timingTokens} from "./tokens";
 import {motionMixins} from "./mixins";
+import {createTableExampleFrame} from "../_shared/table-examples";
 import type {TokenPost} from "../types";
 
 const post: TokenPost = {
@@ -15,9 +16,13 @@ const post: TokenPost = {
             description:
                 "Fem navngitte varigheter fra øyeblikkelig til rolig. Velg timing basert på hvor mye oppmerksomhet interaksjonen fortjener.",
             caption: "Timing-tokens — varighet i millisekunder",
+            exampleColumnIndex: 0,
             columns: ["Animasjon", "Eksport", "CSS-variabel", "Verdi", "Bruksområde"],
             rows: timingTokens.map(({path, token, value, usage}) => [
-                <MotionPreview key={`${token}-prev`} timing={token} easing="--jkl-motion-easing-entrance"/>,
+                createTableExampleFrame(
+                    "motion",
+                    <MotionPreview timing={token} easing="--jkl-motion-easing-entrance"/>,
+                ),
                 <code key={`${path}-public`}>{formatPublicMotionTokenPath(path)}</code>,
                 <code key={`${token}-code`}>{token}</code>,
                 value,
@@ -29,9 +34,13 @@ const post: TokenPost = {
             description:
                 "Fire navngitte kurver som gir bevegelse karakter og retning. Kombinér alltid en easing-token med en timing-token.",
             caption: "Easing-tokens — animasjonskurver",
+            exampleColumnIndex: 0,
             columns: ["Animasjon", "Eksport", "CSS-variabel", "Kurve", "Bruksområde"],
             rows: easingTokens.map(({path, token, curve, usage}) => [
-                <MotionPreview key={`${token}-prev`} timing="--jkl-motion-timing-expressive" easing={token}/>,
+                createTableExampleFrame(
+                    "motion",
+                    <MotionPreview timing="--jkl-motion-timing-expressive" easing={token}/>,
+                ),
                 <code key={`${path}-public`}>{formatPublicMotionTokenPath(path)}</code>,
                 <code key={`${token}-code`}>{token}</code>,
                 curve,

@@ -17,10 +17,11 @@ const doc: ComponentDoc = {
     preview: <ExpandableTableRowPreview />,
     example: (props) => <ExpandableTableRowExample {...props} />,
     exampleControlsConfig: {
-        include: ["isOpen", "collapseToList"],
-        order: ["isOpen", "collapseToList"],
+        include: ["isOpen", "colSpan", "collapseToList"],
+        order: ["isOpen", "colSpan", "collapseToList"],
         overrides: {
             isOpen: { kind: "boolean", defaultValue: false },
+            colSpan: { kind: "number", defaultValue: 3, min: 1, max: 6, step: 1 },
             collapseToList: { kind: "boolean", defaultValue: false },
         },
     },

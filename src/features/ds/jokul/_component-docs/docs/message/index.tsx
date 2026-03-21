@@ -22,6 +22,7 @@ const doc: ComponentDoc = {
     },
 
     preview: <MessagePreview />,
+    example: (props) => <MessagePreview {...props} />,
     props,
 };
 

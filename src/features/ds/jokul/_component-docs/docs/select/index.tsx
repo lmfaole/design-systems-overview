@@ -22,11 +22,13 @@ const doc: ComponentDoc = {
     preview: <SelectPreview />,
     example: (props) => <SelectExample {...props} />,
     exampleControlsConfig: {
-        include: ["label", "placeholder", "helpLabel", "errorLabel", "disabled"],
-        order: ["label", "placeholder", "helpLabel", "errorLabel", "disabled"],
+        include: ["label", "name", "placeholder", "value", "helpLabel", "errorLabel", "disabled"],
+        order: ["label", "name", "placeholder", "value", "helpLabel", "errorLabel", "disabled"],
         overrides: {
             label: { defaultValue: "Velg fylke" },
+            name: { defaultValue: "county-beta" },
             placeholder: { defaultValue: "Velg" },
+            value: { defaultValue: "oslo" },
             helpLabel: { defaultValue: "Velg fylket du bor i." },
             errorLabel: { placeholder: "Feilmelding" },
         },

@@ -1,5 +1,6 @@
 import {BorderRadiusIllustration} from "@/features/ds/jokul/_shared/components/Illustration";
 import {borderRadiusTokens, borderWidthTokens, formatPublicBorderTokenPath} from "./tokens";
+import {createLengthBarExample, createTableExampleFrame} from "../_shared/table-examples";
 import type {TokenPost} from "../types";
 
 const post: TokenPost = {
@@ -11,19 +12,22 @@ const post: TokenPost = {
             description:
                 "Kantradiuser definerer graden av avrunding på hjørnene til komponenter. Skalaen går fra skarpe kanter til fullstendig rundede former, og hvert trinn har et definert bruksområde.",
             caption: "Alle eksporterte border-radius-tokens",
+            exampleColumnIndex: 0,
             columns: ["Forhåndsvisning", "Eksport", "CSS-variabel", "Verdi", "Rem", "Bruksområde"],
             rows: borderRadiusTokens.map(({path, token, value, rem, usage}) => [
-                <div
-                    key={`${token}-preview`}
-                    aria-hidden
-                    style={{
-                        width: "48px",
-                        height: "48px",
-                        background: "var(--jkl-color-background-action)",
-                        borderRadius: `var(${token})`,
-                        flexShrink: 0,
-                    }}
-                />,
+                createTableExampleFrame(
+                    "border-radius",
+                    <span
+                        style={{
+                            display: "block",
+                            inlineSize: "100%",
+                            blockSize: "100%",
+                            background: "var(--jkl-color-background-action)",
+                            borderRadius: `var(${token})`,
+                        }}
+                    />,
+                    {padding: "0.375rem"},
+                ),
                 <code key={`${path}-public`}>{formatPublicBorderTokenPath(path)}</code>,
                 <code key={`${token}-name`}>{token}</code>,
                 value,
@@ -36,8 +40,14 @@ const post: TokenPost = {
             description:
                 "Jøkul eksporterer også kantbredder som egne tokens i `@fremtind/jokul/core`.",
             caption: "Eksporterte border-width-tokens",
-            columns: ["Eksport", "Verdi", "Bruksområde"],
+            exampleColumnIndex: 0,
+            columns: ["Eksempel", "Eksport", "Verdi", "Bruksområde"],
             rows: borderWidthTokens.map(({path, value, usage}) => [
+                createLengthBarExample("100%", {
+                    kind: "border-width",
+                    thickness: value,
+                    color: "var(--jkl-color-border-action)",
+                }),
                 <code key={`${path}-public`}>{formatPublicBorderTokenPath(path)}</code>,
                 value,
                 usage,

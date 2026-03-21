@@ -25,8 +25,10 @@ const doc: ComponentDoc = {
     exampleControlsConfig: {
         include: [
             "label",
+            "description",
             "placeholder",
             "icon",
+            "value",
             "helpLabel",
             "errorLabel",
             "labelProps.variant",
@@ -36,8 +38,10 @@ const doc: ComponentDoc = {
         ],
         order: [
             "label",
+            "description",
             "placeholder",
             "icon",
+            "value",
             "helpLabel",
             "errorLabel",
             "labelProps.variant",
@@ -47,8 +51,10 @@ const doc: ComponentDoc = {
         ],
         overrides: {
             label: { defaultValue: "Søk" },
+            description: { defaultValue: "Finn forsikringer, skader og dokumenter." },
             placeholder: { defaultValue: "Hva leter du etter?" },
             icon: { kind: "select", options: ["search", "filter_alt", "filter_list"], defaultValue: "search" },
+            value: { defaultValue: "Bilforsikring" },
             helpLabel: {
                 defaultValue: "Søk på navn eller nummer.",
                 visibleWhen: { name: "errorLabel", operator: "notEquals", value: "Søket er ugyldig" },

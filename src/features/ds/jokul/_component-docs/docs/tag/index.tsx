@@ -1,5 +1,6 @@
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
+import { TagExample } from "./example";
 import { TagPreview } from "./preview";
 
 const doc: ComponentDoc = {
@@ -18,6 +19,7 @@ const doc: ComponentDoc = {
     },
 
     preview: <TagPreview />,
+    example: (props) => <TagExample {...props} />,
     props,
 };
 

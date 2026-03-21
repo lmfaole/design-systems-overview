@@ -17,6 +17,7 @@ const doc: ComponentDoc = {
         related: [{ id: "description-list", description: "Bruk DescriptionList for nøkkel-verdi-par som ikke krever header- og foterstrukturen til SummaryTable." }, { id: "table", description: "Bruk Table for flerkolonnet tabelldata med sorterbare overskrifter i stedet for et tokolonnet sammendrag." }],
     },
     preview: <SummaryTablePreview />,
+    example: () => <SummaryTablePreview />,
 
     props,
 };

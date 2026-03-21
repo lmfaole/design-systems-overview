@@ -26,6 +26,7 @@ const doc: ComponentDoc = {
         ],
     },
     preview: <SkeletonPreview />,
+    example: () => <SkeletonPreview />,
 
     props,
 };

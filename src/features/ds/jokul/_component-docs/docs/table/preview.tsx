@@ -14,6 +14,7 @@ import {
     TablePagination,
     TableRow,
 } from "@fremtind/jokul/table";
+import type { ComponentExampleProps } from "../types";
 
 const dataRows = [
     ["Bilforsikring", "1 200 kr"],
@@ -202,11 +203,24 @@ export function TablePaginationPreview() {
     );
 }
 
-export function DataTablePreview() {
+export function DataTablePreview(props: ComponentExampleProps = {}) {
+    const caption = typeof props.caption === "string" && props.caption.trim() !== "" ? props.caption : undefined;
+    const collapseToList = props.collapseToList === true;
+    const emptyTableText =
+        typeof props.emptyTableText === "string" && props.emptyTableText.trim() !== ""
+            ? props.emptyTableText
+            : undefined;
+    const verticalAlign = props.verticalAlign === "center" ? "center" : "top";
+    const rows = emptyTableText ? [] : dataRows;
+
     return (
         <DataTable
             columns={["Produkt", "Pris"]}
-            rows={dataRows}
+            rows={rows}
+            caption={caption}
+            collapseToList={collapseToList}
+            emptyTableText={emptyTableText}
+            verticalAlign={verticalAlign}
         />
     );
 }

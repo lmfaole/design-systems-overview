@@ -1,5 +1,6 @@
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
+import { LinkListExample } from "./example";
 import { LinkListPreview } from "./preview";
 
 const doc: ComponentDoc = {
@@ -20,6 +21,15 @@ const doc: ComponentDoc = {
         ],
     },
     preview: <LinkListPreview />,
+    example: (props) => <LinkListExample {...props} />,
+    exampleControlsConfig: {
+        include: ["label", "hideLabel"],
+        order: ["label", "hideLabel"],
+        overrides: {
+            label: { defaultValue: "Forsikringer" },
+            hideLabel: { kind: "boolean", defaultValue: false },
+        },
+    },
 
     props,
 };

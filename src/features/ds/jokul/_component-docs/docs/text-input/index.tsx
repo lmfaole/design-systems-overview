@@ -30,10 +30,13 @@ const doc: ComponentDoc = {
     example: (props) => <TextInputExample {...props} />,
     exampleControlsConfig: {
         include: [
+            "label",
             "type",
             "placeholder",
+            "value",
             "defaultValue",
             "description",
+            "autoComplete",
             "labelProps.variant",
             "labelProps.srOnly",
             "disabled",
@@ -42,10 +45,13 @@ const doc: ComponentDoc = {
             "errorLabel",
         ],
         order: [
+            "label",
             "type",
             "placeholder",
+            "value",
             "defaultValue",
             "description",
+            "autoComplete",
             "labelProps.variant",
             "labelProps.srOnly",
             "disabled",
@@ -54,9 +60,12 @@ const doc: ComponentDoc = {
             "errorLabel",
         ],
         overrides: {
+            label: { defaultValue: "E-post" },
             type: { kind: "select", options: ["text", "email", "password", "tel", "url", "search", "number"] },
             placeholder: { defaultValue: "navn@domene.no" },
+            value: { defaultValue: "" },
             description: { defaultValue: "Vi bruker e-post for varsler." },
+            autoComplete: { defaultValue: "email" },
             "labelProps.variant": { kind: "select", options: ["small", "medium", "large"], defaultValue: "medium" },
             "labelProps.srOnly": { kind: "boolean", defaultValue: false },
             helpLabel: {

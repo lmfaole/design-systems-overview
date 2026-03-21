@@ -9,7 +9,6 @@ const doc: ComponentDoc = {
     category: "Visning",
     status: "stable",
     complexity: {use: "easy", maintenance: "easy"},
-    showOnOverview: false,
     description: {
         short: "Viser en opplastet fil med navn, størrelse og status.",
         long: "File viser metadata for en enkelt opplastet fil, med støtte for visningsvariant, feilmelding, innlastingsstatus og fjerning. Komponenten brukes ofte sammen med FileInput, men kan også brukes alene når du allerede håndterer opplasting og validering selv.",
@@ -27,6 +26,7 @@ const doc: ComponentDoc = {
         ],
     },
     preview: <FilePreview/>,
+    example: (props) => <FilePreview {...props}/>,
     props,
 };
 

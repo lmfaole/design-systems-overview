@@ -26,10 +26,19 @@ const doc: ComponentDoc = {
     preview: <ExpandablePanelPreview />,
     example: (props) => <ExpandablePanelExample {...props} />,
     exampleControlsConfig: {
-        include: ["variant", "defaultOpen"],
-        order: ["variant", "defaultOpen"],
+        include: ["variant", "open", "defaultOpen"],
+        order: ["variant", "open", "defaultOpen"],
         overrides: {
             variant: { kind: "select", options: ["fill", "stroke"], defaultValue: "fill" },
+            open: {
+                kind: "select",
+                options: [
+                    { label: "Automatisk", value: null },
+                    { label: "Åpen", value: true },
+                    { label: "Lukket", value: false },
+                ],
+                defaultValue: null,
+            },
             defaultOpen: { kind: "boolean", defaultValue: false },
         },
     },

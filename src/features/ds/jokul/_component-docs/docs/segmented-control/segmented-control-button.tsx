@@ -17,9 +17,19 @@ const doc: ComponentDoc = {
     preview: <SegmentedControlButtonPreview />,
     example: (props) => <SegmentedControlButtonExample {...props} />,
     exampleControlsConfig: {
-        include: ["selectedValue", "separated", "disabled"],
-        order: ["selectedValue", "separated", "disabled"],
+        include: ["value", "checked", "selectedValue", "separated", "disabled"],
+        order: ["value", "checked", "selectedValue", "separated", "disabled"],
         overrides: {
+            value: { kind: "text", defaultValue: "dag" },
+            checked: {
+                kind: "select",
+                options: [
+                    { label: "Automatisk", value: null },
+                    { label: "På", value: true },
+                    { label: "Av", value: false },
+                ],
+                defaultValue: null,
+            },
             selectedValue: {
                 kind: "select",
                 options: ["dag", "uke"],

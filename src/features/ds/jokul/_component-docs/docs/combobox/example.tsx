@@ -12,6 +12,7 @@ const items: ComboboxValuePair[] = [
 
 export function ComboboxExample(props: ComponentExampleProps) {
     const label = typeof props.label === "string" && props.label.trim() !== "" ? props.label : "Velg forsikringer";
+    const name = typeof props.name === "string" && props.name.trim() !== "" ? props.name : "insurance";
     const placeholder = typeof props.placeholder === "string" && props.placeholder.trim() !== "" ? props.placeholder : undefined;
     const helpLabel = typeof props.helpLabel === "string" && props.helpLabel.trim() !== "" ? props.helpLabel : undefined;
     const errorLabel = typeof props.errorLabel === "string" && props.errorLabel.trim() !== "" ? props.errorLabel : undefined;
@@ -24,7 +25,7 @@ export function ComboboxExample(props: ComponentExampleProps) {
         <Flex direction="column" gap="s">
             <Combobox
                 label={label}
-                name="insurance"
+                name={name}
                 items={items}
                 value={value}
                 onChange={(event) => setValue(event.target.selectedOptions as ComboboxValuePair[])}

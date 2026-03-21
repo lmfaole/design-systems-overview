@@ -10,6 +10,7 @@ type LabelVariant = (typeof labelVariants)[number];
 
 export function SearchExample(props: ComponentExampleProps) {
     const label = typeof props.label === "string" && props.label.trim() !== "" ? props.label : "Søk";
+    const description = typeof props.description === "string" && props.description.trim() !== "" ? props.description : undefined;
     const placeholder = typeof props.placeholder === "string" && props.placeholder.trim() !== "" ? props.placeholder : undefined;
     const helpLabel = typeof props.helpLabel === "string" && props.helpLabel.trim() !== "" ? props.helpLabel : undefined;
     const errorLabel = typeof props.errorLabel === "string" && props.errorLabel.trim() !== "" ? props.errorLabel : undefined;
@@ -43,6 +44,7 @@ export function SearchExample(props: ComponentExampleProps) {
                 placeholder={placeholder}
                 icon={icon}
                 labelProps={resolvedLabelProps}
+                description={description}
                 helpLabel={errorLabel ? undefined : helpLabel}
                 errorLabel={errorLabel}
                 value={value}

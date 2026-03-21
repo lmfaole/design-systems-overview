@@ -10,7 +10,14 @@ const options = [
 ] as const;
 
 export function SegmentedControlButtonExample(props: ComponentExampleProps) {
-    const preferred = typeof props.selectedValue === "string" ? props.selectedValue : options[0].value;
+    const primaryValue = typeof props.value === "string" && props.value.trim() !== "" ? props.value : options[0].value;
+    const controlledChecked = typeof props.checked === "boolean" ? props.checked : null;
+    const segmentedOptions = [
+        { value: primaryValue, label: options[0].label },
+        options[1],
+    ] as const;
+    const preferredSelection = typeof props.selectedValue === "string" ? props.selectedValue : options[0].value;
+    const preferred = preferredSelection === options[0].value ? primaryValue : options[1].value;
     const [selectedValue, setSelectedValue] = useState(preferred);
     const separated = props.separated === true;
     const disabled = props.disabled === true;
@@ -24,12 +31,12 @@ export function SegmentedControlButtonExample(props: ComponentExampleProps) {
     return (
         <Flex direction="column" gap="s">
             <SegmentedControl legend="Velg periode">
-                {options.map((option, index) => (
+                {segmentedOptions.map((option, index) => (
                     <SegmentedControlButton
                         key={option.value}
                         value={option.value}
                         name={name}
-                        checked={selectedValue === option.value}
+                        checked={option.value === primaryValue ? controlledChecked ?? (selectedValue === option.value) : controlledChecked === null ? selectedValue === option.value : !controlledChecked}
                         onChange={({ target }) => setSelectedValue(target.value)}
                         separated={separated && index === 1}
                         disabled={disabled && index === 1}

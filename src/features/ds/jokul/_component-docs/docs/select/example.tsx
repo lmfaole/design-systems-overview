@@ -5,6 +5,7 @@ import type { ComponentExampleProps } from "../types";
 
 export function SelectExample(props: ComponentExampleProps) {
     const label = typeof props.label === "string" && props.label.trim() !== "" ? props.label : "Velg fylke";
+    const name = typeof props.name === "string" && props.name.trim() !== "" ? props.name : "county-beta";
     const placeholder = typeof props.placeholder === "string" && props.placeholder.trim() !== "" ? props.placeholder : undefined;
     const helpLabel = typeof props.helpLabel === "string" && props.helpLabel.trim() !== "" ? props.helpLabel : undefined;
     const errorLabel = typeof props.errorLabel === "string" && props.errorLabel.trim() !== "" ? props.errorLabel : undefined;
@@ -20,7 +21,7 @@ export function SelectExample(props: ComponentExampleProps) {
         <Flex direction="column" gap="s">
             <Select
                 label={label}
-                name="county-beta"
+                name={name}
                 placeholder={placeholder}
                 helpLabel={helpLabel}
                 errorLabel={errorLabel}

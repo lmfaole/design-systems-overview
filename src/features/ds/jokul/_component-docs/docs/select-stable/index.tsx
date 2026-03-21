@@ -30,11 +30,15 @@ const doc: ComponentDoc = {
     preview: <SelectStablePreview />,
     example: (props) => <SelectStableExample {...props} />,
     exampleControlsConfig: {
-        include: ["defaultPrompt", "searchable", "maxShownOptions", "inline", "helpLabel", "errorLabel"],
-        order: ["defaultPrompt", "searchable", "maxShownOptions", "inline", "helpLabel", "errorLabel"],
+        include: ["label", "name", "value", "defaultPrompt", "searchable", "maxShownOptions", "inline", "width", "helpLabel", "errorLabel"],
+        order: ["label", "name", "value", "defaultPrompt", "searchable", "maxShownOptions", "inline", "width", "helpLabel", "errorLabel"],
         overrides: {
+            label: { defaultValue: "Velg forsikring" },
+            name: { defaultValue: "insurance" },
+            value: { defaultValue: "home" },
             defaultPrompt: { defaultValue: "Velg forsikring" },
             maxShownOptions: { defaultValue: 5, min: 3, max: 10, step: 1 },
+            width: { defaultValue: "20rem" },
             helpLabel: { defaultValue: "Velg typen som passer best." },
             errorLabel: { placeholder: "Feilmelding" },
         },

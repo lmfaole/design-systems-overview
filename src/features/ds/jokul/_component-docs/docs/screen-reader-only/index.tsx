@@ -14,6 +14,7 @@ const doc: ComponentDoc = {
         long: "ScreenReaderOnly skjuler innhold visuelt mens det forblir tilgjengelig for skjermlesere og annen hjelpemiddelteknologi. Bruk det til å gi ekstra kontekst for ikonknapper, skip-links og annet innhold som er meningsløst uten visuelle ledetråder.",
     },
     preview: <ScreenReaderOnlyPreview />,
+    example: (props) => <ScreenReaderOnlyPreview {...props} />,
 
     props,
 };

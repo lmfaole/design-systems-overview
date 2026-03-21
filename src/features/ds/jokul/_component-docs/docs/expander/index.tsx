@@ -19,6 +19,7 @@ const doc: ComponentDoc = {
     },
 
     preview: <ExpanderPreview />,
+    example: (props) => <ExpanderPreview {...props} />,
     props,
 };
 

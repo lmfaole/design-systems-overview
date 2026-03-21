@@ -14,6 +14,7 @@ const doc: ComponentDoc = {
         long: "List-komponentene (UnorderedList og OrderedList) brukes for strukturerte lister med konsistent styling.",
     },
     preview: <ListPreview />,
+    example: () => <ListPreview />,
 
     props,
 };

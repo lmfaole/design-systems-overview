@@ -14,6 +14,7 @@ const doc: ComponentDoc = {
         long: "DescriptionList viser nøkkel-verdi-par strukturert som en HTML description list (dl/dt/dd).",
     },
     preview: <DescriptionListPreview />,
+    example: (props) => <DescriptionListPreview {...props} />,
     relationships: {
         subcomponents: [
             { id: "description-term", description: "Nøkkelen (dt) i et nøkkel-verdi-par." },

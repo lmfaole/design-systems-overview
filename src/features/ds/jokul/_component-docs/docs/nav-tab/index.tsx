@@ -22,6 +22,7 @@ const doc: ComponentDoc = {
     },
 
     preview: <NavTabPreview />,
+    example: () => <NavTabPreview />,
     props,
 };
 

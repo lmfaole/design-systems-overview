@@ -19,6 +19,7 @@ vi.mock("@fremtind/jokul/table", () => ({
 vi.mock("@/components/ds/PageHeader", () => ({
     PageHeader: ({title, description, background}: any) => (
         <header data-page-header="" data-has-background={String(Boolean(background))}>
+            {background && <div data-page-header-background="">{background}</div>}
             <h1>{title}</h1>
             <p>{description}</p>
         </header>
@@ -55,14 +56,16 @@ describe("TokenArticle", () => {
                         heading: "Primitive",
                         description: "Faste farger",
                         caption: "Primitive farger",
-                        columns: ["Token"],
-                        rows: [["--jkl-color-brand-snohvit"]],
+                        exampleColumnIndex: 0,
+                        columns: ["Forhåndsvisning", "Token"],
+                        rows: [[<span data-token-table-example="color"/>, "--jkl-color-brand-snohvit"]],
                     },
                     {
                         heading: "Semantiske",
                         caption: "Semantiske farger",
-                        columns: ["Token"],
-                        rows: [["--jkl-color-text-default"]],
+                        exampleColumnIndex: 0,
+                        columns: ["Forhåndsvisning", "Token"],
+                        rows: [[<span data-token-table-example="color"/>, "--jkl-color-text-default"]],
                     },
                 ]}
                 scssSection={[
@@ -77,6 +80,7 @@ describe("TokenArticle", () => {
 
         expect(html).toContain('data-page-header=""');
         expect(html).toContain('data-has-background="true"');
+        expect(html).toContain('data-page-header-background=""');
         expect(html).toContain('data-article-toc=""');
         expect(html).toContain('data-meta=""');
         expect(html).toContain('data-section="Tokens"');
@@ -94,8 +98,23 @@ describe("TokenArticle", () => {
 
         expect(html).toContain('data-page-header=""');
         expect(html).toContain('data-has-background="false"');
+        expect(html).not.toContain('data-page-header-background=""');
         expect(html).toContain('data-article-toc=""');
         expect(html).not.toContain('data-section="Tokens"');
         expect(html).not.toContain('data-section="SCSS-mixins"');
+    });
+
+    it("renders a bespoke illustration inside the token page header background", () => {
+        const html = renderToStaticMarkup(
+            <TokenArticle
+                title="Skygger"
+                excerpt="Skyggevariabler"
+                illustration={<div data-token-illustration="skygger"><div data-shadow-surface="hover"/></div>}
+            />,
+        );
+
+        expect(html).toContain('data-page-header-background=""');
+        expect(html).toContain('data-token-illustration="skygger"');
+        expect(html).toContain('data-shadow-surface="hover"');
     });
 });

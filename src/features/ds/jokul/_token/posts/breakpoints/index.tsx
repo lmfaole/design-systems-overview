@@ -1,6 +1,7 @@
 import {BreakpointsIllustration} from "@/features/ds/jokul/_shared/components/Illustration";
 import {breakpointRanges, breakpointTokens, exportedBreakpointTokens, formatPublicBreakpointTokenPath,} from "./tokens";
 import {breakpointMixins} from "./mixins";
+import {createRangeExample, createScaledBarExample} from "../_shared/table-examples";
 import type {TokenPost} from "../types";
 
 const post: TokenPost = {
@@ -14,8 +15,10 @@ const post: TokenPost = {
             description:
                 "Jøkul eksporterer breakpoint-verdiene i `@fremtind/jokul/core` som `tokens.breakpoint.*`. Disse kan brukes direkte i JS og TS.",
             caption: "Eksporterte breakpoint-tokens fra Jøkul core",
-            columns: ["Eksport", "Verdi", "Gjelder fra", "Typiske enheter"],
+            exampleColumnIndex: 0,
+            columns: ["Eksempel", "Eksport", "Verdi", "Gjelder fra", "Typiske enheter"],
             rows: exportedBreakpointTokens.map(({path, value, range, devices}) => [
+                createScaledBarExample(value, 1600, "breakpoint"),
                 <code key={`${path}-var`}>{formatPublicBreakpointTokenPath(path)}</code>,
                 <strong key={`${path}-val`}>{value}</strong>,
                 range,
@@ -27,8 +30,10 @@ const post: TokenPost = {
             description:
                 "Jøkul definerer tre SCSS-variabler som deler skjermbredden inn i fire navngitte soner. Disse er ikke CSS custom properties — de finnes kun i SCSS og brukes via breakpoint-mixin-ene.",
             caption: "Jøkuls tre breakpoint-variabler",
-            columns: ["SCSS-variabel", "Verdi", "Gjelder fra", "Typiske enheter"],
+            exampleColumnIndex: 0,
+            columns: ["Eksempel", "SCSS-variabel", "Verdi", "Gjelder fra", "Typiske enheter"],
             rows: breakpointTokens.map(({variable, value, range, devices}) => [
+                createScaledBarExample(value, 1600, "breakpoint"),
                 <code key={`${variable}-var`}>{variable}</code>,
                 <strong key={`${variable}-val`}>{value}</strong>,
                 range,
@@ -40,8 +45,10 @@ const post: TokenPost = {
             description:
                 "De tre variablene gir fire navngitte soner. Preferér de navngitte mixin-ene (small-device, from-medium-device osv.) fremfor direkte bruk av variablene.",
             caption: "De fire skjermsonene og tilhørende mixin-er",
-            columns: ["Sone", "Fra", "Til", "Mixin", "Bruksområde"],
+            exampleColumnIndex: 0,
+            columns: ["Eksempel", "Sone", "Fra", "Til", "Mixin", "Bruksområde"],
             rows: breakpointRanges.map(({name, min, max, mixin, usage}) => [
+                createRangeExample(min, max, 1600),
                 <strong key={`${name}-n`}>{name}</strong>,
                 min,
                 max,

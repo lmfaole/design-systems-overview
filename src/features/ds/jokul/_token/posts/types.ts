@@ -18,6 +18,13 @@ export interface TokenTable {
   /** Short description shown between the heading and the table */
   description?: string;
   caption: string;
+  /**
+   * Zero-based column index that contains a rendered example of the token value.
+   *
+   * Every token table should include one visible preview/example column so the
+   * reference is not only textual.
+   */
+  exampleColumnIndex: number;
   columns: string[];
   rows: React.ReactNode[][];
 }

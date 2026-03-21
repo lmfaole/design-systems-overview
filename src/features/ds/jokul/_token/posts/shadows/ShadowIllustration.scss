@@ -1,0 +1,82 @@
+.shadow-illustration {
+    height: 100%;
+    min-height: 100%;
+    display: grid;
+    align-items: end;
+    padding: var(--jkl-spacing-m);
+    background:
+        radial-gradient(
+            circle at top right,
+            color-mix(in srgb, var(--jkl-color-background-alert-info) 60%, transparent) 0%,
+            transparent 48%
+        ),
+        linear-gradient(
+            180deg,
+            color-mix(in srgb, var(--jkl-color-background-page) 35%, transparent) 0%,
+            var(--jkl-color-background-page) 100%
+        );
+}
+
+.shadow-stage {
+    min-height: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: end;
+    gap: var(--jkl-spacing-s);
+}
+
+.shadow-surface {
+    display: grid;
+    align-items: end;
+    min-height: clamp(5rem, 32cqi, 11rem);
+    padding: var(--jkl-spacing-s);
+    border: 1px solid var(--jkl-color-border-separator);
+    border-radius: var(--jkl-border-radius-m);
+    background:
+        linear-gradient(
+            180deg,
+            color-mix(in srgb, var(--jkl-color-background-container-high) 82%, var(--jkl-color-brand-hvit)) 0%,
+            var(--jkl-color-background-container-high) 100%
+        );
+    color: var(--jkl-color-text-subdued);
+    transform-origin: center bottom;
+    animation: shadow-float 2600ms var(--jkl-motion-easing-entrance) infinite alternate;
+
+    span {
+        opacity: 0.78;
+    }
+
+    &[data-shadow-surface="navigation"] {
+        min-height: clamp(4.75rem, 28cqi, 8.5rem);
+        box-shadow: 0 0.25rem 0.9375rem rgb(37 42 49 / 10%);
+        animation-delay: -300ms;
+    }
+
+    &[data-shadow-surface="task"] {
+        min-height: clamp(6rem, 36cqi, 11rem);
+        box-shadow: 0 0.25rem 0.75rem rgb(37 42 49 / 3%);
+        animation-delay: -1100ms;
+    }
+
+    &[data-shadow-surface="hover"] {
+        min-height: clamp(7rem, 42cqi, 12.5rem);
+        box-shadow: 0 0.375rem 1.5625rem rgb(37 42 49 / 12%);
+        animation-delay: -1800ms;
+    }
+}
+
+@keyframes shadow-float {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+
+    100% {
+        transform: translateY(-0.35rem) scale(1.015);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .shadow-surface {
+        animation: none;
+    }
+}

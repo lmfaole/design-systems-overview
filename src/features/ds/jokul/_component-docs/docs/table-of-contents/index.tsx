@@ -14,6 +14,7 @@ const doc: ComponentDoc = {
         long: "TableOfContents viser en navigerbar innholdsfortegnelse for siden.",
     },
     preview: <TableOfContentsPreview />,
+    example: () => <TableOfContentsPreview />,
     relationships: {
         subcomponents: [
             { id: "table-of-contents-link", description: "En lenke i innholdsfortegnelsen." },

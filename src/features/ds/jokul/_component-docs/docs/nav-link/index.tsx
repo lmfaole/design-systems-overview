@@ -17,6 +17,7 @@ const doc: ComponentDoc = {
         alternatives: [{ id: "link", description: "Bruk Link for innebygde hyperkoblinger i tekstinnhold fremfor sidenavigasjon." }, { id: "link-list", description: "Bruk LinkList når du presenterer en gruppert, merket samling av navigasjonslenker i en kolonne." }],
     },
     preview: <NavLinkPreview />,
+    example: (props) => <NavLinkPreview {...props} />,
 
     props,
 };

@@ -17,7 +17,9 @@ vi.mock("@/features/ds/jokul/_token/components/TokenArticle", () => ({
             data-has-illustration={String(Boolean(illustration))}
             data-token-tables={tokenOverview?.length ?? 0}
             data-scss-section={scssSection?.length ?? 0}
-        />
+        >
+            {illustration}
+        </article>
     ),
 }));
 
@@ -50,7 +52,14 @@ describe("TokenPostPageClient", () => {
             title: "Farger",
             excerpt: "Jøkul-farger",
             illustration: <svg data-illustration="true"/>,
-            tokenOverview: [{caption: "Primitive", columns: ["Token"], rows: [["--jkl-color-brand-snohvit"]]}],
+            tokenOverview: [
+                {
+                    caption: "Primitive",
+                    exampleColumnIndex: 0,
+                    columns: ["Forhåndsvisning", "Token"],
+                    rows: [[<span data-token-table-example="color"/>, "--jkl-color-brand-snohvit"]],
+                },
+            ],
             scssSection: [{name: "light-mode-variables"}],
         });
 
@@ -61,5 +70,19 @@ describe("TokenPostPageClient", () => {
         expect(html).toContain('data-has-illustration="true"');
         expect(html).toContain('data-token-tables="1"');
         expect(html).toContain('data-scss-section="1"');
+    });
+
+    it("passes the bespoke illustration through to the token article", () => {
+        dataMocks.getTokenPost.mockReturnValue({
+            title: "Skygger",
+            excerpt: "Skygger i Jøkul",
+            illustration: <div data-token-illustration="skygger"><div data-shadow-surface="task"/></div>,
+        });
+
+        const html = renderToStaticMarkup(<TokenPostPageClient slug="skygger"/>);
+
+        expect(html).toContain('data-token-article=""');
+        expect(html).toContain('data-token-illustration="skygger"');
+        expect(html).toContain('data-shadow-surface="task"');
     });
 });

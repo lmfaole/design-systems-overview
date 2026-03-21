@@ -14,6 +14,7 @@ const doc: ComponentDoc = {
         long: "Feedback er en komponent for å samle inn tilbakemeldinger fra brukere. Den støtter smileys og radioknapper, og kan utvides med et oppfølgingsspørsmål.",
     },
     preview: <FeedbackSmileyPreview />,
+    example: () => <FeedbackSmileyPreview />,
 
     props,
 };

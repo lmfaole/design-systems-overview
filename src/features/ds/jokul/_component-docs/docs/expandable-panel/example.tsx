@@ -9,16 +9,25 @@ type Variant = (typeof variants)[number];
 export function ExpandablePanelExample(props: ComponentExampleProps) {
     const rawVariant = typeof props.variant === "string" ? props.variant : "fill";
     const variant = (variants.includes(rawVariant as Variant) ? rawVariant : "fill") as Variant;
+    const controlledOpen = typeof props.open === "boolean" ? props.open : null;
     const defaultOpen = props.defaultOpen === true;
-    const [open, setOpen] = useState(defaultOpen);
+    const [open, setOpen] = useState(controlledOpen ?? defaultOpen);
 
     useEffect(() => {
-        setOpen(defaultOpen);
-    }, [defaultOpen]);
+        setOpen(controlledOpen ?? defaultOpen);
+    }, [controlledOpen, defaultOpen]);
 
     return (
         <Flex direction="column" gap="s">
-            <ExpandablePanel variant={variant} open={open} onOpenChange={setOpen}>
+            <ExpandablePanel
+                variant={variant}
+                open={controlledOpen ?? open}
+                onOpenChange={(nextOpen) => {
+                    if (controlledOpen === null) {
+                        setOpen(nextOpen);
+                    }
+                }}
+            >
                 <ExpandablePanel.Header>Hva er inkludert?</ExpandablePanel.Header>
                 <ExpandablePanel.Content>
                     <p>Forsikringen dekker skader og ansvar.</p>

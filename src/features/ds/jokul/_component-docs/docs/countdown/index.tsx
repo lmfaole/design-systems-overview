@@ -14,6 +14,7 @@ const doc: ComponentDoc = {
         long: "Countdown viser en nedtelling fra et gitt antall millisekunder.",
     },
     preview: <CountdownPreview />,
+    example: () => <CountdownPreview />,
 
     props,
 };

@@ -11,6 +11,7 @@ const options = [
 
 export function RadioButtonExample(props: ComponentExampleProps) {
     const legend = typeof props.legend === "string" && props.legend.trim() !== "" ? props.legend : "Velg betaling";
+    const name = typeof props.name === "string" && props.name.trim() !== "" ? props.name : "payment";
     const helpLabel = typeof props.helpLabel === "string" && props.helpLabel.trim() !== "" ? props.helpLabel : undefined;
     const errorLabel = typeof props.errorLabel === "string" && props.errorLabel.trim() !== "" ? props.errorLabel : undefined;
     const inline = props.inline === true;
@@ -25,7 +26,7 @@ export function RadioButtonExample(props: ComponentExampleProps) {
         <Flex direction="column" gap="s">
             <RadioButtonGroup
                 legend={legend}
-                name="payment"
+                name={name}
                 value={value}
                 onChange={(event) => setValue(event.target.value)}
                 helpLabel={errorLabel ? undefined : helpLabel}

@@ -22,6 +22,7 @@ const doc: ComponentDoc = {
     },
 
     preview: <ModalPreview />,
+    example: (props) => <ModalPreview {...props} />,
     props,
 };
 

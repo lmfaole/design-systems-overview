@@ -28,6 +28,7 @@ function formatPremium(value: number) {
 
 export function ExpandableTableRowExample(props: ComponentExampleProps) {
     const preferredOpen = props.isOpen === true;
+    const colSpan = typeof props.colSpan === "number" ? props.colSpan : 3;
     const collapseToList = props.collapseToList === true;
     const [isOpen, setIsOpen] = useState(preferredOpen);
 
@@ -55,7 +56,7 @@ export function ExpandableTableRowExample(props: ComponentExampleProps) {
                         onToggle={(nextOpen) => setIsOpen(nextOpen)}
                         expandedChildren={(
                             <TableRow>
-                                <TableCell colSpan={3}>
+                                <TableCell colSpan={colSpan}>
                                     <Flex direction="column" gap="xs">
                                         {row.details.map((detail) => (
                                             <span key={detail}>{detail}</span>

@@ -3,6 +3,23 @@
     "Astro docs": {
       "type": "http",
       "url": "https://mcp.docs.astro.build/mcp"
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "chrome-devtools-mcp@latest"
+      ]
+    },
+    "browserbase": {
+      "type": "http",
+      "url": "your-smithery-url.com"
+    },
+    "lighthouse": {
+      "command": "npx",
+      "args": [
+        "@danielsogl/lighthouse-mcp@latest"
+      ]
     }
   }
 }

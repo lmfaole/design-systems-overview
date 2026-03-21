@@ -26,10 +26,12 @@ const doc: ComponentDoc = {
     preview: <RadioButtonPreview />,
     example: (props) => <RadioButtonExample {...props} />,
     exampleControlsConfig: {
-        include: ["legend", "helpLabel", "errorLabel", "inline"],
-        order: ["legend", "helpLabel", "errorLabel", "inline"],
+        include: ["legend", "name", "value", "helpLabel", "errorLabel", "inline"],
+        order: ["legend", "name", "value", "helpLabel", "errorLabel", "inline"],
         overrides: {
             legend: { defaultValue: "Velg betaling" },
+            name: { defaultValue: "payment" },
+            value: { defaultValue: "card" },
             helpLabel: {
                 defaultValue: "Velg én betalingsmåte.",
                 visibleWhen: { name: "errorLabel", operator: "notEquals", value: "Du må velge en betalingsmåte" },

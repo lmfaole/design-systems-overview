@@ -27,10 +27,11 @@ const doc: ComponentDoc = {
     preview: <ComboboxBasicPreview />,
     example: (props) => <ComboboxExample {...props} />,
     exampleControlsConfig: {
-        include: ["label", "placeholder", "helpLabel", "errorLabel", "noMatchingOption"],
-        order: ["label", "placeholder", "helpLabel", "errorLabel", "noMatchingOption"],
+        include: ["label", "name", "placeholder", "helpLabel", "errorLabel", "noMatchingOption"],
+        order: ["label", "name", "placeholder", "helpLabel", "errorLabel", "noMatchingOption"],
         overrides: {
             label: { defaultValue: "Velg forsikringer" },
+            name: { defaultValue: "insurance" },
             placeholder: { defaultValue: "Søk i listen" },
             helpLabel: {
                 defaultValue: "Velg flere alternativer.",

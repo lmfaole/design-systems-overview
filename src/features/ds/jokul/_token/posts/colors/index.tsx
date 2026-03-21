@@ -14,24 +14,13 @@ import {
     textTokens,
 } from "./tokens";
 import {colorMixins} from "./mixins";
+import {
+    createColorSwatchExample,
+    createDualColorSwatchExample,
+    createLengthBarExample,
+    createTextExample,
+} from "../_shared/table-examples";
 import type {TokenPost} from "../types";
-
-const SWATCH: React.CSSProperties = {
-    width: "28px",
-    height: "28px",
-    borderRadius: "4px",
-    border: "1px solid var(--jkl-color-border-separator)",
-    flexShrink: 0,
-};
-
-function DualSwatch({light, dark}: { light: string; dark: string }) {
-    return (
-        <div style={{display: "inline-flex", gap: "4px"}}>
-            <div style={{...SWATCH, background: light}}/>
-            <div style={{...SWATCH, background: dark}}/>
-        </div>
-    );
-}
 
 const post: TokenPost = {
     id: 11,
@@ -44,9 +33,10 @@ const post: TokenPost = {
             description:
                 "Disse tokenene eksporteres fra `@fremtind/jokul/core` som `tokens.color.brand.*`. De er rå merkevarefarger uten semantikk.",
             caption: "Eksporterte primitive fargetokens fra Jøkul core",
+            exampleColumnIndex: 0,
             columns: ["Forhåndsvisning", "Eksport", "Verdi", "Navn"],
             rows: exportedPrimitiveColorTokens.map(({path, value, label}) => [
-                <div key={`${path}-s`} style={{...SWATCH, background: value}}/>,
+                createColorSwatchExample(value),
                 <code key={`${path}-c`}>{formatPublicColorTokenPath(path)}</code>,
                 value,
                 label,
@@ -57,6 +47,7 @@ const post: TokenPost = {
             description:
                 "Jøkul eksporterer også funksjonelle statusfarger som rå verdier. De brukes blant annet som grunnlag for semantiske feedback-farger.",
             caption: "Eksporterte funksjonelle farger fra Jøkul core",
+            exampleColumnIndex: 0,
             columns: ["Forhåndsvisning", "Eksport", "Lys", "Mørk", "Bruksområde"],
             rows: exportedFunctionalColorTokens.map(({
                                                          name,
@@ -66,7 +57,7 @@ const post: TokenPost = {
                                                          darkValue,
                                                          description
                                                      }) => [
-                <DualSwatch key={`${name}-s`} light={lightValue} dark={darkValue}/>,
+                createDualColorSwatchExample(lightValue, darkValue),
                 <span key={`${name}-c`}>
                     <code>{formatPublicColorTokenPath(lightPath)}</code>
                     <br/>
@@ -82,9 +73,10 @@ const post: TokenPost = {
             description:
                 "Semantiske bakgrunnstokens i `tokens.color.background.*`. Hver rad dokumenterer både lys og mørk verdi.",
             caption: "Eksporterte bakgrunnstokens fra Jøkul core",
+            exampleColumnIndex: 0,
             columns: ["Forhåndsvisning", "Eksport", "Lys", "Mørk", "Bruksområde"],
             rows: exportedBackgroundTokens.map(({path, lightValue, darkValue, description}) => [
-                <DualSwatch key={`${path}-s`} light={lightValue} dark={darkValue}/>,
+                createDualColorSwatchExample(lightValue, darkValue),
                 <code key={`${path}-c`}>{formatPublicColorTokenPath(path)}</code>,
                 lightValue,
                 darkValue,
@@ -96,9 +88,10 @@ const post: TokenPost = {
             description:
                 "Statusflater for meldinger og varsler. Disse finnes som egne eksporterte bakgrunnstokens i Jøkul core.",
             caption: "Eksporterte alert-bakgrunner fra Jøkul core",
+            exampleColumnIndex: 0,
             columns: ["Forhåndsvisning", "Eksport", "Lys", "Mørk", "Bruksområde"],
             rows: exportedAlertBackgroundTokens.map(({path, lightValue, darkValue, description}) => [
-                <DualSwatch key={`${path}-s`} light={lightValue} dark={darkValue}/>,
+                createDualColorSwatchExample(lightValue, darkValue),
                 <code key={`${path}-c`}>{formatPublicColorTokenPath(path)}</code>,
                 lightValue,
                 darkValue,
@@ -110,9 +103,10 @@ const post: TokenPost = {
             description:
                 "Semantiske tekstfarger fra `tokens.color.text.*`. Bruk disse når du jobber direkte mot Jøkul-tokenobjektet i JS eller TS.",
             caption: "Eksporterte tekstfarger fra Jøkul core",
+            exampleColumnIndex: 0,
             columns: ["Forhåndsvisning", "Eksport", "Lys", "Mørk", "Bruksområde"],
             rows: exportedTextTokens.map(({path, lightValue, darkValue, description}) => [
-                <DualSwatch key={`${path}-s`} light={lightValue} dark={darkValue}/>,
+                createDualColorSwatchExample(lightValue, darkValue),
                 <code key={`${path}-c`}>{formatPublicColorTokenPath(path)}</code>,
                 lightValue,
                 darkValue,
@@ -124,9 +118,10 @@ const post: TokenPost = {
             description:
                 "Semantiske kant- og separatorfarger fra `tokens.color.border.*`.",
             caption: "Eksporterte kantfarger fra Jøkul core",
+            exampleColumnIndex: 0,
             columns: ["Forhåndsvisning", "Eksport", "Lys", "Mørk", "Bruksområde"],
             rows: exportedBorderTokens.map(({path, lightValue, darkValue, description}) => [
-                <DualSwatch key={`${path}-s`} light={lightValue} dark={darkValue}/>,
+                createDualColorSwatchExample(lightValue, darkValue),
                 <code key={`${path}-c`}>{formatPublicColorTokenPath(path)}</code>,
                 lightValue,
                 darkValue,
@@ -138,9 +133,10 @@ const post: TokenPost = {
             description:
                 "Jøkuls konkrete fargepalett — merkevarefarger med faste hex-verdier. Bruk ikke disse direkte i komponentkode; bruk de semantiske tokenene som peker til dem.",
             caption: "Primitive fargetokens",
+            exampleColumnIndex: 0,
             columns: ["Forhåndsvisning", "Token", "Navn"],
             rows: primitiveColorTokens.map(({token, name}) => [
-                <div key={`${token}-s`} style={{...SWATCH, background: `var(${token})`}}/>,
+                createColorSwatchExample(`var(${token})`),
                 <code key={`${token}-c`}>{token}</code>,
                 name,
             ]),
@@ -150,9 +146,10 @@ const post: TokenPost = {
             description:
                 "Semantiske tokens for bakgrunns- og overflatefarger. Bytter verdi automatisk mellom lys og mørk modus.",
             caption: "Bakgrunns- og overflatefarger",
+            exampleColumnIndex: 0,
             columns: ["Forhåndsvisning", "Token", "Bruksområde"],
             rows: backgroundTokens.map(({token, description}) => [
-                <div key={`${token}-s`} style={{...SWATCH, background: `var(${token})`}}/>,
+                createColorSwatchExample(`var(${token})`),
                 <code key={`${token}-c`}>{token}</code>,
                 description,
             ]),
@@ -162,23 +159,20 @@ const post: TokenPost = {
             description:
                 "Semantiske tokens for tekstfarger. Sørger for riktig kontrast mot bakgrunnen i begge temaer.",
             caption: "Semantiske tekstfarger",
+            exampleColumnIndex: 0,
             columns: ["Forhåndsvisning", "Token", "Bruksområde"],
             rows: textTokens.map(({token, description}) => [
-                <span
-                    key={`${token}-p`}
-                    aria-hidden
-                    style={{
-                        color: `var(${token})`,
-                        fontWeight: token.includes("default") ? "bold" : undefined,
-                        background: token.includes("inverted")
-                            ? "var(--jkl-color-background-container-inverted)"
-                            : undefined,
-                        padding: token.includes("inverted") ? "0 4px" : undefined,
-                        borderRadius: token.includes("inverted") ? "2px" : undefined,
-                    }}
-                >
-          Abc
-        </span>,
+                createTextExample("Abc", {
+                    color: `var(${token})`,
+                    fontWeight: token.includes("default") ? "700" : undefined,
+                    background: token.includes("inverted")
+                        ? "var(--jkl-color-background-container-inverted)"
+                        : undefined,
+                    padding: token.includes("inverted") ? "0 0.25rem" : undefined,
+                    borderRadius: token.includes("inverted")
+                        ? "var(--jkl-border-radius-xs)"
+                        : undefined,
+                }, "text-color"),
                 <code key={`${token}-c`}>{token}</code>,
                 description,
             ]),
@@ -188,13 +182,14 @@ const post: TokenPost = {
             description:
                 "Semantiske tokens for streker, skillelinjer og innramminger av interaktive elementer.",
             caption: "Semantiske kantlinjefarger",
+            exampleColumnIndex: 0,
             columns: ["Forhåndsvisning", "Token", "Bruksområde"],
             rows: borderTokens.map(({token, description}) => [
-                <div
-                    key={`${token}-p`}
-                    aria-hidden
-                    style={{width: "40px", height: "2px", background: `var(${token})`, borderRadius: "1px"}}
-                />,
+                createLengthBarExample("100%", {
+                    kind: "border-color",
+                    thickness: "2px",
+                    color: `var(${token})`,
+                }),
                 <code key={`${token}-c`}>{token}</code>,
                 description,
             ]),
@@ -204,9 +199,10 @@ const post: TokenPost = {
             description:
                 "Overflatefarger for statusmeldinger — suksess, advarsel, feil og info. Brukes som bakgrunn i Message- og SystemMessage-komponenter.",
             caption: "Feedback-overflatefarger",
+            exampleColumnIndex: 0,
             columns: ["Forhåndsvisning", "Token", "Variant"],
             rows: feedbackSurfaceTokens.map(({token, variant}) => [
-                <div key={`${token}-s`} style={{...SWATCH, background: `var(${token})`}}/>,
+                createColorSwatchExample(`var(${token})`),
                 <code key={`${token}-c`}>{token}</code>,
                 variant,
             ]),

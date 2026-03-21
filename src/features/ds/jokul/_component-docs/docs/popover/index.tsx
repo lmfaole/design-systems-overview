@@ -21,6 +21,7 @@ const doc: ComponentDoc = {
         long: "Popover er en flytende informasjonsboks som vises ved siden av et trigger-element. Den brukes til kontekstuell informasjon, forklaringer og enkle handlinger som ikke krever en full modal. Bygget på Floating UI.",
     },
     preview: <PopoverBasicPreview />,
+    example: (props) => <PopoverBasicPreview {...props} />,
 
     relationships: {
         related: [{ id: "tooltip", description: "Bruk Tooltip for korte skrivebeskyttede hint; Popover støtter interaktivt innhold som skjemaer eller handlingsmenyer." }, { id: "modal", description: "Bruk Modal når overlegget må blokkere resten av siden og krever en bevisst avvisning." }],

@@ -19,6 +19,7 @@ const doc: ComponentDoc = {
         ],
     },
     preview: <FormErrorMessagePreview />,
+    example: () => <FormErrorMessagePreview />,
     props,
 };
 

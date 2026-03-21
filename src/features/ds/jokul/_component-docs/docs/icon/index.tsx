@@ -16,6 +16,7 @@ const doc: ComponentDoc = {
     },
 
     preview: <IconPreview />,
+    example: (props) => <IconPreview {...props} />,
     props,
     migrations,
     relationships: {

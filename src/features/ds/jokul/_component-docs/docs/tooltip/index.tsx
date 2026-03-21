@@ -14,6 +14,7 @@ const doc: ComponentDoc = {
         long: "Tooltip brukes for korte, ikke-interaktive hint til knapper og andre interaktive elementer (vises ved hover/fokus/klikk).",
     },
     preview: <TooltipPreview />,
+    example: (props) => <TooltipPreview {...props} />,
     props,
     relationships: {
         related: [{ id: "popup-tip", description: "PopupTip er deprecated, men dokumentert separat for migrering." }],

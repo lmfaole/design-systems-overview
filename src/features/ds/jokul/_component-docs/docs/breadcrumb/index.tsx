@@ -20,6 +20,7 @@ const doc: ComponentDoc = {
         ],
     },
     preview: <BreadcrumbPreview />,
+    example: () => <BreadcrumbPreview />,
 
     props,
 };

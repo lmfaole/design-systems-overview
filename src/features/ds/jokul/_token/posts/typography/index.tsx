@@ -12,6 +12,7 @@ import {
     lineHeightReference,
 } from "./tokens";
 import {typographyMixins} from "./mixins";
+import {createTableExampleFrame, createTextExample} from "../_shared/table-examples";
 import type {TokenPost} from "../types";
 
 const post: TokenPost = {
@@ -25,8 +26,10 @@ const post: TokenPost = {
             description:
                 "Jøkul eksporterer font-størrelsene i `@fremtind/jokul/core` som `tokens.typography.font.size.*`.",
             caption: "Eksporterte font-size-tokens fra Jøkul core",
-            columns: ["Eksport", "Verdi", "Bruksområde"],
+            exampleColumnIndex: 0,
+            columns: ["Eksempel", "Eksport", "Verdi", "Bruksområde"],
             rows: exportedFontSizeTokens.map(({path, value, usage}) => [
+                createTextExample("Aa", {fontSize: value, lineHeight: 1, fontWeight: "700"}, "font-size"),
                 <code key={`${path}-code`}>{formatPublicTypographyTokenPath(path)}</code>,
                 value,
                 usage,
@@ -37,8 +40,24 @@ const post: TokenPost = {
             description:
                 "Den rå line-height-skalaen i Jøkul, eksportert som `tokens.typography.line.height.*`.",
             caption: "Eksporterte line-height-trinn fra Jøkul core",
-            columns: ["Eksport", "Verdi", "Bruksområde"],
+            exampleColumnIndex: 0,
+            columns: ["Eksempel", "Eksport", "Verdi", "Bruksområde"],
             rows: exportedLineHeightStepTokens.map(({path, value, usage}) => [
+                createTableExampleFrame(
+                    "line-height",
+                    <span
+                        style={{
+                            display: "grid",
+                            inlineSize: "100%",
+                            justifyItems: "start",
+                            fontSize: "var(--jkl-font-size-2)",
+                            lineHeight: value,
+                        }}
+                    >
+                        <span>Linje en</span>
+                        <span>Linje to</span>
+                    </span>,
+                ),
                 <code key={`${path}-code`}>{formatPublicTypographyTokenPath(path)}</code>,
                 value,
                 usage,
@@ -49,8 +68,24 @@ const post: TokenPost = {
             description:
                 "Navngitte line-height-tokens for typiske bruksområder som kompakt UI-tekst og løpende brødtekst.",
             caption: "Eksporterte semantiske line-height-tokens fra Jøkul core",
-            columns: ["Eksport", "Verdi", "Bruksområde"],
+            exampleColumnIndex: 0,
+            columns: ["Eksempel", "Eksport", "Verdi", "Bruksområde"],
             rows: exportedSemanticLineHeightTokens.map(({path, value, usage}) => [
+                createTableExampleFrame(
+                    "line-height",
+                    <span
+                        style={{
+                            display: "grid",
+                            inlineSize: "100%",
+                            justifyItems: "start",
+                            fontSize: "var(--jkl-font-size-2)",
+                            lineHeight: value,
+                        }}
+                    >
+                        <span>Linje en</span>
+                        <span>Linje to</span>
+                    </span>,
+                ),
                 <code key={`${path}-code`}>{formatPublicTypographyTokenPath(path)}</code>,
                 value,
                 usage,
@@ -61,8 +96,10 @@ const post: TokenPost = {
             description:
                 "Tekstvekter eksporteres både som `tokens.typography.weight.*` og `tokens.typography.font.weight.*`.",
             caption: "Eksporterte font-weight-tokens fra Jøkul core",
-            columns: ["Eksport", "Verdi", "Bruksområde"],
+            exampleColumnIndex: 0,
+            columns: ["Eksempel", "Eksport", "Verdi", "Bruksområde"],
             rows: exportedFontWeightTokens.map(({path, aliasPath, value, usage}) => [
+                createTextExample("Aa", {fontSize: "var(--jkl-font-size-4)", fontWeight: value}, "font-weight"),
                 <span key={`${path}-code`}>
           <code>{formatPublicTypographyTokenPath(path)}</code>
                     {aliasPath && (
@@ -81,8 +118,10 @@ const post: TokenPost = {
             description:
                 "Ikonvektene i Jøkul ligger i samme tokenobjekt og påvirker blant annet material-symboler og ikonografi.",
             caption: "Eksporterte ikonvekt-tokens fra Jøkul core",
-            columns: ["Eksport", "Verdi", "Bruksområde"],
+            exampleColumnIndex: 0,
+            columns: ["Eksempel", "Eksport", "Verdi", "Bruksområde"],
             rows: exportedIconWeightTokens.map(({path, value, usage}) => [
+                createTextExample("◎", {fontSize: "var(--jkl-font-size-5)", fontWeight: value}, "icon-weight"),
                 <code key={`${path}-code`}>{formatPublicTypographyTokenPath(path)}</code>,
                 value,
                 usage,
@@ -93,8 +132,14 @@ const post: TokenPost = {
             description:
                 "Jøkul eksporterer navngitte tekststiler som samler font-size, line-height og font-weight for `small` og `base`.",
             caption: "Eksporterte typografistiler fra Jøkul core",
-            columns: ["Stil", "Eksport", "Small", "Base", "Bruksområde"],
+            exampleColumnIndex: 0,
+            columns: ["Eksempel", "Stil", "Eksport", "Small", "Base", "Bruksområde"],
             rows: exportedTypographyStyleTokens.map(({name, path, aliasPath, small, base, usage}) => [
+                createTextExample("Aa", {
+                    fontSize: base.fontSize,
+                    lineHeight: base.lineHeight,
+                    fontWeight: base.fontWeight,
+                }, "typography-style"),
                 <strong key={`${path}-name`}>{name}</strong>,
                 <span key={`${path}-code`}>
           <code>{formatPublicTypographyTokenPath(path)}</code>
@@ -127,15 +172,10 @@ const post: TokenPost = {
             description:
                 "Ti trinn fra micro til display. Bruk alltid disse tokenene fremfor hardkodede verdier for å sikre konsistent typografisk hierarki.",
             caption: "Font-size tokens — 10 trinn fra micro til display",
+            exampleColumnIndex: 0,
             columns: ["Forhåndsvisning", "Token", "Verdi", "Stil-rolle", "Bruksområde"],
             rows: fontSizeReference.map(({token, value, role, usage}) => [
-                <span
-                    key={`${token}-preview`}
-                    aria-hidden
-                    style={{fontSize: `var(${token})`, lineHeight: 1, display: "block"}}
-                >
-          Aa
-        </span>,
+                createTextExample("Aa", {fontSize: `var(${token})`, lineHeight: 1}, "font-size"),
                 <code key={`${token}-code`}>{token}</code>,
                 value,
                 role,
@@ -147,8 +187,24 @@ const post: TokenPost = {
             description:
                 "Tre nivåer som kontrollerer luft mellom tekstlinjer. Velg basert på tekstlengde og leseformål.",
             caption: "Line-height tokens — tre nivåer",
-            columns: ["Token", "Verdi", "Bruksområde"],
+            exampleColumnIndex: 0,
+            columns: ["Eksempel", "Token", "Verdi", "Bruksområde"],
             rows: lineHeightReference.map(({token, value, usage}) => [
+                createTableExampleFrame(
+                    "line-height",
+                    <span
+                        style={{
+                            display: "grid",
+                            inlineSize: "100%",
+                            justifyItems: "start",
+                            fontSize: "var(--jkl-font-size-2)",
+                            lineHeight: `var(${token})`,
+                        }}
+                    >
+                        <span>Linje en</span>
+                        <span>Linje to</span>
+                    </span>,
+                ),
                 <code key={`${token}-code`}>{token}</code>,
                 value,
                 usage,
@@ -159,8 +215,10 @@ const post: TokenPost = {
             description:
                 "To vektnivåer — normal for brødtekst, bold for overskrifter og fremheving. Bruk sparsomt for å bevare hierarki.",
             caption: "Font-weight tokens — to vektnivåer",
-            columns: ["Token", "Verdi", "Bruksområde"],
+            exampleColumnIndex: 0,
+            columns: ["Eksempel", "Token", "Verdi", "Bruksområde"],
             rows: fontWeightReference.map(({token, value, usage}) => [
+                createTextExample("Aa", {fontSize: "var(--jkl-font-size-4)", fontWeight: `var(${token})`}, "font-weight"),
                 <code key={`${token}-code`}>{token}</code>,
                 value,
                 usage,

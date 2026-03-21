@@ -18,6 +18,7 @@ const doc: ComponentDoc = {
         related: [{ id: "button", description: "Erstatt Button-etiketten med Loader mens en asynkron handling pågår for å vise innebygd ladetilstand." }, { id: "feedback", description: "Kombiner Loader med Feedback-mønstre for å kommunisere fremdrift på tvers av en hel side eller seksjon." }],
     },
     preview: <LoaderPreview />,
+    example: (props) => <LoaderPreview {...props} />,
 
     props,
 };

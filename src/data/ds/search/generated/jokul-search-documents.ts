@@ -2298,5 +2298,20 @@ export const jokulSearchDocuments = [
         ],
         "href": "/ds/jokul/token/kantradiuser",
         "meta": "Jøkul · Designtoken"
+    },
+    {
+        "id": "token-21",
+        "designSystemId": "jokul",
+        "designSystemName": "Jøkul",
+        "kind": "token",
+        "title": "Skygger",
+        "description": "SCSS-variabler for skygger i Jøkul. Bruk dem når elevasjon og klikkbarhet må signaliseres tydelig, men sparsomt.",
+        "keywords": [
+            "card",
+            "menu",
+            "modal"
+        ],
+        "href": "/ds/jokul/token/skygger",
+        "meta": "Jøkul · Designtoken"
     }
 ] as const;

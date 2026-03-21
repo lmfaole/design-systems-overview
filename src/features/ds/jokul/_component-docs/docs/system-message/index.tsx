@@ -22,11 +22,12 @@ const doc: ComponentDoc = {
     preview: <SystemMessagePreview />,
     example: (props) => <SystemMessageExample {...props} />,
     exampleControlsConfig: {
-        include: ["variant", "dismissed", "maxContentWidth", "role"],
-        order: ["variant", "dismissed", "maxContentWidth", "role"],
+        include: ["variant", "dismissed", "maxContentWidth", "paddingLeft", "role"],
+        order: ["variant", "dismissed", "maxContentWidth", "paddingLeft", "role"],
         overrides: {
             variant: { kind: "select", options: ["info", "success", "warning", "error"], defaultValue: "info" },
             maxContentWidth: { placeholder: "f.eks. 56rem" },
+            paddingLeft: { placeholder: "f.eks. 4rem" },
             role: { placeholder: "f.eks. alert" },
         },
     },

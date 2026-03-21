@@ -22,12 +22,24 @@ const doc: ComponentDoc = {
     preview: <RadioPanelPreview />,
     example: (props) => <RadioPanelExample {...props} />,
     exampleControlsConfig: {
-        include: ["label", "description", "amount", "disabled"],
-        order: ["label", "description", "amount", "disabled"],
+        include: ["label", "description", "amount", "name", "value", "checked", "defaultChecked", "disabled"],
+        order: ["label", "description", "amount", "name", "value", "checked", "defaultChecked", "disabled"],
         overrides: {
             label: { defaultValue: "Standard" },
             description: { defaultValue: "Dekker de vanligste behovene." },
             amount: { defaultValue: "kr 1 200 / mnd" },
+            name: { kind: "text", defaultValue: "package" },
+            value: { kind: "text", defaultValue: "standard" },
+            checked: {
+                kind: "select",
+                options: [
+                    { label: "Automatisk", value: null },
+                    { label: "På", value: true },
+                    { label: "Av", value: false },
+                ],
+                defaultValue: null,
+            },
+            defaultChecked: { kind: "boolean", defaultValue: true },
             disabled: { kind: "boolean", defaultValue: false },
         },
     },

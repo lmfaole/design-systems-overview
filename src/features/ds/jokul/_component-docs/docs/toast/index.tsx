@@ -28,6 +28,7 @@ const doc: ComponentDoc = {
     },
 
     preview: <ToastPreview />,
+    example: () => <ToastPreview />,
     props,
 };
 

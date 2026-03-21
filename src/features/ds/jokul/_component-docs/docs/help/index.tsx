@@ -15,6 +15,7 @@ const doc: ComponentDoc = {
         long: "Help viser en liten ?-knapp som åpner en flytende hjelpetekst i et popover. Brukes til å gi kontekstuell hjelp ved skjemafelt uten å ta opp permanent plass i grensesnittet.",
     },
     preview: <HelpPreview />,
+    example: (props) => <HelpPreview {...props} />,
 
     relationships: {
         related: [{ id: "tooltip", description: "Tooltip viser et kort ikke-interaktivt hint; Help gir et avvisbart panel med fyldigere veiledningstekst." }, { id: "popover", description: "Help er bygget på Popover og deler det samme flytende posisjoneringssystemet." }, { id: "input-group", description: "Fest Help til en InputGroup for å gi kontekstuell veiledning uten å rote til feltets etikett." }],

@@ -21,6 +21,7 @@ const doc: ComponentDoc = {
         long: "Menu er en dropdown-meny som åpnes av et trigger-element. Den støtter vanlige valg, separatorer og avkrysningselementer.",
     },
     preview: <MenuPreview />,
+    example: (props) => <MenuPreview {...props} />,
     relationships: {
         subcomponents: [
             { id: "menu-item", description: "Et valgbart element i menyen." },

@@ -17,9 +17,10 @@ const doc: ComponentDoc = {
     preview: <TableHeaderPreview />,
     example: (props) => <TableHeaderExample {...props} />,
     exampleControlsConfig: {
-        include: ["align", "srOnly"],
-        order: ["align", "srOnly"],
+        include: ["scope", "align", "srOnly"],
+        order: ["scope", "align", "srOnly"],
         overrides: {
+            scope: { kind: "select", options: ["col", "row"], defaultValue: "col" },
             align: { defaultValue: "right" },
         },
     },

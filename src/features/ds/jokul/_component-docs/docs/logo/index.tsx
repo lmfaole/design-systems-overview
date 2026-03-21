@@ -14,6 +14,7 @@ const doc: ComponentDoc = {
         long: "Logo rendrer Fremtind-logoen som en SVG-komponent.",
     },
     preview: <LogoPreview />,
+    example: () => <LogoPreview />,
 
     props,
 };

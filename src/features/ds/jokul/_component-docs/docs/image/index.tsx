@@ -15,6 +15,7 @@ const doc: ComponentDoc = {
     },
 
     preview: <ImagePreview />,
+    example: (props) => <ImagePreview {...props} />,
     props,
 };
 

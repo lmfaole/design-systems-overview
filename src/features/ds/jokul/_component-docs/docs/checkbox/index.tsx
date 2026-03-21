@@ -25,10 +25,21 @@ const doc: ComponentDoc = {
     preview: <CheckboxPreview />,
     example: (props) => <CheckboxExample {...props} />,
     exampleControlsConfig: {
-        include: ["label", "defaultChecked", "indeterminate", "invalid"],
-        order: ["label", "defaultChecked", "indeterminate", "invalid"],
+        include: ["label", "name", "value", "checked", "defaultChecked", "indeterminate", "invalid"],
+        order: ["label", "name", "value", "checked", "defaultChecked", "indeterminate", "invalid"],
         overrides: {
             label: { kind: "text", defaultValue: "Godta vilkårene" },
+            name: { kind: "text", defaultValue: "terms" },
+            value: { kind: "text", defaultValue: "accepted" },
+            checked: {
+                kind: "select",
+                options: [
+                    { label: "Automatisk", value: null },
+                    { label: "På", value: true },
+                    { label: "Av", value: false },
+                ],
+                defaultValue: null,
+            },
             defaultChecked: { kind: "boolean", defaultValue: false },
             indeterminate: { kind: "boolean", defaultValue: false },
             invalid: { kind: "boolean", defaultValue: false },

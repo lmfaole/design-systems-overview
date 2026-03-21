@@ -22,12 +22,23 @@ const doc: ComponentDoc = {
     preview: <CheckboxPanelPreview />,
     example: (props) => <CheckboxPanelExample {...props} />,
     exampleControlsConfig: {
-        include: ["label", "description", "amount", "defaultChecked", "disabled"],
-        order: ["label", "description", "amount", "defaultChecked", "disabled"],
+        include: ["label", "description", "amount", "name", "value", "checked", "defaultChecked", "disabled"],
+        order: ["label", "description", "amount", "name", "value", "checked", "defaultChecked", "disabled"],
         overrides: {
             label: { defaultValue: "Bilforsikring" },
             description: { defaultValue: "Dekker skade på egen bil." },
             amount: { defaultValue: "kr 1 200 / mnd" },
+            name: { kind: "text", defaultValue: "addons" },
+            value: { kind: "text", defaultValue: "car" },
+            checked: {
+                kind: "select",
+                options: [
+                    { label: "Automatisk", value: null },
+                    { label: "På", value: true },
+                    { label: "Av", value: false },
+                ],
+                defaultValue: null,
+            },
             defaultChecked: { kind: "boolean", defaultValue: true },
             disabled: { kind: "boolean", defaultValue: false },
         },

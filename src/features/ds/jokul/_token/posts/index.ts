@@ -4,7 +4,16 @@ import spacingPost from "./spacing";
 import motionPost from "./motion";
 import breakpointsPost from "./breakpoints";
 import borderRadiusPost from "./border-radius";
+import shadowsPost from "./shadows";
 import type { TokenPost } from "./types";
 
 export type { TokenPost };
-export const tokenPosts: TokenPost[] = [typographyPost, colorsPost, spacingPost, motionPost, breakpointsPost, borderRadiusPost].sort((a, b) => a.title.localeCompare(b.title, "nb"));
+export const tokenPosts: TokenPost[] = [
+    typographyPost,
+    colorsPost,
+    spacingPost,
+    motionPost,
+    breakpointsPost,
+    borderRadiusPost,
+    shadowsPost,
+].sort((a, b) => a.title.localeCompare(b.title, "nb"));

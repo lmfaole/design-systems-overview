@@ -15,7 +15,7 @@ const jokulSurfaceTokens: IllustrationSurfaceTokens = {
     backgroundHigh: "var(--jkl-color-background-container-high)",
     border: "var(--jkl-color-border-separator)",
     borderSubdued: "var(--jkl-color-border-subdued)",
-    radius: "var(--jkl-border-radius-medium)",
+    radius: "var(--jkl-border-radius-m)",
     pageBackground: "var(--jkl-color-background-page)",
     textColor: "var(--jkl-color-text-default)",
     easing: "var(--jkl-motion-easing-entrance)",

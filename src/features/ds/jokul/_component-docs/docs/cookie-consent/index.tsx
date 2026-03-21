@@ -33,6 +33,7 @@ const doc: ComponentDoc = {
         ],
     },
     preview: <CookieConsentPreview/>,
+    example: (props) => <CookieConsentPreview {...props}/>,
     props,
 };
 

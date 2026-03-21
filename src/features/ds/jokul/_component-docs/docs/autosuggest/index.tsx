@@ -35,6 +35,7 @@ const doc: ComponentDoc = {
         include: [
             "label",
             "placeholder",
+            "value",
             "variant",
             "maxNumberOfHits",
             "showDropdownControllerButton",
@@ -44,6 +45,7 @@ const doc: ComponentDoc = {
         order: [
             "label",
             "placeholder",
+            "value",
             "variant",
             "maxNumberOfHits",
             "showDropdownControllerButton",
@@ -53,6 +55,7 @@ const doc: ComponentDoc = {
         overrides: {
             label: { defaultValue: "Søk etter forsikring" },
             placeholder: { defaultValue: "Begynn å skrive" },
+            value: { defaultValue: "Bil" },
             variant: { kind: "select", options: ["small", "medium", "large"], defaultValue: "medium" },
             maxNumberOfHits: { kind: "number", defaultValue: 5, min: 1 },
             showDropdownControllerButton: { kind: "boolean", defaultValue: false },

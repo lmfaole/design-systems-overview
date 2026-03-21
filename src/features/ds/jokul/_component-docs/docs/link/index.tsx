@@ -17,6 +17,7 @@ const doc: ComponentDoc = {
         alternatives: [{ id: "link-list", description: "Bruk LinkList når flere relaterte lenker bør grupperes under en felles overskrift." }, { id: "nav-link", description: "Bruk NavLink for sidefelts- eller menynavigasjonselementer som fremhever aktiv rute." }],
     },
     preview: <LinkPreview />,
+    example: (props) => <LinkPreview {...props} />,
 
     props,
 };

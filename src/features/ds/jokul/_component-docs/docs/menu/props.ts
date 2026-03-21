@@ -19,9 +19,9 @@ export const props: PropDef[] = [
         },
         {
             name: "initialPlacement",
-            type: "string",
+            type: '"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"',
             required: false,
-            source: "react",
+            source: "custom",
             status: "stable",
             default: '"bottom-start"',
             description: "Startposisjon for menyen relativt til trigger.",

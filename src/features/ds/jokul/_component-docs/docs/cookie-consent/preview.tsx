@@ -1,8 +1,14 @@
 import {Button} from "@fremtind/jokul/button";
 import {Flex} from "@fremtind/jokul/flex";
 import {Link} from "@fremtind/jokul/link";
+import type {ComponentExampleProps} from "../types";
 
-export function CookieConsentPreview() {
+export function CookieConsentPreview(props: ComponentExampleProps = {}) {
+    const aboutPage = typeof props.aboutPage === "string" && props.aboutPage.trim() !== ""
+        ? props.aboutPage
+        : "https://www.fremtind.no/informasjonskapsler";
+    const blocking = props.blocking === true;
+
     return (
         <div
             style={{
@@ -18,8 +24,13 @@ export function CookieConsentPreview() {
                 <p style={{margin: 0, fontSize: "0.9em"}}>
                     Vi bruker anonym statistikk for å forstå hvordan løsningen brukes.
                 </p>
+                {blocking ? (
+                    <p style={{margin: 0, fontSize: "0.9em"}}>
+                        Du må velge før du kan gå videre.
+                    </p>
+                ) : null}
                 <p style={{margin: 0, fontSize: "0.9em"}}>
-                    <Link href="https://www.fremtind.no/informasjonskapsler" target="_blank">
+                    <Link href={aboutPage} target="_blank">
                         Les mer om informasjonskapsler
                     </Link>
                     .

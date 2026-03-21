@@ -15,6 +15,9 @@ export function SystemMessageExample(props: ComponentExampleProps) {
     const maxContentWidth = typeof props.maxContentWidth === "string" && props.maxContentWidth.trim() !== ""
         ? props.maxContentWidth
         : undefined;
+    const paddingLeft = typeof props.paddingLeft === "string" && props.paddingLeft.trim() !== ""
+        ? props.paddingLeft
+        : undefined;
 
     useEffect(() => {
         setDismissed(dismissedProp);
@@ -27,6 +30,7 @@ export function SystemMessageExample(props: ComponentExampleProps) {
                 dismissed={dismissed}
                 role={role}
                 maxContentWidth={maxContentWidth}
+                paddingLeft={paddingLeft}
                 dismissAction={{
                     buttonTitle: "Lukk",
                     handleDismiss: () => {

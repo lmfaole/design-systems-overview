@@ -1,3 +1,5 @@
+import {isValidElement} from "react";
+import {renderToStaticMarkup} from "react-dom/server";
 import {readdirSync, readFileSync} from "node:fs";
 import path from "node:path";
 import {compileString} from "sass";
@@ -29,6 +31,7 @@ import {
     spacingTokens,
     unitTokens,
 } from "@/features/ds/jokul/_token/posts/spacing/tokens";
+import {shadowTokens} from "@/features/ds/jokul/_token/posts/shadows/tokens";
 import {getTokenPost, getTokenPostById, getTokenSlug, tokenPosts} from "./data";
 import {typographyMixins} from "@/features/ds/jokul/_token/posts/typography/mixins";
 import {
@@ -70,6 +73,13 @@ const jokulCoreScssSource = collectFiles(
     path.join(jokulStylesRoot, "core", "jkl"),
     (file) => file.endsWith(".scss"),
 ).map((file) => readFileSync(file, "utf8")).join("\n");
+const jokulShadowScssSource = readFileSync(
+    path.join(jokulStylesRoot, "core", "jkl", "_shadows.scss"),
+    "utf8",
+);
+const validJokulCssCustomProperties = new Set(
+    Array.from(jokulStylesSource.matchAll(/--jkl-[a-z0-9-]+/gi), (match) => match[0]),
+);
 
 const documentedCssCustomProperties = [
     ...primitiveColorTokens.map(({token}) => token),
@@ -87,7 +97,10 @@ const documentedCssCustomProperties = [
     ...borderRadiusTokens.map(({token}) => token),
 ];
 
-const documentedScssVariables = breakpointTokens.map(({variable}) => variable);
+const documentedScssVariables = [
+    ...breakpointTokens.map(({variable}) => variable),
+    ...shadowTokens.map(({variable}) => variable),
+];
 
 const documentedMixins = [
     ...colorMixins,
@@ -194,6 +207,48 @@ describe("Jokul token docs integrity", () => {
         expect(issues).toEqual([]);
     });
 
+    it("keeps every token table populated with a rendered example of the token value", () => {
+        const issues: string[] = [];
+
+        for (const post of tokenPosts) {
+            for (const table of post.tokenOverview ?? []) {
+                if (!Number.isInteger(table.exampleColumnIndex)) {
+                    issues.push(`${post.id}: ${table.caption} missing exampleColumnIndex`);
+                    continue;
+                }
+
+                if (table.exampleColumnIndex < 0 || table.exampleColumnIndex >= table.columns.length) {
+                    issues.push(
+                        `${post.id}: ${table.caption} exampleColumnIndex ${table.exampleColumnIndex} is outside the table columns`,
+                    );
+                    continue;
+                }
+
+                for (const [rowIndex, row] of table.rows.entries()) {
+                    if (row.length !== table.columns.length) {
+                        continue;
+                    }
+
+                    const exampleMarkup = renderToStaticMarkup(row[table.exampleColumnIndex]).trim();
+
+                    if (!exampleMarkup) {
+                        issues.push(
+                            `${post.id}: ${table.caption} row ${rowIndex + 1} has an empty example cell`,
+                        );
+                    }
+
+                    if (!exampleMarkup.includes("data-token-table-example=")) {
+                        issues.push(
+                            `${post.id}: ${table.caption} row ${rowIndex + 1} example cell is missing a rendered token example`,
+                        );
+                    }
+                }
+            }
+        }
+
+        expect(issues).toEqual([]);
+    });
+
     it("documents only CSS custom properties that exist in the installed Jøkul styles", () => {
         const missingTokens = Array.from(new Set(documentedCssCustomProperties))
             .filter((token) => !jokulStylesSource.includes(token));
@@ -213,8 +268,74 @@ describe("Jokul token docs integrity", () => {
         expect([...missingVariables, ...missingMixins]).toEqual([]);
     });
 
+    it("documents every exported shadow variable from core/jkl/_shadows.scss", () => {
+        const exportedShadowVariables = Array.from(
+            new Set(Array.from(jokulShadowScssSource.matchAll(/\$[a-z0-9-]+(?=:)/gi), (match) => match[0])),
+        ).sort((a, b) => a.localeCompare(b, "nb"));
+        const documentedShadowVariables = Array.from(
+            new Set(shadowTokens.map(({variable}) => variable)),
+        ).sort((a, b) => a.localeCompare(b, "nb"));
+
+        expect(documentedShadowVariables).toEqual(exportedShadowVariables);
+    });
+
     it("documents every public token export from @fremtind/jokul/core", () => {
         expect(documentedPublicTokenExportPaths).toEqual(publicTokenExportPaths);
+    });
+
+    it("keeps a bespoke illustration assigned to every token page", () => {
+        const issues: string[] = [];
+        const postsByIllustrationType = new Map<string, string[]>();
+
+        for (const post of tokenPosts) {
+            if (!isValidElement(post.illustration)) {
+                issues.push(`${post.title}: illustration is not a valid React element`);
+                continue;
+            }
+
+            const type = post.illustration.type;
+            const illustrationName =
+                typeof type === "string"
+                    ? type
+                    : (type as { displayName?: string; name?: string }).displayName ||
+                      (type as { displayName?: string; name?: string }).name ||
+                      "anonymous-illustration";
+
+            const posts = postsByIllustrationType.get(illustrationName) ?? [];
+            posts.push(post.title);
+            postsByIllustrationType.set(illustrationName, posts);
+        }
+
+        for (const [illustrationName, posts] of postsByIllustrationType.entries()) {
+            if (posts.length > 1) {
+                issues.push(`${illustrationName}: reused by ${posts.join(", ")}`);
+            }
+        }
+
+        expect(issues).toEqual([]);
+    });
+
+    it("keeps every token-page illustration constrained to valid Jøkul tokens", () => {
+        const invalidIllustrationTokens: string[] = [];
+
+        for (const post of tokenPosts) {
+            if (!post.illustration) {
+                continue;
+            }
+
+            const markup = renderToStaticMarkup(post.illustration);
+            const referencedTokens = Array.from(
+                new Set(Array.from(markup.matchAll(/var\((--jkl-[a-z0-9-]+)\)/gi), (match) => match[1])),
+            );
+
+            for (const token of referencedTokens) {
+                if (!validJokulCssCustomProperties.has(token)) {
+                    invalidIllustrationTokens.push(`${post.title}: ${token}`);
+                }
+            }
+        }
+
+        expect(invalidIllustrationTokens).toEqual([]);
     });
 
     it("keeps every documented Jøkul mixin example compilable", () => {

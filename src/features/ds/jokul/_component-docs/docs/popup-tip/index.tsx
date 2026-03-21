@@ -24,6 +24,7 @@ const doc: ComponentDoc = {
         ],
     },
     preview: <PopupTipPreview />,
+    example: (props) => <PopupTipPreview {...props} />,
     props,
     migrations,
 };

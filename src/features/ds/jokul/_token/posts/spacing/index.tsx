@@ -7,6 +7,7 @@ import {
     unitTokens,
 } from "./tokens";
 import {spacingMixins} from "./mixins";
+import {createLengthBarExample} from "../_shared/table-examples";
 import type {TokenPost} from "../types";
 
 const post: TokenPost = {
@@ -19,20 +20,10 @@ const post: TokenPost = {
             description:
                 "Disse tokenene eksporteres fra `@fremtind/jokul/core` som `tokens.spacing.*` og er den rå numeriske spacing-skalaen i Jøkul.",
             caption: "Eksporterte spacing-verdier fra Jøkul core",
+            exampleColumnIndex: 0,
             columns: ["Forhåndsvisning", "Eksport", "Verdi", "Bruksområde"],
             rows: exportedSpacingScaleTokens.map(({path, value, usage}) => [
-                <div
-                    key={`${path}-bar`}
-                    aria-hidden
-                    style={{
-                        height: "12px",
-                        width: value === "0rem" ? "2px" : value,
-                        minWidth: "2px",
-                        background: "var(--jkl-color-background-action)",
-                        borderRadius: "2px",
-                        opacity: value === "0rem" ? 0.2 : 1,
-                    }}
-                />,
+                createLengthBarExample(value),
                 <code key={`${path}-token`}>{formatPublicSpacingTokenPath(path)}</code>,
                 value,
                 usage,
@@ -43,20 +34,10 @@ const post: TokenPost = {
             description:
                 "Disse tokenene eksporteres som `tokens.semanticSpacing.*` og er de navngitte spacing-verdiene du bør bruke i komponent-API-er og tokensystemer.",
             caption: "Eksporterte semantiske spacing-tokens fra Jøkul core",
+            exampleColumnIndex: 0,
             columns: ["Forhåndsvisning", "Eksport", "Verdi", "Bruksområde"],
             rows: exportedSemanticSpacingTokens.map(({path, value, usage}) => [
-                <div
-                    key={`${path}-bar`}
-                    aria-hidden
-                    style={{
-                        height: "12px",
-                        width: value === "0" ? "2px" : value,
-                        minWidth: "2px",
-                        background: "var(--jkl-color-background-action)",
-                        borderRadius: "2px",
-                        opacity: value === "0" ? 0.2 : 1,
-                    }}
-                />,
+                createLengthBarExample(value),
                 <code key={`${path}-token`}>{formatPublicSpacingTokenPath(path)}</code>,
                 value,
                 usage,
@@ -67,19 +48,10 @@ const post: TokenPost = {
             description:
                 "Navngitte semantiske tokens basert på et 8-punkts grid. Bruk disse i komponenter og layouter for konsistent visuell rytme.",
             caption: "Spacing-skalaen — alle tilgjengelige tokens",
+            exampleColumnIndex: 0,
             columns: ["Forhåndsvisning", "Token", "Verdi", "Bruksområde"],
             rows: spacingTokens.map(({name, token, px, usage}) => [
-                <div
-                    key={`${name}-bar`}
-                    aria-hidden
-                    style={{
-                        height: "12px",
-                        width: `var(${token})`,
-                        minWidth: "4px",
-                        background: "var(--jkl-color-background-action)",
-                        borderRadius: "2px",
-                    }}
-                />,
+                createLengthBarExample(`var(${token})`),
                 <code key={`${name}-token`}>{token}</code>,
                 px,
                 usage,
@@ -90,20 +62,10 @@ const post: TokenPost = {
             description:
                 "Primitive størrelsesenheter som skalerer responsivt med --jkl-unit-base (0.5rem / 8px på desktop). Brukes internt i Jøkul-komponenter og for presist layout-arbeid.",
             caption: "Unit-tokens — grunnleggende størrelsesenheter",
+            exampleColumnIndex: 0,
             columns: ["Forhåndsvisning", "Token", "Multiplier", "px", "rem"],
             rows: unitTokens.map(({token, multiplier, px, rem}) => [
-                <div
-                    key={`${token}-bar`}
-                    aria-hidden
-                    style={{
-                        height: "8px",
-                        width: px === "0px" ? "2px" : `var(${token})`,
-                        maxWidth: "100%",
-                        background: "var(--jkl-color-background-action)",
-                        borderRadius: "2px",
-                        opacity: px === "0px" ? 0.2 : 1,
-                    }}
-                />,
+                createLengthBarExample(`var(${token})`, {kind: "unit", thickness: "0.5rem"}),
                 <code key={`${token}-name`}>{token}</code>,
                 multiplier,
                 px,

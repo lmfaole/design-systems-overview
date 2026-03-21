@@ -21,6 +21,7 @@ const doc: ComponentDoc = {
         ],
     },
     preview: <DataTablePreview/>,
+    example: (props) => <DataTablePreview {...props}/>,
     props: [
         {name: "columns", type: "string[]", required: true, source: "custom", status: "stable", description: "Kolonneoverskrifter i korrekt rekkefølge."},
         {name: "rows", type: "React.ReactNode[][]", required: true, source: "custom", status: "stable", description: "Raddata, samme lengde som columns. Hver celle kan være tekst eller JSX."},

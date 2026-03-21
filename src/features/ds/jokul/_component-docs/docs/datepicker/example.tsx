@@ -8,6 +8,8 @@ type LabelVariant = (typeof labelVariants)[number];
 
 export function DatePickerExample(props: ComponentExampleProps) {
     const label = typeof props.label === "string" && props.label.trim() !== "" ? props.label : "Velg dato";
+    const controlledValue = typeof props.value === "string" && props.value.trim() !== "" ? props.value : "";
+    const defaultValue = typeof props.defaultValue === "string" && props.defaultValue.trim() !== "" ? props.defaultValue : "";
     const placeholder = typeof props.placeholder === "string" && props.placeholder.trim() !== "" ? props.placeholder : undefined;
     const helpLabel = typeof props.helpLabel === "string" && props.helpLabel.trim() !== "" ? props.helpLabel : undefined;
     const errorLabel = typeof props.errorLabel === "string" && props.errorLabel.trim() !== "" ? props.errorLabel : undefined;
@@ -27,12 +29,17 @@ export function DatePickerExample(props: ComponentExampleProps) {
     const resolvedLabelProps = labelVariant || labelSrOnly !== undefined
         ? { ...(labelVariant ? { variant: labelVariant } : {}), ...(labelSrOnly !== undefined ? { srOnly: labelSrOnly } : {}) }
         : undefined;
-    const controlledValue = typeof props.value === "string" ? props.value : "";
-    const [value, setValue] = useState(controlledValue);
+    const showCalendarLabel = typeof props.showCalendarLabel === "string" && props.showCalendarLabel.trim() !== ""
+        ? props.showCalendarLabel
+        : undefined;
+    const hideCalendarLabel = typeof props.hideCalendarLabel === "string" && props.hideCalendarLabel.trim() !== ""
+        ? props.hideCalendarLabel
+        : undefined;
+    const [value, setValue] = useState(controlledValue || defaultValue);
 
     useEffect(() => {
-        setValue(controlledValue);
-    }, [controlledValue]);
+        setValue(controlledValue || defaultValue);
+    }, [controlledValue, defaultValue]);
 
     return (
         <Flex direction="column" gap="s">
@@ -45,6 +52,8 @@ export function DatePickerExample(props: ComponentExampleProps) {
                 errorLabel={errorLabel}
                 disableBeforeDate={disableBeforeDate}
                 disableAfterDate={disableAfterDate}
+                showCalendarLabel={showCalendarLabel}
+                hideCalendarLabel={hideCalendarLabel}
                 labelProps={resolvedLabelProps}
             />
         </Flex>
