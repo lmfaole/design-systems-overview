@@ -66,7 +66,7 @@ export default function DesignSystemsPage() {
                     id="design-system-search"
                     type="search"
                     name="q"
-                    placeholder="Komponent, token eller mønster i Jøkul…"
+                    placeholder="Komponent, formatter, token eller mønster i Jøkul…"
                 />
                 <button type="submit">Søk</button>
             </form>

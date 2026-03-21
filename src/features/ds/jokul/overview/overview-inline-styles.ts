@@ -11,7 +11,7 @@ export const overviewInlineStyles = `
 
 .overview-nav-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
     gap: var(--jkl-spacing-l);
 }
 
@@ -127,6 +127,10 @@ export const overviewInlineStyles = `
 
 .overview-card[data-layout="feature"][data-kind="token"] {
     --overview-card-accent: var(--jkl-color-background-alert-info);
+}
+
+.overview-card[data-layout="feature"][data-kind="formatter"] {
+    --overview-card-accent: var(--jkl-color-background-alert-warning);
 }
 
 .overview-card-title {

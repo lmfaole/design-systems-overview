@@ -1,0 +1,27 @@
+---
+import JokulLayout from "@/layouts/JokulLayout.astro";
+import { formatterDocs, getFormatterDoc } from "@/data/jokul/formatters";
+import { FormatterPage } from "@/features/ds/jokul/formatters/FormatterPage";
+
+export function getStaticPaths() {
+    return formatterDocs.map((doc) => ({
+        params: { id: doc.id },
+    }));
+}
+
+const { id } = Astro.params;
+const doc = getFormatterDoc(id ?? "");
+
+if (!doc) {
+    throw new Error(`Missing formatter for id "${id}"`);
+}
+---
+
+<JokulLayout
+    title={`${doc.name} i Jøkul`}
+    description={doc.description.long}
+    path={`/ds/jokul/formatter/${doc.id}`}
+    type="article"
+>
+    <FormatterPage id={doc.id} />
+</JokulLayout>

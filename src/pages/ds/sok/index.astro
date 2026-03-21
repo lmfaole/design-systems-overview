@@ -1,8 +1,71 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { SearchPageClient } from "@/features/ds/search/SearchPageClient";
+import "@/components/ds/PageHeader/page-header.scss";
+import "@/components/ds/Grid/grid.scss";
+import "@/components/ds/cards/SearchResultCard/search-result-card.scss";
+import "@/features/ds/search/search-page.scss";
+import { createSearchPageModel, getInitialSearchContent, renderSearchContent } from "@/features/ds/search/search-page";
+
+const query = Astro.url.searchParams.get("q")?.trim() ?? "";
+const model = createSearchPageModel(query);
+const emptySearchContent = getInitialSearchContent(false);
+const loadingSearchContent = getInitialSearchContent(true);
 ---
 
 <BaseLayout title="Søk" description="Søk etter sider, komponenter, mønstre og designtokens i /ds." path="/ds/sok" noIndex={true}>
-    <SearchPageClient client:load />
+    <main class="page" data-ua-only>
+        <header class="ds-page-header">
+            <h1 class="title">Søk</h1>
+            <p class="description">Finn sider, komponenter, formattere, mønstre og tokens i den lokale `/ds`-dokumentasjonen.</p>
+        </header>
+
+        <form role="search" action="/ds/sok" method="get" data-search-form>
+            <label for="search-input">Søk i dokumentasjonen</label>
+            <input
+                id="search-input"
+                type="search"
+                name="q"
+                value={query}
+                placeholder="Komponent, formatter, token eller side…"
+                data-search-input
+            />
+            <button type="submit">Søk</button>
+        </form>
+
+        <div
+            data-search-results
+            data-empty-search-content={emptySearchContent}
+            data-loading-search-content={loadingSearchContent}
+            set:html={renderSearchContent(model)}
+        />
+
+        <noscript>
+            <p>Søk i den publiserte statiske versjonen krever JavaScript for å vise resultater.</p>
+        </noscript>
+    </main>
+
+    <script is:inline>
+        const searchInput = document.querySelector("[data-search-input]");
+        const searchResults = document.querySelector("[data-search-results]");
+        const queryFromLocation = new URLSearchParams(window.location.search).get("q")?.trim() ?? "";
+
+        if (searchInput instanceof HTMLInputElement) {
+            searchInput.value = queryFromLocation;
+        }
+
+        if (searchResults instanceof HTMLElement) {
+            const emptySearchContent = searchResults.getAttribute("data-empty-search-content") ?? "";
+            const loadingSearchContent = searchResults.getAttribute("data-loading-search-content") ?? "";
+
+            searchResults.innerHTML = queryFromLocation
+                ? loadingSearchContent
+                : emptySearchContent;
+        }
+    </script>
+
+    <script>
+        import { initSearchPage } from "@/features/ds/search/search-page";
+
+        initSearchPage();
+    </script>
 </BaseLayout>

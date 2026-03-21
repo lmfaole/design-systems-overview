@@ -2221,6 +2221,257 @@ export const jokulSearchDocuments = [
         "meta": "Jøkul · Komponent · Navigasjon"
     },
     {
+        "id": "formatter-format-avstand",
+        "designSystemId": "jokul",
+        "designSystemName": "Jøkul",
+        "kind": "formatter",
+        "title": "formatAvstand",
+        "description": "Formaterer en tallverdi som en avstand med enhet.",
+        "keywords": [
+            "format-avstand",
+            "@fremtind/jokul/utilities",
+            "Tall og enheter",
+            "formatAvstand(input: string | number, options?: FormatAvstandOptions): string",
+            "distance",
+            "unit",
+            "km",
+            "meter",
+            "length"
+        ],
+        "href": "/ds/jokul/formatter/format-avstand",
+        "meta": "Jøkul · Formatter · Tall og enheter"
+    },
+    {
+        "id": "formatter-format-bytes",
+        "designSystemId": "jokul",
+        "designSystemName": "Jøkul",
+        "kind": "formatter",
+        "title": "formatBytes",
+        "description": "Gjør byte-størrelser lesbare som KB eller MB.",
+        "keywords": [
+            "format-bytes",
+            "@fremtind/jokul/utilities",
+            "Tall og enheter",
+            "formatBytes(bytes: number, options?: FormatNumberOptions): string",
+            "filesize",
+            "kb",
+            "mb",
+            "bytes",
+            "upload"
+        ],
+        "href": "/ds/jokul/formatter/format-bytes",
+        "meta": "Jøkul · Formatter · Tall og enheter"
+    },
+    {
+        "id": "formatter-format-date",
+        "designSystemId": "jokul",
+        "designSystemName": "Jøkul",
+        "kind": "formatter",
+        "title": "formatDate",
+        "description": "Formaterer en Date til `dd.mm.yyyy`.",
+        "keywords": [
+            "format-date",
+            "@fremtind/jokul/utilities",
+            "Dato",
+            "formatDate(date: Date): string",
+            "dato",
+            "dd.mm.yyyy",
+            "date",
+            "norwegian date"
+        ],
+        "href": "/ds/jokul/formatter/format-date",
+        "meta": "Jøkul · Formatter · Dato"
+    },
+    {
+        "id": "formatter-format-fodselsnummer",
+        "designSystemId": "jokul",
+        "designSystemName": "Jøkul",
+        "kind": "formatter",
+        "title": "formatFodselsnummer",
+        "description": "Deler fødselsnummer i dato- og individdel med non-breaking space.",
+        "keywords": [
+            "format-fodselsnummer",
+            "@fremtind/jokul/utilities",
+            "Norske identifikatorer",
+            "formatFodselsnummer(input: string, options?: { partial?: boolean }): string",
+            "fnr",
+            "fodselsnummer",
+            "personnummer",
+            "mask"
+        ],
+        "href": "/ds/jokul/formatter/format-fodselsnummer",
+        "meta": "Jøkul · Formatter · Norske identifikatorer"
+    },
+    {
+        "id": "formatter-format-kontonummer",
+        "designSystemId": "jokul",
+        "designSystemName": "Jøkul",
+        "kind": "formatter",
+        "title": "formatKontonummer",
+        "description": "Formaterer kontonummer som `1234 56 78901` eller med valgfri separator.",
+        "keywords": [
+            "format-kontonummer",
+            "@fremtind/jokul/utilities",
+            "Norske identifikatorer",
+            "formatKontonummer(input: string, options?: { partial?: boolean; separator?: string }): string",
+            "kontonummer",
+            "bankkonto",
+            "account number",
+            "mask"
+        ],
+        "href": "/ds/jokul/formatter/format-kontonummer",
+        "meta": "Jøkul · Formatter · Norske identifikatorer"
+    },
+    {
+        "id": "formatter-format-kortnummer",
+        "designSystemId": "jokul",
+        "designSystemName": "Jøkul",
+        "kind": "formatter",
+        "title": "formatKortnummer",
+        "description": "Deler kortnummer i grupper på fire sifre.",
+        "keywords": [
+            "format-kortnummer",
+            "@fremtind/jokul/utilities",
+            "Norske identifikatorer",
+            "formatKortnummer(input: string, options?: { partial?: boolean }): string",
+            "kortnummer",
+            "card number",
+            "credit card",
+            "mask"
+        ],
+        "href": "/ds/jokul/formatter/format-kortnummer",
+        "meta": "Jøkul · Formatter · Norske identifikatorer"
+    },
+    {
+        "id": "formatter-format-number",
+        "designSystemId": "jokul",
+        "designSystemName": "Jøkul",
+        "kind": "formatter",
+        "title": "formatNumber",
+        "description": "Formaterer tall med locale og valgfri Intl-konfigurasjon.",
+        "keywords": [
+            "format-number",
+            "@fremtind/jokul/utilities",
+            "Tall og enheter",
+            "formatNumber(input: string | number, options?: FormatNumberOptions): string",
+            "intl",
+            "locale",
+            "numberformat",
+            "desimaltall",
+            "thousand separator"
+        ],
+        "href": "/ds/jokul/formatter/format-number",
+        "meta": "Jøkul · Formatter · Tall og enheter"
+    },
+    {
+        "id": "formatter-format-organisasjonsnummer",
+        "designSystemId": "jokul",
+        "designSystemName": "Jøkul",
+        "kind": "formatter",
+        "title": "formatOrganisasjonsnummer",
+        "description": "Grupperer organisasjonsnummer i tre blokker på tre sifre.",
+        "keywords": [
+            "format-organisasjonsnummer",
+            "@fremtind/jokul/utilities",
+            "Norske identifikatorer",
+            "formatOrganisasjonsnummer(input: string, options?: { partial?: boolean }): string",
+            "orgnr",
+            "organisasjonsnummer",
+            "bronnoysund",
+            "mask"
+        ],
+        "href": "/ds/jokul/formatter/format-organisasjonsnummer",
+        "meta": "Jøkul · Formatter · Norske identifikatorer"
+    },
+    {
+        "id": "formatter-format-telefonnummer",
+        "designSystemId": "jokul",
+        "designSystemName": "Jøkul",
+        "kind": "formatter",
+        "title": "formatTelefonnummer",
+        "description": "Formaterer norske mobil- og fastnummer etter Språkrådets mønstre.",
+        "keywords": [
+            "format-telefonnummer",
+            "@fremtind/jokul/utilities",
+            "Norske identifikatorer",
+            "formatTelefonnummer(input: string, options?: FormatTelefonnummerOptions): string",
+            "telefon",
+            "mobil",
+            "fasttelefon",
+            "phone",
+            "country code"
+        ],
+        "href": "/ds/jokul/formatter/format-telefonnummer",
+        "meta": "Jøkul · Formatter · Norske identifikatorer"
+    },
+    {
+        "id": "formatter-format-valuta",
+        "designSystemId": "jokul",
+        "designSystemName": "Jøkul",
+        "kind": "formatter",
+        "title": "formatValuta",
+        "description": "Formaterer beløp med norsk tallformat og valutasuffiks.",
+        "keywords": [
+            "format-valuta",
+            "@fremtind/jokul/utilities",
+            "Tall og enheter",
+            "formatValuta(input: string | number, options?: FormatValutaOptions): string",
+            "currency",
+            "belop",
+            "kr",
+            "nok",
+            "money"
+        ],
+        "href": "/ds/jokul/formatter/format-valuta",
+        "meta": "Jøkul · Formatter · Tall og enheter"
+    },
+    {
+        "id": "formatter-parse-number",
+        "designSystemId": "jokul",
+        "designSystemName": "Jøkul",
+        "kind": "formatter",
+        "title": "parseNumber",
+        "description": "Parser en formattert tallstreng tilbake til et Number.",
+        "keywords": [
+            "parse-number",
+            "@fremtind/jokul/utilities",
+            "Tall og enheter",
+            "parseNumber(input: string | number): number",
+            "parse",
+            "tallstreng",
+            "komma",
+            "punktum",
+            "decimal parser"
+        ],
+        "href": "/ds/jokul/formatter/parse-number",
+        "meta": "Jøkul · Formatter · Tall og enheter"
+    },
+    {
+        "id": "formatter-register-with-masks",
+        "designSystemId": "jokul",
+        "designSystemName": "Jøkul",
+        "kind": "formatter",
+        "title": "registerWithMasks",
+        "description": "Kobler Jøkul-formatterne til React Hook Form som inputmasker.",
+        "keywords": [
+            "register-with-masks",
+            "@fremtind/jokul/utilities",
+            "Skjema",
+            "registerWithMasks<T extends FieldValues>(form: UseFormReturn<T>)",
+            "react-hook-form",
+            "mask",
+            "input mask",
+            "registerWithFodselsnummerMask",
+            "registerWithKortnummerMask",
+            "registerWithKontonummerMask",
+            "registerWithTelefonnummerMask",
+            "registerWithDateMask",
+            "registerWithNumber"
+        ],
+        "href": "/ds/jokul/formatter/register-with-masks",
+        "meta": "Jøkul · Formatter · Skjema"
+    },
+    {
         "id": "token-10",
         "designSystemId": "jokul",
         "designSystemName": "Jøkul",

@@ -18,6 +18,10 @@ const tokenPostsIndexPath = path.join(
     repoRoot,
     "src/features/ds/jokul/_token/posts/index.ts",
 );
+const formatterDocsIndexPath = path.join(
+    repoRoot,
+    "src/features/ds/jokul/_formatter-docs/docs/index.ts",
+);
 const generatedSearchIndexPath = path.join(
     repoRoot,
     "src/data/ds/search/generated/jokul-search-documents.ts",
@@ -105,6 +109,7 @@ function syncFonts() {
 function getSearchIndexDependencies() {
     const componentDocPaths = getImportPaths(componentDocsIndexPath);
     const tokenPostPaths = getImportPaths(tokenPostsIndexPath);
+    const formatterDocPaths = getImportPaths(formatterDocsIndexPath);
     const propPaths = componentDocPaths
         .map((docPath) => {
             const propsBasePath = path.resolve(path.dirname(docPath), "props");
@@ -117,7 +122,9 @@ function getSearchIndexDependencies() {
         searchIndexScriptPath,
         componentDocsIndexPath,
         tokenPostsIndexPath,
+        formatterDocsIndexPath,
         ...componentDocPaths,
+        ...formatterDocPaths,
         ...tokenPostPaths,
         ...propPaths,
     ];

@@ -19,6 +19,10 @@ const jokulTokenIndexPageSource = readFileSync(
     path.resolve(process.cwd(), "src/pages/ds/jokul/token/index.astro"),
     "utf8",
 );
+const searchPageSource = readFileSync(
+    path.resolve(process.cwd(), "src/pages/ds/sok/index.astro"),
+    "utf8",
+);
 
 describe("Layout performance wiring", () => {
     it("renders the site breadcrumb on the server instead of hydrating it", () => {
@@ -41,5 +45,10 @@ describe("Layout performance wiring", () => {
         expect(jokulOverviewThemeStyles).toContain(
             '--site-font-family: "Fremtind Grotesk", "Adjusted Arial Fallback", arial, sans-serif;',
         );
+    });
+
+    it("renders the search page without React islands", () => {
+        expect(searchPageSource).not.toContain("client:load");
+        expect(searchPageSource).not.toContain("SearchPageClient");
     });
 });

@@ -11,6 +11,7 @@ describe("package scripts", () => {
         expect(packageJson.scripts.postinstall).toBe("patch-package && npm run setup");
         expect(packageJson.scripts.setup).toBe("node scripts/setup.mjs");
         expect(packageJson.scripts["browser:ensure"]).toBe("node scripts/ensure-browser.mjs");
+        expect(packageJson.scripts["test:search:run"]).toBe("node scripts/test-search-page.mjs");
         expect(packageJson.scripts["test:browser"]).toBe("npm run build && npm run test:browser:run");
         expect(packageJson.scripts["test:a11y"]).toBe("npm run build && npm run test:a11y:built");
         expect(packageJson.scripts["test:lighthouse"]).toBe("npm run build && npm run test:lighthouse:built");

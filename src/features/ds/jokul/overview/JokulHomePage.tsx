@@ -1,6 +1,7 @@
-import {visibleTokenCount} from "@/features/ds/jokul/tokens/token-overview-data";
-import {visibleComponentCount} from "./component-overview-data";
-import {overviewInlineStyles} from "./overview-inline-styles";
+import { visibleFormatterCount } from "@/features/ds/jokul/formatters/formatter-overview-data";
+import { visibleTokenCount } from "@/features/ds/jokul/tokens/token-overview-data";
+import { visibleComponentCount } from "./component-overview-data";
+import { overviewInlineStyles } from "./overview-inline-styles";
 
 export default function Home() {
     return (
@@ -35,6 +36,20 @@ export default function Home() {
                         <small className="overview-card-description">
                             Se alle fundamentene samlet, med illustrerte kort for typografi, farger,
                             spacing, bevegelse og resten av tokensystemet.
+                        </small>
+                    </a>
+                    <a
+                        className="overview-card"
+                        data-kind="formatter"
+                        data-layout="feature"
+                        data-overview-card="formatter"
+                        href="/ds/jokul/formatter"
+                    >
+                        <span className="overview-card-meta">{visibleFormatterCount} formattere</span>
+                        <strong className="overview-card-title">Formattere</strong>
+                        <small className="overview-card-description">
+                            Dokumentasjon for utility-funksjoner i Jøkul som formaterer tall, datoer,
+                            norske identifikatorer og inputmasker i skjema.
                         </small>
                     </a>
                 </div>

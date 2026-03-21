@@ -15,6 +15,10 @@ const tokenPostsIndexPath = path.join(
     repoRoot,
     "src/features/ds/jokul/_token/posts/index.ts",
 );
+const formatterDocsIndexPath = path.join(
+    repoRoot,
+    "src/features/ds/jokul/_formatter-docs/docs/index.ts",
+);
 const outputPath = path.join(
     repoRoot,
     "src/data/ds/search/generated/jokul-search-documents.ts",
@@ -219,6 +223,32 @@ function extractTokenSearchDocs() {
     });
 }
 
+function extractFormatterSearchDocs() {
+    return getImportPaths(formatterDocsIndexPath).map((docPath) => {
+        const sourceFile = parseTsxFile(docPath);
+        const doc = findVariableObject(sourceFile, "doc");
+        const description = readObject(doc, "description");
+
+        return {
+            id: `formatter-${readString(doc, "id")}`,
+            designSystemId: "jokul",
+            designSystemName: "Jøkul",
+            kind: "formatter",
+            title: readString(doc, "name"),
+            description: readString(description, "short"),
+            keywords: [
+                readString(doc, "id"),
+                readString(doc, "package"),
+                readString(doc, "category"),
+                readString(doc, "signature"),
+                ...readStringArray(doc, "keywords"),
+            ].filter(Boolean),
+            href: `/ds/jokul/formatter/${readString(doc, "id")}`,
+            meta: `Jøkul · Formatter · ${readString(doc, "category")}`,
+        };
+    });
+}
+
 function readNumber(objectNode, propertyName) {
     const initializer = getInitializer(objectNode, propertyName);
     if (!initializer || !ts.isNumericLiteral(initializer)) {
@@ -255,5 +285,6 @@ export const jokulSearchDocuments = ${JSON.stringify(searchDocs, null, 4)} as co
 
 writeOutput([
     ...extractComponentSearchDocs(),
+    ...extractFormatterSearchDocs(),
     ...extractTokenSearchDocs(),
 ]);
