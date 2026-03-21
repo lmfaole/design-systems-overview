@@ -1,11 +1,5 @@
-export type TokenIllustrationSlug =
-    | "animasjon"
-    | "breakpoints"
-    | "farger"
-    | "kantradiuser"
-    | "skygger"
-    | "spacing"
-    | "typografi";
+import type { TokenIllustrationSlug } from "@/features/ds/jokul/_shared/components/TokenIllustration/shared";
+
 export interface TokenOverviewEntry {
     id: number;
     title: string;

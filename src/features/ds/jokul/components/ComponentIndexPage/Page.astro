@@ -1,7 +1,7 @@
 ---
 import { componentDocs } from "@/data/jokul/component-docs";
-import { PageHeader } from "@/components/ds/PageHeader";
-import "@/components/ds/Toolbar/toolbar.scss";
+import PageHeader from "@/components/PageHeader.astro";
+import "@/components/toolbar.scss";
 import "./styles.scss";
 
 const visibleDocs = componentDocs
@@ -24,10 +24,9 @@ const categories = Array.from(new Set(allDocs.map((doc) => doc.category))).sort(
     <section aria-label="Filtrer komponenter">
 
         <div class="ds-toolbar component-index-toolbar" data-component-index-form>
-            <label class="site-field site-field-fill" for="component-query">
+            <label for="component-query">
                 <span>Søk etter komponent</span>
                 <input
-                    class="site-control"
                     id="component-query"
                     type="search"
                     name="q"
@@ -36,9 +35,9 @@ const categories = Array.from(new Set(allDocs.map((doc) => doc.category))).sort(
                 />
             </label>
 
-            <label class="site-field" for="component-category">
+            <label for="component-category">
                 <span>Kategori</span>
-                <select class="site-control" id="component-category" name="category" data-component-index-category>
+                <select id="component-category" name="category" data-component-index-category>
                     <option value="">Alle kategorier</option>
                     {categories.map((category) => (
                         <option value={category}>{category}</option>
@@ -46,9 +45,9 @@ const categories = Array.from(new Set(allDocs.map((doc) => doc.category))).sort(
                 </select>
             </label>
 
-            <label class="site-field" for="component-status">
+            <label for="component-status">
                 <span>Status</span>
-                <select class="site-control" id="component-status" name="status" data-component-index-status>
+                <select id="component-status" name="status" data-component-index-status>
                     <option value="">Alle statuser</option>
                     <option value="stable">Stable</option>
                     <option value="beta">Beta</option>
@@ -56,19 +55,20 @@ const categories = Array.from(new Set(allDocs.map((doc) => doc.category))).sort(
                 </select>
             </label>
 
-            <label class="site-field" for="component-sort">
+            <label for="component-sort">
                 <span>Sorter</span>
-                <select class="site-control" id="component-sort" name="sort" data-component-index-sort>
+                <select id="component-sort" name="sort" data-component-index-sort>
                     <option value="az">A–Å</option>
                     <option value="za">Å–A</option>
                     <option value="most-props">Flest props</option>
                 </select>
             </label>
 
-            <label class="site-check" for="component-show-all">
+            <label class="switch" for="component-show-all">
                 <input
                     id="component-show-all"
                     type="checkbox"
+                    data-variant="switch"
                     name="all"
                     value="1"
                     data-component-index-show-all
@@ -80,12 +80,10 @@ const categories = Array.from(new Set(allDocs.map((doc) => doc.category))).sort(
         <p class="count" data-component-index-count>{visibleDocs.length} komponenter</p>
     </section>
 
-    <div class="ds-grid component-index-results" data-columns={4} data-component-index-results>
+    <div class="grid component-index-results" data-columns={4} data-component-index-results>
         {allDocs.map((doc) => (
-            <a
-                class="site-card site-card-link"
-                href={`/ds/jokul/component/${doc.id}`}
-                aria-label={doc.name}
+            <div
+                class="card"
                 data-component-card=""
                 data-component-id={doc.id}
                 data-component-name={doc.name}
@@ -96,9 +94,11 @@ const categories = Array.from(new Set(allDocs.map((doc) => doc.category))).sort(
                 data-component-show-on-overview={doc.showOnOverview === false ? "false" : "true"}
                 hidden={doc.showOnOverview === false}
             >
-                <strong>{doc.name}</strong>
-                <small class="muted">{doc.description.short}</small>
-            </a>
+                <a href={`/ds/jokul/component/${doc.id}`} aria-label={doc.name}>
+                    <strong>{doc.name}</strong>
+                    <small class="muted">{doc.description.short}</small>
+                </a>
+            </div>
         ))}
     </div>
 

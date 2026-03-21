@@ -132,7 +132,7 @@ function renderSection(title: string, items: DsSearchResult[]): string {
     return [
         "<section>",
         `<h3>${escapeHtml(title)}</h3>`,
-        '<ul class="ds-grid bare-list" data-columns="3">',
+        '<ul class="grid bare-list" data-columns="3">',
         items.map((item) => renderResultCard(item)).join(""),
         "</ul>",
         "</section>",

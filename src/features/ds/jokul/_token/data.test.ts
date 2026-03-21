@@ -1,10 +1,9 @@
-import {isValidElement} from "react";
-import {renderToStaticMarkup} from "react-dom/server";
 import {readdirSync, readFileSync} from "node:fs";
 import path from "node:path";
 import {compileString} from "sass";
 import {describe, expect, it} from "vitest";
 import {getComponentDoc} from "@/features/ds/jokul/_component-docs/data";
+import { renderTokenIllustrationHtml } from "@/features/ds/jokul/_shared/components/TokenIllustration/shared";
 import {borderRadiusTokens, borderWidthTokens} from "@/features/ds/jokul/_token/posts/border-radius/tokens";
 import {breakpointMixins} from "@/features/ds/jokul/_token/posts/breakpoints/mixins";
 import {breakpointTokens, exportedBreakpointTokens} from "@/features/ds/jokul/_token/posts/breakpoints/tokens";
@@ -221,13 +220,13 @@ describe("Jokul token docs integrity", () => {
         const issues: string[] = [];
 
         for (const post of tokenPosts) {
-            if (!post.illustration || !isValidElement(post.illustration)) {
-                issues.push(`${post.id}: missing renderable illustration`);
+            if (!post.illustration) {
+                issues.push(`${post.id}: missing illustration slug`);
                 continue;
             }
 
             const slug = getTokenSlug(post);
-            const illustrationMarkup = renderToStaticMarkup(post.illustration);
+            const illustrationMarkup = renderTokenIllustrationHtml(post.illustration);
             const specimenMatches = illustrationMarkup.match(/data-token-specimen="[^"]+"/g) ?? [];
 
             if (!illustrationMarkup.includes('data-token-illustration-bleed="true"')) {
@@ -272,7 +271,7 @@ describe("Jokul token docs integrity", () => {
                         continue;
                     }
 
-                    const exampleMarkup = renderToStaticMarkup(row[table.exampleColumnIndex]).trim();
+                    const exampleMarkup = row[table.exampleColumnIndex]?.trim() ?? "";
 
                     if (!exampleMarkup) {
                         issues.push(
@@ -349,28 +348,20 @@ describe("Jokul token docs integrity", () => {
 
     it("keeps a bespoke illustration assigned to every token page", () => {
         const issues: string[] = [];
-        const postsByIllustrationType = new Map<string, string[]>();
+        const postsByIllustration = new Map<string, string[]>();
 
         for (const post of tokenPosts) {
-            if (!isValidElement(post.illustration)) {
-                issues.push(`${post.title}: illustration is not a valid React element`);
+            if (!post.illustration) {
+                issues.push(`${post.title}: illustration is missing`);
                 continue;
             }
 
-            const type = post.illustration.type;
-            const illustrationName =
-                typeof type === "string"
-                    ? type
-                    : (type as { displayName?: string; name?: string }).displayName ||
-                      (type as { displayName?: string; name?: string }).name ||
-                      "anonymous-illustration";
-
-            const posts = postsByIllustrationType.get(illustrationName) ?? [];
+            const posts = postsByIllustration.get(post.illustration) ?? [];
             posts.push(post.title);
-            postsByIllustrationType.set(illustrationName, posts);
+            postsByIllustration.set(post.illustration, posts);
         }
 
-        for (const [illustrationName, posts] of postsByIllustrationType.entries()) {
+        for (const [illustrationName, posts] of postsByIllustration.entries()) {
             if (posts.length > 1) {
                 issues.push(`${illustrationName}: reused by ${posts.join(", ")}`);
             }
@@ -387,7 +378,7 @@ describe("Jokul token docs integrity", () => {
                 continue;
             }
 
-            const markup = renderToStaticMarkup(post.illustration);
+            const markup = renderTokenIllustrationHtml(post.illustration);
             const referencedTokens = Array.from(
                 new Set(Array.from(markup.matchAll(/var\((--jkl-[a-z0-9-]+)\)/gi), (match) => match[1])),
             );

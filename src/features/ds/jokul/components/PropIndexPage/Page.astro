@@ -1,7 +1,7 @@
 ---
 import { ALL_PROP_ENTRIES } from "@/features/ds/jokul/_component-docs/prop-index";
-import { PageHeader } from "@/components/ds/PageHeader";
-import "@/components/ds/Toolbar/toolbar.scss";
+import PageHeader from "@/components/PageHeader.astro";
+import "@/components/toolbar.scss";
 import "./styles.scss";
 
 const entries = [...ALL_PROP_ENTRIES].sort((left, right) => left.propName.localeCompare(right.propName, "nb"));
@@ -18,10 +18,9 @@ const entries = [...ALL_PROP_ENTRIES].sort((left, right) => left.propName.locale
     <section aria-label="Filtrer props">
 
         <div class="ds-toolbar component-index-toolbar" data-prop-index-form>
-            <label class="site-field site-field-fill" for="prop-query">
+            <label for="prop-query">
                 <span>Filtrer props</span>
                 <input
-                    class="site-control"
                     id="prop-query"
                     type="search"
                     name="q"
@@ -30,9 +29,9 @@ const entries = [...ALL_PROP_ENTRIES].sort((left, right) => left.propName.locale
                 />
             </label>
 
-            <label class="site-field" for="prop-sort">
+            <label for="prop-sort">
                 <span>Sorter</span>
-                <select class="site-control" id="prop-sort" name="sort" data-prop-index-sort>
+                <select id="prop-sort" name="sort" data-prop-index-sort>
                     <option value="name-asc">A–Å</option>
                     <option value="name-desc">Å–A</option>
                     <option value="source-asc">Kilde</option>

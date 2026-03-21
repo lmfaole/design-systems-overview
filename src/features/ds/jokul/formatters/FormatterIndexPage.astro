@@ -1,0 +1,37 @@
+---
+import PageHeader from "@/components/PageHeader.astro";
+import { overviewInlineStyles } from "@/features/ds/jokul/overview/overview-inline-styles";
+import { formatterOverviewGroups } from "./formatter-overview-data";
+import { getFormatterCardLabel } from "./formatter-view";
+---
+
+<style is:inline set:html={overviewInlineStyles} />
+
+<main class="page overview-page">
+    <PageHeader
+        title="Formattere"
+        description="Jøkul har små, praktiske utilities for tall, datoer, norske identifikatorer og inputmasker. Bruk dem når data skal presenteres eller tastes inn på en måte brukerne kjenner igjen."
+    />
+
+    {formatterOverviewGroups.map((group) => (
+        <section class="overview-section" aria-labelledby={`formatter-group-${group.id}`}>
+            <div class="overview-section-header">
+                <h2 id={`formatter-group-${group.id}`}>{group.label}</h2>
+                <p>{group.description}</p>
+            </div>
+            <div class="grid" data-columns={3}>
+                {group.docs.map((doc) => (
+                    <a
+                        class="overview-card"
+                        data-kind="formatter"
+                        href={`/ds/jokul/formatter/${doc.id}`}
+                    >
+                        <span class="overview-card-meta">{getFormatterCardLabel(doc.name)}</span>
+                        <strong class="overview-card-title">{doc.name}</strong>
+                        <small class="overview-card-description">{doc.description.short}</small>
+                    </a>
+                ))}
+            </div>
+        </section>
+    ))}
+</main>

@@ -1,0 +1,28 @@
+---
+interface Props {
+    title: string;
+    description?: string;
+    backgroundHtml?: string;
+}
+
+const {title, description, backgroundHtml} = Astro.props;
+---
+
+{backgroundHtml ? (
+<header class="ds-full-bleed ds-page-header" data-variant="hero">
+    <div class="background" aria-hidden="true">
+        <Fragment set:html={backgroundHtml}/>
+    </div>
+    <div class="page inner">
+        <div class="content">
+            <h1 class="title">{title}</h1>
+            {description && <p class="description">{description}</p>}
+        </div>
+    </div>
+</header>
+    ) : (
+<header class="ds-page-header">
+    <h1 class="title">{title}</h1>
+    {description && <p class="description">{description}</p>}
+</header>
+    )}

@@ -24,7 +24,7 @@ export function MigrationExample({ migration }: MigrationExampleProps) {
                 </p>
             )}
 
-            <div className="ds-grid" data-columns={2}>
+            <div className="grid" data-columns={2}>
                 <Flex direction="column" gap="xs" className="block">
                     <span className="block-label muted">Før</span>
                     <CodeBlock code={migration.before} />

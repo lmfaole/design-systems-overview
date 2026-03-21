@@ -1,0 +1,107 @@
+import { code, strong, text } from "@/lib/html";
+import {
+    breakpointRanges,
+    breakpointTokens,
+    exportedBreakpointTokens,
+    formatPublicBreakpointTokenPath,
+} from "./tokens";
+import { breakpointMixins } from "./mixins";
+import { createRangeExample, createScaledBarExample } from "../_shared/table-examples";
+import type { TokenPost } from "../types";
+
+const post: TokenPost = {
+    id: 14,
+    title: "Breakpoints",
+    excerpt:
+        "En referanse til Jøkuls fire breakpoints, navngitte skjermstørrelser og SCSS-mixin-er for responsiv layout — fra mobil til ekstra bred desktop.",
+    tokenOverview: [
+        {
+            heading: "Eksporterte breakpoints",
+            description:
+                "Jøkul eksporterer breakpoint-verdiene i `@fremtind/jokul/core` som `tokens.breakpoint.*`. Disse kan brukes direkte i JS og TS.",
+            caption: "Eksporterte breakpoint-tokens fra Jøkul core",
+            exampleColumnIndex: 0,
+            columns: ["Eksempel", "Eksport", "Verdi", "Gjelder fra", "Typiske enheter"],
+            rows: exportedBreakpointTokens.map(({ path, value, range, devices }) => [
+                createScaledBarExample(value, 1600, "breakpoint"),
+                code(formatPublicBreakpointTokenPath(path)),
+                strong(value),
+                text(range),
+                text(devices),
+            ]),
+        },
+        {
+            heading: "Breakpoints",
+            description:
+                "Jøkul definerer tre SCSS-variabler som deler skjermbredden inn i fire navngitte soner. Disse er ikke CSS custom properties — de finnes kun i SCSS og brukes via breakpoint-mixin-ene.",
+            caption: "Jøkuls tre breakpoint-variabler",
+            exampleColumnIndex: 0,
+            columns: ["Eksempel", "SCSS-variabel", "Verdi", "Gjelder fra", "Typiske enheter"],
+            rows: breakpointTokens.map(({ variable, value, range, devices }) => [
+                createScaledBarExample(value, 1600, "breakpoint"),
+                code(variable),
+                strong(value),
+                text(range),
+                text(devices),
+            ]),
+        },
+        {
+            heading: "Soner",
+            description:
+                "De tre variablene gir fire navngitte soner. Preferér de navngitte mixin-ene (small-device, from-medium-device osv.) fremfor direkte bruk av variablene.",
+            caption: "De fire skjermsonene og tilhørende mixin-er",
+            exampleColumnIndex: 0,
+            columns: ["Eksempel", "Sone", "Fra", "Til", "Mixin", "Bruksområde"],
+            rows: breakpointRanges.map(({ name, min, max, mixin, usage }) => [
+                createRangeExample(min, max, 1600),
+                strong(name),
+                text(min),
+                text(max),
+                code(mixin),
+                text(usage),
+            ]),
+        },
+    ],
+    scssSection: breakpointMixins,
+    illustration: "breakpoints",
+    relatedComponents: [],
+    resources: [
+        {
+            title: "MDN: Using media queries",
+            url: "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries",
+            publisher: "MDN",
+            relevance: 4,
+            description: "Grunnleggende bruk av media queries.",
+        },
+        {
+            title: "MDN: @container",
+            url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@container",
+            publisher: "MDN",
+            relevance: 3,
+            description: "Container queries som supplement til breakpoints.",
+        },
+        {
+            title: "Mobile First — Luke Wroblewski",
+            url: "https://www.lukew.com/ff/entry.asp?933",
+            publisher: "Luke Wroblewski",
+            relevance: 3,
+            description: "Prinsippet om å starte design i mobilformat.",
+        },
+        {
+            title: "WCAG 2.1 — 1.3.4: Orientation",
+            url: "https://www.w3.org/WAI/WCAG21/Understanding/orientation.html",
+            publisher: "W3C/WAI",
+            relevance: 4,
+            description: "Krav om at innhold ikke låses til én orientering.",
+        },
+        {
+            title: "WCAG 2.1 — 1.4.10: Reflow",
+            url: "https://www.w3.org/WAI/WCAG21/Understanding/reflow.html",
+            publisher: "W3C/WAI",
+            relevance: 4,
+            description: "Krav om at innhold fungerer ved smale visninger.",
+        },
+    ],
+};
+
+export default post;

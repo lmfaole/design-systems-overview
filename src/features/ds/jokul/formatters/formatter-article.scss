@@ -1,4 +1,7 @@
 .formatter-article {
+    display: grid;
+    gap: var(--jkl-spacing-xl);
+
     .formatter-section {
         max-width: var(--content-max-width);
     }
@@ -24,6 +27,22 @@
     .formatter-example-card,
     .formatter-related-card {
         min-block-size: 100%;
+    }
+
+    .formatter-card {
+        padding: var(--jkl-spacing-l);
+        border: 1px solid var(--jkl-color-border-subdued);
+        border-radius: var(--jkl-border-radius-m);
+        background: var(--jkl-color-background-container-low);
+    }
+
+    .formatter-card-stack {
+        display: grid;
+        gap: var(--jkl-spacing-s);
+    }
+
+    .formatter-card-stack[data-gap="xs"] {
+        gap: var(--jkl-spacing-xs);
     }
 
     .formatter-pre {

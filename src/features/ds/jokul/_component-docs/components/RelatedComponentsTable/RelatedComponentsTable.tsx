@@ -7,7 +7,7 @@ interface RelatedComponentsTableProps {
 
 export function RelatedComponentsTable({ items }: RelatedComponentsTableProps) {
     return (
-        <div className="ds-grid" data-columns={4}>
+        <div className="grid" data-columns={4}>
             {items.map(({ doc, description }) => (
                 <RelatedComponentCard key={doc.id} doc={doc} description={description} />
             ))}

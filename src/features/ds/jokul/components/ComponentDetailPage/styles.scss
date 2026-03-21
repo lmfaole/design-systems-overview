@@ -5,6 +5,67 @@
     gap: var(--jkl-spacing-xl);
 }
 
+.component-detail-dots {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    place-items: center;
+    inline-size: 100%;
+    block-size: 100%;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.component-detail-dot {
+    inline-size: 4px;
+    block-size: 4px;
+    background: var(--component-detail-dot-color);
+    transform-origin: center;
+    animation: component-detail-dot-spin 2.5s calc(var(--component-detail-dot-index, 0) * -0.12s) linear infinite;
+
+    &:nth-child(3n) {
+        inline-size: 3px;
+        block-size: 3px;
+        background: var(--component-detail-dot-subdued);
+    }
+
+    &:nth-child(7n) {
+        inline-size: 6px;
+        block-size: 6px;
+    }
+}
+
+@keyframes component-detail-dot-spin {
+    0% {
+        opacity: 0.2;
+        transform: rotate(45deg) scale(0);
+    }
+
+    30% {
+        opacity: 1;
+        transform: rotate(135deg) scale(1);
+    }
+
+    70% {
+        opacity: 0.2;
+        transform: rotate(225deg) scale(0);
+    }
+
+    100% {
+        opacity: 0.2;
+        transform: rotate(225deg) scale(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .component-detail-dot {
+        animation: none;
+        opacity: 0.7;
+        transform: rotate(135deg) scale(1);
+    }
+}
+
 .component-detail-page .article-toc {
     max-width: var(--content-max-width);
 

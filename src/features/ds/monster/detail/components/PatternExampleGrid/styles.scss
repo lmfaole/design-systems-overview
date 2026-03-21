@@ -1,4 +1,4 @@
-@use "../../../../../../components/ds/cards/shared";
+@use "../../../../../../components/cards" as shared;
 
 .monster-example-grid-item {
   @include shared.card-item-reset;

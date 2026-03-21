@@ -49,7 +49,10 @@ describe("Jøkul component routes", () => {
         );
         expect(componentIndexRouteSource).not.toContain("client:load");
         expect(propIndexRouteSource).not.toContain("client:load");
-        expect(componentIndexPageSource).toContain('class="site-card site-card-link"');
+        expect(componentIndexPageSource).toContain('class="card"');
+        expect(componentIndexPageSource).not.toContain("card-link");
+        expect(componentIndexPageSource).toContain('type="checkbox"');
+        expect(componentIndexPageSource).toContain('data-variant="switch"');
         expect(componentIndexPageSource).not.toContain('import { Card }');
         expect(propIndexPageSource).toContain('<table class="site-table">');
         expect(propIndexPageSource).toContain("<caption>Props-oversikt</caption>");
@@ -68,7 +71,10 @@ describe("Jøkul component routes", () => {
         );
         expect(componentDetailRouteSource).not.toContain("ComponentPageClient");
         expect(componentDetailRouteSource).not.toContain("client:load");
+        expect(componentDetailPageSource).toContain('import PageHeader from "@/components/PageHeader.astro";');
+        expect(componentDetailPageSource).not.toContain('import { PageHeader } from "@/components/PageHeader";');
         expect(componentDetailPageSource).toContain('const exampleHydrationMode = getExampleHydrationMode(doc.id);');
+        expect(componentDetailPageSource).toContain("const headerBackgroundHtml = renderDotsIllustration();");
         expect(componentDetailPageSource).toContain('<ComponentExampleIsland id={doc.id} client:load />');
         expect(componentDetailPageSource).toContain('<ComponentExampleIsland id={doc.id} client:only="react" />');
         expect(componentDetailPageSource).not.toContain("ComponentPageClient");
@@ -78,7 +84,7 @@ describe("Jøkul component routes", () => {
         expect(componentDetailPageSource).not.toContain("RelatedComponentsTable");
         expect(componentDetailPageSource).not.toContain("SubcomponentsList");
         expect(componentDetailPageSource).not.toContain("AlternativesList");
-        expect(componentDetailPageSource).toContain('class="site-card component-pattern-card"');
+        expect(componentDetailPageSource).toContain('class="card component-pattern-card"');
         expect(componentDetailPropTableSource).toContain('<table class="site-table component-prop-table">');
         expect(componentDetailPropTableSource).toContain('<th scope="col">Navn</th>');
         expect(componentDetailPropTableSource).toContain('<th scope="col">Type</th>');

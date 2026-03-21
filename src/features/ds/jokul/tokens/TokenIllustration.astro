@@ -1,51 +1,11 @@
 ---
 import "@/features/ds/jokul/_shared/components/TokenIllustration/token-illustration.scss";
-
-type TokenIllustrationSlug =
-    | "animasjon"
-    | "breakpoints"
-    | "farger"
-    | "kantradiuser"
-    | "skygger"
-    | "spacing"
-    | "typografi";
+import { tokenIllustrationVariants, type TokenIllustrationSlug } from "@/features/ds/jokul/_shared/components/TokenIllustration/shared";
 
 interface Props {
     slug: TokenIllustrationSlug;
     surface?: "card" | "page";
 }
-
-const tokenIllustrationVariants = {
-    animasjon: {
-        specimenTag: "span",
-        showcaseProperties: ["transform"],
-    },
-    breakpoints: {
-        specimenTag: "span",
-        showcaseProperties: ["inline-size"],
-    },
-    farger: {
-        specimenTag: "span",
-        showcaseProperties: ["background-color"],
-    },
-    kantradiuser: {
-        specimenTag: "span",
-        showcaseProperties: ["border-radius"],
-    },
-    skygger: {
-        specimenTag: "span",
-        showcaseProperties: ["box-shadow"],
-    },
-    spacing: {
-        specimenTag: "span",
-        showcaseProperties: ["inline-size", "block-size"],
-    },
-    typografi: {
-        specimenTag: "strong",
-        label: "Ag",
-        showcaseProperties: ["font-size", "line-height"],
-    },
-} as const;
 
 const { slug, surface = "card" } = Astro.props;
 const variant = tokenIllustrationVariants[slug];

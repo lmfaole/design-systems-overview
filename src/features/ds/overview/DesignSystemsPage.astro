@@ -6,16 +6,12 @@ import {
     getUndocumentedDesignSystems,
     isDocumentedInProject,
 } from "@/data/ds-overview";
-import "@/components/ds/PageHeader/page-header.scss";
+import DesignSystemExternalLinks from "@/components/DesignSystemExternalLinks.astro";
+import "@/components/page-header.scss";
 
 const systems = getDesignSystems();
 const documentedSystems = getDocumentedDesignSystems();
 const undocumentedSystems = getUndocumentedDesignSystems();
-const externalLinkLabels = [
-    { key: "frontPage", label: "Forside" },
-    { key: "changelog", label: "Endringslogg" },
-    { key: "about", label: "Om" },
-] as const;
 ---
 
 <main class="page">
@@ -64,13 +60,7 @@ const externalLinkLabels = [
                                         : "Har foreløpig bare ekstern dokumentasjon."}
                                 </p>
                                 {componentCountLabel && <p>{componentCountLabel}</p>}
-                                <ul>
-                                    {externalLinkLabels.map(({ key, label }) => (
-                                        <li>
-                                            <a href={system.externalLinks[key]} rel="noreferrer" target="_blank">{label}</a>
-                                        </li>
-                                    ))}
-                                </ul>
+                                <DesignSystemExternalLinks links={system.externalLinks} />
                             </article>
                         </li>
                     );
@@ -100,13 +90,7 @@ const externalLinkLabels = [
                                 <p>{system.description}</p>
                                 <p>Har foreløpig bare ekstern dokumentasjon.</p>
                                 {componentCountLabel && <p>{componentCountLabel}</p>}
-                                <ul>
-                                    {externalLinkLabels.map(({ key, label }) => (
-                                        <li>
-                                            <a href={system.externalLinks[key]} rel="noreferrer" target="_blank">{label}</a>
-                                        </li>
-                                    ))}
-                                </ul>
+                                <DesignSystemExternalLinks links={system.externalLinks} />
                             </article>
                         </li>
                     );
@@ -138,13 +122,7 @@ const externalLinkLabels = [
                                     : "Har foreløpig bare ekstern dokumentasjon."}
                             </p>
                             {componentCountLabel && <p>{componentCountLabel}</p>}
-                            <ul>
-                                {externalLinkLabels.map(({ key, label }) => (
-                                    <li>
-                                        <a href={system.externalLinks[key]} rel="noreferrer" target="_blank">{label}</a>
-                                    </li>
-                                ))}
-                            </ul>
+                            <DesignSystemExternalLinks links={system.externalLinks} />
                         </article>
                     </li>
                 );

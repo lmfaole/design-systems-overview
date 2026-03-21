@@ -18,7 +18,7 @@ export function ImplementationSection({ implementations }: ImplementationSection
             <h2 id={MONSTER_PATTERN_SECTIONS.implementation.id}>
                 {MONSTER_PATTERN_SECTIONS.implementation.label}
             </h2>
-            <ul className="ds-grid monster-implementation-list">
+            <ul className="grid monster-implementation-list">
                 {implementations.map((implementation) => (
                     <PatternImplementationCard
                         key={`${implementation.designSystem}-${implementation.title}`}

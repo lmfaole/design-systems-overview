@@ -1,5 +1,5 @@
 ---
-import PageHeader from "@/components/ds/PageHeader/PageHeader.astro";
+import PageHeader from "@/components/PageHeader.astro";
 import type { PatternPost } from "@/data/monster/patterns";
 import { serializePatternPost } from "../render";
 import { MONSTER_PATTERN_SECTIONS } from "./sections";
@@ -52,14 +52,14 @@ const tableOfContentsItems = [
         <h2 id={MONSTER_PATTERN_SECTIONS.doAndDonts.id}>
             {MONSTER_PATTERN_SECTIONS.doAndDonts.label}
         </h2>
-        <div class="ds-grid monster-guidance-grid" data-columns={2}>
+        <div class="grid monster-guidance-grid" data-columns={2}>
             <section
                 class="monster-guidance-column"
                 data-tone="success"
                 aria-labelledby="monster-guidance-dos"
             >
                 <h3 id="monster-guidance-dos" class="monster-guidance-heading">Gjør dette</h3>
-                <ul class="ds-grid monster-feature-list" data-tone="success">
+                <ul class="grid monster-feature-list" data-tone="success">
                     {serializedPost.doAndDonts.dos.map((item) => (
                         <li class="monster-feature-item">
                             <article class="monster-feature-body">
@@ -78,7 +78,7 @@ const tableOfContentsItems = [
                 aria-labelledby="monster-guidance-donts"
             >
                 <h3 id="monster-guidance-donts" class="monster-guidance-heading">Unngå dette</h3>
-                <ul class="ds-grid monster-feature-list" data-tone="error">
+                <ul class="grid monster-feature-list" data-tone="error">
                     {serializedPost.doAndDonts.donts.map((item) => (
                         <li class="monster-feature-item">
                             <article class="monster-feature-body">
@@ -99,7 +99,7 @@ const tableOfContentsItems = [
             <h2 id={MONSTER_PATTERN_SECTIONS.accessibility.id}>
                 {MONSTER_PATTERN_SECTIONS.accessibility.label}
             </h2>
-            <ul class="ds-grid monster-feature-list" data-tone="accent">
+            <ul class="grid monster-feature-list" data-tone="accent">
                 {serializedPost.accessibilityConcerns.map((item) => (
                     <li class="monster-feature-item">
                         <article class="monster-feature-body">
@@ -119,7 +119,7 @@ const tableOfContentsItems = [
             <h2 id={MONSTER_PATTERN_SECTIONS.implementation.id}>
                 {MONSTER_PATTERN_SECTIONS.implementation.label}
             </h2>
-            <ul class="ds-grid monster-implementation-list">
+            <ul class="grid monster-implementation-list">
                 {serializedPost.implementation.map((implementation) => (
                     <li class="monster-implementation">
                         <article>
@@ -133,7 +133,7 @@ const tableOfContentsItems = [
                             {implementation.components.length > 0 && (
                                 <section class="monster-implementation-group">
                                     <h4>Komponenter</h4>
-                                    <ul class="ds-grid monster-feature-list">
+                                    <ul class="grid monster-feature-list">
                                         {implementation.components.map((component) => (
                                             <li class="monster-feature-item">
                                                 <article class="monster-feature-body">
@@ -170,7 +170,7 @@ const tableOfContentsItems = [
             <h2 id={MONSTER_PATTERN_SECTIONS.furtherReading.id}>
                 {MONSTER_PATTERN_SECTIONS.furtherReading.label}
             </h2>
-            <ul class="ds-grid monster-feature-list">
+            <ul class="grid monster-feature-list">
                 {serializedPost.furtherReading.map((item) => (
                     <li class="monster-feature-item">
                         <article class="monster-feature-body">

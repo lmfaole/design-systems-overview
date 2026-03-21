@@ -1,4 +1,4 @@
-import type { SiteFooterSection, SiteLink } from "@/components/site/types";
+import type { SiteFooterSection, SiteLink } from "@/components/site-types";
 
 export const siteBrand: SiteLink = {
     href: "/",

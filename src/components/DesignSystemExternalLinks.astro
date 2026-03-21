@@ -1,0 +1,20 @@
+---
+import {
+    DESIGN_SYSTEM_EXTERNAL_LINK_LABELS,
+    type DesignSystemExternalLinksLinks,
+} from "./design-system-external-links";
+
+interface Props {
+    links: DesignSystemExternalLinksLinks;
+}
+
+const { links } = Astro.props;
+---
+
+<ul>
+    {DESIGN_SYSTEM_EXTERNAL_LINK_LABELS.map(({ key, label }) => (
+        <li>
+            <a href={links[key]} rel="noreferrer" target="_blank">{label}</a>
+        </li>
+    ))}
+</ul>

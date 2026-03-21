@@ -369,10 +369,9 @@ function JsonControl({ control, rows, onChange, label }: JsonControlProps) {
                 <div key={row.id} className="json-row">
                     {control.keyReadOnly ? (
                         valueOptions ? (
-                            <label className="site-field">
+                            <label>
                                 <span>{row.key || "verdi"}</span>
                                 <select
-                                    className="site-control"
                                     name={`example-${control.name}-value-${row.id}`}
                                     value={
                                         valueOptions.find((option) => String(option.value) === row.value)?.id ??
@@ -391,10 +390,9 @@ function JsonControl({ control, rows, onChange, label }: JsonControlProps) {
                                 </select>
                             </label>
                         ) : (
-                            <label className="site-field">
+                            <label>
                                 <span>{row.key || "verdi"}</span>
                                 <input
-                                    className="site-control"
                                     type="text"
                                     name={`example-${control.name}-value-${row.id}`}
                                     value={row.value}
@@ -404,10 +402,9 @@ function JsonControl({ control, rows, onChange, label }: JsonControlProps) {
                         )
                     ) : (
                         <>
-                            <label className="site-field">
+                            <label>
                                 <span>key</span>
                                 <input
-                                    className="site-control"
                                     type="text"
                                     name={`example-${control.name}-key-${row.id}`}
                                     value={row.key}
@@ -416,10 +413,9 @@ function JsonControl({ control, rows, onChange, label }: JsonControlProps) {
                             </label>
 
                             {valueOptions ? (
-                                <label className="site-field">
+                                <label>
                                     <span>value</span>
                                     <select
-                                        className="site-control"
                                         name={`example-${control.name}-value-${row.id}`}
                                         value={
                                             valueOptions.find((option) => String(option.value) === row.value)?.id ??
@@ -438,10 +434,9 @@ function JsonControl({ control, rows, onChange, label }: JsonControlProps) {
                                     </select>
                                 </label>
                             ) : (
-                                <label className="site-field">
+                                <label>
                                     <span>value</span>
                                     <input
-                                        className="site-control"
                                         type="text"
                                         name={`example-${control.name}-value-${row.id}`}
                                         value={row.value}
@@ -453,7 +448,7 @@ function JsonControl({ control, rows, onChange, label }: JsonControlProps) {
                             {allowRowActions && (
                                 <button
                                     type="button"
-                                    className="site-button site-button-quiet"
+                                    data-variant="quiet"
                                     onClick={() => removeRow(row.id)}
                                     aria-label={`Fjern ${control.name}-rad`}
                                 >
@@ -468,7 +463,7 @@ function JsonControl({ control, rows, onChange, label }: JsonControlProps) {
             {(allowRowActions || error) && (
                 <div className="json-actions">
                     {allowRowActions && (
-                        <button type="button" className="site-button site-button-quiet" onClick={addRow}>
+                        <button type="button" data-variant="quiet" onClick={addRow}>
                             Legg til
                         </button>
                     )}
@@ -543,10 +538,9 @@ export function ComponentExample({ titleId = "eksempel", children, controls }: C
     const displayControls = useMemo(
         () => (
             <>
-                <label className="site-field">
+                <label>
                     <span>Tema</span>
                     <select
-                        className="site-control"
                         name="example-theme"
                         value={exampleTheme}
                         onChange={({ target }) => setExampleTheme(target.value)}
@@ -557,10 +551,9 @@ export function ComponentExample({ titleId = "eksempel", children, controls }: C
                     </select>
                 </label>
 
-                <label className="site-field">
+                <label>
                     <span>Størrelse</span>
                     <select
-                        className="site-control"
                         name="example-size"
                         value={exampleSize}
                         onChange={({ target }) => setExampleSize(target.value)}
@@ -571,10 +564,9 @@ export function ComponentExample({ titleId = "eksempel", children, controls }: C
                     </select>
                 </label>
 
-                <label className="site-field">
+                <label>
                     <span>Viewport</span>
                     <select
-                        className="site-control"
                         name="example-viewport"
                         value={exampleViewport}
                         onChange={({ target }) => setExampleViewport(target.value)}
@@ -603,9 +595,10 @@ export function ComponentExample({ titleId = "eksempel", children, controls }: C
 
             if (control.kind === "boolean") {
                 return (
-                    <label key={control.name} className="site-check">
+                    <label key={control.name} className="switch">
                         <input
                             type="checkbox"
+                            data-variant="switch"
                             name={`example-${control.name}`}
                             checked={rawValue === true}
                             onChange={({ target }) =>
@@ -621,10 +614,9 @@ export function ComponentExample({ titleId = "eksempel", children, controls }: C
                 const selectedValues = isStringArray(rawValue) ? rawValue : control.defaultOptionIds;
 
                 return (
-                    <label key={control.name} className="site-field">
+                    <label key={control.name}>
                         <span>{label}</span>
                         <select
-                            className="site-control multiselect"
                             name={`example-${control.name}`}
                             value={selectedValues}
                             multiple
@@ -661,10 +653,9 @@ export function ComponentExample({ titleId = "eksempel", children, controls }: C
                 const textValue = typeof rawValue === "string" ? rawValue : "";
 
                 return (
-                    <label key={control.name} className="site-field">
+                    <label key={control.name}>
                         <span>{label}</span>
                         <input
-                            className="site-control"
                             type="text"
                             name={`example-${control.name}`}
                             value={textValue}
@@ -681,10 +672,9 @@ export function ComponentExample({ titleId = "eksempel", children, controls }: C
                 const numberValue = typeof rawValue === "string" ? rawValue : "";
 
                 return (
-                    <label key={control.name} className="site-field">
+                    <label key={control.name}>
                         <span>{label}</span>
                         <input
-                            className="site-control"
                             type="number"
                             name={`example-${control.name}`}
                             value={numberValue}
@@ -706,10 +696,9 @@ export function ComponentExample({ titleId = "eksempel", children, controls }: C
                     : control.defaultOptionId;
 
             return (
-                <label key={control.name} className="site-field">
+                <label key={control.name}>
                     <span>{label}</span>
                     <select
-                        className="site-control"
                         name={`example-${control.name}`}
                         value={selectedId}
                         onChange={({ target }) =>
@@ -755,7 +744,7 @@ export function ComponentExample({ titleId = "eksempel", children, controls }: C
 
     return (
         <section ref={exampleRef} className="component-page-example" aria-labelledby={titleId}>
-            <div ref={previewRef} className="site-card" data-panel="preview">
+            <div ref={previewRef} className="card" data-panel="preview">
                 <div
                     className="area"
                     data-theme={exampleTheme === "auto" ? undefined : exampleTheme}
@@ -773,7 +762,7 @@ export function ComponentExample({ titleId = "eksempel", children, controls }: C
                 </div>
             </div>
 
-            <div className="site-card" data-panel="controls">
+            <div className="card" data-panel="controls">
                 <div data-panel-scroll="">
                     <section data-group="display">
                         <h3>Visning</h3>
@@ -788,10 +777,7 @@ export function ComponentExample({ titleId = "eksempel", children, controls }: C
                             )}
                             {propControls.groupControls}
                             {propControls.booleanControls.length > 0 && (
-                                <fieldset>
-                                    <legend>Valg</legend>
-                                    <div className="options-list">{propControls.booleanControls}</div>
-                                </fieldset>
+                                <div className="options-list">{propControls.booleanControls}</div>
                             )}
                         </section>
                     )}

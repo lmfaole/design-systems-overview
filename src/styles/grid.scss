@@ -1,12 +1,35 @@
 @layer site {
-  .ds-grid {
+  .grid {
+    --ds-grid-columns: 1;
+
     display: grid;
     gap: var(--site-space-m);
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(var(--ds-grid-columns), minmax(0, 1fr));
 
-    &[data-columns] {
-      /* stylelint-disable-next-line scss/operator-no-unspaced -- attr() type syntax uses <number> */
-      grid-template-columns: repeat(attr(data-columns type(<number>), 1), minmax(0, 1fr));
+    &[data-columns="2"] {
+      @media (min-width: 42.5rem) {
+        --ds-grid-columns: 2;
+      }
+    }
+
+    &[data-columns="3"] {
+      @media (min-width: 42.5rem) {
+        --ds-grid-columns: 2;
+      }
+
+      @media (min-width: 75rem) {
+        --ds-grid-columns: 3;
+      }
+    }
+
+    &[data-columns="4"] {
+      @media (min-width: 42.5rem) {
+        --ds-grid-columns: 2;
+      }
+
+      @media (min-width: 75rem) {
+        --ds-grid-columns: 4;
+      }
     }
   }
 }

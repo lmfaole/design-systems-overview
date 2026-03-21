@@ -10,7 +10,7 @@ export function PatternFeatureList({
 
     return (
         <ListTag
-            className="ds-grid monster-feature-list"
+            className="grid monster-feature-list"
             data-ordered={ordered}
             data-tone={tone}
         >

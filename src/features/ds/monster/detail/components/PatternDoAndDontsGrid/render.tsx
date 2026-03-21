@@ -7,7 +7,7 @@ export function PatternDoAndDontsGrid({
     donts,
 }: PatternDoAndDontsGridProps) {
     return (
-        <div className="ds-grid monster-guidance-grid" data-columns={2}>
+        <div className="grid monster-guidance-grid" data-columns={2}>
             <section
                 className="monster-guidance-column"
                 data-tone="success"

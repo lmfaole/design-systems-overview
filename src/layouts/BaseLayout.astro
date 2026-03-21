@@ -1,7 +1,7 @@
 ---
-import SiteHeader from "@/components/site/SiteHeader/SiteHeader.astro";
-import SiteFooter from "@/components/site/SiteFooter/SiteFooter.astro";
-import SiteBreadcrumb from "@/components/site/SiteBreadcrumb/SiteBreadcrumb.astro";
+import SiteHeader from "@/components/SiteHeader.astro";
+import SiteFooter from "@/components/SiteFooter.astro";
+import SiteBreadcrumb from "@/components/SiteBreadcrumb.astro";
 import {
     siteBrand,
     siteFooterNote,
@@ -9,8 +9,11 @@ import {
     siteHeaderLinks,
 } from "@/data/site/navigation";
 import { DEFAULT_DESCRIPTION, SITE_NAME, SITE_URL } from "@/site/seo";
+import "@/styles/card.scss";
+import "@/styles/form.scss";
 import "@/styles/grid.scss";
 import "@/styles/globals.scss";
+import "@/styles/switch.scss";
 
 interface Props {
     title?: string;

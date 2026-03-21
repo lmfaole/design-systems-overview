@@ -32,19 +32,23 @@ describe("ComponentExample", () => {
             </ComponentExample>,
         );
 
-        expect(html).toContain('class="site-control"');
         expect(html).toContain('type="checkbox"');
+        expect(html).toContain('data-variant="switch"');
         expect(html).toContain('type="text"');
         expect(html).toContain('type="number"');
         expect(html).toContain('data-panel="controls"');
         expect(html).toContain('data-panel="preview"');
         expect(html).toContain(">Visning<");
         expect(html).toContain(">Props<");
+        expect(html).not.toContain(">Valg<");
     });
 
     it("stays free of design-system-specific UI imports", () => {
         expect(componentExampleSource).not.toContain('@fremtind/jokul/');
-        expect(componentExampleSource).toContain('className="site-control"');
+        expect(componentExampleSource).not.toContain('className="select"');
+        expect(componentExampleSource).not.toContain('className="text-field"');
+        expect(componentExampleSource).not.toContain("site-control");
+        expect(componentExampleSource).not.toContain("site-button");
         expect(componentExampleSource).toContain('data-panel="controls"');
         expect(componentExampleSource).toContain('data-panel-scroll=""');
         expect(componentExampleSource).toContain('<h3>Visning</h3>');

@@ -1,6 +1,6 @@
 ---
 import { slugify } from "@/lib/format";
-import PageHeader from "@/components/ds/PageHeader/PageHeader.astro";
+import PageHeader from "@/components/PageHeader.astro";
 import type { TokenPost } from "@/data/jokul/tokens";
 import "@/features/ds/jokul/_shared/components/CodeBlock/code-block.scss";
 import { serializeTokenPost } from "./render";
@@ -161,12 +161,12 @@ const tableOfContentsItems = [
                         {serializedPost.resources.map((item) => (
                             <li>
                                 <a href={item.href}>{item.title}</a>
-                                {(item.meta || item.descriptionHtml) && (
+                                {(item.meta || item.description) && (
                                     <p class="muted">
                                         <small>
                                             {item.meta}
-                                            {item.meta && item.descriptionHtml ? " · " : ""}
-                                            {item.descriptionHtml && <Fragment set:html={item.descriptionHtml} />}
+                                            {item.meta && item.description ? " · " : ""}
+                                            {item.description}
                                         </small>
                                     </p>
                                 )}

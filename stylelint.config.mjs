@@ -72,11 +72,7 @@ export default {
         },
         {
             files: [
-                "src/components/ds/FullBleed/**/*.{css,scss}",
-                "src/components/ds/Grid/**/*.{css,scss}",
-                "src/components/ds/PageHeader/**/*.{css,scss}",
-                "src/components/ds/Toolbar/**/*.{css,scss}",
-                "src/components/ds/cards/**/*.{css,scss}",
+                "src/components/**/*.{css,scss}",
                 "src/features/ds/jokul/_shared/components/**/*.{css,scss}",
                 "src/features/ds/jokul/components/**/*.{css,scss}",
                 "src/features/ds/jokul/_styles/**/*.scss",

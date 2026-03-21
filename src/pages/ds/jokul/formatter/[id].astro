@@ -1,7 +1,7 @@
 ---
 import JokulLayout from "@/layouts/JokulLayout.astro";
 import { formatterDocs, getFormatterDoc } from "@/data/jokul/formatters";
-import { FormatterPage } from "@/features/ds/jokul/formatters/FormatterPage";
+import FormatterPage from "@/features/ds/jokul/formatters/FormatterPage.astro";
 
 export function getStaticPaths() {
     return formatterDocs.map((doc) => ({
@@ -23,5 +23,5 @@ if (!doc) {
     path={`/ds/jokul/formatter/${doc.id}`}
     type="article"
 >
-    <FormatterPage id={doc.id} />
+    <FormatterPage doc={doc} />
 </JokulLayout>

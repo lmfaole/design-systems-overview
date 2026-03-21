@@ -83,100 +83,6 @@
     display: none !important;
   }
 
-  .site-card {
-    box-sizing: border-box;
-    display: grid;
-    gap: var(--site-space-s);
-    align-content: start;
-    inline-size: 100%;
-    min-inline-size: 0;
-    padding: var(--site-space-s);
-    border: 1px solid var(--site-border-color);
-    border-radius: var(--site-pre-border-radius);
-    background: color-mix(in srgb, var(--site-page-background) 94%, canvas 6%);
-  }
-
-  .site-card-link {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .site-card-link:hover {
-    border-color: color-mix(in srgb, currentcolor 14%, var(--site-border-color));
-  }
-
-  .site-card-link:focus-visible {
-    outline: 3px solid currentcolor;
-    outline-offset: 3px;
-  }
-
-  .site-field {
-    display: grid;
-    gap: var(--site-space-xxs);
-    min-inline-size: 0;
-  }
-
-  .site-field-fill {
-    inline-size: 100%;
-  }
-
-  .site-check {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--site-space-xs);
-    min-block-size: 2.75rem;
-  }
-
-  .site-check input {
-    margin: 0;
-  }
-
-  .site-control {
-    box-sizing: border-box;
-    appearance: none;
-    inline-size: 100%;
-    min-block-size: 2.75rem;
-    padding: var(--site-space-s);
-    border: 1px solid var(--site-border-color);
-    border-radius: var(--site-pre-border-radius);
-    background: var(--site-page-background);
-    color: inherit;
-    font: inherit;
-  }
-
-  .site-button {
-    box-sizing: border-box;
-    appearance: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--site-space-xxs);
-    min-block-size: 2.25rem;
-    padding: var(--site-space-xxs) var(--site-space-s);
-    border: 1px solid var(--site-border-color);
-    border-radius: var(--site-pre-border-radius);
-    background: var(--site-page-background);
-    color: inherit;
-    cursor: pointer;
-    font: inherit;
-    text-decoration: none;
-  }
-
-  .site-button-quiet {
-    min-block-size: auto;
-    padding: var(--site-space-xxs) var(--site-space-xs);
-    background: color-mix(in srgb, var(--site-page-background) 92%, canvas 8%);
-  }
-
-  .site-button:hover {
-    border-color: color-mix(in srgb, currentcolor 14%, var(--site-border-color));
-  }
-
-  .site-button:focus-visible {
-    outline: 3px solid currentcolor;
-    outline-offset: 3px;
-  }
-
   .site-popover {
     inline-size: min(90vw, 48rem);
     max-block-size: 70vh;
@@ -200,18 +106,6 @@
 
   .site-popover[popover]:popover-open {
     display: grid;
-  }
-
-  select.site-control {
-    padding-inline-end: calc(var(--site-space-l) + 1.25rem);
-    background-image:
-      linear-gradient(45deg, transparent 50%, currentcolor 50%),
-      linear-gradient(135deg, currentcolor 50%, transparent 50%);
-    background-position:
-      calc(100% - 1.2rem) calc(50% - 0.15rem),
-      calc(100% - 0.85rem) calc(50% - 0.15rem);
-    background-size: 0.45rem 0.45rem;
-    background-repeat: no-repeat;
   }
 
   .site-table-wrap {

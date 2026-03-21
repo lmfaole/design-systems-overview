@@ -1,1 +1,0 @@
-export { DesignSystemExternalLinks } from "./DesignSystemExternalLinks";

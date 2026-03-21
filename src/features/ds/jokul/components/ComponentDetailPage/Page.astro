@@ -2,13 +2,13 @@
 import type { ComponentDoc } from "@/data/jokul/component-docs";
 import { getParentAndSiblings, getRelationships } from "@/data/jokul/component-docs";
 import type { PatternComponentBacklink } from "@/data/monster/patterns";
-import { DotsIllustration } from "@/features/ds/jokul/_shared/components/Illustration";
-import { PageHeader } from "@/components/ds/PageHeader";
+import PageHeader from "@/components/PageHeader.astro";
 import ComponentExampleIsland from "@/features/ds/jokul/components/ComponentExampleIsland";
 import CodeSnippet from "./CodeSnippet.astro";
 import PropTable from "./PropTable.astro";
 import RelationshipDefinitionList from "./RelationshipDefinitionList.astro";
 import RelationshipGrid from "./RelationshipGrid.astro";
+import { renderDotsIllustration } from "./renderDotsIllustration";
 import {
     createDetailTocItems,
     createMigrationEntries,
@@ -51,13 +51,14 @@ const siblingsItems = toRelatedItems(siblings);
 const relatedItems = toRelatedItems(related);
 const firstMigrationAnchor = migrationEntries[0]?.anchorId ?? "migrering";
 const exampleHydrationMode = getExampleHydrationMode(doc.id);
+const headerBackgroundHtml = renderDotsIllustration();
 ---
 
 <main class="page component-detail-page">
     <PageHeader
         title={doc.name}
         description={doc.description.long}
-        background={DotsIllustration}
+        backgroundHtml={headerBackgroundHtml}
     />
 
     {tocItems.length > 0 && (
@@ -72,7 +73,7 @@ const exampleHydrationMode = getExampleHydrationMode(doc.id);
     )}
 
     {doc.status === "deprecated" && migrationEntries.length > 0 && (
-        <aside class="site-card component-warning" aria-labelledby="deprecated-notice-title">
+        <aside class="card component-warning" aria-labelledby="deprecated-notice-title">
             <p id="deprecated-notice-title" class="component-warning-title"><strong>Deprecated</strong></p>
             <p class="component-warning-body">
                 Denne komponenten er deprecated. <a href={`#${firstMigrationAnchor}`}>Se migrering</a>.
@@ -95,7 +96,7 @@ const exampleHydrationMode = getExampleHydrationMode(doc.id);
             <ul class="component-pattern-list">
                 {relatedPatterns.map((pattern) => (
                     <li>
-                        <article class="site-card component-pattern-card">
+                        <article class="card component-pattern-card">
                             <small>{pattern.categoryLabel}</small>
                             <h3 class="component-pattern-title">
                                 <a href={pattern.href}>{pattern.title}</a>
@@ -134,7 +135,7 @@ const exampleHydrationMode = getExampleHydrationMode(doc.id);
             <h2 id="migrering">Migreringsguider</h2>
             <div class="migration-list">
                 {migrationEntries.map(({ anchorId, displayName, migration }) => (
-                    <div class="site-card" id={anchorId}>
+                    <div class="card" id={anchorId}>
                         <h3 class="migration-heading">{displayName}</h3>
                         {migration.description && <p class="small muted">{migration.description}</p>}
 
@@ -150,7 +151,7 @@ const exampleHydrationMode = getExampleHydrationMode(doc.id);
                             </p>
                         )}
 
-                        <div class="ds-grid" data-columns={2}>
+                        <div class="grid" data-columns={2}>
                             <div>
                                 <p class="small muted">Før</p>
                                 <CodeSnippet code={migration.before} />

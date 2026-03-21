@@ -1,32 +1,32 @@
-import type React from "react";
 import type {
-  ResourcePublisher,
-  ResourceRelevance,
-} from "@/components/ds/resource-list/types";
+    ResourcePublisher,
+    ResourceRelevance,
+} from "@/components/resource-list-types";
+import type { TokenIllustrationSlug } from "@/features/ds/jokul/_shared/components/TokenIllustration/shared";
 
 export interface TokenResource {
-  title: string;
-  url: string;
-  publisher?: ResourcePublisher;
-  relevance?: ResourceRelevance;
-  description?: React.ReactNode;
+    title: string;
+    url: string;
+    publisher?: ResourcePublisher;
+    relevance?: ResourceRelevance;
+    description?: string;
 }
 
 export interface TokenTable {
-  /** Optional h3 heading rendered above this table */
-  heading?: string;
-  /** Short description shown between the heading and the table */
-  description?: string;
-  caption: string;
-  /**
-   * Zero-based column index that contains a rendered example of the token value.
-   *
-   * Every token table should include one visible preview/example column so the
-   * reference is not only textual.
-   */
-  exampleColumnIndex: number;
-  columns: string[];
-  rows: React.ReactNode[][];
+    /** Optional h3 heading rendered above this table */
+    heading?: string;
+    /** Short description shown between the heading and the table */
+    description?: string;
+    caption: string;
+    /**
+     * Zero-based column index that contains a rendered example of the token value.
+     *
+     * Every token table should include one visible preview/example column so the
+     * reference is not only textual.
+     */
+    exampleColumnIndex: number;
+    columns: string[];
+    rows: string[][];
 }
 
 export interface ScssMixin {
@@ -71,16 +71,16 @@ export interface ScssMixinProperty {
 }
 
 export interface TokenPost {
-  id: number;
-  title: string;
-  excerpt: string;
-  /** Structured token reference tables rendered after the header, before content */
-  tokenOverview?: TokenTable[];
-  /** SCSS mixins relevant to this foundation area */
-  scssSection?: ScssMixin[];
-  /** Optional inline illustration rendered as the card hero. Replaces image URL. */
-  illustration?: React.ReactNode;
-  /** IDs of component docs directly related to this token area */
-  relatedComponents?: string[];
-  resources?: TokenResource[];
+    id: number;
+    title: string;
+    excerpt: string;
+    /** Structured token reference tables rendered after the header, before content */
+    tokenOverview?: TokenTable[];
+    /** SCSS mixins relevant to this foundation area */
+    scssSection?: ScssMixin[];
+    /** Token-page illustration rendered in the page header */
+    illustration?: TokenIllustrationSlug;
+    /** IDs of component docs directly related to this token area */
+    relatedComponents?: string[];
+    resources?: TokenResource[];
 }

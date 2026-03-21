@@ -9,10 +9,10 @@ interface Props {
 const { items, columns = 4 } = Astro.props;
 ---
 
-<ul class="bare-list ds-grid component-relationship-grid" data-columns={columns}>
+<ul class="bare-list grid component-relationship-grid" data-columns={columns}>
     {items.map(({ doc, description }) => (
-        <li>
-            <a class="site-card site-card-link component-relationship-card" href={`/ds/jokul/component/${doc.id}`}>
+        <li class="card component-relationship-card">
+            <a href={`/ds/jokul/component/${doc.id}`}>
                 <strong>{doc.name}</strong>
                 <p class="component-relationship-description">{description}</p>
             </a>

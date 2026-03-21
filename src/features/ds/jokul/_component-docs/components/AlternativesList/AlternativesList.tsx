@@ -8,7 +8,7 @@ interface AlternativesListProps {
 
 export function AlternativesList({ items }: AlternativesListProps) {
     return (
-        <div className="ds-grid">
+        <div className="grid">
             {items.map(({ doc, description }) => (
                 <RelatedComponentCard key={doc.id} doc={doc} description={description} layout="horizontal" />
             ))}
