@@ -1,19 +1,16 @@
 ---
+import "./styles/reset.scss";
+import "./styles/base.scss";
 import SiteHeader from "@/components/SiteHeader.astro";
 import SiteFooter from "@/components/SiteFooter.astro";
 import SiteBreadcrumb from "@/components/SiteBreadcrumb.astro";
 import {
     siteBrand,
+    siteFooterLinks,
     siteFooterNote,
-    siteFooterSections,
     siteHeaderLinks,
 } from "@/data/site/navigation";
-import { DEFAULT_DESCRIPTION, SITE_NAME, SITE_URL } from "@/site/seo";
-import "@/styles/card.scss";
-import "@/styles/form.scss";
-import "@/styles/grid.scss";
-import "@/styles/globals.scss";
-import "@/styles/switch.scss";
+import {DEFAULT_DESCRIPTION, SITE_NAME, SITE_URL} from "@/site/seo";
 
 interface Props {
     title?: string;
@@ -21,7 +18,6 @@ interface Props {
     path?: string;
     type?: "website" | "article";
     noIndex?: boolean;
-    jokulTheme?: boolean;
 }
 
 const {
@@ -30,7 +26,6 @@ const {
     path = "/",
     type = "website",
     noIndex = false,
-    jokulTheme = false,
 } = Astro.props;
 
 const canonicalUrl = new URL(path, SITE_URL).toString();
@@ -38,37 +33,32 @@ const pageTitle = title === SITE_NAME ? SITE_NAME : `${title} | ${SITE_NAME}`;
 ---
 
 <html lang="no">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>{pageTitle}</title>
-        <meta name="description" content={description} />
-        <link rel="canonical" href={canonicalUrl} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:site_name" content={SITE_NAME} />
-        <meta property="og:locale" content="nb_NO" />
-        <meta property="og:type" content={type} />
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
-        <link rel="icon" href="/favicon.ico" />
-        {noIndex && <meta name="robots" content="noindex,follow" />}
-    </head>
-    <body>
-        <SiteHeader brand={siteBrand} links={siteHeaderLinks} />
-        <SiteBreadcrumb pathname={path} />
-        {jokulTheme ? (
-            <div class="jkl-site site-layout" data-theme="auto">
-                <slot />
-            </div>
-        ) : (
-            <slot />
-        )}
-        <SiteFooter
-            sections={siteFooterSections}
-            note={siteFooterNote}
-        />
-    </body>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>{pageTitle}</title>
+    <meta name="description" content={description}/>
+    <link rel="canonical" href={canonicalUrl}/>
+    <meta property="og:title" content={title}/>
+    <meta property="og:description" content={description}/>
+    <meta property="og:url" content={canonicalUrl}/>
+    <meta property="og:site_name" content={SITE_NAME}/>
+    <meta property="og:locale" content="nb_NO"/>
+    <meta property="og:type" content={type}/>
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content={title}/>
+    <meta name="twitter:description" content={description}/>
+    <link rel="icon" href="/favicon.ico"/>
+    {noIndex &&
+            <meta name="robots" content="noindex,follow"/>}
+</head>
+<body>
+<SiteHeader brand={siteBrand} links={siteHeaderLinks}/>
+<SiteBreadcrumb pathname={path}/>
+<slot/>
+<SiteFooter
+        links={siteFooterLinks}
+        note={siteFooterNote}
+/>
+</body>
 </html>

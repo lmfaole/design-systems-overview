@@ -2,7 +2,7 @@
   "name": "lmfaole",
   "version": "1.0.0",
   "private": true,
-  "description": "Jokul documentation site (components, tokens, patterns).",
+  "description": "Learning resource for design systems and UI patterns.",
   "scripts": {
     "generate:search-index": "node scripts/generate-search-index.mjs",
     "typecheck": "astro check",
@@ -28,8 +28,8 @@
     "test:lighthouse:run": "node scripts/test-lighthouse.mjs http://127.0.0.1:3001",
     "lint": "npm run typecheck && npm run lint:styles && npm run lint:repo",
     "lint:repo": "node scripts/lint-repo-rules.mjs",
-    "lint:styles": "stylelint \"src/**/*.{css,scss}\"",
-    "lint:styles:fix": "stylelint \"src/**/*.{css,scss}\" --fix",
+    "lint:styles": "stylelint --allow-empty-input \"src/**/*.{css,scss}\"",
+    "lint:styles:fix": "stylelint --allow-empty-input \"src/**/*.{css,scss}\" --fix",
     "setup": "node scripts/setup.mjs",
     "pages:dev": "npm run build && npx wrangler pages dev dist",
     "pages:build": "npm run build",
@@ -42,7 +42,6 @@
   "keywords": [
     "astro",
     "cloudflare-pages",
-    "jokul",
     "design-system",
     "documentation"
   ],
@@ -53,18 +52,12 @@
   },
   "homepage": "https://lmfaole.party",
   "dependencies": {
-    "@astrojs/react": "^5.0.1",
-    "@fremtind/jokul": "^4.2.0",
     "astro": "^6.0.7",
-    "patch-package": "^8.0.1",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "patch-package": "^8.0.1"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.8",
     "@types/node": "^25.5.0",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
     "lighthouse": "^13.0.3",
     "pa11y-ci": "^4.1.0",
     "postcss-scss": "^4.0.9",

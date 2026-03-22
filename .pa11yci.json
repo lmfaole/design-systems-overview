@@ -6,15 +6,9 @@
     },
     "urls": [
         "http://127.0.0.1:3001/ds",
-        "http://127.0.0.1:3001/ds/jokul",
-        "http://127.0.0.1:3001/ds/jokul/formatter",
-        "http://127.0.0.1:3001/ds/jokul/component",
-        "http://127.0.0.1:3001/ds/jokul/component/button",
-        "http://127.0.0.1:3001/ds/jokul/component/props",
-        "http://127.0.0.1:3001/ds/jokul/token",
-        "http://127.0.0.1:3001/ds/jokul/token/farger",
-        "http://127.0.0.1:3001/ds/monster",
-        "http://127.0.0.1:3001/ds/monster/lastetilstander",
-        "http://127.0.0.1:3001/ds/sok?q=button"
+        "http://127.0.0.1:3001/ds/mønster",
+        "http://127.0.0.1:3001/ds/mønster/skjelettvisning",
+        "http://127.0.0.1:3001/ds/mønster/tomtilstander",
+        "http://127.0.0.1:3001/ds/søk?q=skjelettvisning"
     ]
 }

@@ -11,7 +11,7 @@ export function toPascalCase(id: string): string {
 
 /**
  * Converts a string to a URL-safe slug for use as an anchor ID.
- * e.g. "Bekreftelse på søknad" → "bekreftelse-pa-soknad"
+ * e.g. "Varsling på e-post" → "varsling-pa-e-post"
  */
 export function slugify(text: string): string {
     return text

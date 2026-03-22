@@ -1,0 +1,18 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getRoutePaths, renderSitemapRouteList } from "@/site/sitemap";
+
+const routePaths = getRoutePaths();
+---
+
+<BaseLayout
+    title="Sitekart"
+    description="En enkel oversikt over alle offentlige ruter i læringsressursen."
+    path="/sitemap"
+    noIndex
+>
+    <main class="page" data-ua-only>
+        <h1>Sitekart</h1>
+        <nav aria-label="Alle ruter" set:html={renderSitemapRouteList(routePaths)} />
+    </main>
+</BaseLayout>

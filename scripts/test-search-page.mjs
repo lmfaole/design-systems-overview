@@ -2,7 +2,7 @@ import process from "node:process";
 import puppeteer from "puppeteer";
 
 const baseUrl = process.argv[2] ?? "http://127.0.0.1:3001";
-const url = new URL("/ds/sok?q=button", `${baseUrl}/`).toString();
+const url = new URL("/ds/søk?q=skjelettvisning", `${baseUrl}/`).toString();
 
 const browser = await puppeteer.launch({
     headless: true,
@@ -18,23 +18,23 @@ try {
 
     const state = await page.evaluate(() => {
         const input = document.querySelector('input[name="q"]');
-        const buttonLink = document.querySelector('a[href="/ds/jokul/component/button"]');
+        const resultLink = document.querySelector('a[href="/ds/mønster/skjelettvisning"]');
         const pageText = document.querySelector("main")?.textContent ?? "";
 
         return {
             inputValue: input instanceof HTMLInputElement ? input.value : "",
-            hasButtonResult: Boolean(buttonLink),
+            hasPatternResult: Boolean(resultLink),
             hasAstroIsland: Boolean(document.querySelector("astro-island")),
             pageText,
         };
     });
 
-    if (!state.hasButtonResult) {
-        throw new Error(`Expected a button result on ${url}, but none was rendered.`);
+    if (!state.hasPatternResult) {
+        throw new Error(`Expected a skeleton-pattern result on ${url}, but none was rendered.`);
     }
 
-    if (state.inputValue !== "button") {
-        throw new Error(`Expected search input value to be "button", got "${state.inputValue}".`);
+    if (state.inputValue !== "skjelettvisning") {
+        throw new Error(`Expected search input value to be "skjelettvisning", got "${state.inputValue}".`);
     }
 
     if (state.hasAstroIsland) {

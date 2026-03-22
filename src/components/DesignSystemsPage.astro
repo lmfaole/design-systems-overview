@@ -1,0 +1,131 @@
+---
+import {
+    getComponentCountLabel,
+    getDocumentedDesignSystems,
+    getDesignSystems,
+    getUndocumentedDesignSystems,
+    isDocumentedInProject,
+} from "@/data/ds-overview";
+import DesignSystemExternalLinks from "@/components/DesignSystemExternalLinks.astro";
+
+const systems = getDesignSystems();
+const documentedSystems = getDocumentedDesignSystems();
+const undocumentedSystems = getUndocumentedDesignSystems();
+---
+
+<main class="page">
+    <header class="ds-page-header">
+        <h1 class="title">Designsystemer</h1>
+        <p class="description">
+            Oversikt over designsystemene som er registrert i prosjektet, og hvilke som faktisk har lokal dokumentasjon her.
+        </p>
+    </header>
+
+    <form role="search" action="/ds/søk" method="get">
+        <label for="design-system-search">Søk</label>
+        <input
+            id="design-system-search"
+            type="search"
+            name="q"
+            placeholder="Mønster eller side i den lokale dokumentasjonen…"
+        />
+        <button type="submit">Søk</button>
+    </form>
+    <p>Søket dekker den lokale mønsterdokumentasjonen og sidene under <code>/ds</code>.</p>
+
+    <section>
+        <div>
+            <h2>Dokumenterte designsystemer</h2>
+            <p>Disse har egne sider og lokal dokumentasjon i repoet.</p>
+        </div>
+        {documentedSystems.length === 0 ? (
+            <p>Ingen designsystemer har lokal dokumentasjon i repoet ennå.</p>
+        ) : (
+            <ul>
+                {documentedSystems.map((system) => {
+                    const componentCountLabel = getComponentCountLabel(system);
+                    const documentedInProject = isDocumentedInProject(system);
+
+                    return (
+                        <li>
+                            <article>
+                                <h3>
+                                    <a href={system.docs}>{system.name}</a>
+                                </h3>
+                                <p>{system.description}</p>
+                                <p>
+                                    {documentedInProject
+                                        ? "Dokumentert i dette repoet."
+                                        : "Har foreløpig bare ekstern dokumentasjon."}
+                                </p>
+                                {componentCountLabel && <p>{componentCountLabel}</p>}
+                                <DesignSystemExternalLinks links={system.externalLinks} />
+                            </article>
+                        </li>
+                    );
+                })}
+            </ul>
+        )}
+    </section>
+
+    <section>
+        <div>
+            <h2>Uokumenterte designsystemer</h2>
+            <p>Disse designsystemene er registrert i prosjektet, men har ikke egne ruter eller lokal dokumentasjon i repoet ennå.</p>
+        </div>
+        {undocumentedSystems.length === 0 ? (
+            <p>Alle registrerte designsystemer har lokal dokumentasjon i repoet.</p>
+        ) : (
+            <ul>
+                {undocumentedSystems.map((system) => {
+                    const componentCountLabel = getComponentCountLabel(system);
+
+                    return (
+                        <li>
+                            <article>
+                                <h3>
+                                    <a href={system.docs}>{system.name}</a>
+                                </h3>
+                                <p>{system.description}</p>
+                                <p>Har foreløpig bare ekstern dokumentasjon.</p>
+                                {componentCountLabel && <p>{componentCountLabel}</p>}
+                                <DesignSystemExternalLinks links={system.externalLinks} />
+                            </article>
+                        </li>
+                    );
+                })}
+            </ul>
+        )}
+    </section>
+
+    <section>
+        <div>
+            <h2>Alle registrerte designsystemer</h2>
+            <p>Samlet oversikt over både lokale og eksterne dokumentasjonskilder.</p>
+        </div>
+        <ul>
+            {systems.map((system) => {
+                const componentCountLabel = getComponentCountLabel(system);
+                const documentedInProject = isDocumentedInProject(system);
+
+                return (
+                    <li>
+                        <article>
+                            <h3>
+                                <a href={system.docs}>{system.name}</a>
+                            </h3>
+                            <p>{system.description}</p>
+                            <p>
+                                {documentedInProject
+                                    ? "Dokumentert i dette repoet."
+                                    : "Har foreløpig bare ekstern dokumentasjon."}
+                            </p>
+                            {componentCountLabel && <p>{componentCountLabel}</p>}
+                            <DesignSystemExternalLinks links={system.externalLinks} />
+                        </article>
+                    </li>
+                );
+            })}
+        </ul>
+    </section>
+</main>

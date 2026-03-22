@@ -1,1 +1,0 @@
-export { MigrationExample } from "./MigrationExample";

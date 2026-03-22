@@ -30,8 +30,8 @@ export const lighthousePages = [
         },
     },
     {
-        name: "Jokul overview",
-        path: "/ds/jokul",
+        name: "Design systems",
+        path: "/ds",
         thresholds: {
             performance: 0.9,
             "best-practices": 0.9,
@@ -39,17 +39,17 @@ export const lighthousePages = [
         },
     },
     {
-        name: "Menu component",
-        path: "/ds/jokul/component/menu",
+        name: "Pattern index",
+        path: "/ds/mønster",
         thresholds: {
-            performance: 0.62,
+            performance: 0.9,
             "best-practices": 0.9,
             seo: 0.9,
         },
     },
     {
-        name: "Token index",
-        path: "/ds/jokul/token",
+        name: "Pattern detail",
+        path: "/ds/mønster/skjelettvisning",
         thresholds: {
             performance: 0.9,
             "best-practices": 0.9,

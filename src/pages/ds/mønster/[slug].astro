@@ -1,0 +1,29 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getPatternHref, getPatternPost, getPatternSlug, patternPosts } from "@/data/mønster/patterns";
+import PatternDetailPage from "@/components/ds/mønster/PatternDetailPage.astro";
+import PatternPostEnhancements from "@/components/ds/mønster/PatternPostEnhancements.astro";
+
+export function getStaticPaths() {
+    return patternPosts.map((post) => ({
+        params: { slug: getPatternSlug(post) },
+    }));
+}
+
+const { slug } = Astro.params;
+const post = getPatternPost(slug ?? "");
+
+if (!post) {
+    throw new Error(`Missing pattern for slug "${slug}"`);
+}
+---
+
+<BaseLayout
+    title={post.title}
+    description={post.description}
+    path={getPatternHref(post)}
+    type="article"
+>
+    <PatternDetailPage post={post} />
+    <PatternPostEnhancements />
+</BaseLayout>

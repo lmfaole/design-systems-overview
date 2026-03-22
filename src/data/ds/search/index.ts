@@ -1,4 +1,3 @@
-import { getJokulSearchDocuments } from "./jokul";
 import { getPatternSearchDocuments } from "./patterns";
 import { getDsPageSearchDocuments } from "./pages";
 import { searchDocuments } from "./utils";
@@ -9,7 +8,6 @@ export type { DsSearchDocument, DsSearchDocumentKind, DsSearchResult, DsSearchMa
 export function getDsSearchDocuments() {
     return [
         ...getDsPageSearchDocuments(),
-        ...getJokulSearchDocuments(),
         ...getPatternSearchDocuments(),
     ];
 }

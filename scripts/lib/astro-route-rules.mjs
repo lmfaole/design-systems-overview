@@ -1,11 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-export const allowedDesignSystemIslandRoutes = new Set([
-    "src/pages/ds/jokul/component/[id].astro",
-    "src/pages/ds/jokul/component/index.astro",
-    "src/pages/ds/jokul/component/props/index.astro",
-]);
+export const allowedDesignSystemIslandRoutes = new Set();
 
 const inlineStylePattern = /<[^>]+\sstyle\s*=/s;
 const inlineEventHandlerPattern = /<[^>]+\son[a-z][a-z0-9-]*\s*=/s;

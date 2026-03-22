@@ -1,4 +1,4 @@
-export type DsSearchDocumentKind = "page" | "component" | "formatter" | "token" | "pattern";
+export type DsSearchDocumentKind = "page" | "pattern";
 export type DsSearchMatchField = "title" | "description" | "keyword" | "meta";
 
 export interface DsSearchDocument {

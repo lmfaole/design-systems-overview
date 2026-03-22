@@ -1,6 +1,4 @@
-import { getComponentDoc, getParentAndSiblings } from "@/features/ds/jokul/_component-docs/data";
-import { getTokenPost } from "@/features/ds/jokul/_token/data";
-import { getPatternPost } from "@/data/monster/patterns";
+import { getPatternPost } from "@/data/mønster/patterns";
 
 export type SiteBreadcrumbItem = {
     href?: string;
@@ -30,60 +28,13 @@ function withCurrent(items: SiteBreadcrumbItem[]): SiteBreadcrumbItem[] {
     }));
 }
 
-function resolveJokulComponentItems(componentId: string): SiteBreadcrumbItem[] {
-    const doc = getComponentDoc(componentId);
-
-    if (!doc) {
-        return withCurrent([
-            { href: "/", label: "Forside" },
-            { href: "/ds", label: "Designsystemer" },
-            { href: "/ds/jokul", label: "Jøkul" },
-            { href: "/ds/jokul/component", label: "Komponenter" },
-            { label: humanizeSegment(componentId) },
-        ]);
-    }
-
-    const { parent } = getParentAndSiblings(componentId);
-
-    return withCurrent(
-        parent
-            ? [
-                { href: "/", label: "Forside" },
-                { href: "/ds", label: "Designsystemer" },
-                { href: "/ds/jokul", label: "Jøkul" },
-                { href: "/ds/jokul/component", label: "Komponenter" },
-                { href: `/ds/jokul/component/${parent.id}`, label: parent.name },
-                { label: doc.name },
-            ]
-            : [
-                { href: "/", label: "Forside" },
-                { href: "/ds", label: "Designsystemer" },
-                { href: "/ds/jokul", label: "Jøkul" },
-                { href: "/ds/jokul/component", label: "Komponenter" },
-                { label: doc.name },
-            ],
-    );
-}
-
-function resolveJokulTokenItems(tokenSlug: string): SiteBreadcrumbItem[] {
-    const post = getTokenPost(tokenSlug);
-
-    return withCurrent([
-        { href: "/", label: "Forside" },
-        { href: "/ds", label: "Designsystemer" },
-        { href: "/ds/jokul", label: "Jøkul" },
-        { href: "/ds/jokul/token", label: "Designtokens" },
-        { label: post?.title ?? humanizeSegment(tokenSlug) },
-    ]);
-}
-
-function resolveMonsterItems(patternSlug: string): SiteBreadcrumbItem[] {
+function resolveMønsterItems(patternSlug: string): SiteBreadcrumbItem[] {
     const post = getPatternPost(patternSlug);
 
     return withCurrent([
         { href: "/", label: "Forside" },
         { href: "/ds", label: "Designsystemer" },
-        { href: "/ds/monster", label: "Mønster" },
+        { href: "/ds/mønster", label: "Mønster" },
         { label: post?.title ?? humanizeSegment(patternSlug) },
     ]);
 }
@@ -111,7 +62,7 @@ export function resolveSiteBreadcrumbItems(pathname: string): SiteBreadcrumbItem
         ]);
     }
 
-    if (segments[1] === "sok") {
+    if (segments[1] === "søk") {
         return withCurrent([
             { href: "/", label: "Forside" },
             { href: "/ds", label: "Designsystemer" },
@@ -119,60 +70,7 @@ export function resolveSiteBreadcrumbItems(pathname: string): SiteBreadcrumbItem
         ]);
     }
 
-    if (segments[1] === "jokul") {
-        if (segments.length === 2) {
-            return withCurrent([
-                { href: "/", label: "Forside" },
-                { href: "/ds", label: "Designsystemer" },
-                { label: "Jøkul" },
-            ]);
-        }
-
-        if (segments[2] === "component") {
-            if (segments.length === 3) {
-                return withCurrent([
-                    { href: "/", label: "Forside" },
-                    { href: "/ds", label: "Designsystemer" },
-                    { href: "/ds/jokul", label: "Jøkul" },
-                    { label: "Komponenter" },
-                ]);
-            }
-
-            if (segments[3] === "props") {
-                return withCurrent([
-                    { href: "/", label: "Forside" },
-                    { href: "/ds", label: "Designsystemer" },
-                    { href: "/ds/jokul", label: "Jøkul" },
-                    { href: "/ds/jokul/component", label: "Komponenter" },
-                    { label: "Props-oversikt" },
-                ]);
-            }
-
-            return resolveJokulComponentItems(segments[3]);
-        }
-
-        if (segments[2] === "token") {
-            if (segments.length === 3) {
-                return withCurrent([
-                    { href: "/", label: "Forside" },
-                    { href: "/ds", label: "Designsystemer" },
-                    { href: "/ds/jokul", label: "Jøkul" },
-                    { label: "Designtokens" },
-                ]);
-            }
-
-            return resolveJokulTokenItems(segments[3]);
-        }
-
-        return withCurrent([
-            { href: "/", label: "Forside" },
-            { href: "/ds", label: "Designsystemer" },
-            { href: "/ds/jokul", label: "Jøkul" },
-            { label: humanizeSegment(segments[2]) },
-        ]);
-    }
-
-    if (segments[1] === "monster") {
+    if (segments[1] === "mønster") {
         if (segments.length === 2) {
             return withCurrent([
                 { href: "/", label: "Forside" },
@@ -181,7 +79,7 @@ export function resolveSiteBreadcrumbItems(pathname: string): SiteBreadcrumbItem
             ]);
         }
 
-        return resolveMonsterItems(segments[2]);
+        return resolveMønsterItems(segments[2]);
     }
 
     return withCurrent([

@@ -1,6 +1,6 @@
 export interface DesignSystem {
     /**
-     * Navnet på designsystemet, for eksempel "Jøkul". Skal være unikt, da det brukes i URL-strukturen.
+     * Navnet på designsystemet. Skal være unikt, da det brukes i URL-strukturen.
      */
     name: string;
     /**
@@ -34,7 +34,7 @@ export interface DesignSystem {
     /**
      * Statistikk om designsystemet, for eksempel antall komponenter. Dette er valgfritt og kan brukes til å vise ekstra informasjon på forsiden.
      * Eksempel: { components: 42 }
-     * Statistikken må oppdateres manuelt, for eksempel ved å telle antall komponentdokumenter i Jøkul og sette dette tallet her.
+     * Statistikken må oppdateres manuelt, for eksempel ved å telle antall dokumenterte komponenter og sette dette tallet her.
      * Dette er ikke automatisk oppdatert, så det må vedlikeholdes for å være nøyaktig.
      */
     stats?: {
@@ -45,19 +45,6 @@ export interface DesignSystem {
 }
 
 export const DESIGN_SYSTEMS: DesignSystem[] = [
-    {
-        name: "Jøkul",
-        company: "Fremtind",
-        description: "Fremtinds designsystem for produkter og tjenester.",
-        docs: "/ds/jokul",
-        packageName: "@fremtind/jokul",
-        openSource: true,
-        externalLinks: {
-            frontPage: "https://jokul.fremtind.no/",
-            changelog: "https://github.com/fremtind/jokul/releases",
-            about: "https://jokul.fremtind.no/kom-i-gang/introduksjon/",
-        },
-    },
     {
         name: "Designsystemet",
         company: "Digdir",

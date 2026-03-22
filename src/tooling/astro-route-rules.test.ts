@@ -35,10 +35,6 @@ describe("Astro route rules", () => {
         });
 
         expect(violations).toEqual([]);
-        expect(Array.from(allowedDesignSystemIslandRoutes).sort()).toEqual([
-            "src/pages/ds/jokul/component/[id].astro",
-            "src/pages/ds/jokul/component/index.astro",
-            "src/pages/ds/jokul/component/props/index.astro",
-        ]);
+        expect(Array.from(allowedDesignSystemIslandRoutes).sort()).toEqual([]);
     });
 });

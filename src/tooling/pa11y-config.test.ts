@@ -10,16 +10,10 @@ describe("pa11y config", () => {
     it("targets current /ds routes instead of legacy 404 pages", () => {
         expect(pa11yConfig.urls).toEqual([
             "http://127.0.0.1:3001/ds",
-            "http://127.0.0.1:3001/ds/jokul",
-            "http://127.0.0.1:3001/ds/jokul/formatter",
-            "http://127.0.0.1:3001/ds/jokul/component",
-            "http://127.0.0.1:3001/ds/jokul/component/button",
-            "http://127.0.0.1:3001/ds/jokul/component/props",
-            "http://127.0.0.1:3001/ds/jokul/token",
-            "http://127.0.0.1:3001/ds/jokul/token/farger",
-            "http://127.0.0.1:3001/ds/monster",
-            "http://127.0.0.1:3001/ds/monster/lastetilstander",
-            "http://127.0.0.1:3001/ds/sok?q=button",
+            "http://127.0.0.1:3001/ds/mønster",
+            "http://127.0.0.1:3001/ds/mønster/skjelettvisning",
+            "http://127.0.0.1:3001/ds/mønster/tomtilstander",
+            "http://127.0.0.1:3001/ds/søk?q=skjelettvisning",
         ]);
         expect(
             pa11yConfig.urls.every((url) => {
@@ -30,10 +24,10 @@ describe("pa11y config", () => {
         expect(
             pa11yConfig.urls.some((url) => {
                 const { pathname } = new URL(url);
-                return /\/jokul(?:\/|$)/.test(pathname) && !pathname.startsWith("/ds/");
+                return pathname.includes("/component/") || pathname.includes("/token/") || pathname.includes("/formatter/");
             }),
         ).toBe(false);
-        expect(pa11yConfig.urls).toContain("http://127.0.0.1:3001/ds/jokul/component");
-        expect(pa11yConfig.urls).toContain("http://127.0.0.1:3001/ds/jokul/component/props");
+        expect(pa11yConfig.urls).toContain("http://127.0.0.1:3001/ds/mønster");
+        expect(pa11yConfig.urls).toContain("http://127.0.0.1:3001/ds/søk?q=skjelettvisning");
     });
 });

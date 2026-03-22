@@ -1,1 +1,0 @@
-export {AlternativesList} from "./AlternativesList";

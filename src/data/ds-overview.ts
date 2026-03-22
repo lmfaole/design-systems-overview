@@ -1,21 +1,11 @@
 import { DESIGN_SYSTEMS, type DesignSystem } from "@/data/design-systems";
-import { componentDocs } from "@/data/jokul/component-docs";
 
 export function isDocumentedInProject(system: DesignSystem) {
     return system.docs.startsWith("/ds/");
 }
 
 export function getDesignSystems() {
-    const jokulComponentCount = componentDocs.filter((doc) => doc.showOnOverview !== false).length;
-
-    return DESIGN_SYSTEMS.map((system) => {
-        if (system.docs !== "/ds/jokul") return system;
-
-        return {
-            ...system,
-            stats: { ...system.stats, components: jokulComponentCount },
-        };
-    });
+    return [...DESIGN_SYSTEMS];
 }
 
 export function getUndocumentedDesignSystems() {
