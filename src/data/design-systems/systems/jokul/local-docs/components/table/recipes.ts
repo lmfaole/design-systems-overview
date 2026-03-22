@@ -1,7 +1,7 @@
 import type { DesignSystemComponentRecipe } from "../../../../../types";
 
 function getTableCssImports(): string {
-    return `import "@fremtind/jokul/styles/core/core.min.css";
+    return `import "@fremtind/jokul/styles/core/core.css";
 import "@fremtind/jokul/styles/components/table/table.min.css";`;
 }
 

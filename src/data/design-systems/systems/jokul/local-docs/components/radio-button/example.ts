@@ -136,7 +136,7 @@ function renderRadioButtonReactCode(state: RadioButtonExampleState): string {
         : "";
     const disabledCode = state.disabled ? "            <RadioButton value=\"post\" disabled>I posten</RadioButton>\n" : "            <RadioButton value=\"post\">I posten</RadioButton>\n";
 
-    return `import "@fremtind/jokul/styles/core/core.min.css";
+    return `import "@fremtind/jokul/styles/core/core.css";
 import "@fremtind/jokul/styles/components/input-group/input-group.min.css";
 import "@fremtind/jokul/styles/components/radio-button/radio-button.min.css";
 import "@fremtind/jokul/styles/fonts/webfonts.min.css";

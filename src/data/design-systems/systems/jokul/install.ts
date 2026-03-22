@@ -20,7 +20,7 @@ export const jokulInstallGuides: DesignSystemInstallGuide[] = [
             {
                 title: "Importer grunnstiler og komponentstiler",
                 description: "Start med core, og legg deretter til styles for komponentene du faktisk bruker.",
-                code: `import "@fremtind/jokul/styles/core/core.min.css";
+                code: `import "@fremtind/jokul/styles/core/core.css";
 import "@fremtind/jokul/styles/components/button/button.min.css";
 import "@fremtind/jokul/styles/components/loader/loader.min.css";`,
                 language: "ts",

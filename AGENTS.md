@@ -104,6 +104,10 @@ accessibility and performance.
 
 - Always file issues in the designsystems for any gaps, bugs, missing or unclear docs, a11y, SSR, performance, API
   limitations, or workarounds.
+- If a bug, warning, limitation, or workaround is caused by a design-system dependency rather than this repo, file the
+  issue in the same turn before closing the task, even if you also fix it locally here.
+- Treat local workarounds for design-system bugs as incomplete until the tracking issue exists and is linked in the
+  final summary.
 - File issues in `lmfaole/design-systems-overview` using `gh issue create`.
 - Write issues in Norwegian with a scan-friendly title and include labels for the issue type.
 - Issue body must include:

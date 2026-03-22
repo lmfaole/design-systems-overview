@@ -133,7 +133,7 @@ function renderTableReactCode(state: TableExampleState): string {
         ? ' align="right"'
         : "";
 
-    return `import "@fremtind/jokul/styles/core/core.min.css";
+    return `import "@fremtind/jokul/styles/core/core.css";
 import "@fremtind/jokul/styles/components/table/table.min.css";
 import {
     Table,

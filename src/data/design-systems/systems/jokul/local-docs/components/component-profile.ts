@@ -22,7 +22,7 @@ interface CreateJokulComponentProfileOptions {
     automatedChecks?: string[];
 }
 
-const JOKUL_CORE_STYLE_IMPORT = "@fremtind/jokul/styles/core/core.min.css";
+const JOKUL_CORE_STYLE_IMPORT = "@fremtind/jokul/styles/core/core.css";
 const JOKUL_ICON_STYLE_IMPORT = "@fremtind/jokul/styles/components/icon/icon.min.css";
 const JOKUL_WEBFONTS_STYLE_IMPORT = "@fremtind/jokul/styles/fonts/webfonts.min.css";
 const JOKUL_ICON_IMPORT_PATH = "@fremtind/jokul/icon";

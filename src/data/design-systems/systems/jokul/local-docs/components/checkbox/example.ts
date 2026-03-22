@@ -82,7 +82,7 @@ function renderCheckboxReactCode(state: CheckboxExampleState): string {
     const invalidCode = state.invalid ? "            invalid\n" : "";
     const disabledCode = state.disabled ? "            disabled\n" : "";
 
-    return `import "@fremtind/jokul/styles/core/core.min.css";
+    return `import "@fremtind/jokul/styles/core/core.css";
 import "@fremtind/jokul/styles/components/checkbox/checkbox.min.css";
 import "@fremtind/jokul/styles/fonts/webfonts.min.css";
 import { Checkbox } from "@fremtind/jokul/checkbox";

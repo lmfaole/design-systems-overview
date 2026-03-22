@@ -18,7 +18,7 @@ function createRecipeExample(state: SkeletonLoaderExampleState, note: string) {
             {
                 label: "CSS-importer",
                 language: "ts" as const,
-                code: `import "@fremtind/jokul/styles/core/core.min.css";
+                code: `import "@fremtind/jokul/styles/core/core.css";
 import "@fremtind/jokul/styles/components/loader/skeleton-loader.min.css";`,
             },
         ],

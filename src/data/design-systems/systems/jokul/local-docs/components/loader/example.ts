@@ -123,7 +123,7 @@ function renderLoaderHtmlCode(state: LoaderExampleState): string {
         ? '            role="status"\n'
         : "";
 
-    return `import "@fremtind/jokul/styles/core/core.min.css";
+    return `import "@fremtind/jokul/styles/core/core.css";
 import "@fremtind/jokul/styles/components/loader/loader.min.css";
 import { Loader } from "@fremtind/jokul/loader";
 

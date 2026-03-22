@@ -65,7 +65,7 @@ function renderTagReactCode(state: TagExampleState): string {
         ? ` variant="${state.variant}"`
         : "";
 
-    return `import "@fremtind/jokul/styles/core/core.min.css";
+    return `import "@fremtind/jokul/styles/core/core.css";
 import "@fremtind/jokul/styles/components/tag/tag.min.css";
 import { Tag } from "@fremtind/jokul/tag";
 

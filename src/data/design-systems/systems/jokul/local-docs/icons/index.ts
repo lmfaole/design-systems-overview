@@ -80,7 +80,7 @@ function renderIconPreview(definition: JokulIconDefinition): string {
 }
 
 function renderIconReactCode(definition: JokulIconDefinition): string {
-    return `import "@fremtind/jokul/styles/core/core.min.css";
+    return `import "@fremtind/jokul/styles/core/core.css";
 import "@fremtind/jokul/styles/components/icon/icon.min.css";
 import "@fremtind/jokul/styles/fonts/webfonts.min.css";
 import { ${definition.exportName} } from "@fremtind/jokul/icon";

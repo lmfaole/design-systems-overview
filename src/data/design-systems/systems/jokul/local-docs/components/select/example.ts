@@ -130,7 +130,7 @@ function renderSelectReactCode(state: SelectExampleState): string {
         ? ""
         : `            value="${state.valueState}"\n            onChange={() => undefined}\n`;
 
-    return `import "@fremtind/jokul/styles/core/core.min.css";
+    return `import "@fremtind/jokul/styles/core/core.css";
 import "@fremtind/jokul/styles/components/icon/icon.min.css";
 import "@fremtind/jokul/styles/fonts/webfonts.min.css";
 import "@fremtind/jokul/styles/components/input-group/input-group.min.css";

@@ -249,7 +249,7 @@ function renderButtonReactExampleCode(state: ButtonExampleState): string {
         ? `            as="a"\n            href="${JOKUL_BUTTON_LINK_HREF}"\n`
         : `            type="${state.type}"\n${state.disabled ? "            disabled\n" : ""}`;
 
-    return `import "@fremtind/jokul/styles/core/core.min.css";
+    return `import "@fremtind/jokul/styles/core/core.css";
 import "@fremtind/jokul/styles/components/button/button.min.css";
 import "@fremtind/jokul/styles/components/loader/loader.min.css";
 ${iconStyleImport}${iconFontImport}import { Button } from "@fremtind/jokul/button";
