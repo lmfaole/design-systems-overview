@@ -1,8 +1,12 @@
 import type { DesignSystemLocalSectionDocs } from "../../../types";
 import { buttonDoc } from "./components/button";
+import { checkboxDoc } from "./components/checkbox";
 import { loaderDoc } from "./components/loader";
+import { selectDoc } from "./components/select";
 import { skeletonLoaderDoc } from "./components/skeleton-loader";
 import { tableDoc } from "./components/table";
+import { textInputDoc } from "./components/text-input";
+import { jokulIconDocs } from "./icons";
 import { spacingDoc } from "./tokens/spacing";
 
 const jokulComponentSection = {
@@ -15,11 +19,14 @@ const jokulComponentSection = {
         "react",
         "jokul komponenter",
         "button",
+        "checkbox",
         "loader",
+        "select",
         "skeleton loader",
         "table",
+        "text input",
     ],
-    items: [buttonDoc, loaderDoc, skeletonLoaderDoc, tableDoc],
+    items: [buttonDoc, checkboxDoc, loaderDoc, selectDoc, skeletonLoaderDoc, tableDoc, textInputDoc],
 } satisfies DesignSystemLocalSectionDocs<"component">;
 
 const jokulTokenSection = {
@@ -36,7 +43,23 @@ const jokulTokenSection = {
     items: [spacingDoc],
 } satisfies DesignSystemLocalSectionDocs<"token">;
 
+const jokulIconSection = {
+    slug: "ikoner",
+    kind: "icon",
+    title: "Ikoner",
+    description: "Lokale oppslag for Jøkul sine statiske ikoner som går igjen i komponenter, statusmeldinger, menyer og navigasjonsmønstre.",
+    keywords: [
+        "ikoner",
+        "icon",
+        "material symbols",
+        "statusikoner",
+        "navigasjonsikoner",
+    ],
+    items: jokulIconDocs,
+} satisfies DesignSystemLocalSectionDocs<"icon">;
+
 export const jokulLocalSections: DesignSystemLocalSectionDocs[] = [
     jokulComponentSection,
+    jokulIconSection,
     jokulTokenSection,
 ];

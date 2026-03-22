@@ -302,10 +302,19 @@ export const DESIGN_SYSTEM_COMPONENT_RUNTIME_LEVELS = [
 export type DesignSystemComponentRuntimeLevel =
     (typeof DESIGN_SYSTEM_COMPONENT_RUNTIME_LEVELS)[number];
 
+export interface DesignSystemComponentIconContract {
+    usage: DesignSystemComponentRuntimeLevel;
+    importPath?: string;
+    styleImport?: string;
+    fontStyleImport?: string;
+    notes: string[];
+}
+
 export interface DesignSystemComponentProfile {
     styleImports: string[];
     clientRuntime: DesignSystemComponentRuntimeLevel;
     hydration: DesignSystemComponentRuntimeLevel;
+    iconContract: DesignSystemComponentIconContract;
     keyboardSupport: string;
     semantics: string[];
     automatedChecks: string[];

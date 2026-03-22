@@ -87,6 +87,14 @@ function validateComponentProfile(
 ): string[] {
     const errors: string[] = [];
     const duplicateStyleImports = getDuplicateValues(profile.styleImports);
+    const hasIconStyleImport = Boolean(
+        profile.iconContract.styleImport &&
+        profile.styleImports.includes(profile.iconContract.styleImport),
+    );
+    const hasIconFontStyleImport = Boolean(
+        profile.iconContract.fontStyleImport &&
+        profile.styleImports.includes(profile.iconContract.fontStyleImport),
+    );
 
     errors.push(...validateProfileList(label, "styleImports", profile.styleImports));
     errors.push(...validateProfileList(label, "semantics", profile.semantics));
@@ -102,6 +110,44 @@ function validateComponentProfile(
         errors.push(
             `${label}: komponentprofilen har dupliserte styleImports: ${duplicateStyleImports.join(", ")}.`,
         );
+    }
+
+    if (profile.iconContract.usage === "none") {
+        if (
+            profile.iconContract.importPath ||
+            profile.iconContract.styleImport ||
+            profile.iconContract.fontStyleImport
+        ) {
+            errors.push(`${label}: ikonkontrakt med usage=none kan ikke oppgi importPath, styleImport eller fontStyleImport.`);
+        }
+
+        if (profile.iconContract.notes.some((note) => !note.trim())) {
+            errors.push(`${label}: ikonkontrakten kan ikke ha tomme notater.`);
+        }
+    } else {
+        errors.push(...validateProfileList(label, "iconContract.notes", profile.iconContract.notes));
+
+        if (
+            !profile.iconContract.importPath?.trim() &&
+            !profile.iconContract.styleImport?.trim() &&
+            !profile.iconContract.fontStyleImport?.trim()
+        ) {
+            errors.push(`${label}: ikonkontrakt med ikoner må oppgi minst én konkret avhengighet.`);
+        }
+
+        if (profile.iconContract.styleImport && !hasIconStyleImport) {
+            errors.push(`${label}: ikonkontrakten peker på en styleImport som mangler i komponentprofilen.`);
+        }
+
+        if (profile.iconContract.fontStyleImport && !hasIconFontStyleImport) {
+            errors.push(`${label}: ikonkontrakten peker på en fontStyleImport som mangler i komponentprofilen.`);
+        }
+    }
+
+    if (profile.iconContract.usage === "none" && profile.styleImports.some((value) =>
+        value.includes("/components/icon/") || value.includes("/styles/fonts/")
+    )) {
+        errors.push(`${label}: komponentprofilen importerer ikon- eller fontstiler uten å dokumentere ikonkontrakt.`);
     }
 
     if (profile.clientRuntime === "none" && profile.hydration !== "none") {

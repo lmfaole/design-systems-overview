@@ -69,6 +69,7 @@ export type {
     DesignSystemCodeLanguage,
     DesignSystemComponentAssetDoc,
     DesignSystemComponentExample,
+    DesignSystemComponentIconContract,
     DesignSystemComponentPart,
     DesignSystemComponentProfile,
     DesignSystemComponentRecipe,

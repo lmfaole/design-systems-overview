@@ -185,7 +185,7 @@ const buttonPropDocs: ButtonPropDoc[] = [
         name: "icon",
         type: "ReactElement",
         defaultValue: "ingen",
-        description: "Ikoninnhold for knapper som kombinerer tekst og ikon eller rendres som ren ikon-knapp.",
+        description: "Ikoninnhold for knapper som kombinerer tekst og ikon eller rendres som ren ikon-knapp. Jøkul-ikoner fra `@fremtind/jokul/icon` er et naturlig utgangspunkt.",
         interactiveControl: {
             kind: "select",
             name: "icon",
@@ -193,8 +193,8 @@ const buttonPropDocs: ButtonPropDoc[] = [
             defaultValue: "none",
             options: [
                 { value: "none", label: "Ingen" },
-                { value: "download", label: "Download" },
-                { value: "arrow", label: "Arrow" },
+                { value: "search", label: "Search" },
+                { value: "arrow", label: "Arrow right" },
             ],
         },
     },

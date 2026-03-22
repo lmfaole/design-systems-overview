@@ -5,6 +5,8 @@
   "description": "Overview of design systems, their contents, and shared UI patterns.",
   "scripts": {
     "typecheck": "astro check",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
     "dev": "astro dev",
     "build": "astro build",
     "start": "astro preview",
@@ -40,6 +42,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.8",
+    "@changesets/cli": "^2.30.0",
     "@types/node": "^25.5.0",
     "postcss-scss": "^4.0.9",
     "sass": "^1.98.0",

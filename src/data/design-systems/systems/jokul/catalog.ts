@@ -1,4 +1,5 @@
 import type { DesignSystemCatalogSection } from "../../types";
+import { jokulIconCatalogItems } from "./local-docs/icons";
 
 export const jokulCatalog: DesignSystemCatalogSection[] = [
     {
@@ -27,6 +28,21 @@ export const jokulCatalog: DesignSystemCatalogSection[] = [
                 ],
             },
             {
+                slug: "checkbox",
+                title: "Checkbox",
+                description: "Lokal komponentside for av/på-valg og korte flervalgssett med ekte Jøkul-checkbox-markup.",
+                status: "documented",
+                localPath: "/ds/jokul/komponenter/checkbox",
+                packageNames: [
+                    "@fremtind/jokul",
+                ],
+                examples: [
+                    "Samtykke",
+                    "Inline",
+                    "Feilstatus",
+                ],
+            },
+            {
                 slug: "loader",
                 title: "Loader",
                 description: "Lokal komponentside for ventetilstander med ekte Jøkul-loader og tilgjengelighetsnotater.",
@@ -38,6 +54,21 @@ export const jokulCatalog: DesignSystemCatalogSection[] = [
                 examples: [
                     "Statusområde",
                     "Inline i tekst",
+                ],
+            },
+            {
+                slug: "select",
+                title: "Select",
+                description: "Lokal komponentside for native select med Jøkul-wrapper, placeholder og feilstatus.",
+                status: "documented",
+                localPath: "/ds/jokul/komponenter/select",
+                packageNames: [
+                    "@fremtind/jokul",
+                ],
+                examples: [
+                    "Ingen valgt verdi",
+                    "Fast bredde",
+                    "Feilstatus",
                 ],
             },
             {
@@ -68,6 +99,21 @@ export const jokulCatalog: DesignSystemCatalogSection[] = [
                     "Standard",
                     "Collapse to list",
                     "Sticky head",
+                ],
+            },
+            {
+                slug: "text-input",
+                title: "TextInput",
+                description: "Lokal komponentside for korte tekstfelt med InputGroup-kontrakt, enhet og feilstatus.",
+                status: "documented",
+                localPath: "/ds/jokul/komponenter/text-input",
+                packageNames: [
+                    "@fremtind/jokul",
+                ],
+                examples: [
+                    "Beløpsfelt",
+                    "Enhet",
+                    "Feilstatus",
                 ],
             },
         ],
@@ -141,12 +187,13 @@ export const jokulCatalog: DesignSystemCatalogSection[] = [
         slug: "ikoner",
         kind: "icon",
         title: "Ikoner",
-        description: "Ikonpakken må vises som et eget asset-område med installasjon og API-oppslag.",
-        status: "planned",
+        description: "Lokale oppslag for Jøkul sine statiske ikoner som brukes i komponenter, statusmeldinger, menyer og navigasjon.",
+        status: "documented",
         localPath: "/ds/jokul/ikoner",
         packageNames: [
             "@fremtind/jokul",
         ],
+        items: jokulIconCatalogItems,
     },
     {
         slug: "tooling",

@@ -1,15 +1,7 @@
 ---
 import "@fremtind/jokul/styles/core/core.min.css";
-import "@fremtind/jokul/styles/components/button/button.min.css";
-import "@fremtind/jokul/styles/components/checkbox/checkbox.min.css";
 import "@fremtind/jokul/styles/components/icon/icon.min.css";
 import "@fremtind/jokul/styles/fonts/webfonts.min.css";
-import "@fremtind/jokul/styles/components/input-group/input-group.min.css";
-import "@fremtind/jokul/styles/components/loader/loader.min.css";
-import "@fremtind/jokul/styles/components/loader/skeleton-loader.min.css";
-import "@fremtind/jokul/styles/components/select/select.min.css";
-import "@fremtind/jokul/styles/components/table/table.min.css";
-import "@fremtind/jokul/styles/components/text-input/text-input.min.css";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import DesignSystemAssetPage from "@/components/ds/DesignSystemAssetPage.astro";
 import { getDesignSystem } from "@/data/design-systems";
@@ -21,14 +13,14 @@ import {
 } from "@/data/design-systems/systems/jokul/docs";
 
 const system = getDesignSystem("jokul");
-const section = getJokulLocalSection("komponenter");
+const section = getJokulLocalSection("ikoner");
 
 if (!system || !section) {
-    throw new Error("Missing Jøkul component documentation");
+    throw new Error("Missing Jøkul icon documentation");
 }
 
 export function getStaticPaths() {
-    const documentedSection = getJokulLocalSection("komponenter");
+    const documentedSection = getJokulLocalSection("ikoner");
 
     if (!documentedSection) {
         return [];
@@ -40,10 +32,10 @@ export function getStaticPaths() {
 }
 
 const slug = Astro.params.slug ?? "";
-const asset = getJokulAssetDoc("komponenter", slug);
+const asset = getJokulAssetDoc("ikoner", slug);
 
 if (!asset) {
-    throw new Error(`Missing Jøkul component "${slug}"`);
+    throw new Error(`Missing Jøkul icon "${slug}"`);
 }
 
 const installGuideHref = asset.installGuideSlug
@@ -54,7 +46,7 @@ const installGuideHref = asset.installGuideSlug
 <BaseLayout
     title={`Jøkul ${asset.title}`}
     description={asset.description}
-    path={getJokulAssetHref("komponenter", asset.slug)}
+    path={getJokulAssetHref("ikoner", asset.slug)}
     type="article"
 >
     <DesignSystemAssetPage

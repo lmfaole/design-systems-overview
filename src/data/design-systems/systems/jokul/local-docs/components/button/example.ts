@@ -10,7 +10,7 @@ type ButtonAsValue = "button" | "a";
 type ButtonVariantValue = "primary" | "secondary" | "tertiary" | "ghost";
 type ButtonDensityValue = "inherit" | "comfortable" | "compact";
 type ButtonLoaderValue = "none" | "sending";
-type ButtonIconValue = "none" | "download" | "arrow";
+type ButtonIconValue = "none" | "search" | "arrow";
 type ButtonIconPositionValue = "left" | "right";
 type ButtonTypeValue = "button" | "submit" | "reset";
 
@@ -54,12 +54,32 @@ function getButtonExampleState(values: Record<string, string | boolean>): Button
     };
 }
 
-function getButtonLoaderText(loader: ButtonLoaderValue): string {
-    if (loader === "sending") {
-        return "Sender inn";
+function getButtonLoaderText(state: ButtonExampleState): string {
+    if (state.loader === "none") {
+        return "";
     }
 
-    return "";
+    if (state.icon === "search") {
+        return "Søker";
+    }
+
+    if (state.icon === "arrow") {
+        return "Laster neste steg";
+    }
+
+    return "Sender inn";
+}
+
+function getButtonLabelText(state: ButtonExampleState): string {
+    if (state.icon === "search") {
+        return "Søk";
+    }
+
+    if (state.icon === "arrow") {
+        return "Gå videre";
+    }
+
+    return "Send inn";
 }
 
 function getButtonPreviewDensity(state: ButtonExampleState): Exclude<ButtonDensityValue, "inherit"> {
@@ -71,19 +91,19 @@ function getButtonPreviewDensity(state: ButtonExampleState): Exclude<ButtonDensi
 }
 
 function renderButtonIcon(icon: ButtonIconValue): string {
-    if (icon === "download") {
-        return '<svg class="jkl-icon" width="1em" height="1em" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5v7"></path><path d="m5.5 7.75 2.5 2.75 2.5-2.75"></path><path d="M3 12.5h10"></path></svg>';
+    if (icon === "search") {
+        return '<span class="jkl-icon" aria-hidden="true"></span>';
     }
 
     if (icon === "arrow") {
-        return '<svg class="jkl-icon" width="1em" height="1em" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 8h9"></path><path d="m8.5 4.5 3.5 3.5-3.5 3.5"></path></svg>';
+        return '<span class="jkl-icon" aria-hidden="true"></span>';
     }
 
     return "";
 }
 
-function renderButtonLoaderMarkup(loader: ButtonLoaderValue): string {
-    if (loader === "none") {
+function renderButtonLoaderMarkup(state: ButtonExampleState): string {
+    if (state.loader === "none") {
         return "";
     }
 
@@ -94,7 +114,7 @@ function renderButtonLoaderMarkup(loader: ButtonLoaderValue): string {
         '<span class="jkl-loader__dot jkl-loader__dot--middle"></span>',
         '<span class="jkl-loader__dot jkl-loader__dot--right"></span>',
         "</span>",
-        `<span class="jkl-sr-only">${getButtonLoaderText(loader)}</span>`,
+        `<span class="jkl-sr-only">${getButtonLoaderText(state)}</span>`,
         "</span>",
     ].join("");
 }
@@ -106,53 +126,32 @@ function getButtonPreviewSummary(state: ButtonExampleState): string {
         `density="${state.density}"`,
         `type="${state.type}"`,
         `disabled=${state.disabled ? "true" : "false"}`,
-        state.loader === "none" ? "loader=ingen" : `loader="${getButtonLoaderText(state.loader)}"`,
+        state.loader === "none" ? "loader=ingen" : `loader="${getButtonLoaderText(state)}"`,
         state.icon === "none" ? "icon=ingen" : `icon="${state.icon}"`,
         `iconPosition="${state.iconPosition}"`,
     ].join(" · ");
 }
 
-function getButtonReactCodeIcon(state: ButtonExampleState): string {
-    if (state.icon === "download") {
-        return `const icon = (
-    <svg
-        width="1em"
-        height="1em"
-        viewBox="0 0 16 16"
-        aria-hidden="true"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-    >
-        <path d="M8 2.5v7" />
-        <path d="m5.5 7.75 2.5 2.75 2.5-2.75" />
-        <path d="M3 12.5h10" />
-    </svg>
-);`;
+function getButtonReactIconName(icon: ButtonIconValue): string {
+    if (icon === "search") {
+        return "SearchIcon";
     }
 
-    if (state.icon === "arrow") {
-        return `const icon = (
-    <svg
-        width="1em"
-        height="1em"
-        viewBox="0 0 16 16"
-        aria-hidden="true"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-    >
-        <path d="M2.5 8h9" />
-        <path d="m8.5 4.5 3.5 3.5-3.5 3.5" />
-    </svg>
-);`;
+    if (icon === "arrow") {
+        return "ArrowRightIcon";
     }
 
     return "";
+}
+
+function getButtonReactCodeIcon(state: ButtonExampleState): string {
+    const iconName = getButtonReactIconName(state.icon);
+
+    if (!iconName) {
+        return "";
+    }
+
+    return `const icon = <${iconName} aria-hidden="true" />;`;
 }
 
 function getButtonNotes(state: ButtonExampleState): string[] {
@@ -194,10 +193,10 @@ function getButtonNotes(state: ButtonExampleState): string[] {
 function renderButtonPreviewMarkup(state: ButtonExampleState): string {
     const previewDensity = getButtonPreviewDensity(state);
     const previewIcon = renderButtonIcon(state.icon);
-    const previewLoader = renderButtonLoaderMarkup(state.loader);
+    const previewLoader = renderButtonLoaderMarkup(state);
     const buttonLabelChildren = [
         state.icon !== "none" && state.iconPosition === "left" ? previewIcon : "",
-        '<span class="jkl-button__text">Send inn</span>',
+        `<span class="jkl-button__text">${getButtonLabelText(state)}</span>`,
         state.icon !== "none" && state.iconPosition === "right" ? previewIcon : "",
     ].filter(Boolean).join("");
     const buttonAttributes = [
@@ -227,39 +226,40 @@ function renderButtonPreviewMarkup(state: ButtonExampleState): string {
 
 function renderButtonReactExampleCode(state: ButtonExampleState): string {
     const iconCode = getButtonReactCodeIcon(state);
+    const iconImportName = getButtonReactIconName(state.icon);
+    const iconStyleImport = state.icon === "none"
+        ? ""
+        : 'import "@fremtind/jokul/styles/components/icon/icon.min.css";\n';
+    const iconFontImport = state.icon === "none"
+        ? ""
+        : 'import "@fremtind/jokul/styles/fonts/webfonts.min.css";\n';
+    const iconImportCode = iconImportName
+        ? `import { ${iconImportName} } from "@fremtind/jokul/icon";\n`
+        : "";
     const loaderCode = state.loader === "none"
         ? ""
-        : `            loader={{ showLoader: true, textDescription: "${getButtonLoaderText(state.loader)}" }}
-`;
+        : `            loader={{ showLoader: true, textDescription: "${getButtonLoaderText(state)}" }}\n`;
     const iconPropCode = state.icon === "none"
         ? ""
-        : `            icon={icon}
-            iconPosition="${state.iconPosition}"
-`;
+        : `            icon={icon}\n            iconPosition="${state.iconPosition}"\n`;
     const densityCode = state.density === "inherit"
         ? ""
-        : `            density="${state.density}"
-`;
+        : `            density="${state.density}"\n`;
     const elementSpecificCode = state.as === "a"
-        ? `            as="a"
-            href="${JOKUL_BUTTON_LINK_HREF}"
-`
-        : `            type="${state.type}"
-${state.disabled ? "            disabled\n" : ""}`;
+        ? `            as="a"\n            href="${JOKUL_BUTTON_LINK_HREF}"\n`
+        : `            type="${state.type}"\n${state.disabled ? "            disabled\n" : ""}`;
 
     return `import "@fremtind/jokul/styles/core/core.min.css";
 import "@fremtind/jokul/styles/components/button/button.min.css";
 import "@fremtind/jokul/styles/components/loader/loader.min.css";
-import { Button } from "@fremtind/jokul/button";
-
-${iconCode ? `${iconCode}
-
-` : ""}export function Example() {
+${iconStyleImport}${iconFontImport}import { Button } from "@fremtind/jokul/button";
+${iconImportCode ? `${iconImportCode}` : ""}
+${iconCode ? `${iconCode}\n\n` : ""}export function Example() {
     return (
         <Button
 ${elementSpecificCode}            variant="${state.variant}"
 ${densityCode}${loaderCode}${iconPropCode}        >
-            Send inn
+            ${getButtonLabelText(state)}
         </Button>
     );
 }`;

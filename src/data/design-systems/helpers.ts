@@ -186,6 +186,12 @@ export function getDesignSystemComponentProfileSummary(
             ),
         },
         {
+            label: "Ikoner",
+            value: getDesignSystemComponentRuntimeLevelLabel(
+                asset.componentProfile.iconContract.usage,
+            ),
+        },
+        {
             label: "Dokumenterte props",
             value: String(propCount),
         },

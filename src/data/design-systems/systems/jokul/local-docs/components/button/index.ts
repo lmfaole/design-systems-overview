@@ -71,6 +71,11 @@ export const buttonDoc: DesignSystemComponentAssetDoc = {
             description: "Start her for å hente inn monopakka og de relevante Jøkul-stilene i prosjektet.",
         },
         {
+            title: "ArrowRightIcon",
+            href: getJokulAssetHref("ikoner", "arrow-right"),
+            description: "Et godt utgangspunkt når Button skal peke brukeren videre med et ikon fra samme designsystem.",
+        },
+        {
             title: "Spacing",
             href: getJokulAssetHref("tokens", "spacing"),
             description: "Spacing-tokenene hjelper deg å holde samme rytme rundt og inni knapper og skjemaområder.",

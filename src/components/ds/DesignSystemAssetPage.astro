@@ -7,6 +7,7 @@ import {
     type DesignSystemAssetDoc,
     getDesignSystemComponentPartId,
     getDesignSystemComponentProfileSummary,
+    getDesignSystemComponentRuntimeLevelLabel,
     getDesignSystemComponentSubcomponentId,
     getDesignSystemComponentSubcomponentPropTableId,
     getDesignSystemPropTableId,
@@ -374,6 +375,35 @@ const otherTables = asset.tables ?? [];
                         <li><code>{styleImport}</code></li>
                     ))}
                 </ul>
+            </section>
+
+            <section aria-labelledby="asset-komponentprofil-ikoner">
+                <h3 id="asset-komponentprofil-ikoner">Ikonkontrakt</h3>
+                <p>Bruk: {getDesignSystemComponentRuntimeLevelLabel(componentProfile.iconContract.usage)}</p>
+                {componentProfile.iconContract.importPath && (
+                    <p>
+                        Import: <code>{componentProfile.iconContract.importPath}</code>
+                    </p>
+                )}
+                {componentProfile.iconContract.styleImport && (
+                    <p>
+                        Stilimport: <code>{componentProfile.iconContract.styleImport}</code>
+                    </p>
+                )}
+                {componentProfile.iconContract.fontStyleImport && (
+                    <p>
+                        Fontimport: <code>{componentProfile.iconContract.fontStyleImport}</code>
+                    </p>
+                )}
+                {componentProfile.iconContract.notes.length > 0 ? (
+                    <ul>
+                        {componentProfile.iconContract.notes.map((item) => (
+                            <li>{item}</li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p>Komponenten krever ingen egen ikonkontrakt i grunnoppsettet.</p>
+                )}
             </section>
 
             <section aria-labelledby="asset-komponentprofil-tilgjengelighet">
