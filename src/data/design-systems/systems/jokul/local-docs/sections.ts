@@ -2,9 +2,12 @@ import type { DesignSystemLocalSectionDocs } from "../../../types";
 import { buttonDoc } from "./components/button";
 import { checkboxDoc } from "./components/checkbox";
 import { loaderDoc } from "./components/loader";
+import { radioButtonDoc } from "./components/radio-button";
 import { selectDoc } from "./components/select";
 import { skeletonLoaderDoc } from "./components/skeleton-loader";
 import { tableDoc } from "./components/table";
+import { tagDoc } from "./components/tag";
+import { textAreaDoc } from "./components/text-area";
 import { textInputDoc } from "./components/text-input";
 import { jokulIconDocs } from "./icons";
 import { spacingDoc } from "./tokens/spacing";
@@ -21,12 +24,26 @@ const jokulComponentSection = {
         "button",
         "checkbox",
         "loader",
+        "radio button",
         "select",
         "skeleton loader",
+        "tag",
         "table",
+        "text area",
         "text input",
     ],
-    items: [buttonDoc, checkboxDoc, loaderDoc, selectDoc, skeletonLoaderDoc, tableDoc, textInputDoc],
+    items: [
+        buttonDoc,
+        checkboxDoc,
+        loaderDoc,
+        radioButtonDoc,
+        selectDoc,
+        skeletonLoaderDoc,
+        tableDoc,
+        tagDoc,
+        textAreaDoc,
+        textInputDoc,
+    ],
 } satisfies DesignSystemLocalSectionDocs<"component">;
 
 const jokulTokenSection = {

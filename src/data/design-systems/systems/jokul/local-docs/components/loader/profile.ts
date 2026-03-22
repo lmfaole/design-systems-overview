@@ -1,9 +1,28 @@
-import { createJokulComponentProfile } from "../component-profile";
+import {
+    createJokulComponentProfile,
+    createJokulComponentPropDocumentation,
+} from "../component-profile";
 
 export const loaderComponentProfile = createJokulComponentProfile({
     styleImports: [
         "@fremtind/jokul/styles/components/loader/loader.min.css",
     ],
+    propDocumentation: createJokulComponentPropDocumentation([
+        {
+            owner: "root",
+            importPath: "@fremtind/jokul/loader",
+            typeName: "LoaderProps",
+            documentedProps: [
+                "variant",
+                "textDescription",
+                "className",
+                "dataTestAutoId",
+                "role",
+                "inline",
+                "delay",
+            ],
+        },
+    ]),
     keyboardSupport: "Ingen egen tastaturmodell; loaderen er ikke en interaktiv kontroll.",
     semantics: [
         "Selve animasjonen må skjules med aria-hidden=\"true\".",

@@ -1,10 +1,44 @@
-import { createJokulComponentProfile } from "../component-profile";
+import {
+    createJokulComponentProfile,
+    createJokulComponentPropDocumentation,
+} from "../component-profile";
 
 export const selectComponentProfile = createJokulComponentProfile({
     styleImports: [
         "@fremtind/jokul/styles/components/input-group/input-group.min.css",
         "@fremtind/jokul/styles/components/select/select.min.css",
     ],
+    propDocumentation: createJokulComponentPropDocumentation([
+        {
+            owner: "root",
+            importPath: "@fremtind/jokul/select",
+            typeName: "NativeSelectProps",
+            documentedProps: [
+                "data-testautoid",
+                "id",
+                "className",
+                "data-testid",
+                "data-size",
+                "errorLabel",
+                "helpLabel",
+                "inline",
+                "label",
+                "labelProps",
+                "supportLabelProps",
+                "description",
+                "tooltip",
+                "style",
+                "render",
+                "invalid",
+                "placeholder",
+                "items",
+                "selectClassName",
+                "width",
+            ],
+        },
+    ], [
+        "Denne siden dokumenterer den native Select-varianten som rendres fra `NativeSelect` i `@fremtind/jokul/select`.",
+    ]),
     iconContract: {
         usage: "required",
         importPath: false,

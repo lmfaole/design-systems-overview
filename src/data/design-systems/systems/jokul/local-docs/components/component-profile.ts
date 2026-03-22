@@ -1,7 +1,11 @@
-import type { DesignSystemComponentProfile } from "../../../../types";
+import type {
+    DesignSystemComponentProfile,
+    DesignSystemComponentPropDocumentationEntry,
+} from "../../../../types";
 
 interface CreateJokulComponentProfileOptions {
     styleImports: string[];
+    propDocumentation: DesignSystemComponentProfile["propDocumentation"];
     keyboardSupport: string;
     semantics: string[];
     manualChecks: string[];
@@ -28,8 +32,31 @@ const DEFAULT_AUTOMATED_CHECKS = [
     "Forhåndsvisningen rendres server-side uten Astro islands eller klienthydrering.",
 ];
 
+const DEFAULT_PROP_DOCUMENTATION_NOTES = [
+    "Dekningen følger offentlige props som kommer fra Jøkul-pakken og dens egne basetyper, men ikke generiske DOM-props fra React.",
+];
+
+export function createJokulComponentPropDocumentation(
+    entries: DesignSystemComponentPropDocumentationEntry[],
+    notes: string[] = [],
+): DesignSystemComponentProfile["propDocumentation"] {
+    return {
+        coverage: "complete",
+        scope: "package-public-props",
+        notes: [
+            ...DEFAULT_PROP_DOCUMENTATION_NOTES,
+            ...notes,
+        ],
+        entries: entries.map((entry) => ({
+            ...entry,
+            documentedProps: [...entry.documentedProps],
+        })),
+    };
+}
+
 export function createJokulComponentProfile({
     styleImports,
+    propDocumentation,
     keyboardSupport,
     semantics,
     manualChecks,
@@ -75,6 +102,14 @@ export function createJokulComponentProfile({
         clientRuntime,
         hydration,
         iconContract: resolvedIconContract,
+        propDocumentation: {
+            ...propDocumentation,
+            notes: [...propDocumentation.notes],
+            entries: propDocumentation.entries.map((entry) => ({
+                ...entry,
+                documentedProps: [...entry.documentedProps],
+            })),
+        },
         keyboardSupport,
         semantics,
         automatedChecks,

@@ -1,9 +1,33 @@
-import { createJokulComponentProfile } from "../component-profile";
+import {
+    createJokulComponentProfile,
+    createJokulComponentPropDocumentation,
+} from "../component-profile";
 
 export const checkboxComponentProfile = createJokulComponentProfile({
     styleImports: [
         "@fremtind/jokul/styles/components/checkbox/checkbox.min.css",
     ],
+    propDocumentation: createJokulComponentPropDocumentation([
+        {
+            owner: "root",
+            importPath: "@fremtind/jokul/checkbox",
+            typeName: "CheckboxProps",
+            documentedProps: [
+                "data-testautoid",
+                "children",
+                "name",
+                "value",
+                "checked",
+                "inline",
+                "className",
+                "invalid",
+                "onChange",
+                "onFocus",
+                "onBlur",
+                "indeterminate",
+            ],
+        },
+    ]),
     iconContract: {
         usage: "required",
         importPath: false,

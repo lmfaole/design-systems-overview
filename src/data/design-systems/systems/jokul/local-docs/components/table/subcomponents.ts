@@ -52,10 +52,26 @@ const tableSubcomponentPropDocs: TableSubcomponentPropDoc[] = [
     {
         subcomponent: "table-head",
         category: "framework",
+        name: "srOnly",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Skjuler headerseksjonen visuelt når konteksten allerede gjør kolonneetikettene tydelige, men beholder dem for hjelpemidler.",
+    },
+    {
+        subcomponent: "table-head",
+        category: "framework",
         name: "sticky",
         type: "boolean",
         defaultValue: "false",
         description: "Holder header-raden synlig når brukeren blar i lange tabeller.",
+    },
+    {
+        subcomponent: "table-header",
+        category: "framework",
+        name: "bold",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Brukes når headeren trenger ekstra vekt, for eksempel i mer kompakte eller tette tabelloppsett.",
     },
     {
         subcomponent: "table-header",
@@ -78,10 +94,26 @@ const tableSubcomponentPropDocs: TableSubcomponentPropDoc[] = [
     {
         subcomponent: "table-header",
         category: "native",
+        name: "srOnly",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Skjuler headerinnholdet visuelt, men beholder det for skjermlesere når kolonneetiketten ellers vises i omgivelsene.",
+    },
+    {
+        subcomponent: "table-header",
+        category: "native",
         name: "scope",
         type: `"col" | "row"`,
         defaultValue: `"col"`,
         description: "Headerceller bør sette `scope` korrekt slik at sammenhengen mellom header og celle blir tydelig.",
+    },
+    {
+        subcomponent: "table-header",
+        category: "native",
+        name: "sortable",
+        type: "TableSortProps",
+        defaultValue: "ingen sortering",
+        description: "Aktiverer sorteringskontrakten når headeren også skal styre rekkefølgen i datasettet.",
     },
     {
         subcomponent: "table-cell",
@@ -100,6 +132,14 @@ const tableSubcomponentPropDocs: TableSubcomponentPropDoc[] = [
                 { value: "right", label: "right" },
             ],
         },
+    },
+    {
+        subcomponent: "table-cell",
+        category: "framework",
+        name: "verticalAlign",
+        type: `"center" | "top"`,
+        defaultValue: `"top"`,
+        description: "Lar celleinnholdet topp- eller midtstilles avhengig av om raden hovedsakelig består av tekst eller kontroller.",
     },
     {
         subcomponent: "table-cell",

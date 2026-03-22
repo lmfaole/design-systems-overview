@@ -2,6 +2,7 @@ import type {
     DesignSystem,
     DesignSystemComponentAssetDoc,
     DesignSystemComponentProfile,
+    DesignSystemComponentPropDocumentationEntry,
     DesignSystemComponentRecipe,
     DesignSystemComponentSubcomponentDoc,
     DesignSystemDocumentedAsset,
@@ -51,6 +52,10 @@ function getAllComponentPropTables(
         ...asset.propTables,
         ...(asset.subcomponents?.flatMap((subcomponent) => subcomponent.propTables) ?? []),
     ];
+}
+
+function getPropRowNames(propTables: DesignSystemPropTable[]): string[] {
+    return propTables.flatMap((table) => table.rows.map((row) => row.name));
 }
 
 function hasRenderableExampleContent(example: DesignSystemExample): boolean {
@@ -152,6 +157,102 @@ function validateComponentProfile(
 
     if (profile.clientRuntime === "none" && profile.hydration !== "none") {
         errors.push(`${label}: hydrering kan ikke være påkrevd eller valgfri når clientRuntime er none.`);
+    }
+
+    return errors;
+}
+
+function getPropDocumentationEntryLabel(
+    label: string,
+    entry: DesignSystemComponentPropDocumentationEntry,
+): string {
+    if (entry.owner === "root") {
+        return `${label}: propkontrakten for rotelementet ${entry.typeName}`;
+    }
+
+    return `${label}: propkontrakten for delkomponenten ${entry.subcomponentSlug ?? "ukjent"} (${entry.typeName})`;
+}
+
+function validateComponentPropDocumentation(
+    label: string,
+    asset: DesignSystemComponentAssetDoc,
+): string[] {
+    const errors: string[] = [];
+    const { propDocumentation } = asset.componentProfile;
+    const duplicateEntries = getDuplicateValues(propDocumentation.entries.map((entry) =>
+        [
+            entry.owner,
+            entry.subcomponentSlug ?? "",
+            entry.importPath,
+            entry.typeName,
+        ].join(":")
+    ));
+
+    if (propDocumentation.notes.some((note) => !note.trim())) {
+        errors.push(`${label}: propkontrakten kan ikke ha tomme notater.`);
+    }
+
+    if (propDocumentation.entries.length === 0) {
+        errors.push(`${label}: komponentprofilen må dokumentere minst én propkontrakt.`);
+    }
+
+    if (duplicateEntries.length > 0) {
+        errors.push(`${label}: propkontrakten har dupliserte oppføringer.`);
+    }
+
+    for (const entry of propDocumentation.entries) {
+        const entryLabel = getPropDocumentationEntryLabel(label, entry);
+
+        if (!entry.importPath.trim()) {
+            errors.push(`${entryLabel} må oppgi importPath.`);
+        }
+
+        if (!entry.typeName.trim()) {
+            errors.push(`${entryLabel} må oppgi typeName.`);
+        }
+
+        if (entry.owner === "root" && entry.subcomponentSlug) {
+            errors.push(`${entryLabel} kan ikke oppgi subcomponentSlug når owner er root.`);
+        }
+
+        if (entry.owner === "subcomponent" && !entry.subcomponentSlug?.trim()) {
+            errors.push(`${entryLabel} må oppgi subcomponentSlug når owner er subcomponent.`);
+        }
+
+        const subcomponent = entry.owner === "subcomponent"
+            ? asset.subcomponents?.find((candidate) => candidate.slug === entry.subcomponentSlug)
+            : undefined;
+
+        if (entry.owner === "subcomponent" && !subcomponent) {
+            errors.push(`${entryLabel} peker på en ukjent delkomponent.`);
+        }
+
+        if (entry.documentedProps.length === 0) {
+            errors.push(`${entryLabel} må liste minst én dokumentert prop.`);
+            continue;
+        }
+
+        const duplicateProps = getDuplicateValues(entry.documentedProps);
+        const emptyProps = entry.documentedProps.filter((prop) => !prop.trim());
+
+        if (duplicateProps.length > 0) {
+            errors.push(`${entryLabel} har dupliserte props: ${duplicateProps.join(", ")}.`);
+        }
+
+        if (emptyProps.length > 0) {
+            errors.push(`${entryLabel} kan ikke ha tomme prop-navn.`);
+        }
+
+        const documentedRowNames = entry.owner === "root"
+            ? getPropRowNames(asset.propTables)
+            : getPropRowNames(subcomponent?.propTables ?? []);
+        const missingProps = entry.documentedProps.filter((prop) =>
+            !documentedRowNames.includes(prop)
+        );
+
+        if (missingProps.length > 0) {
+            errors.push(`${entryLabel} mangler prop-rader for: ${missingProps.join(", ")}.`);
+        }
     }
 
     return errors;
@@ -323,6 +424,7 @@ function validateComponentAsset(
     }
 
     errors.push(...validateComponentProfile(label, asset.componentProfile));
+    errors.push(...validateComponentPropDocumentation(label, asset));
 
     if (asset.relationships) {
         errors.push(...validateRelationshipGroups(label, asset.relationships));

@@ -1,10 +1,31 @@
-import { createJokulComponentProfile } from "../component-profile";
+import {
+    createJokulComponentProfile,
+    createJokulComponentPropDocumentation,
+} from "../component-profile";
 
 export const buttonComponentProfile = createJokulComponentProfile({
     styleImports: [
         "@fremtind/jokul/styles/components/button/button.min.css",
         "@fremtind/jokul/styles/components/loader/loader.min.css",
     ],
+    propDocumentation: createJokulComponentPropDocumentation([
+        {
+            owner: "root",
+            importPath: "@fremtind/jokul/button",
+            typeName: "ButtonProps",
+            documentedProps: [
+                "as",
+                "children",
+                "variant",
+                "className",
+                "loader",
+                "iconLeft",
+                "iconRight",
+                "iconPosition",
+                "icon",
+            ],
+        },
+    ]),
     iconContract: {
         usage: "optional",
         notes: [

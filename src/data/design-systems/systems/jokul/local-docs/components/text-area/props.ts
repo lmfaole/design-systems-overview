@@ -3,10 +3,10 @@ import type {
     DesignSystemPropTable,
 } from "../../../../../types";
 
-type TextInputPropSource = "design-system" | "framework" | "native" | "aria";
+type TextAreaPropSource = "design-system" | "framework" | "native" | "aria";
 
-interface TextInputPropDoc {
-    source: TextInputPropSource;
+interface TextAreaPropDoc {
+    source: TextAreaPropSource;
     name: string;
     type: string;
     defaultValue: string;
@@ -15,75 +15,72 @@ interface TextInputPropDoc {
 }
 
 function hasInteractiveControl(
-    prop: TextInputPropDoc,
-): prop is TextInputPropDoc & { interactiveControl: DesignSystemInteractiveExampleControl } {
+    prop: TextAreaPropDoc,
+): prop is TextAreaPropDoc & { interactiveControl: DesignSystemInteractiveExampleControl } {
     return "interactiveControl" in prop && Boolean(prop.interactiveControl);
 }
 
-function getInteractiveControlName(prop: TextInputPropDoc): string | undefined {
+function getInteractiveControlName(prop: TextAreaPropDoc): string | undefined {
     return hasInteractiveControl(prop)
         ? prop.interactiveControl.name
         : undefined;
 }
 
-const textInputPropDocs: TextInputPropDoc[] = [
+const textAreaPropDocs: TextAreaPropDoc[] = [
     {
         source: "design-system",
-        name: "align",
-        type: `"left" | "right"`,
-        defaultValue: `"left"`,
-        description: "Justerer innholdet i feltet. Høyrejustering brukes typisk for beløp eller andre tallfelt.",
+        name: "rows",
+        type: "number",
+        defaultValue: "7",
+        description: "Bestemmer hvor mange tekstlinjer feltet ekspanderer til når det åpnes eller får fokus.",
         interactiveControl: {
             kind: "select",
-            name: "align",
-            label: "Align",
-            defaultValue: "left",
+            name: "rows",
+            label: "Rader",
+            defaultValue: "7",
             options: [
-                { value: "left", label: "left" },
-                { value: "right", label: "right" },
+                { value: "3", label: "3" },
+                { value: "7", label: "7" },
+                { value: "10", label: "10" },
             ],
         },
     },
     {
         source: "design-system",
-        name: "unit",
-        type: "ReactNode",
-        defaultValue: "ingen",
-        description: "Viser en benevnelse til høyre i feltet, for eksempel `kr`.",
-        interactiveControl: {
-            kind: "select",
-            name: "unit",
-            label: "Unit",
-            defaultValue: "none",
-            options: [
-                { value: "none", label: "Ingen" },
-                { value: "kr", label: "kr" },
-            ],
-        },
-    },
-    {
-        source: "design-system",
-        name: "inline",
+        name: "startOpen",
         type: "boolean",
         defaultValue: "false",
-        description: "Lar feltet gå inn i mer kompakte oppsett der labelen skjules visuelt, men fortsatt finnes for skjermlesere.",
+        description: "Lar feltet starte i åpen høyde i stedet for å ekspandere først ved fokus eller innhold.",
         interactiveControl: {
             kind: "boolean",
-            name: "inline",
-            label: "Inline",
+            name: "startOpen",
+            label: "Start open",
             defaultValue: false,
         },
     },
     {
         source: "design-system",
-        name: "invalid",
+        name: "autoExpand",
         type: "boolean",
         defaultValue: "false",
-        description: "Setter error-state på feltet og brukes sammen med en konkret feilmelding.",
+        description: "Lar feltet vokse med innholdet i stedet for å bruke intern scrolling.",
         interactiveControl: {
             kind: "boolean",
-            name: "invalid",
-            label: "Invalid",
+            name: "autoExpand",
+            label: "Auto expand",
+            defaultValue: false,
+        },
+    },
+    {
+        source: "design-system",
+        name: "counter",
+        type: "{ maxLength: number; hideProgress?: boolean }",
+        defaultValue: "ingen teller",
+        description: "Viser tegnteller og progresjonslinje når brukeren må forholde seg til en maksimumslengde.",
+        interactiveControl: {
+            kind: "boolean",
+            name: "counter",
+            label: "Teller",
             defaultValue: false,
         },
     },
@@ -92,35 +89,21 @@ const textInputPropDocs: TextInputPropDoc[] = [
         name: "data-testautoid",
         type: "string",
         defaultValue: "ingen",
-        description: "Stabil test-id fra Jøkul sin kjernetype når feltet må spores i automatiserte tester.",
+        description: "Stabil test-id fra Jøkul sin kjernetype når feltet må spores i ende-til-ende-tester.",
     },
     {
         source: "framework",
         name: "id",
         type: "string",
         defaultValue: "auto-generert når mulig",
-        description: "Lar deg styre koblingen mellom label, support-tekst og inputelementet eksplisitt.",
+        description: "Gir deg kontroll over koblingen mellom label, support-tekst og textarea-elementet.",
     },
     {
         source: "framework",
         name: "label",
         type: "ReactNode",
         defaultValue: "påkrevd",
-        description: "Labelteksten som forklarer hva brukeren skal skrive inn.",
-    },
-    {
-        source: "framework",
-        name: "helpLabel",
-        type: "ReactNode",
-        defaultValue: "ingen",
-        description: "Hjelpetekst under feltet når brukeren trenger ekstra føring uten at feltet er ugyldig.",
-    },
-    {
-        source: "framework",
-        name: "errorLabel",
-        type: "ReactNode",
-        defaultValue: "ingen",
-        description: "Feilmelding under feltet når `invalid` er satt eller valideringen slår inn.",
+        description: "Labelteksten som forklarer hva brukeren skal beskrive i feltet.",
     },
     {
         source: "framework",
@@ -141,7 +124,7 @@ const textInputPropDocs: TextInputPropDoc[] = [
         name: "data-size",
         type: "\"small\" | \"medium\" | \"large\"",
         defaultValue: "arver størrelse",
-        description: "Lar feltet følge en eksplisitt størrelseskontrakt i trange eller veldig romslige oppsett.",
+        description: "Lar feltet følge en eksplisitt størrelseskontrakt i tettpakkede skjemaer.",
     },
     {
         source: "framework",
@@ -159,17 +142,44 @@ const textInputPropDocs: TextInputPropDoc[] = [
     },
     {
         source: "framework",
+        name: "helpLabel",
+        type: "ReactNode",
+        defaultValue: "ingen",
+        description: "Kort støttetekst når brukeren trenger føring om format eller detaljnivå.",
+    },
+    {
+        source: "framework",
+        name: "errorLabel",
+        type: "ReactNode",
+        defaultValue: "ingen",
+        description: "Feilmelding som forklarer hva som mangler eller er ugyldig i teksten.",
+        interactiveControl: {
+            kind: "boolean",
+            name: "invalid",
+            label: "Invalid",
+            defaultValue: false,
+        },
+    },
+    {
+        source: "framework",
+        name: "inline",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Lar feltet inngå i mer kompakte oppsett der labelen skjules visuelt, men fortsatt finnes for skjermlesere.",
+    },
+    {
+        source: "framework",
         name: "description",
         type: "ReactNode",
         defaultValue: "ingen",
-        description: "Ekstra beskrivelsetekst mellom label og felt når brukeren trenger mer kontekst.",
+        description: "Ekstra beskrivelse mellom label og felt når brukeren trenger mer kontekst før hen begynner å skrive.",
     },
     {
         source: "framework",
         name: "tooltip",
         type: "ReactNode",
         defaultValue: "ingen",
-        description: "Lar labelen få en tilknyttet forklaring uten å utvide hjelpeteksten permanent.",
+        description: "Lar labelen få en tilknyttet forklaring uten å gjøre hjelpeteksten permanent synlig.",
     },
     {
         source: "framework",
@@ -190,7 +200,7 @@ const textInputPropDocs: TextInputPropDoc[] = [
         name: "defaultValue",
         type: "string",
         defaultValue: "tom streng",
-        description: "Setter startverdien i et ukontrollert felt når du vil vise et forhåndsutfylt eksempel.",
+        description: "Setter startteksten i et ukontrollert felt når du vil vise et forhåndsutfylt eksempel.",
         interactiveControl: {
             kind: "select",
             name: "valueState",
@@ -206,63 +216,8 @@ const textInputPropDocs: TextInputPropDoc[] = [
         source: "native",
         name: "placeholder",
         type: "string",
-        defaultValue: "ingen",
-        description: "Kort hint om format eller forventet verdi. Skal ikke erstatte labelen.",
-    },
-    {
-        source: "native",
-        name: "disabled",
-        type: "boolean",
-        defaultValue: "false",
-        description: "Brukes når feltet midlertidig ikke kan redigeres.",
-        interactiveControl: {
-            kind: "boolean",
-            name: "disabled",
-            label: "Disabled",
-            defaultValue: false,
-        },
-    },
-    {
-        source: "native",
-        name: "type",
-        type: "string",
-        defaultValue: `"text"`,
-        description: "Bruk riktig inputtype når feltet handler om e-post, tall, passord eller andre spesifikke data.",
-    },
-    {
-        source: "native",
-        name: "width",
-        type: "string",
-        defaultValue: "auto",
-        description: "Lar deg styre bredden på feltet når innholdet bør bruke en bestemt plass i layouten.",
-    },
-    {
-        source: "native",
-        name: "action",
-        type: "Action",
-        defaultValue: "deprecated",
-        description: "Utfaset API for handlingsknapp i feltet. Bruk `actionButton` i ny kode.",
-    },
-    {
-        source: "native",
-        name: "actionButton",
-        type: "ReactElement",
-        defaultValue: "ingen",
-        description: "Element som vises til høyre i feltet, for eksempel for å vise eller skjule passord.",
-    },
-    {
-        source: "native",
-        name: "maxLength",
-        type: "number",
-        defaultValue: "ingen",
-        description: "Setter maxlength og hjelper komponenten å tilpasse bredden når feltet representerer korte, faste verdier.",
-    },
-    {
-        source: "native",
-        name: "inputClassName",
-        type: "string",
-        defaultValue: "ingen",
-        description: "Ekstra klasse på det underliggende `<input>`-elementet når bare feltet må styles eller spores.",
+        defaultValue: `" "`,
+        description: "Brukes internt for å styre høydeoverganger og kan suppleres med et kort hint, men skal ikke erstatte labelen.",
     },
     {
         source: "aria",
@@ -276,7 +231,7 @@ const textInputPropDocs: TextInputPropDoc[] = [
         name: "aria-invalid",
         type: "boolean",
         defaultValue: "false",
-        description: "Bør settes sammen med en konkret feilmelding når feltet er ugyldig.",
+        description: "Settes sammen med en konkret feilmelding når innholdet ikke er gyldig nok.",
         interactiveControl: {
             kind: "boolean",
             name: "invalid",
@@ -286,29 +241,29 @@ const textInputPropDocs: TextInputPropDoc[] = [
     },
 ];
 
-const textInputPropTableDefinitions = [
+const textAreaPropTableDefinitions = [
     {
         source: "design-system",
-        description: "Jøkul-props som styrer hvordan tekstfeltet oppfører seg og presenteres i docs.",
+        description: "Jøkul-props som styrer hvordan tekstfeltet åpner, vokser og viser teller.",
     },
     {
         source: "framework",
         frameworkName: "React",
-        description: "Props på `TextInput` og `InputGroup` som påvirker label, hjelp og wrapperoppførsel.",
+        description: "Props som navngir feltet og kobler det til hjelp eller feilmeldinger i InputGroup-familien.",
     },
     {
         source: "native",
-        description: "Native HTML-attributter som sendes videre til det underliggende `<input>`-elementet.",
+        description: "Native textarea-attributter som settes på det underliggende elementet.",
     },
     {
         source: "aria",
-        description: "Tilgjengelighetsattributter som kobler feltet til støtte- og feiltekst.",
+        description: "Tilgjengelighetsattributter som gjør støtte- og feilmeldinger lesbare for hjelpemidler.",
     },
 ] as const;
 
-export const textInputPropTables: DesignSystemPropTable[] = textInputPropTableDefinitions
+export const textAreaPropTables: DesignSystemPropTable[] = textAreaPropTableDefinitions
     .map((definition) => {
-        const rows = textInputPropDocs
+        const rows = textAreaPropDocs
             .filter((prop) => prop.source === definition.source)
             .map((prop) => ({
                 name: prop.name,
@@ -335,7 +290,7 @@ export const textInputPropTables: DesignSystemPropTable[] = textInputPropTableDe
     })
     .filter((table) => table.rows.length > 0);
 
-export const textInputInteractiveControls = textInputPropDocs
+export const textAreaInteractiveControls = textAreaPropDocs
     .filter(hasInteractiveControl)
     .map((prop) => prop.interactiveControl)
     .filter((control, index, controls) =>

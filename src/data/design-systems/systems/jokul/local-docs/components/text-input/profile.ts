@@ -1,10 +1,44 @@
-import { createJokulComponentProfile } from "../component-profile";
+import {
+    createJokulComponentProfile,
+    createJokulComponentPropDocumentation,
+} from "../component-profile";
 
 export const textInputComponentProfile = createJokulComponentProfile({
     styleImports: [
         "@fremtind/jokul/styles/components/input-group/input-group.min.css",
         "@fremtind/jokul/styles/components/text-input/text-input.min.css",
     ],
+    propDocumentation: createJokulComponentPropDocumentation([
+        {
+            owner: "root",
+            importPath: "@fremtind/jokul/text-input",
+            typeName: "TextInputProps",
+            documentedProps: [
+                "data-testautoid",
+                "id",
+                "className",
+                "data-testid",
+                "data-size",
+                "errorLabel",
+                "helpLabel",
+                "inline",
+                "label",
+                "labelProps",
+                "supportLabelProps",
+                "description",
+                "tooltip",
+                "style",
+                "render",
+                "align",
+                "action",
+                "unit",
+                "width",
+                "actionButton",
+                "maxLength",
+                "inputClassName",
+            ],
+        },
+    ]),
     iconContract: {
         usage: "required",
         importPath: false,

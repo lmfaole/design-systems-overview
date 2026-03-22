@@ -5,20 +5,25 @@ import {
 } from "../../../../../playground";
 import { loaderInteractiveControls } from "./props";
 
-type LoaderSizeValue = "large" | "medium" | "small";
+type LoaderVariantValue = "large" | "medium" | "small";
 type LoaderRoleValue = "status" | "none";
 type LoaderAriaLiveValue = "polite" | "assertive" | "off";
+type LoaderDelayValue = "0" | "250" | "600";
 
 interface LoaderExampleState {
-    size: LoaderSizeValue;
+    variant: LoaderVariantValue;
+    textDescription: string;
     inline: boolean;
+    delay: LoaderDelayValue;
     role: LoaderRoleValue;
     ariaLive: LoaderAriaLiveValue;
 }
 
 const defaultLoaderExampleState: LoaderExampleState = {
-    size: "large",
+    variant: "large",
+    textDescription: "Laster inn oversikten",
     inline: false,
+    delay: "0",
     role: "status",
     ariaLive: "polite",
 };
@@ -26,8 +31,12 @@ export const LOADER_INTERACTIVE_EXAMPLE_RENDERER_ID = "jokul/loader";
 
 function getLoaderExampleState(values: Record<string, string | boolean>): LoaderExampleState {
     return {
-        size: String(values.size ?? defaultLoaderExampleState.size) as LoaderSizeValue,
+        variant: String(values.variant ?? defaultLoaderExampleState.variant) as LoaderVariantValue,
+        textDescription: String(
+            values.textDescription ?? defaultLoaderExampleState.textDescription,
+        ),
         inline: values.inline === true,
+        delay: String(values.delay ?? defaultLoaderExampleState.delay) as LoaderDelayValue,
         role: String(values.role ?? defaultLoaderExampleState.role) as LoaderRoleValue,
         ariaLive: String(values.ariaLive ?? defaultLoaderExampleState.ariaLive) as LoaderAriaLiveValue,
     };
@@ -37,7 +46,7 @@ function getLoaderClassName(state: LoaderExampleState): string {
     return [
         "jkl-loader",
         state.inline ? "jkl-loader--inline" : "",
-        state.size === "large" ? "" : `jkl-loader--${state.size}`,
+        state.variant === "large" ? "" : `jkl-loader--${state.variant}`,
     ].filter(Boolean).join(" ");
 }
 
@@ -51,12 +60,6 @@ function renderLoaderDots(className: string): string {
     ].join("");
 }
 
-function getStatusText(state: LoaderExampleState): string {
-    return state.inline
-        ? "Sender inn skjemaet"
-        : "Laster inn oversikten";
-}
-
 function getRoleAttributes(state: LoaderExampleState): string {
     if (state.role !== "status") {
         return "";
@@ -67,8 +70,10 @@ function getRoleAttributes(state: LoaderExampleState): string {
 
 function getLoaderSummary(state: LoaderExampleState): string {
     return [
-        `size="${state.size}"`,
+        `variant="${state.variant}"`,
+        `textDescription="${state.textDescription}"`,
         `inline=${state.inline ? "true" : "false"}`,
+        `delay=${state.delay}ms`,
         state.role === "status"
             ? `role="status" · aria-live="${state.ariaLive}"`
             : "role=utelatt",
@@ -78,7 +83,7 @@ function getLoaderSummary(state: LoaderExampleState): string {
 function renderStatusLoaderPreview(state: LoaderExampleState): string {
     const loaderMarkup = renderLoaderDots(getLoaderClassName(state));
     const hiddenText = state.role === "status"
-        ? `<span class="jkl-sr-only">${getStatusText(state)}</span>`
+        ? `<span class="jkl-sr-only">${state.textDescription}</span>`
         : "";
     const wrapperTag = state.inline ? "span" : "div";
 
@@ -86,7 +91,7 @@ function renderStatusLoaderPreview(state: LoaderExampleState): string {
         return [
             '<div class="jkl">',
             `<p><small>${getLoaderSummary(state)}</small></p>`,
-            `<p>Sender inn <${wrapperTag}${getRoleAttributes(state)}>${hiddenText}${loaderMarkup}</${wrapperTag}> skjemaet.</p>`,
+            `<p>Status: <${wrapperTag}${getRoleAttributes(state)}>${hiddenText}${loaderMarkup}</${wrapperTag}> ${state.textDescription}.</p>`,
             state.role === "none"
                 ? "<p>Her må den synlige teksten rundt loaderen formidle statusen uten hjelp fra en live region.</p>"
                 : "",
@@ -97,7 +102,7 @@ function renderStatusLoaderPreview(state: LoaderExampleState): string {
     return [
         '<div class="jkl">',
         `<p><small>${getLoaderSummary(state)}</small></p>`,
-        "<p>Henter oppdatert oversikt over komponenter.</p>",
+        `<p>${state.textDescription}</p>`,
         `<${wrapperTag}${getRoleAttributes(state)}>${hiddenText}${loaderMarkup}</${wrapperTag}>`,
         state.role === "none"
             ? "<p>Uten `role=\"status\"` må teksten rundt loaderen eller annen feedback dekke statusendringen.</p>"
@@ -107,46 +112,35 @@ function renderStatusLoaderPreview(state: LoaderExampleState): string {
 }
 
 function renderLoaderHtmlCode(state: LoaderExampleState): string {
-    const loaderMarkup = [
-        `<span class="${getLoaderClassName(state)}" aria-hidden="true">`,
-        '    <span class="jkl-loader__dot jkl-loader__dot--left"></span>',
-        '    <span class="jkl-loader__dot jkl-loader__dot--middle"></span>',
-        '    <span class="jkl-loader__dot jkl-loader__dot--right"></span>',
-        "</span>",
-    ].join("\n");
-    const srOnlyMarkup = state.role === "status"
-        ? `\n    <span class="jkl-sr-only">${getStatusText(state)}</span>`
+    const variantCode = state.variant === "large"
+        ? ""
+        : `            variant="${state.variant}"\n`;
+    const inlineCode = state.inline ? "            inline\n" : "";
+    const delayCode = state.delay === "0"
+        ? ""
+        : `            delay={${state.delay}}\n`;
+    const roleCode = state.role === "status"
+        ? '            role="status"\n'
         : "";
 
-    if (state.inline) {
-        const roleAttributes = state.role === "status"
-            ? ` role="status" aria-live="${state.ariaLive}"`
-            : "";
+    return `import "@fremtind/jokul/styles/core/core.min.css";
+import "@fremtind/jokul/styles/components/loader/loader.min.css";
+import { Loader } from "@fremtind/jokul/loader";
 
-        return `<p>
-    Sender inn
-    <span${roleAttributes}>${srOnlyMarkup}
-${loaderMarkup.replace(/^/gm, "    ")}
-    </span>
-    skjemaet.
-</p>`;
-    }
-
-    const roleAttributes = state.role === "status"
-        ? ` role="status" aria-live="${state.ariaLive}"`
-        : "";
-
-    return `<p>Henter oppdatert oversikt over komponenter.</p>
-<div${roleAttributes}>${srOnlyMarkup}
-${loaderMarkup}
-</div>`;
+export function Example() {
+    return (
+        <Loader
+            textDescription="${state.textDescription}"
+${variantCode}${inlineCode}${delayCode}${roleCode}        />
+    );
+}`;
 }
 
 function getLoaderNotes(state: LoaderExampleState): string[] {
     const notes = [
-        state.size === "large"
+        state.variant === "large"
             ? "Large er standardstørrelsen når du bruker basisklassen uten modifier."
-            : `Bruk \`jkl-loader--${state.size}\` når loaderen trenger en ${state.size === "medium" ? "mellomstor" : "kompakt"} variant.`,
+            : `Bruk \`variant="${state.variant}"\` når loaderen trenger en ${state.variant === "medium" ? "mellomstor" : "kompakt"} variant.`,
     ];
 
     if (state.inline) {
@@ -165,6 +159,10 @@ function getLoaderNotes(state: LoaderExampleState): string[] {
         notes.push("Når du utelater `role=\"status\"`, må annen synlig eller skjult tekst forklare tilstanden tydelig.");
     }
 
+    if (state.delay !== "0") {
+        notes.push("Delay hjelper når du vil unngå at korte operasjoner flimrer loaderen inn og ut før brukeren rekker å oppfatte noe.");
+    }
+
     return notes;
 }
 
@@ -177,15 +175,9 @@ export function renderLoaderInteractiveExample(
         previewHtml: renderStatusLoaderPreview(state),
         codeExamples: [
             {
-                label: "HTML",
-                language: "html",
+                label: "React",
+                language: "tsx",
                 code: renderLoaderHtmlCode(state),
-            },
-            {
-                label: "CSS-importer",
-                language: "ts",
-                code: `import "@fremtind/jokul/styles/core/core.min.css";
-import "@fremtind/jokul/styles/components/loader/loader.min.css";`,
             },
         ],
         notes: getLoaderNotes(state),

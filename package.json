@@ -10,6 +10,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "start": "astro preview",
+    "test": "pnpm run test:contract",
+    "test:contract": "node --import tsx --test tests/**/*.test.ts",
     "lint": "pnpm run typecheck && pnpm run lint:styles && pnpm run lint:commit && pnpm run lint:repo",
     "lint:commit": "node scripts/lint-commit-message.mjs",
     "lint:repo": "node scripts/lint-repo-rules.mjs",
@@ -48,6 +50,7 @@
     "sass": "^1.98.0",
     "stylelint": "^17.5.0",
     "stylelint-config-standard-scss": "^17.0.0",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   },
   "engines": {

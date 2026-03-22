@@ -3,6 +3,8 @@ import {
     type DesignSystem,
     type DesignSystemAssetKind,
     type DesignSystemComponentAssetDoc,
+    type DesignSystemComponentPropDocumentationCoverage,
+    type DesignSystemComponentPropDocumentationScope,
     type DesignSystemComponentRuntimeLevel,
     type DesignSystemDocumentationStatus,
     type DesignSystemPropSource,
@@ -53,6 +55,20 @@ const DESIGN_SYSTEM_COMPONENT_RUNTIME_LEVEL_LABELS: Record<
     none: "Ingen",
     optional: "Valgfri",
     required: "Påkrevd",
+};
+
+const DESIGN_SYSTEM_COMPONENT_PROP_DOCUMENTATION_COVERAGE_LABELS: Record<
+    DesignSystemComponentPropDocumentationCoverage,
+    string
+> = {
+    complete: "Komplett",
+};
+
+const DESIGN_SYSTEM_COMPONENT_PROP_DOCUMENTATION_SCOPE_LABELS: Record<
+    DesignSystemComponentPropDocumentationScope,
+    string
+> = {
+    "package-public-props": "Pakkens offentlige props, uten generiske DOM-props",
 };
 
 export function getDesignSystemDocumentationStatus(
@@ -164,13 +180,26 @@ export function getDesignSystemComponentRuntimeLevelLabel(
     return DESIGN_SYSTEM_COMPONENT_RUNTIME_LEVEL_LABELS[level];
 }
 
+export function getDesignSystemComponentPropDocumentationCoverageLabel(
+    coverage: DesignSystemComponentPropDocumentationCoverage,
+): string {
+    return DESIGN_SYSTEM_COMPONENT_PROP_DOCUMENTATION_COVERAGE_LABELS[coverage];
+}
+
+export function getDesignSystemComponentPropDocumentationScopeLabel(
+    scope: DesignSystemComponentPropDocumentationScope,
+): string {
+    return DESIGN_SYSTEM_COMPONENT_PROP_DOCUMENTATION_SCOPE_LABELS[scope];
+}
+
 export function getDesignSystemComponentProfileSummary(
     asset: DesignSystemComponentAssetDoc,
 ): Array<{ label: string; value: string }> {
-    const propCount = [
-        ...asset.propTables,
-        ...(asset.subcomponents?.flatMap((subcomponent) => subcomponent.propTables) ?? []),
-    ].flatMap((table) => table.rows).length;
+    const documentedPropCount = new Set(
+        asset.componentProfile.propDocumentation.entries.flatMap((entry) =>
+            entry.documentedProps
+        ),
+    ).size;
 
     return [
         {
@@ -192,8 +221,8 @@ export function getDesignSystemComponentProfileSummary(
             ),
         },
         {
-            label: "Dokumenterte props",
-            value: String(propCount),
+            label: "Dekket API-props",
+            value: String(documentedPropCount),
         },
         {
             label: "Playground-kontroller",

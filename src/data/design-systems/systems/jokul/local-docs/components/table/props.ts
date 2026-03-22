@@ -45,7 +45,21 @@ const tableRootPropDocs: TableRootPropDoc[] = [
     },
     {
         category: "framework",
-        name: "Table.fullWidth",
+        name: "caption",
+        type: "ReactNode",
+        defaultValue: "påkrevd",
+        description: "Navngir tabellen semantisk og bør beskrive hva datasettet faktisk inneholder.",
+    },
+    {
+        category: "framework",
+        name: "children",
+        type: "ReactNode",
+        defaultValue: "påkrevd",
+        description: "Innholdet i tabellen, vanligvis satt sammen av TableHead, TableBody, TableRow og celler.",
+    },
+    {
+        category: "framework",
+        name: "fullWidth",
         type: "boolean",
         defaultValue: "false",
         description: "Setter `jkl-table--full-width` slik at tabellen fyller hele den tilgjengelige bredden.",
@@ -58,7 +72,7 @@ const tableRootPropDocs: TableRootPropDoc[] = [
     },
     {
         category: "framework",
-        name: "Table.collapseToList",
+        name: "collapseToList",
         type: "boolean",
         defaultValue: "false",
         description: "Bryter ned tabellen til listevisning på små skjermer. Da må hver celle ha `data-th`.",

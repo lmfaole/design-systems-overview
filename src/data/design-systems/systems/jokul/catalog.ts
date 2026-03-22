@@ -57,6 +57,21 @@ export const jokulCatalog: DesignSystemCatalogSection[] = [
                 ],
             },
             {
+                slug: "radio-button",
+                title: "RadioButtonGroup",
+                description: "Lokal komponentside for enkeltvalg med RadioButtonGroup, RadioButton og felles valideringskontrakt.",
+                status: "documented",
+                localPath: "/ds/jokul/komponenter/radio-button",
+                packageNames: [
+                    "@fremtind/jokul",
+                ],
+                examples: [
+                    "Én valgt verdi",
+                    "Inline gruppe",
+                    "Feilstatus",
+                ],
+            },
+            {
                 slug: "select",
                 title: "Select",
                 description: "Lokal komponentside for native select med Jøkul-wrapper, placeholder og feilstatus.",
@@ -99,6 +114,36 @@ export const jokulCatalog: DesignSystemCatalogSection[] = [
                     "Standard",
                     "Collapse to list",
                     "Sticky head",
+                ],
+            },
+            {
+                slug: "tag",
+                title: "Tag",
+                description: "Lokal komponentside for kompakte status- og kategorimarkører med Jøkul sine variantklasser.",
+                status: "documented",
+                localPath: "/ds/jokul/komponenter/tag",
+                packageNames: [
+                    "@fremtind/jokul",
+                ],
+                examples: [
+                    "Neutral",
+                    "Warning",
+                    "Success",
+                ],
+            },
+            {
+                slug: "text-area",
+                title: "TextArea",
+                description: "Lokal komponentside for flerlinjefelt med høydekontroll, teller og feilstatus i InputGroup-familien.",
+                status: "documented",
+                localPath: "/ds/jokul/komponenter/text-area",
+                packageNames: [
+                    "@fremtind/jokul",
+                ],
+                examples: [
+                    "Start open",
+                    "Teller",
+                    "Feilstatus",
                 ],
             },
             {

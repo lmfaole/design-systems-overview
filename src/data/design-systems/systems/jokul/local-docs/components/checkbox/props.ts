@@ -68,6 +68,13 @@ const checkboxPropDocs: CheckboxPropDoc[] = [
     },
     {
         source: "framework",
+        name: "data-testautoid",
+        type: "string",
+        defaultValue: "ingen",
+        description: "Stabil test-id fra Jøkul sin kjernetype når feltet må spores i automatiserte tester uten å lene seg på labelteksten.",
+    },
+    {
+        source: "framework",
         name: "children",
         type: "ReactNode",
         defaultValue: "påkrevd",
@@ -113,6 +120,27 @@ const checkboxPropDocs: CheckboxPropDoc[] = [
         type: "(event) => void",
         defaultValue: "ingen handler",
         description: "Håndterer endringer når komponenten brukes kontrollert i React.",
+    },
+    {
+        source: "native",
+        name: "onFocus",
+        type: "(event) => void",
+        defaultValue: "ingen handler",
+        description: "Brukes når feltet må reagere idet checkboxen får fokus, for eksempel for lokal hjelpetekst eller analyse.",
+    },
+    {
+        source: "native",
+        name: "onBlur",
+        type: "(event) => void",
+        defaultValue: "ingen handler",
+        description: "Brukes når du vil validere eller rydde opp etter at checkboxen mister fokus.",
+    },
+    {
+        source: "native",
+        name: "indeterminate",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Viser en mellomtilstand når et overordnet valg bare er delvis oppfylt, for eksempel i hierarkiske sjekklister.",
     },
     {
         source: "aria",

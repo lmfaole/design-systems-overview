@@ -6,6 +6,8 @@ import DesignSystemExampleBlock from "@/components/ds/DesignSystemExampleBlock.a
 import {
     type DesignSystemAssetDoc,
     getDesignSystemComponentPartId,
+    getDesignSystemComponentPropDocumentationCoverageLabel,
+    getDesignSystemComponentPropDocumentationScopeLabel,
     getDesignSystemComponentProfileSummary,
     getDesignSystemComponentRuntimeLevelLabel,
     getDesignSystemComponentSubcomponentId,
@@ -403,6 +405,48 @@ const otherTables = asset.tables ?? [];
                     </ul>
                 ) : (
                     <p>Komponenten krever ingen egen ikonkontrakt i grunnoppsettet.</p>
+                )}
+            </section>
+
+            <section aria-labelledby="asset-komponentprofil-props">
+                <h3 id="asset-komponentprofil-props">Propkontrakt</h3>
+                <p>
+                    Dekning:{" "}
+                    {getDesignSystemComponentPropDocumentationCoverageLabel(
+                        componentProfile.propDocumentation.coverage,
+                    )}
+                </p>
+                <p>
+                    Scope:{" "}
+                    {getDesignSystemComponentPropDocumentationScopeLabel(
+                        componentProfile.propDocumentation.scope,
+                    )}
+                </p>
+
+                <ul>
+                    {componentProfile.propDocumentation.entries.map((entry) => (
+                        <li>
+                            {entry.owner === "root"
+                                ? asset.title
+                                : componentSubcomponents.find((subcomponent) =>
+                                    subcomponent.slug === entry.subcomponentSlug)
+                                    ?.title ?? entry.subcomponentSlug}
+                            {" · "}
+                            <code>{entry.typeName}</code>
+                            {" · "}
+                            <code>{entry.importPath}</code>
+                            {" · "}
+                            {entry.documentedProps.length} props
+                        </li>
+                    ))}
+                </ul>
+
+                {componentProfile.propDocumentation.notes.length > 0 && (
+                    <ul>
+                        {componentProfile.propDocumentation.notes.map((item) => (
+                            <li>{item}</li>
+                        ))}
+                    </ul>
                 )}
             </section>
 

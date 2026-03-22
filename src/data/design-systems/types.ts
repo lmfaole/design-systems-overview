@@ -310,11 +310,49 @@ export interface DesignSystemComponentIconContract {
     notes: string[];
 }
 
+export const DESIGN_SYSTEM_COMPONENT_PROP_DOCUMENTATION_COVERAGES = [
+    "complete",
+] as const;
+
+export type DesignSystemComponentPropDocumentationCoverage =
+    (typeof DESIGN_SYSTEM_COMPONENT_PROP_DOCUMENTATION_COVERAGES)[number];
+
+export const DESIGN_SYSTEM_COMPONENT_PROP_DOCUMENTATION_SCOPES = [
+    "package-public-props",
+] as const;
+
+export type DesignSystemComponentPropDocumentationScope =
+    (typeof DESIGN_SYSTEM_COMPONENT_PROP_DOCUMENTATION_SCOPES)[number];
+
+export const DESIGN_SYSTEM_COMPONENT_PROP_DOCUMENTATION_OWNERS = [
+    "root",
+    "subcomponent",
+] as const;
+
+export type DesignSystemComponentPropDocumentationOwner =
+    (typeof DESIGN_SYSTEM_COMPONENT_PROP_DOCUMENTATION_OWNERS)[number];
+
+export interface DesignSystemComponentPropDocumentationEntry {
+    owner: DesignSystemComponentPropDocumentationOwner;
+    subcomponentSlug?: string;
+    importPath: string;
+    typeName: string;
+    documentedProps: string[];
+}
+
+export interface DesignSystemComponentPropDocumentation {
+    coverage: DesignSystemComponentPropDocumentationCoverage;
+    scope: DesignSystemComponentPropDocumentationScope;
+    notes: string[];
+    entries: DesignSystemComponentPropDocumentationEntry[];
+}
+
 export interface DesignSystemComponentProfile {
     styleImports: string[];
     clientRuntime: DesignSystemComponentRuntimeLevel;
     hydration: DesignSystemComponentRuntimeLevel;
     iconContract: DesignSystemComponentIconContract;
+    propDocumentation: DesignSystemComponentPropDocumentation;
     keyboardSupport: string;
     semantics: string[];
     automatedChecks: string[];
