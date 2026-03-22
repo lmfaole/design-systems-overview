@@ -1,0 +1,31 @@
+---
+import type { OverviewContentArea } from "@/data/overview";
+
+interface Props {
+    areas: OverviewContentArea[];
+}
+
+const { areas } = Astro.props;
+---
+
+<ul>
+    {areas.map((area) => (
+        <li>
+            <article>
+                <h3>{area.title}</h3>
+                <p>{area.summary}</p>
+                {area.documentedItemCount > 0 && (
+                    <p>{area.documentedItemCount} lokale oppslag publisert under dette området.</p>
+                )}
+                <ul>
+                    {area.systems.map((entry) => (
+                        <li>
+                            <a href={entry.href}>{entry.systemName}</a>: {entry.statusLabel}
+                            {entry.itemCount > 0 && ` · ${entry.itemCount} oppslag`}
+                        </li>
+                    ))}
+                </ul>
+            </article>
+        </li>
+    ))}
+</ul>

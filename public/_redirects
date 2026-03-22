@@ -1,9 +1,0 @@
-/monster /ds/monster 302
-/monster/:id /ds/monster/:id 302
-/sok /ds/sok 302
-/ds/jokul/sok /ds/sok 302
-/jokul/monster /monster 302
-/jokul/monster/ikonknapper /monster/1 302
-/jokul/monster/* /monster/:splat 302
-/jokul/mønster /monster 302
-/jokul/mønster/* /monster/:splat 302

@@ -1,0 +1,92 @@
+---
+import PageHeader from "@/components/PageHeader.astro";
+import TableOfContents from "@/components/TableOfContents.astro";
+import ContentAreaList from "@/features/overview/ContentAreaList.astro";
+import OverviewStats from "@/features/overview/OverviewStats.astro";
+import SystemInventoryList from "@/features/overview/SystemInventoryList.astro";
+import {
+    getOverviewContentAreas,
+    getOverviewEntryPoints,
+    getOverviewSummaryStats,
+    getOverviewSystemInventory,
+    getPublishedPatternEntries,
+} from "@/data/overview";
+
+const entryPoints = getOverviewEntryPoints();
+const stats = getOverviewSummaryStats();
+const contentAreas = getOverviewContentAreas().slice(0, 4);
+const documentedSystems = getOverviewSystemInventory().filter((system) => system.status === "documented");
+const patterns = getPublishedPatternEntries();
+---
+
+<main class="page">
+    <PageHeader
+        title="Oversikt over mønstre og designsysteminnhold"
+        description="Bruk forsiden som inngang til tverrgående innholdsområder, lokale oppslag og systemkatalogen som hele prosjektet bygger på."
+    />
+
+    <p>
+        Prosjektet er organisert som en oversikt først, ikke som en samling løse demosider. Målet er å se hvilke
+        mønstre og innholdsområder som går igjen på tvers av designsystemer, og deretter gå ned i hvert enkelt systems
+        egne sider.
+    </p>
+
+    <TableOfContents />
+
+    <section aria-labelledby="landing-start">
+        <h2 id="landing-start">Start her</h2>
+        <ul>
+            {entryPoints.map((entryPoint) => (
+                <li>
+                    <article>
+                        <h3>
+                            <a href={entryPoint.href}>{entryPoint.title}</a>
+                        </h3>
+                        <p>{entryPoint.description}</p>
+                    </article>
+                </li>
+            ))}
+        </ul>
+    </section>
+
+    <section aria-labelledby="landing-status">
+        <h2 id="landing-status">Hva repoet dekker akkurat nå</h2>
+        <OverviewStats items={stats} />
+    </section>
+
+    <section aria-labelledby="landing-areas">
+        <h2 id="landing-areas">Felles innholdsområder</h2>
+        <p>
+            Disse områdene går igjen i katalogene for designsystemene og danner grunnlaget for sammenligning på tvers.
+            <a href="/ds/mønster"> Se hele oversikten over mønstre og innholdsområder.</a>
+        </p>
+        <ContentAreaList areas={contentAreas} />
+    </section>
+
+    <section aria-labelledby="landing-systems">
+        <h2 id="landing-systems">Systemer med lokal dokumentasjon</h2>
+        {documentedSystems.length === 0 ? (
+            <p>Ingen designsystemer har lokal dokumentasjon ennå.</p>
+        ) : (
+            <SystemInventoryList systems={documentedSystems} />
+        )}
+    </section>
+
+    <section aria-labelledby="landing-patterns">
+        <h2 id="landing-patterns">Publiserte mønstersider</h2>
+        {patterns.length === 0 ? (
+            <p>
+                Det finnes ingen publiserte mønstersider ennå. Inntil de er på plass brukes
+                <a href="/ds/mønster"> oversikten over innholdsområder</a> som tverrgående inngang.
+            </p>
+        ) : (
+            <ul>
+                {patterns.map((pattern) => (
+                    <li>
+                        <a href={pattern.href}>{pattern.title}</a>: {pattern.description}
+                    </li>
+                ))}
+            </ul>
+        )}
+    </section>
+</main>

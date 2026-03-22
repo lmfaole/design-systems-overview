@@ -2,17 +2,22 @@ import type { SiteLink } from "@/components/site-types";
 
 export const siteBrand: SiteLink = {
     href: "/",
-    label: "lmfaole",
+    label: "Designsystemoversikt",
 };
 
-export const siteHeaderLinks: SiteLink[] = [];
+export const siteHeaderLinks: SiteLink[] = [
+    { href: "/ds", label: "Oversikt" },
+    { href: "/ds/mønster", label: "Mønstre" },
+    { href: "/ds/systemer", label: "Systemer" },
+];
 
 export const siteFooterLinks: SiteLink[] = [
     { href: "/", label: "Forside" },
-    { href: "/ds", label: "Designsystemer" },
+    { href: "/ds", label: "Oversikt" },
     { href: "/ds/mønster", label: "Mønstre" },
+    { href: "/ds/systemer", label: "Systemer" },
     { href: "/ds/søk", label: "Søk" },
 ];
 
 export const siteFooterNote =
-    "En uoffisiell læringsressurs for designsystemer, komponenter og UI-mønstre.";
+    "En læringsressurs som sammenligner mønstre, innholdsområder og dokumentasjon på tvers av designsystemer.";

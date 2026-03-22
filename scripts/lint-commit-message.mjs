@@ -16,7 +16,7 @@ const message = normalizeCommitMessage(getMessageFromArguments(process.argv.slic
 
 if (!isValidCommitMessage(message)) {
     console.error(`Invalid commit message: "${message}"`);
-    console.error('Expected format: "<type>: <description>" where <type> is feat, fix, docs, style, refactor, test, or chore.');
+    console.error('Expected format: "<type>: <description>" where <type> is feat, fix, docs, style, refactor, or chore.');
     process.exit(1);
 }
 

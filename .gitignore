@@ -7,6 +7,8 @@ tsconfig.tsbuildinfo
 .cache
 .astro/
 dist/
+storybook-static/
+coverage/
 .DS_Store
 .env
 .wrangler/

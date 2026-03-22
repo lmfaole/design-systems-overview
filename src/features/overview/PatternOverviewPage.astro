@@ -1,0 +1,81 @@
+---
+import PageHeader from "@/components/PageHeader.astro";
+import TableOfContents from "@/components/TableOfContents.astro";
+import ContentAreaList from "@/features/overview/ContentAreaList.astro";
+import {
+    getOverviewContentAreas,
+    getOverviewSummaryStats,
+    getOverviewSystemInventory,
+    getPublishedPatternEntries,
+} from "@/data/overview";
+
+const stats = getOverviewSummaryStats();
+const patterns = getPublishedPatternEntries();
+const contentAreas = getOverviewContentAreas();
+const systemsWithLocalContent = getOverviewSystemInventory().filter((system) => system.documentedItemCount > 0);
+---
+
+<main class="page">
+    <PageHeader
+        title="Mønstre på tvers av designsystemer"
+        description="Se hvilke innholdsområder som går igjen i systemene, hvor det finnes lokalt dokumentert grunnlag, og hvilke faktiske mønstersider som allerede er publisert."
+    />
+
+    <p>
+        I dette prosjektet betyr mønstre to ting: egne mønstersider når de finnes, og tilbakevendende innholdsområder
+        på tvers av systemene når mønsterbiblioteket ennå ikke er bygd ut. Begge deler må være synlige i samme oversikt.
+    </p>
+
+    <TableOfContents />
+
+    <section aria-labelledby="patterns-status">
+        <h2 id="patterns-status">Status for mønsterlaget</h2>
+        <ul>
+            {stats
+                .filter((item) => item.label === "Publiserte mønstersider" || item.label === "Innholdsområder på tvers" || item.label === "Lokale oppslag publisert")
+                .map((item) => (
+                    <li>
+                        <strong>{item.value}</strong> {item.label.toLowerCase()}: {item.detail}
+                    </li>
+                ))}
+        </ul>
+    </section>
+
+    <section aria-labelledby="patterns-published">
+        <h2 id="patterns-published">Publiserte mønstersider</h2>
+        {patterns.length === 0 ? (
+            <p>
+                Ingen mønstersider er publisert ennå. Oversikten under bruker derfor innholdsområdene i systemkatalogene
+                som grunnkart for kommende mønsterarbeid.
+            </p>
+        ) : (
+            <ul>
+                {patterns.map((pattern) => (
+                    <li>
+                        <a href={pattern.href}>{pattern.title}</a>: {pattern.description}
+                    </li>
+                ))}
+            </ul>
+        )}
+    </section>
+
+    <section aria-labelledby="patterns-areas">
+        <h2 id="patterns-areas">Innholdsområder som går igjen</h2>
+        <ContentAreaList areas={contentAreas} />
+    </section>
+
+    <section aria-labelledby="patterns-foundation">
+        <h2 id="patterns-foundation">Lokalt dokumentert grunnlag</h2>
+        {systemsWithLocalContent.length === 0 ? (
+            <p>Ingen systemer har lokalt dokumenterte oppslag som kan brukes som mønstergrunnlag ennå.</p>
+        ) : (
+            <ul>
+                {systemsWithLocalContent.map((system) => (
+                    <li>
+                        <a href={system.href}>{system.name}</a>: {system.documentedItemCount} oppslag fordelt på {system.documentedSectionCount} dokumenterte seksjoner.
+                    </li>
+                ))}
+            </ul>
+        )}
+    </section>
+</main>

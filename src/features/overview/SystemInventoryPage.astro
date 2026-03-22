@@ -1,0 +1,52 @@
+---
+import PageHeader from "@/components/PageHeader.astro";
+import TableOfContents from "@/components/TableOfContents.astro";
+import SystemInventoryList from "@/features/overview/SystemInventoryList.astro";
+import { getOverviewSystemInventory } from "@/data/overview";
+
+const systems = getOverviewSystemInventory();
+const documentedSystems = systems.filter((system) => system.status === "documented");
+const plannedSystems = systems.filter((system) => system.status === "planned");
+const externalSystems = systems.filter((system) => system.status === "external");
+---
+
+<main class="page">
+    <PageHeader
+        title="Innhold per designsystem"
+        description="Se hvert designsystem som en egen innholdskatalog, med installasjonsguider, lokale seksjoner og status for videre dokumentasjon."
+    />
+
+    <p>
+        Når den tverrgående oversikten forteller hvilke områder som går igjen, er denne siden stedet for å se hva hvert
+        enkelt system faktisk inneholder i dag.
+    </p>
+
+    <TableOfContents />
+
+    <section aria-labelledby="systems-documented">
+        <h2 id="systems-documented">Systemer med lokal dokumentasjon</h2>
+        {documentedSystems.length === 0 ? (
+            <p>Ingen designsystemer har lokal dokumentasjon ennå.</p>
+        ) : (
+            <SystemInventoryList systems={documentedSystems} />
+        )}
+    </section>
+
+    <section aria-labelledby="systems-planned">
+        <h2 id="systems-planned">Systemer med planlagt lokal struktur</h2>
+        {plannedSystems.length === 0 ? (
+            <p>Ingen designsystemer står som planlagt akkurat nå.</p>
+        ) : (
+            <SystemInventoryList systems={plannedSystems} />
+        )}
+    </section>
+
+    <section aria-labelledby="systems-external">
+        <h2 id="systems-external">Systemer som foreløpig er eksterne</h2>
+        {externalSystems.length === 0 ? (
+            <p>Alle systemene i katalogen har enten lokal dokumentasjon eller en plan for det.</p>
+        ) : (
+            <SystemInventoryList systems={externalSystems} />
+        )}
+    </section>
+</main>

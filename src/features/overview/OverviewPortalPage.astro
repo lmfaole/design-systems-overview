@@ -1,0 +1,73 @@
+---
+import PageHeader from "@/components/PageHeader.astro";
+import TableOfContents from "@/components/TableOfContents.astro";
+import ContentAreaList from "@/features/overview/ContentAreaList.astro";
+import OverviewStats from "@/features/overview/OverviewStats.astro";
+import SystemInventoryList from "@/features/overview/SystemInventoryList.astro";
+import {
+    getOverviewContentAreas,
+    getOverviewEntryPoints,
+    getOverviewSummaryStats,
+    getOverviewSystemInventory,
+} from "@/data/overview";
+
+const entryPoints = getOverviewEntryPoints();
+const stats = getOverviewSummaryStats();
+const contentAreas = getOverviewContentAreas().slice(0, 6);
+const systems = getOverviewSystemInventory();
+---
+
+<main class="page">
+    <PageHeader
+        title="Designsystemoversikt"
+        description="Samlet oversikt over hvilke mønstre og innholdsområder som går igjen på tvers av systemene, og hvordan hvert system er bygget opp i repoet."
+    />
+
+    <p>
+        Denne siden er prosjektets hovedkart. Den skiller mellom tverrgående mønstre på den ene siden og systemspesifikt
+        innhold på den andre, slik at det blir enklere å se hva som kan gjenbrukes og hva som må dokumenteres per system.
+    </p>
+
+    <TableOfContents />
+
+    <section aria-labelledby="portal-structure">
+        <h2 id="portal-structure">Slik er oversikten organisert</h2>
+        <ul>
+            {entryPoints.map((entryPoint) => (
+                <li>
+                    <article>
+                        <h3>
+                            <a href={entryPoint.href}>{entryPoint.title}</a>
+                        </h3>
+                        <p>{entryPoint.description}</p>
+                    </article>
+                </li>
+            ))}
+        </ul>
+    </section>
+
+    <section aria-labelledby="portal-status">
+        <h2 id="portal-status">Status på tvers av katalogen</h2>
+        <OverviewStats items={stats} />
+    </section>
+
+    <section aria-labelledby="portal-patterns">
+        <h2 id="portal-patterns">Mønstre og innholdsområder som går igjen</h2>
+        <p>
+            Oversikten under viser hvilke dokumentasjonsområder som finnes på tvers av systemsidene. Dette er grunnlaget
+            for å bygge faktiske mønstersider senere uten å duplisere informasjon.
+        </p>
+        <ContentAreaList areas={contentAreas} />
+        <p>
+            <a href="/ds/mønster">Se hele sammenligningen på tvers av systemene</a>
+        </p>
+    </section>
+
+    <section aria-labelledby="portal-systems">
+        <h2 id="portal-systems">Innhold per designsystem</h2>
+        <SystemInventoryList systems={systems} />
+        <p>
+            <a href="/ds/systemer">Se systemoversikten som egen side</a>
+        </p>
+    </section>
+</main>

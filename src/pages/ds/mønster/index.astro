@@ -1,14 +1,12 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import PatternIndexPage from "@/components/ds/mønster/PatternIndexPage.astro";
+import PatternOverviewPage from "@/features/overview/PatternOverviewPage.astro";
 ---
 
 <BaseLayout
-    title="UI-mønstre"
-    description="Plan for å bygge opp mønsterdokumentasjonen på nytt og koble den til komponenter, tokens, søk og navigasjon."
+    title="Mønstre på tvers"
+    description="Oversikt over innholdsområder og mønstersider på tvers av designsystemene i katalogen."
     path="/ds/mønster"
 >
-    <main class="page">
-        <PatternIndexPage />
-    </main>
+    <PatternOverviewPage />
 </BaseLayout>

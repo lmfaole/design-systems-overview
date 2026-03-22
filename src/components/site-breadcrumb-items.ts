@@ -38,8 +38,8 @@ function resolveMønsterItems(patternSlug: string): SiteBreadcrumbItem[] {
 
     return withCurrent([
         { href: "/", label: "Forside" },
-        { href: "/ds", label: "Designsystemer" },
-        { href: "/ds/mønster", label: "Mønster" },
+        { href: "/ds", label: "Oversikt" },
+        { href: "/ds/mønster", label: "Mønstre" },
         { label: post?.title ?? humanizeSegment(patternSlug) },
     ]);
 }
@@ -54,14 +54,14 @@ function resolveDesignSystemItems(segments: string[]): SiteBreadcrumbItem[] | un
 
     const baseItems: SiteBreadcrumbItem[] = [
         { href: "/", label: "Forside" },
-        { href: "/ds", label: "Designsystemer" },
+        { href: "/ds", label: "Oversikt" },
         { href: `/ds/${system.slug}`, label: system.name },
     ];
 
     if (segments.length === 2) {
         return withCurrent([
             { href: "/", label: "Forside" },
-            { href: "/ds", label: "Designsystemer" },
+            { href: "/ds", label: "Oversikt" },
             { label: system.name },
         ]);
     }
@@ -122,14 +122,14 @@ export function resolveSiteBreadcrumbItems(pathname: string): SiteBreadcrumbItem
     if (segments.length === 1) {
         return withCurrent([
             { href: "/", label: "Forside" },
-            { label: "Designsystemer" },
+            { label: "Oversikt" },
         ]);
     }
 
     if (segments[1] === "søk") {
         return withCurrent([
             { href: "/", label: "Forside" },
-            { href: "/ds", label: "Designsystemer" },
+            { href: "/ds", label: "Oversikt" },
             { label: "Søk" },
         ]);
     }
@@ -138,12 +138,20 @@ export function resolveSiteBreadcrumbItems(pathname: string): SiteBreadcrumbItem
         if (segments.length === 2) {
             return withCurrent([
                 { href: "/", label: "Forside" },
-                { href: "/ds", label: "Designsystemer" },
-                { label: "Mønster" },
+                { href: "/ds", label: "Oversikt" },
+                { label: "Mønstre" },
             ]);
         }
 
         return resolveMønsterItems(segments[2]);
+    }
+
+    if (segments[1] === "systemer") {
+        return withCurrent([
+            { href: "/", label: "Forside" },
+            { href: "/ds", label: "Oversikt" },
+            { label: "Systemer" },
+        ]);
     }
 
     const designSystemItems = resolveDesignSystemItems(segments);
@@ -154,7 +162,7 @@ export function resolveSiteBreadcrumbItems(pathname: string): SiteBreadcrumbItem
 
     return withCurrent([
         { href: "/", label: "Forside" },
-        { href: "/ds", label: "Designsystemer" },
+        { href: "/ds", label: "Oversikt" },
         { label: humanizeSegment(segments[1]) },
     ]);
 }

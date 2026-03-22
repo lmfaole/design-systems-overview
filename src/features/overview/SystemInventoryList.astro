@@ -1,0 +1,37 @@
+---
+import type { OverviewSystemInventoryEntry } from "@/data/overview";
+
+interface Props {
+    systems: OverviewSystemInventoryEntry[];
+}
+
+const { systems } = Astro.props;
+---
+
+<ul>
+    {systems.map((system) => (
+        <li>
+            <article>
+                <h3>
+                    <a href={system.href}>{system.name}</a>
+                </h3>
+                <p>{system.description}</p>
+                <p>{system.statusText}</p>
+                <p>
+                    {system.sectionCount} seksjoner, {system.documentedSectionCount} dokumentert lokalt og {system.documentedItemCount} konkrete oppslag.
+                </p>
+                {system.installGuideCount > 0 && (
+                    <p>{system.installGuideCount} installasjonsguider registrert.</p>
+                )}
+                <ul>
+                    {system.sections.map((section) => (
+                        <li>
+                            <a href={section.href}>{section.title}</a>: {section.statusLabel}
+                            {section.itemCount > 0 && ` · ${section.itemCount} oppslag`}
+                        </li>
+                    ))}
+                </ul>
+            </article>
+        </li>
+    ))}
+</ul>

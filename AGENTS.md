@@ -2,12 +2,11 @@
 
 ## Project Intent
 
-This repo is a learning resource that collects UI patterns, design tokens, and documentation for design systems. Build
-patterns in the Monster feature and data modules, with Astro routes under `src/pages/ds/monster`, and keep
-design-system-specific pages under `src/pages/ds/<system>` with implementation in `src/features/ds/<system>`.
-Patterns should be focused on the design systems in scope, but also include general UI patterns that can be applied
-across systems. The goal is to create a comprehensive resource for designers and developers working with design systems,
-with a strong emphasis on accessibility and performance.
+This repo is a learning resource that compares design systems through shared overview pages, local system documentation,
+and cross-system pattern references. Keep Astro routes under `src/pages`, overview implementations under
+`src/features/overview`, and system-specific data under `src/data/design-systems`. The goal is to make it easy to see
+both what patterns recur across systems and what each individual system actually contains, with a strong emphasis on
+accessibility and performance.
 
 ## Structure And Scope
 
@@ -24,13 +23,12 @@ with a strong emphasis on accessibility and performance.
 
 ## Commands
 
-- Install deps: `npm install`
-- Dev: `npm run dev`
-- Build: `npm run build`
-- Typecheck: `npm run typecheck`
-- Tests (full): `npm test`
-- A11y (direct): `npm run test:a11y`
-- Cloudflare Pages build: `npm run pages:build`
+- Install deps: `pnpm install`
+- Dev: `pnpm run dev`
+- Build: `pnpm run build`
+- Lint: `pnpm run lint`
+- Typecheck: `pnpm run typecheck`
+- Cloudflare Pages build: `pnpm run pages:build`
 
 ## Code Style And Architecture
 
@@ -44,7 +42,7 @@ with a strong emphasis on accessibility and performance.
       or logic that would not be applicable across systems.
     - Commit messages should be clear and descriptive, following the format of `<type>: <description>`, where `<type>`
       is one of
-      `feat`, `fix`, `docs`, `style`, `refactor`, `test`, or `chore`, and `<description>` is a brief summary of the
+      `feat`, `fix`, `docs`, `style`, `refactor`, or `chore`, and `<description>` is a brief summary of the
       changes made in the commit.
     - Commit at a logical level of granularity, with each commit representing a single, cohesive change to the codebase
       that can be
@@ -91,23 +89,22 @@ with a strong emphasis on accessibility and performance.
     - Avoid using unnecessary amounts of elements in HTML, and instead prefer using a minimal number of elements that
       are necessary to achieve the desired layout and functionality to improve performance and maintainability.
 
-## Testing Expectations
+## Verification Expectations
 
-- Run the full test suite for changes, including a11y where relevant.
-- Write tests for new features, bug fixes, and any significant changes to existing patterns.
-- Use descriptive test names that clearly indicate what is being tested and the expected outcome.
-- Ensure tests cover edge cases and potential failure points to maintain robustness.
+- Run the relevant repo checks for your changes, starting with `pnpm run lint`.
+- Run `pnpm run build` when changing routes, content, data, or rendering logic.
+- Manually verify affected pages and flows when changing UI behavior.
 
 ## Tooling
 
 - Use `gh` for issue management and PRs.
-- Use the repo scripts and checked-in config files as the source of truth for linting, testing, and deployment tooling.
+- Use the repo scripts and checked-in config files as the source of truth for linting and deployment tooling.
 
 ## Issue Reporting
 
 - Always file issues in the designsystems for any gaps, bugs, missing or unclear docs, a11y, SSR, performance, API
   limitations, or workarounds.
-- File issues in `lmfaole/lmfaole` using `gh issue create`.
+- File issues in `lmfaole/design-systems-overview` using `gh issue create`.
 - Write issues in Norwegian with a scan-friendly title and include labels for the issue type.
 - Issue body must include:
     - Why the issue happens

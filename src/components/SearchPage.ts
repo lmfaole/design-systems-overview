@@ -100,11 +100,12 @@ function renderEmptyState(query: string): string {
     return [
         '<section class="ds-search-empty-state">',
         `<h2>Ingen treff for “${escapeHtml(query)}”</h2>`,
-        "<p>Prøv et kortere søk, et komponentnavn eller et mer generelt begrep.</p>",
+        "<p>Prøv et kortere søk, et komponentnavn, et designsystem eller et innholdsområde.</p>",
         "<p>Du kan også gå direkte til:</p>",
         "<ul>",
-        '<li><a href="/ds">Designsystemoversikten</a></li>',
-        '<li><a href="/ds/mønster">Alle mønstre</a></li>',
+        '<li><a href="/ds">Samlet oversikt</a></li>',
+        '<li><a href="/ds/mønster">Mønstre på tvers</a></li>',
+        '<li><a href="/ds/systemer">Innhold per designsystem</a></li>',
         "</ul>",
         "</section>",
     ].join("");
