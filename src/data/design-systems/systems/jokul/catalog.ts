@@ -28,6 +28,21 @@ export const jokulCatalog: DesignSystemCatalogSection[] = [
                 ],
             },
             {
+                slug: "card",
+                title: "Card",
+                description: "Lokal komponentside for innholdskort, klikkbare flater og CardImage som del av samme oversiktsmønster.",
+                status: "documented",
+                localPath: "/ds/jokul/komponenter/card",
+                packageNames: [
+                    "@fremtind/jokul",
+                ],
+                examples: [
+                    "Innholdskort",
+                    "Klikkbar flate",
+                    "CardImage",
+                ],
+            },
+            {
                 slug: "checkbox",
                 title: "Checkbox",
                 description: "Lokal komponentside for av/på-valg og korte flervalgssett med ekte Jøkul-checkbox-markup.",
@@ -43,6 +58,21 @@ export const jokulCatalog: DesignSystemCatalogSection[] = [
                 ],
             },
             {
+                slug: "description-list",
+                title: "DescriptionList",
+                description: "Lokal komponentside for nøkkel-verdi-par med DescriptionList, DescriptionTerm og DescriptionDetail.",
+                status: "documented",
+                localPath: "/ds/jokul/komponenter/description-list",
+                packageNames: [
+                    "@fremtind/jokul",
+                ],
+                examples: [
+                    "Horizontal",
+                    "Justified",
+                    "Separatorer",
+                ],
+            },
+            {
                 slug: "loader",
                 title: "Loader",
                 description: "Lokal komponentside for ventetilstander med ekte Jøkul-loader og tilgjengelighetsnotater.",
@@ -54,6 +84,21 @@ export const jokulCatalog: DesignSystemCatalogSection[] = [
                 examples: [
                     "Statusområde",
                     "Inline i tekst",
+                ],
+            },
+            {
+                slug: "message",
+                title: "Message",
+                description: "Lokal komponentside for statusmeldinger, variantikoner og FormErrorMessage som skjemaoppsummering.",
+                status: "documented",
+                localPath: "/ds/jokul/komponenter/message",
+                packageNames: [
+                    "@fremtind/jokul",
+                ],
+                examples: [
+                    "Info",
+                    "Warning",
+                    "Avvisbar",
                 ],
             },
             {
@@ -99,6 +144,21 @@ export const jokulCatalog: DesignSystemCatalogSection[] = [
                     "Element",
                     "Input",
                     "Table",
+                ],
+            },
+            {
+                slug: "summary-table",
+                title: "SummaryTable",
+                description: "Lokal komponentside for kompakte oppsummeringer med SummaryTable og SummaryTableRow.",
+                status: "documented",
+                localPath: "/ds/jokul/komponenter/summary-table",
+                packageNames: [
+                    "@fremtind/jokul",
+                ],
+                examples: [
+                    "Caption",
+                    "Footer",
+                    "Oppsummering",
                 ],
             },
             {

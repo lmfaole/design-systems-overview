@@ -3,13 +3,25 @@ import {
     renderButtonInteractiveExample,
 } from "./systems/jokul/local-docs/components/button/example";
 import {
+    CARD_INTERACTIVE_EXAMPLE_RENDERER_ID,
+    renderCardInteractiveExample,
+} from "./systems/jokul/local-docs/components/card/example";
+import {
     CHECKBOX_INTERACTIVE_EXAMPLE_RENDERER_ID,
     renderCheckboxInteractiveExample,
 } from "./systems/jokul/local-docs/components/checkbox/example";
 import {
+    DESCRIPTION_LIST_INTERACTIVE_EXAMPLE_RENDERER_ID,
+    renderDescriptionListInteractiveExample,
+} from "./systems/jokul/local-docs/components/description-list/example";
+import {
     LOADER_INTERACTIVE_EXAMPLE_RENDERER_ID,
     renderLoaderInteractiveExample,
 } from "./systems/jokul/local-docs/components/loader/example";
+import {
+    MESSAGE_INTERACTIVE_EXAMPLE_RENDERER_ID,
+    renderMessageInteractiveExample,
+} from "./systems/jokul/local-docs/components/message/example";
 import {
     RADIO_BUTTON_INTERACTIVE_EXAMPLE_RENDERER_ID,
     renderRadioButtonInteractiveExample,
@@ -22,6 +34,10 @@ import {
     SKELETON_LOADER_INTERACTIVE_EXAMPLE_RENDERER_ID,
     renderSkeletonLoaderInteractiveExample,
 } from "./systems/jokul/local-docs/components/skeleton-loader/example";
+import {
+    SUMMARY_TABLE_INTERACTIVE_EXAMPLE_RENDERER_ID,
+    renderSummaryTableInteractiveExample,
+} from "./systems/jokul/local-docs/components/summary-table/example";
 import {
     TABLE_INTERACTIVE_EXAMPLE_RENDERER_ID,
     renderTableInteractiveExample,
@@ -50,11 +66,15 @@ const interactiveExampleRenderers: Record<
     DesignSystemInteractiveExampleRenderer
 > = {
     [BUTTON_INTERACTIVE_EXAMPLE_RENDERER_ID]: renderButtonInteractiveExample,
+    [CARD_INTERACTIVE_EXAMPLE_RENDERER_ID]: renderCardInteractiveExample,
     [CHECKBOX_INTERACTIVE_EXAMPLE_RENDERER_ID]: renderCheckboxInteractiveExample,
+    [DESCRIPTION_LIST_INTERACTIVE_EXAMPLE_RENDERER_ID]: renderDescriptionListInteractiveExample,
     [LOADER_INTERACTIVE_EXAMPLE_RENDERER_ID]: renderLoaderInteractiveExample,
+    [MESSAGE_INTERACTIVE_EXAMPLE_RENDERER_ID]: renderMessageInteractiveExample,
     [RADIO_BUTTON_INTERACTIVE_EXAMPLE_RENDERER_ID]: renderRadioButtonInteractiveExample,
     [SELECT_INTERACTIVE_EXAMPLE_RENDERER_ID]: renderSelectInteractiveExample,
     [SKELETON_LOADER_INTERACTIVE_EXAMPLE_RENDERER_ID]: renderSkeletonLoaderInteractiveExample,
+    [SUMMARY_TABLE_INTERACTIVE_EXAMPLE_RENDERER_ID]: renderSummaryTableInteractiveExample,
     [TAG_INTERACTIVE_EXAMPLE_RENDERER_ID]: renderTagInteractiveExample,
     [TABLE_INTERACTIVE_EXAMPLE_RENDERER_ID]: renderTableInteractiveExample,
     [TEXT_AREA_INTERACTIVE_EXAMPLE_RENDERER_ID]: renderTextAreaInteractiveExample,

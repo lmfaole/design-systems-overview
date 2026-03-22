@@ -1,10 +1,14 @@
 import type { DesignSystemLocalSectionDocs } from "../../../types";
 import { buttonDoc } from "./components/button";
+import { cardDoc } from "./components/card";
 import { checkboxDoc } from "./components/checkbox";
+import { descriptionListDoc } from "./components/description-list";
 import { loaderDoc } from "./components/loader";
+import { messageDoc } from "./components/message";
 import { radioButtonDoc } from "./components/radio-button";
 import { selectDoc } from "./components/select";
 import { skeletonLoaderDoc } from "./components/skeleton-loader";
+import { summaryTableDoc } from "./components/summary-table";
 import { tableDoc } from "./components/table";
 import { tagDoc } from "./components/tag";
 import { textAreaDoc } from "./components/text-area";
@@ -22,11 +26,15 @@ const jokulComponentSection = {
         "react",
         "jokul komponenter",
         "button",
+        "card",
         "checkbox",
+        "description list",
         "loader",
+        "message",
         "radio button",
         "select",
         "skeleton loader",
+        "summary table",
         "tag",
         "table",
         "text area",
@@ -34,11 +42,15 @@ const jokulComponentSection = {
     ],
     items: [
         buttonDoc,
+        cardDoc,
         checkboxDoc,
+        descriptionListDoc,
         loaderDoc,
+        messageDoc,
         radioButtonDoc,
         selectDoc,
         skeletonLoaderDoc,
+        summaryTableDoc,
         tableDoc,
         tagDoc,
         textAreaDoc,
