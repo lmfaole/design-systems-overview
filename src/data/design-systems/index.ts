@@ -3,6 +3,7 @@ import designsystemet from "./systems/designsystemet";
 import jokul from "./systems/jokul";
 import {
     createInteractiveExample,
+    getInteractiveExampleClientConfig,
     getInteractiveExampleDefaultValues,
     getInteractiveExampleInitialState,
     getInteractiveExampleStateKey,
@@ -82,8 +83,10 @@ export type {
     DesignSystemExampleCode,
     DesignSystemInteractiveExample,
     DesignSystemInteractiveExampleBooleanControl,
+    DesignSystemInteractiveExampleClientConfig,
     DesignSystemInteractiveExampleControl,
     DesignSystemInteractiveExampleEventLog,
+    DesignSystemInteractiveExampleRendererId,
     DesignSystemInteractiveExampleSelectControl,
     DesignSystemInteractiveExampleSelectOption,
     DesignSystemInteractiveExampleState,
@@ -108,6 +111,7 @@ export type {
 export {
     createInteractiveExample,
     getAssetKindLabel,
+    getInteractiveExampleClientConfig,
     getInteractiveExampleDefaultValues,
     getInteractiveExampleInitialState,
     getInteractiveExampleStateKey,

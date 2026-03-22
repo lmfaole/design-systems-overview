@@ -1,4 +1,8 @@
-import { createInteractiveExample } from "../../../../../playground";
+import {
+    createInteractiveExample,
+    type CreateInteractiveExampleStateResult,
+    type DesignSystemInteractiveExampleValues,
+} from "../../../../../playground";
 import { loaderInteractiveControls } from "./props";
 
 type LoaderSizeValue = "large" | "medium" | "small";
@@ -18,6 +22,7 @@ const defaultLoaderExampleState: LoaderExampleState = {
     role: "status",
     ariaLive: "polite",
 };
+export const LOADER_INTERACTIVE_EXAMPLE_RENDERER_ID = "jokul/loader";
 
 function getLoaderExampleState(values: Record<string, string | boolean>): LoaderExampleState {
     return {
@@ -163,27 +168,32 @@ function getLoaderNotes(state: LoaderExampleState): string[] {
     return notes;
 }
 
-export const loaderPlayground = createInteractiveExample(
-    loaderInteractiveControls,
-    (values) => {
-        const state = getLoaderExampleState(values);
+export function renderLoaderInteractiveExample(
+    values: DesignSystemInteractiveExampleValues,
+): CreateInteractiveExampleStateResult {
+    const state = getLoaderExampleState(values);
 
-        return {
-            previewHtml: renderStatusLoaderPreview(state),
-            codeExamples: [
-                {
-                    label: "HTML",
-                    language: "html",
-                    code: renderLoaderHtmlCode(state),
-                },
-                {
-                    label: "CSS-importer",
-                    language: "ts",
-                    code: `import "@fremtind/jokul/styles/core/core.min.css";
+    return {
+        previewHtml: renderStatusLoaderPreview(state),
+        codeExamples: [
+            {
+                label: "HTML",
+                language: "html",
+                code: renderLoaderHtmlCode(state),
+            },
+            {
+                label: "CSS-importer",
+                language: "ts",
+                code: `import "@fremtind/jokul/styles/core/core.min.css";
 import "@fremtind/jokul/styles/components/loader/loader.min.css";`,
-                },
-            ],
-            notes: getLoaderNotes(state),
-        };
-    },
+            },
+        ],
+        notes: getLoaderNotes(state),
+    };
+}
+
+export const loaderPlayground = createInteractiveExample(
+    LOADER_INTERACTIVE_EXAMPLE_RENDERER_ID,
+    loaderInteractiveControls,
+    renderLoaderInteractiveExample,
 );

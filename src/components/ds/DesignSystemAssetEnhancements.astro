@@ -1,12 +1,24 @@
 ---
 ---
 
-<script is:inline>
-    const interactiveExampleConfigs = new WeakMap();
-    const interactiveExampleEventEntries = new WeakMap();
-    const interactiveExampleEventCleanup = new WeakMap();
+<script>
+    import type {
+        DesignSystemExampleCode,
+        DesignSystemInteractiveExampleClientConfig,
+        DesignSystemInteractiveExampleControl,
+    } from "@/data/design-systems";
+    import { renderInteractiveExampleState } from "@/data/design-systems/interactive-runtime";
 
-    const getInteractiveConfig = (root) => {
+    const interactiveExampleConfigs = new WeakMap<
+        HTMLElement,
+        DesignSystemInteractiveExampleClientConfig
+    >();
+    const interactiveExampleEventEntries = new WeakMap<HTMLElement, string[]>();
+    const interactiveExampleEventCleanup = new WeakMap<HTMLElement, () => void>();
+
+    const getInteractiveConfig = (
+        root: HTMLElement,
+    ): DesignSystemInteractiveExampleClientConfig | null => {
         const cached = interactiveExampleConfigs.get(root);
 
         if (cached) {
@@ -20,9 +32,15 @@
         }
 
         try {
-            const config = JSON.parse(configElement.textContent || "null");
+            const config = JSON.parse(
+                configElement.textContent || "null",
+            ) as DesignSystemInteractiveExampleClientConfig | null;
 
-            if (!config || !Array.isArray(config.controls) || !Array.isArray(config.states)) {
+            if (
+                !config ||
+                !Array.isArray(config.controls) ||
+                typeof config.rendererId !== "string"
+            ) {
                 return null;
             }
 
@@ -33,7 +51,10 @@
         }
     };
 
-    const getControlValue = (control, root) => {
+    const getControlValue = (
+        control: DesignSystemInteractiveExampleControl,
+        root: HTMLElement,
+    ): string | boolean => {
         const field = root.querySelector(`[data-ds-interactive-control="${control.name}"]`);
 
         if (control.kind === "boolean") {
@@ -43,14 +64,10 @@
         return field instanceof HTMLSelectElement ? field.value : "";
     };
 
-    const getStateKey = (controls, values) =>
-        controls
-            .map((control) => `${control.name}:${String(values[control.name])}`)
-            .join("|");
+    const getEventLogEntries = (root: HTMLElement): string[] =>
+        interactiveExampleEventEntries.get(root) ?? [];
 
-    const getEventLogEntries = (root) => interactiveExampleEventEntries.get(root) ?? [];
-
-    const getEventTargetLabel = (target) => {
+    const getEventTargetLabel = (target: EventTarget | null): string => {
         if (!(target instanceof Element)) {
             return "ukjent mål";
         }
@@ -67,7 +84,7 @@
         return `${tagName} "${label.slice(0, 80)}"`;
     };
 
-    const renderEventLog = (root) => {
+    const renderEventLog = (root: HTMLElement): void => {
         const eventsRoot = root.querySelector("[data-ds-interactive-events]");
 
         if (!(eventsRoot instanceof HTMLElement)) {
@@ -95,7 +112,7 @@
         }
     };
 
-    const recordEventLogEntry = (root, event) => {
+    const recordEventLogEntry = (root: HTMLElement, event: Event): void => {
         const config = getInteractiveConfig(root);
         const eventLog = config?.eventLog;
 
@@ -114,7 +131,10 @@
         renderEventLog(root);
     };
 
-    const bindEventLogListeners = (root, previewRoot) => {
+    const bindEventLogListeners = (
+        root: HTMLElement,
+        previewRoot: HTMLElement,
+    ): void => {
         const previousCleanup = interactiveExampleEventCleanup.get(root);
 
         if (typeof previousCleanup === "function") {
@@ -134,7 +154,7 @@
             ? Array.from(previewRoot.querySelectorAll(eventLog.targetSelector))
             : [previewRoot];
         const targets = matchedTargets.length > 0 ? matchedTargets : [previewRoot];
-        const listeners = [];
+        const listeners: Array<() => void> = [];
 
         for (const target of targets) {
             if (!(target instanceof Element)) {
@@ -142,7 +162,7 @@
             }
 
             for (const eventName of eventLog.events) {
-                const listener = (event) => recordEventLogEntry(root, event);
+                const listener = (event: Event) => recordEventLogEntry(root, event);
                 target.addEventListener(eventName, listener);
                 listeners.push(() => target.removeEventListener(eventName, listener));
             }
@@ -157,7 +177,10 @@
         renderEventLog(root);
     };
 
-    const renderCodeExamples = (root, codeExamples) => {
+    const renderCodeExamples = (
+        root: HTMLElement,
+        codeExamples: DesignSystemExampleCode[],
+    ): void => {
         const codeRoot = root.querySelector("[data-ds-interactive-code]");
 
         if (!(codeRoot instanceof HTMLElement)) {
@@ -197,7 +220,7 @@
         }
     };
 
-    const renderNotes = (root, notes) => {
+    const renderNotes = (root: HTMLElement, notes: string[] | undefined): void => {
         const notesRoot = root.querySelector("[data-ds-interactive-notes]");
 
         if (!(notesRoot instanceof HTMLElement)) {
@@ -228,7 +251,7 @@
         notesRoot.append(list);
     };
 
-    const updateInteractiveExample = (root) => {
+    const updateInteractiveExample = (root: HTMLElement | null): void => {
         if (!(root instanceof HTMLElement)) {
             return;
         }
@@ -240,10 +263,12 @@
         }
 
         const values = Object.fromEntries(
-            config.controls.map((control) => [control.name, getControlValue(control, root)]),
+            config.controls.map((control: DesignSystemInteractiveExampleControl) => [
+                control.name,
+                getControlValue(control, root),
+            ]),
         );
-        const stateKey = getStateKey(config.controls, values);
-        const state = config.states.find((entry) => entry.key === stateKey);
+        const state = renderInteractiveExampleState(config.rendererId, values);
 
         if (!state) {
             return;
@@ -261,7 +286,7 @@
         renderEventLog(root);
     };
 
-    const getInteractiveRoot = (target) =>
+    const getInteractiveRoot = (target: EventTarget | null): HTMLElement | null =>
         target instanceof Element
             ? target.closest("[data-ds-interactive-example]")
             : null;
@@ -275,6 +300,8 @@
     });
 
     document.querySelectorAll("[data-ds-interactive-example]").forEach((root) => {
-        updateInteractiveExample(root);
+        if (root instanceof HTMLElement) {
+            updateInteractiveExample(root);
+        }
     });
 </script>

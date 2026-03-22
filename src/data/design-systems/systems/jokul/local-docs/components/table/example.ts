@@ -1,4 +1,8 @@
-import { createInteractiveExample } from "../../../../../playground";
+import {
+    createInteractiveExample,
+    type CreateInteractiveExampleStateResult,
+    type DesignSystemInteractiveExampleValues,
+} from "../../../../../playground";
 import { tableInteractiveControls } from "./props";
 
 type TableDensityValue = "comfortable" | "compact";
@@ -19,6 +23,7 @@ const defaultTableExampleState: TableExampleState = {
     captionSrOnly: false,
     amountAlign: "right",
 };
+export const TABLE_INTERACTIVE_EXAMPLE_RENDERER_ID = "jokul/table";
 
 function getTableExampleState(values: Record<string, string | boolean>): TableExampleState {
     return {
@@ -205,21 +210,26 @@ function getTableNotes(state: TableExampleState): string[] {
     return notes;
 }
 
-export const tablePlayground = createInteractiveExample(
-    tableInteractiveControls,
-    (values) => {
-        const state = getTableExampleState(values);
+export function renderTableInteractiveExample(
+    values: DesignSystemInteractiveExampleValues,
+): CreateInteractiveExampleStateResult {
+    const state = getTableExampleState(values);
 
-        return {
-            previewHtml: renderTablePreviewMarkup(state),
-            codeExamples: [
-                {
-                    label: "React",
-                    language: "tsx",
-                    code: renderTableReactCode(state),
-                },
-            ],
-            notes: getTableNotes(state),
-        };
-    },
+    return {
+        previewHtml: renderTablePreviewMarkup(state),
+        codeExamples: [
+            {
+                label: "React",
+                language: "tsx",
+                code: renderTableReactCode(state),
+            },
+        ],
+        notes: getTableNotes(state),
+    };
+}
+
+export const tablePlayground = createInteractiveExample(
+    TABLE_INTERACTIVE_EXAMPLE_RENDERER_ID,
+    tableInteractiveControls,
+    renderTableInteractiveExample,
 );

@@ -1,4 +1,8 @@
-import { createInteractiveExample } from "../../../../../playground";
+import {
+    createInteractiveExample,
+    type CreateInteractiveExampleStateResult,
+    type DesignSystemInteractiveExampleValues,
+} from "../../../../../playground";
 import { getJokulInstallGuideHref } from "../../paths";
 import { buttonInteractiveControls } from "./props";
 
@@ -22,6 +26,7 @@ interface ButtonExampleState {
 }
 
 const JOKUL_BUTTON_LINK_HREF = getJokulInstallGuideHref("react-og-core");
+export const BUTTON_INTERACTIVE_EXAMPLE_RENDERER_ID = "jokul/button";
 
 const defaultButtonExampleState: ButtonExampleState = {
     as: "button",
@@ -260,23 +265,28 @@ ${densityCode}${loaderCode}${iconPropCode}        >
 }`;
 }
 
-export const buttonPlayground = createInteractiveExample(
-    buttonInteractiveControls,
-    (values: Record<string, string | boolean>) => {
-        const state = getButtonExampleState(values);
+export function renderButtonInteractiveExample(
+    values: DesignSystemInteractiveExampleValues,
+): CreateInteractiveExampleStateResult {
+    const state = getButtonExampleState(values);
 
-        return {
-            previewHtml: renderButtonPreviewMarkup(state),
-            codeExamples: [
-                {
-                    label: "React",
-                    language: "tsx",
-                    code: renderButtonReactExampleCode(state),
-                },
-            ],
-            notes: getButtonNotes(state),
-        };
-    },
+    return {
+        previewHtml: renderButtonPreviewMarkup(state),
+        codeExamples: [
+            {
+                label: "React",
+                language: "tsx",
+                code: renderButtonReactExampleCode(state),
+            },
+        ],
+        notes: getButtonNotes(state),
+    };
+}
+
+export const buttonPlayground = createInteractiveExample(
+    BUTTON_INTERACTIVE_EXAMPLE_RENDERER_ID,
+    buttonInteractiveControls,
+    renderButtonInteractiveExample,
     {
         eventLog: {
             events: ["focus", "click", "blur"],

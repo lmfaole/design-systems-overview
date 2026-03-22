@@ -147,12 +147,12 @@ export type DesignSystemInteractiveExampleControl =
 export type DesignSystemInteractiveExampleValue = string | boolean;
 
 export interface DesignSystemInteractiveExampleState {
-    key: string;
-    values: Record<string, DesignSystemInteractiveExampleValue>;
     previewHtml: string;
     codeExamples: DesignSystemExampleCode[];
     notes?: string[];
 }
+
+export type DesignSystemInteractiveExampleRendererId = string;
 
 export interface DesignSystemInteractiveExampleEventLog {
     events: string[];
@@ -163,7 +163,14 @@ export interface DesignSystemInteractiveExampleEventLog {
 
 export interface DesignSystemInteractiveExample {
     controls: DesignSystemInteractiveExampleControl[];
-    states: DesignSystemInteractiveExampleState[];
+    rendererId: DesignSystemInteractiveExampleRendererId;
+    initialState: DesignSystemInteractiveExampleState;
+    eventLog?: DesignSystemInteractiveExampleEventLog;
+}
+
+export interface DesignSystemInteractiveExampleClientConfig {
+    controls: DesignSystemInteractiveExampleControl[];
+    rendererId: DesignSystemInteractiveExampleRendererId;
     eventLog?: DesignSystemInteractiveExampleEventLog;
 }
 

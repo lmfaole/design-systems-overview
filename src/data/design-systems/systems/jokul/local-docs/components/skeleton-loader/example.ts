@@ -1,4 +1,8 @@
-import { createInteractiveExample } from "../../../../../playground";
+import {
+    createInteractiveExample,
+    type CreateInteractiveExampleStateResult,
+    type DesignSystemInteractiveExampleValues,
+} from "../../../../../playground";
 import { skeletonLoaderInteractiveControls } from "./props";
 
 type SkeletonLoaderPatternValue = "element" | "input" | "table";
@@ -15,6 +19,7 @@ const defaultSkeletonLoaderExampleState: SkeletonLoaderExampleState = {
     compact: false,
     shape: "rectangle",
 };
+export const SKELETON_LOADER_INTERACTIVE_EXAMPLE_RENDERER_ID = "jokul/skeleton-loader";
 
 function getSkeletonLoaderExampleState(
     values: Record<string, string | boolean>,
@@ -247,27 +252,32 @@ function getSkeletonLoaderNotes(state: SkeletonLoaderExampleState): string[] {
     return notes;
 }
 
-export const skeletonLoaderPlayground = createInteractiveExample(
-    skeletonLoaderInteractiveControls,
-    (values) => {
-        const state = getSkeletonLoaderExampleState(values);
+export function renderSkeletonLoaderInteractiveExample(
+    values: DesignSystemInteractiveExampleValues,
+): CreateInteractiveExampleStateResult {
+    const state = getSkeletonLoaderExampleState(values);
 
-        return {
-            previewHtml: renderSkeletonLoaderPreviewMarkup(state),
-            codeExamples: [
-                {
-                    label: "HTML",
-                    language: "html",
-                    code: renderSkeletonLoaderHtmlCode(state),
-                },
-                {
-                    label: "CSS-importer",
-                    language: "ts",
-                    code: `import "@fremtind/jokul/styles/core/core.min.css";
+    return {
+        previewHtml: renderSkeletonLoaderPreviewMarkup(state),
+        codeExamples: [
+            {
+                label: "HTML",
+                language: "html",
+                code: renderSkeletonLoaderHtmlCode(state),
+            },
+            {
+                label: "CSS-importer",
+                language: "ts",
+                code: `import "@fremtind/jokul/styles/core/core.min.css";
 import "@fremtind/jokul/styles/components/loader/skeleton-loader.min.css";`,
-                },
-            ],
-            notes: getSkeletonLoaderNotes(state),
-        };
-    },
+            },
+        ],
+        notes: getSkeletonLoaderNotes(state),
+    };
+}
+
+export const skeletonLoaderPlayground = createInteractiveExample(
+    SKELETON_LOADER_INTERACTIVE_EXAMPLE_RENDERER_ID,
+    skeletonLoaderInteractiveControls,
+    renderSkeletonLoaderInteractiveExample,
 );

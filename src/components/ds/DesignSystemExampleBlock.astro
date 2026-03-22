@@ -1,5 +1,6 @@
 ---
 import {
+    getInteractiveExampleClientConfig,
     getInteractiveExampleInitialState,
     type DesignSystemExample,
 } from "@/data/design-systems";
@@ -15,6 +16,12 @@ const { example, index = 0, isSingle = false } = Astro.props;
 function getExampleInitialState() {
     return example.interactive
         ? getInteractiveExampleInitialState(example.interactive)
+        : undefined;
+}
+
+function getExampleInteractiveConfig() {
+    return example.interactive
+        ? getInteractiveExampleClientConfig(example.interactive)
         : undefined;
 }
 
@@ -136,7 +143,7 @@ function getExampleLabel() {
             type="application/json"
             data-ds-interactive-config
             is:inline
-            set:html={JSON.stringify(example.interactive)}
+            set:html={JSON.stringify(getExampleInteractiveConfig())}
         />
     </section>
 ) : (

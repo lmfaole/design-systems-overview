@@ -1,8 +1,10 @@
 import type {
+    DesignSystemInteractiveExampleClientConfig,
     DesignSystemExampleCode,
     DesignSystemInteractiveExample,
     DesignSystemInteractiveExampleControl,
     DesignSystemInteractiveExampleEventLog,
+    DesignSystemInteractiveExampleRendererId,
     DesignSystemInteractiveExampleState,
     DesignSystemInteractiveExampleValue,
 } from "./types";
@@ -12,21 +14,15 @@ export type DesignSystemInteractiveExampleValues = Record<
     DesignSystemInteractiveExampleValue
 >;
 
-interface CreateInteractiveExampleStateResult {
+export interface CreateInteractiveExampleStateResult {
     previewHtml: string;
     codeExamples: DesignSystemExampleCode[];
     notes?: string[];
 }
 
-function getControlValues(
-    control: DesignSystemInteractiveExampleControl,
-): DesignSystemInteractiveExampleValue[] {
-    if (control.kind === "boolean") {
-        return [false, true];
-    }
-
-    return control.options.map((option) => option.value);
-}
+export type DesignSystemInteractiveExampleRenderer = (
+    values: DesignSystemInteractiveExampleValues,
+) => CreateInteractiveExampleStateResult;
 
 export function getInteractiveExampleStateKey(
     controls: DesignSystemInteractiveExampleControl[],
@@ -48,55 +44,33 @@ export function getInteractiveExampleDefaultValues(
 export function getInteractiveExampleInitialState(
     interactive: DesignSystemInteractiveExample,
 ): DesignSystemInteractiveExampleState | undefined {
-    const defaultValues = getInteractiveExampleDefaultValues(interactive.controls);
-    const defaultKey = getInteractiveExampleStateKey(interactive.controls, defaultValues);
+    return interactive.initialState;
+}
 
-    return interactive.states.find((state) => state.key === defaultKey);
+export function getInteractiveExampleClientConfig(
+    interactive: DesignSystemInteractiveExample,
+): DesignSystemInteractiveExampleClientConfig {
+    return {
+        controls: interactive.controls,
+        rendererId: interactive.rendererId,
+        eventLog: interactive.eventLog,
+    };
 }
 
 export function createInteractiveExample(
+    rendererId: DesignSystemInteractiveExampleRendererId,
     controls: DesignSystemInteractiveExampleControl[],
-    renderState: (
-        values: DesignSystemInteractiveExampleValues,
-    ) => CreateInteractiveExampleStateResult,
+    renderState: DesignSystemInteractiveExampleRenderer,
     options?: {
         eventLog?: DesignSystemInteractiveExampleEventLog;
     },
 ): DesignSystemInteractiveExample {
-    const states: DesignSystemInteractiveExampleState[] = [];
-
-    function walk(
-        controlIndex: number,
-        values: DesignSystemInteractiveExampleValues,
-    ) {
-        if (controlIndex >= controls.length) {
-            const state = renderState(values);
-
-            states.push({
-                key: getInteractiveExampleStateKey(controls, values),
-                values: { ...values },
-                previewHtml: state.previewHtml,
-                codeExamples: state.codeExamples,
-                notes: state.notes,
-            });
-            return;
-        }
-
-        const control = controls[controlIndex];
-
-        for (const value of getControlValues(control)) {
-            walk(controlIndex + 1, {
-                ...values,
-                [control.name]: value,
-            });
-        }
-    }
-
-    walk(0, {});
+    const defaultValues = getInteractiveExampleDefaultValues(controls);
 
     return {
         controls,
-        states,
+        rendererId,
+        initialState: renderState(defaultValues),
         eventLog: options?.eventLog,
     };
 }
