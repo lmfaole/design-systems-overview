@@ -1,0 +1,174 @@
+---
+import {
+    getInteractiveExampleInitialState,
+    type DesignSystemExample,
+} from "@/data/design-systems";
+
+interface Props {
+    example: DesignSystemExample;
+    index?: number;
+    isSingle?: boolean;
+}
+
+const { example, index = 0, isSingle = false } = Astro.props;
+
+function getExampleInitialState() {
+    return example.interactive
+        ? getInteractiveExampleInitialState(example.interactive)
+        : undefined;
+}
+
+function getExamplePreviewHtml() {
+    return getExampleInitialState()?.previewHtml ?? example.previewHtml;
+}
+
+function getExampleCodeExamples() {
+    return getExampleInitialState()?.codeExamples ?? example.codeExamples ?? [];
+}
+
+function getExampleNotes() {
+    return [
+        ...(example.notes ?? []),
+        ...(getExampleInitialState()?.notes ?? []),
+    ];
+}
+
+function getExampleEventLogLabel() {
+    return example.interactive?.eventLog?.emptyLabel ?? "Ingen hendelser ennå.";
+}
+
+function getExampleLabel() {
+    return isSingle ? "eksempelet" : `eksempel ${index + 1}`;
+}
+---
+
+{example.interactive ? (
+    <section data-ds-interactive-example>
+        <fieldset>
+            <legend>Props</legend>
+            <menu>
+                {example.interactive.controls.map((control) => {
+                    const controlId = `${example.slug}-${control.name}`;
+
+                    return (
+                        <li>
+                            <label for={controlId}>{control.label}</label>
+                            {control.kind === "boolean" ? (
+                                <input
+                                    id={controlId}
+                                    type="checkbox"
+                                    checked={control.defaultValue}
+                                    data-ds-interactive-control={control.name}
+                                />
+                            ) : (
+                                <select
+                                    id={controlId}
+                                    data-ds-interactive-control={control.name}
+                                >
+                                    {control.options.map((option) => (
+                                        <option
+                                            value={option.value}
+                                            selected={option.value === control.defaultValue}
+                                        >
+                                            {option.label}
+                                        </option>
+                                    ))}
+                                </select>
+                            )}
+                        </li>
+                    );
+                })}
+            </menu>
+        </fieldset>
+
+        {getExamplePreviewHtml() && (
+            <div data-ds-interactive-preview>
+                <Fragment set:html={getExamplePreviewHtml()} />
+            </div>
+        )}
+
+        <section aria-label={`Kode for ${getExampleLabel()}`} data-ds-interactive-code>
+            {getExampleCodeExamples().length > 0 && (
+                <Fragment>
+                    <h4>Kode</h4>
+                    {getExampleCodeExamples().map((codeExample) => (
+                        <figure>
+                            <figcaption>
+                                <strong>{codeExample.label}</strong>
+                                {codeExample.language && ` · ${codeExample.language}`}
+                            </figcaption>
+                            <pre><code>{codeExample.code}</code></pre>
+                        </figure>
+                    ))}
+                </Fragment>
+            )}
+        </section>
+
+        <aside aria-label={`Notater for ${getExampleLabel()}`} data-ds-interactive-notes>
+            {getExampleNotes().length > 0 && (
+                <Fragment>
+                    <h4>Notater</h4>
+                    <ul>
+                        {getExampleNotes().map((note) => (
+                            <li>{note}</li>
+                        ))}
+                    </ul>
+                </Fragment>
+            )}
+        </aside>
+
+        {example.interactive.eventLog && (
+            <section
+                aria-live="polite"
+                aria-relevant="additions text"
+                aria-label={`Hendelser for ${getExampleLabel()}`}
+                data-ds-interactive-events
+            >
+                <h4>Hendelser</h4>
+                <p data-ds-interactive-events-empty>
+                    {getExampleEventLogLabel()}
+                </p>
+                <ol data-ds-interactive-events-list hidden></ol>
+            </section>
+        )}
+
+        <script
+            type="application/json"
+            data-ds-interactive-config
+            is:inline
+            set:html={JSON.stringify(example.interactive)}
+        />
+    </section>
+) : (
+    <Fragment>
+        {example.previewHtml && (
+            <div>
+                <Fragment set:html={example.previewHtml} />
+            </div>
+        )}
+        {example.codeExamples && example.codeExamples.length > 0 && (
+            <section aria-label={`Kode for ${getExampleLabel()}`}>
+                <h4>Kode</h4>
+                {example.codeExamples.map((codeExample) => (
+                    <figure>
+                        <figcaption>
+                            <strong>{codeExample.label}</strong>
+                            {codeExample.language && ` · ${codeExample.language}`}
+                        </figcaption>
+                        <pre><code>{codeExample.code}</code></pre>
+                    </figure>
+                ))}
+            </section>
+        )}
+        {example.notes && example.notes.length > 0 && (
+            <aside aria-label={`Notater for ${getExampleLabel()}`}>
+                <h4>Notater</h4>
+                <ul>
+                    {example.notes.map((note) => (
+                        <li>{note}</li>
+                    ))}
+                </ul>
+            </aside>
+        )}
+    </Fragment>
+)}

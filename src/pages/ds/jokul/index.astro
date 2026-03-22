@@ -1,0 +1,20 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import DesignSystemOverviewPage from "@/components/ds/DesignSystemOverviewPage.astro";
+import { getDesignSystem } from "@/data/design-systems";
+import { JOKUL_OVERVIEW_PATH, jokulLocalDocs } from "@/data/design-systems/systems/jokul/docs";
+
+const system = getDesignSystem("jokul");
+
+if (!system) {
+    throw new Error("Missing design system \"jokul\"");
+}
+---
+
+<BaseLayout
+    title="Jøkul"
+    description={jokulLocalDocs.overview.description}
+    path={JOKUL_OVERVIEW_PATH}
+>
+    <DesignSystemOverviewPage system={system} intro={jokulLocalDocs.overview.intro} />
+</BaseLayout>

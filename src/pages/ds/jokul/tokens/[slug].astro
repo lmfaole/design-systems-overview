@@ -1,0 +1,55 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import DesignSystemAssetPage from "@/components/ds/DesignSystemAssetPage.astro";
+import { getDesignSystem } from "@/data/design-systems";
+import {
+    getJokulAssetDoc,
+    getJokulAssetHref,
+    getJokulInstallGuideHref,
+    getJokulLocalSection,
+} from "@/data/design-systems/systems/jokul/docs";
+
+const system = getDesignSystem("jokul");
+const section = getJokulLocalSection("tokens");
+
+if (!system || !section) {
+    throw new Error("Missing Jøkul token documentation");
+}
+
+export function getStaticPaths() {
+    const documentedSection = getJokulLocalSection("tokens");
+
+    if (!documentedSection) {
+        return [];
+    }
+
+    return documentedSection.items.map((item) => ({
+        params: { slug: item.slug },
+    }));
+}
+
+const slug = Astro.params.slug ?? "";
+const asset = getJokulAssetDoc("tokens", slug);
+
+if (!asset) {
+    throw new Error(`Missing Jøkul token group "${slug}"`);
+}
+
+const installGuideHref = asset.installGuideSlug
+    ? getJokulInstallGuideHref(asset.installGuideSlug)
+    : undefined;
+---
+
+<BaseLayout
+    title={`Jøkul ${asset.title}`}
+    description={asset.description}
+    path={getJokulAssetHref("tokens", asset.slug)}
+    type="article"
+>
+    <DesignSystemAssetPage
+        systemName={system.name}
+        sectionTitle={section.title}
+        asset={asset}
+        installGuideHref={installGuideHref}
+    />
+</BaseLayout>

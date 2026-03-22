@@ -1,0 +1,41 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import DesignSystemInstallGuidePage from "@/components/ds/DesignSystemInstallGuidePage.astro";
+import { getDesignSystem } from "@/data/design-systems";
+import { getJokulInstallGuideHref } from "@/data/design-systems/systems/jokul/docs";
+
+const system = getDesignSystem("jokul");
+
+if (!system) {
+    throw new Error("Missing design system \"jokul\"");
+}
+
+export function getStaticPaths() {
+    const documentedSystem = getDesignSystem("jokul");
+
+    if (!documentedSystem) {
+        return [];
+    }
+
+    return documentedSystem.installGuides
+        .filter((guide) => guide.status === "documented")
+        .map((guide) => ({
+            params: { guide: guide.slug },
+        }));
+}
+
+const guideSlug = Astro.params.guide ?? "";
+const guide = system.installGuides.find((entry) => entry.slug === guideSlug);
+
+if (!guide) {
+    throw new Error(`Missing Jøkul install guide "${guideSlug}"`);
+}
+---
+
+<BaseLayout
+    title={guide.title}
+    description={guide.description}
+    path={getJokulInstallGuideHref(guide.slug)}
+>
+    <DesignSystemInstallGuidePage systemName={system.name} guide={guide} />
+</BaseLayout>

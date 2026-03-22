@@ -1,0 +1,280 @@
+---
+---
+
+<script is:inline>
+    const interactiveExampleConfigs = new WeakMap();
+    const interactiveExampleEventEntries = new WeakMap();
+    const interactiveExampleEventCleanup = new WeakMap();
+
+    const getInteractiveConfig = (root) => {
+        const cached = interactiveExampleConfigs.get(root);
+
+        if (cached) {
+            return cached;
+        }
+
+        const configElement = root.querySelector('[data-ds-interactive-config]');
+
+        if (!(configElement instanceof HTMLScriptElement)) {
+            return null;
+        }
+
+        try {
+            const config = JSON.parse(configElement.textContent || "null");
+
+            if (!config || !Array.isArray(config.controls) || !Array.isArray(config.states)) {
+                return null;
+            }
+
+            interactiveExampleConfigs.set(root, config);
+            return config;
+        } catch {
+            return null;
+        }
+    };
+
+    const getControlValue = (control, root) => {
+        const field = root.querySelector(`[data-ds-interactive-control="${control.name}"]`);
+
+        if (control.kind === "boolean") {
+            return field instanceof HTMLInputElement ? field.checked : false;
+        }
+
+        return field instanceof HTMLSelectElement ? field.value : "";
+    };
+
+    const getStateKey = (controls, values) =>
+        controls
+            .map((control) => `${control.name}:${String(values[control.name])}`)
+            .join("|");
+
+    const getEventLogEntries = (root) => interactiveExampleEventEntries.get(root) ?? [];
+
+    const getEventTargetLabel = (target) => {
+        if (!(target instanceof Element)) {
+            return "ukjent mål";
+        }
+
+        const tagName = target.tagName.toLowerCase();
+        const ariaLabel = target.getAttribute("aria-label")?.trim();
+        const textContent = target.textContent?.replace(/\s+/g, " ").trim();
+        const label = ariaLabel || textContent;
+
+        if (!label) {
+            return `<${tagName}>`;
+        }
+
+        return `${tagName} "${label.slice(0, 80)}"`;
+    };
+
+    const renderEventLog = (root) => {
+        const eventsRoot = root.querySelector("[data-ds-interactive-events]");
+
+        if (!(eventsRoot instanceof HTMLElement)) {
+            return;
+        }
+
+        const eventsList = eventsRoot.querySelector("[data-ds-interactive-events-list]");
+        const emptyState = eventsRoot.querySelector("[data-ds-interactive-events-empty]");
+
+        if (!(eventsList instanceof HTMLOListElement) || !(emptyState instanceof HTMLElement)) {
+            return;
+        }
+
+        eventsList.replaceChildren();
+
+        const entries = getEventLogEntries(root);
+
+        emptyState.hidden = entries.length > 0;
+        eventsList.hidden = entries.length === 0;
+
+        for (const entry of entries) {
+            const item = document.createElement("li");
+            item.textContent = entry;
+            eventsList.append(item);
+        }
+    };
+
+    const recordEventLogEntry = (root, event) => {
+        const config = getInteractiveConfig(root);
+        const eventLog = config?.eventLog;
+
+        if (!eventLog) {
+            return;
+        }
+
+        const maxEntries = Math.max(1, eventLog.maxEntries ?? 8);
+        const currentTargetLabel = getEventTargetLabel(event.currentTarget);
+        const entries = [
+            `${event.type} på ${currentTargetLabel}`,
+            ...getEventLogEntries(root),
+        ].slice(0, maxEntries);
+
+        interactiveExampleEventEntries.set(root, entries);
+        renderEventLog(root);
+    };
+
+    const bindEventLogListeners = (root, previewRoot) => {
+        const previousCleanup = interactiveExampleEventCleanup.get(root);
+
+        if (typeof previousCleanup === "function") {
+            previousCleanup();
+        }
+
+        const config = getInteractiveConfig(root);
+        const eventLog = config?.eventLog;
+
+        if (!eventLog || !(previewRoot instanceof HTMLElement)) {
+            interactiveExampleEventCleanup.delete(root);
+            renderEventLog(root);
+            return;
+        }
+
+        const matchedTargets = eventLog.targetSelector
+            ? Array.from(previewRoot.querySelectorAll(eventLog.targetSelector))
+            : [previewRoot];
+        const targets = matchedTargets.length > 0 ? matchedTargets : [previewRoot];
+        const listeners = [];
+
+        for (const target of targets) {
+            if (!(target instanceof Element)) {
+                continue;
+            }
+
+            for (const eventName of eventLog.events) {
+                const listener = (event) => recordEventLogEntry(root, event);
+                target.addEventListener(eventName, listener);
+                listeners.push(() => target.removeEventListener(eventName, listener));
+            }
+        }
+
+        interactiveExampleEventCleanup.set(root, () => {
+            for (const dispose of listeners) {
+                dispose();
+            }
+        });
+
+        renderEventLog(root);
+    };
+
+    const renderCodeExamples = (root, codeExamples) => {
+        const codeRoot = root.querySelector("[data-ds-interactive-code]");
+
+        if (!(codeRoot instanceof HTMLElement)) {
+            return;
+        }
+
+        codeRoot.replaceChildren();
+
+        if (!Array.isArray(codeExamples) || codeExamples.length === 0) {
+            codeRoot.hidden = true;
+            return;
+        }
+
+        codeRoot.hidden = false;
+
+        const heading = document.createElement("h4");
+        heading.textContent = "Kode";
+        codeRoot.append(heading);
+
+        for (const codeExample of codeExamples) {
+            const figure = document.createElement("figure");
+            const caption = document.createElement("figcaption");
+            const label = document.createElement("strong");
+            label.textContent = codeExample.label;
+            caption.append(label);
+
+            if (codeExample.language) {
+                caption.append(` · ${codeExample.language}`);
+            }
+
+            const pre = document.createElement("pre");
+            const code = document.createElement("code");
+            code.textContent = codeExample.code;
+            pre.append(code);
+            figure.append(caption, pre);
+            codeRoot.append(figure);
+        }
+    };
+
+    const renderNotes = (root, notes) => {
+        const notesRoot = root.querySelector("[data-ds-interactive-notes]");
+
+        if (!(notesRoot instanceof HTMLElement)) {
+            return;
+        }
+
+        notesRoot.replaceChildren();
+
+        if (!Array.isArray(notes) || notes.length === 0) {
+            notesRoot.hidden = true;
+            return;
+        }
+
+        notesRoot.hidden = false;
+
+        const heading = document.createElement("h4");
+        heading.textContent = "Notater";
+        notesRoot.append(heading);
+
+        const list = document.createElement("ul");
+
+        for (const note of notes) {
+            const item = document.createElement("li");
+            item.textContent = note;
+            list.append(item);
+        }
+
+        notesRoot.append(list);
+    };
+
+    const updateInteractiveExample = (root) => {
+        if (!(root instanceof HTMLElement)) {
+            return;
+        }
+
+        const config = getInteractiveConfig(root);
+
+        if (!config) {
+            return;
+        }
+
+        const values = Object.fromEntries(
+            config.controls.map((control) => [control.name, getControlValue(control, root)]),
+        );
+        const stateKey = getStateKey(config.controls, values);
+        const state = config.states.find((entry) => entry.key === stateKey);
+
+        if (!state) {
+            return;
+        }
+
+        const previewRoot = root.querySelector("[data-ds-interactive-preview]");
+
+        if (previewRoot instanceof HTMLElement) {
+            previewRoot.innerHTML = state.previewHtml;
+            bindEventLogListeners(root, previewRoot);
+        }
+
+        renderCodeExamples(root, state.codeExamples);
+        renderNotes(root, state.notes);
+        renderEventLog(root);
+    };
+
+    const getInteractiveRoot = (target) =>
+        target instanceof Element
+            ? target.closest("[data-ds-interactive-example]")
+            : null;
+
+    document.addEventListener("input", (event) => {
+        updateInteractiveExample(getInteractiveRoot(event.target));
+    });
+
+    document.addEventListener("change", (event) => {
+        updateInteractiveExample(getInteractiveRoot(event.target));
+    });
+
+    document.querySelectorAll("[data-ds-interactive-example]").forEach((root) => {
+        updateInteractiveExample(root);
+    });
+</script>

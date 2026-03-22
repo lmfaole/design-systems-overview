@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import TableOfContents from "@/components/TableOfContents.astro";
 import { createSearchPageModel, getInitialSearchContent, renderSearchContent } from "@/components/SearchPage";
 
 const query = Astro.url.searchParams.get("q")?.trim() ?? "";
@@ -14,6 +15,8 @@ const loadingSearchContent = getInitialSearchContent(true);
             <h1 class="title">Søk</h1>
             <p class="description">Finn sider og UI-mønstre i den lokale <code>/ds</code>-dokumentasjonen.</p>
         </header>
+
+        <TableOfContents />
 
         <form role="search" action="/ds/søk" method="get" data-search-form>
             <label for="search-input">Søk i dokumentasjonen</label>

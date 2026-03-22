@@ -1,0 +1,31 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import DesignSystemCollectionPage from "@/components/ds/DesignSystemCollectionPage.astro";
+import { getDesignSystem } from "@/data/design-systems";
+import { JOKUL_INSTALL_PATH } from "@/data/design-systems/systems/jokul/docs";
+
+const system = getDesignSystem("jokul");
+
+if (!system) {
+    throw new Error("Missing design system \"jokul\"");
+}
+
+const items = system.installGuides.map((guide) => ({
+    href: guide.localPath,
+    title: guide.title,
+    description: guide.description,
+    meta: guide.packages.join(", "),
+}));
+---
+
+<BaseLayout
+    title="Jøkul installasjon"
+    description="Lokale installasjonsguider for Jøkul-pakker og grunnoppsett."
+    path={JOKUL_INSTALL_PATH}
+>
+    <DesignSystemCollectionPage
+        title="Jøkul installasjon"
+        description="Start med installasjon før du går videre til komponenter eller tokens."
+        items={items}
+    />
+</BaseLayout>

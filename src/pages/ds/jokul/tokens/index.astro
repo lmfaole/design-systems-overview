@@ -1,0 +1,30 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import DesignSystemCollectionPage from "@/components/ds/DesignSystemCollectionPage.astro";
+import { getJokulAssetHref, getJokulLocalSection } from "@/data/design-systems/systems/jokul/docs";
+
+const section = getJokulLocalSection("tokens");
+
+if (!section) {
+    throw new Error("Missing Jøkul section \"tokens\"");
+}
+
+const items = section.items.map((item) => ({
+    href: getJokulAssetHref(section.slug, item.slug),
+    title: item.title,
+    description: item.description,
+    meta: item.packageName,
+}));
+---
+
+<BaseLayout
+    title="Jøkul designtokens"
+    description={section.description}
+    path="/ds/jokul/tokens"
+>
+    <DesignSystemCollectionPage
+        title="Jøkul designtokens"
+        description={section.description}
+        items={items}
+    />
+</BaseLayout>

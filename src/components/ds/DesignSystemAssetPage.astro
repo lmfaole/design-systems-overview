@@ -1,0 +1,459 @@
+---
+import PageHeader from "@/components/PageHeader.astro";
+import TableOfContents from "@/components/TableOfContents.astro";
+import DesignSystemAssetEnhancements from "@/components/ds/DesignSystemAssetEnhancements.astro";
+import DesignSystemExampleBlock from "@/components/ds/DesignSystemExampleBlock.astro";
+import {
+    type DesignSystemAssetDoc,
+    getDesignSystemComponentPartId,
+    getDesignSystemComponentProfileSummary,
+    getDesignSystemComponentSubcomponentId,
+    getDesignSystemComponentSubcomponentPropTableId,
+    getDesignSystemPropTableId,
+    getDesignSystemPropTableTitle,
+    getDesignSystemRelationshipGroupId,
+    getDesignSystemRelationshipTitle,
+} from "@/data/design-systems";
+
+interface Props {
+    systemName: string;
+    sectionTitle: string;
+    asset: DesignSystemAssetDoc;
+    installGuideHref?: string;
+}
+
+const { systemName, sectionTitle, asset, installGuideHref } = Astro.props;
+const hasInteractiveExamples = Boolean(
+    asset.example?.interactive ||
+    asset.examples?.some((example) => example.interactive),
+);
+const componentProfile = asset.kind === "component" ? asset.componentProfile : undefined;
+const componentProfileSummary = asset.kind === "component"
+    ? getDesignSystemComponentProfileSummary(asset)
+    : [];
+const propTables = asset.kind === "component" ? asset.propTables ?? [] : [];
+const componentParts = asset.kind === "component" ? asset.parts ?? [] : [];
+const componentRecipes = asset.kind === "component" ? asset.recipes ?? [] : [];
+const componentSubcomponents = asset.kind === "component" ? asset.subcomponents ?? [] : [];
+const recipeTitleBySlug = new Map(componentRecipes.map((recipe) => [recipe.slug, recipe.title]));
+const otherTables = asset.tables ?? [];
+---
+
+<main class="page">
+    <PageHeader title={asset.title} description={asset.description} />
+
+    <p>
+        <small>{systemName} · {sectionTitle}</small>
+    </p>
+
+    {asset.packageName && (
+        <p>
+            Pakke: <code>{asset.packageName}</code>
+        </p>
+    )}
+
+    {installGuideHref && (
+        <p>
+            Installasjon: <a href={installGuideHref}>Se relevant guide</a>
+        </p>
+    )}
+
+    {asset.intro.map((paragraph) => (
+        <p>{paragraph}</p>
+    ))}
+
+    <TableOfContents />
+
+    {asset.example && (
+        <section aria-labelledby="asset-eksempel">
+            <h2 id="asset-eksempel">Eksempel</h2>
+            <article>
+                <DesignSystemExampleBlock example={asset.example} isSingle={true} />
+            </article>
+        </section>
+    )}
+
+    {asset.examples && asset.examples.length > 0 && (
+        <section aria-labelledby="asset-eksempler">
+            <h2 id="asset-eksempler">Eksempler</h2>
+            <ol>
+                {asset.examples.map((example, index) => (
+                    <li>
+                        <article>
+                            <DesignSystemExampleBlock example={example} index={index} />
+                        </article>
+                    </li>
+                ))}
+            </ol>
+        </section>
+    )}
+
+    {propTables.length > 0 && (
+        <section aria-labelledby="asset-props">
+            <h2 id="asset-props">Props</h2>
+            {componentSubcomponents.length > 0 && (
+                <p>Disse prop-tabellene gjelder rotelementet <code>{asset.title}</code>.</p>
+            )}
+            {propTables.map((table) => (
+                <section aria-labelledby={getDesignSystemPropTableId(table.source)}>
+                    <h3 id={getDesignSystemPropTableId(table.source)}>
+                        {getDesignSystemPropTableTitle(systemName, table)}
+                    </h3>
+                    {table.description && <p>{table.description}</p>}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Prop</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Standard</th>
+                                <th scope="col">Beskrivelse</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {table.rows.map((row) => (
+                                <tr>
+                                    <td>{row.name}</td>
+                                    <td>{row.type}</td>
+                                    <td>{row.defaultValue}</td>
+                                    <td>{row.description}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </section>
+            ))}
+        </section>
+    )}
+
+    {asset.deprecatedPropMigrations && asset.deprecatedPropMigrations.length > 0 && (
+        <section aria-labelledby="asset-deprecated-props">
+            <h2 id="asset-deprecated-props">Migrering fra utfasete props</h2>
+            <ol>
+                {asset.deprecatedPropMigrations.map((migration) => (
+                    <li>
+                        <article>
+                            <h3><code>{migration.propName}</code></h3>
+                            <p>{migration.warning}</p>
+                            <p>
+                                Bytt til:{" "}
+                                {migration.replacementCode ? (
+                                    <code>{migration.replacementCode}</code>
+                                ) : (
+                                    migration.replacement
+                                )}
+                            </p>
+                            <section aria-label={`Før migrering for ${migration.propName}`}>
+                                <h4>Før</h4>
+                                <pre><code>{migration.beforeCode}</code></pre>
+                            </section>
+                            <section aria-label={`Etter migrering for ${migration.propName}`}>
+                                <h4>Etter</h4>
+                                <pre><code>{migration.afterCode}</code></pre>
+                            </section>
+                            {migration.notes && migration.notes.length > 0 && (
+                                <section aria-label={`Notater om ${migration.propName}`}>
+                                    <h4>Notater</h4>
+                                    <ul>
+                                        {migration.notes.map((note) => (
+                                            <li>{note}</li>
+                                        ))}
+                                    </ul>
+                                </section>
+                            )}
+                        </article>
+                    </li>
+                ))}
+            </ol>
+        </section>
+    )}
+
+    {componentSubcomponents.length > 0 && (
+        <section aria-labelledby="asset-delkomponenter">
+            <h2 id="asset-delkomponenter">Delkomponenter</h2>
+            {componentSubcomponents.map((subcomponent) => (
+                <section aria-labelledby={getDesignSystemComponentSubcomponentId(subcomponent.slug)}>
+                    <h3 id={getDesignSystemComponentSubcomponentId(subcomponent.slug)}>
+                        {subcomponent.title}
+                    </h3>
+                    <p>
+                        API: <code>{subcomponent.sourceName}</code>
+                        {subcomponent.selector ? (
+                            <Fragment>
+                                {" · "}
+                                Selektor: <code>{subcomponent.selector}</code>
+                            </Fragment>
+                        ) : null}
+                    </p>
+                    <p>{subcomponent.description}</p>
+
+                    {subcomponent.relatedPartNames && subcomponent.relatedPartNames.length > 0 && (
+                        <p>
+                            Relaterte deler:
+                            {" "}
+                            {subcomponent.relatedPartNames.map((partName, index) => (
+                                <Fragment>
+                                    {index > 0 && ", "}
+                                    <a href={`#${getDesignSystemComponentPartId(partName)}`}>{partName}</a>
+                                </Fragment>
+                            ))}
+                        </p>
+                    )}
+
+                    {subcomponent.relatedRecipeSlugs && subcomponent.relatedRecipeSlugs.length > 0 && (
+                        <p>
+                            Brukes i komposisjonene:
+                            {" "}
+                            {subcomponent.relatedRecipeSlugs.map((recipeSlug, index) => (
+                                <Fragment>
+                                    {index > 0 && ", "}
+                                    <a href={`#recipe-${recipeSlug}`}>
+                                        {recipeTitleBySlug.get(recipeSlug) ?? recipeSlug}
+                                    </a>
+                                </Fragment>
+                            ))}
+                        </p>
+                    )}
+
+                    {subcomponent.propTables.map((table) => (
+                        <section
+                            aria-labelledby={getDesignSystemComponentSubcomponentPropTableId(
+                                subcomponent.slug,
+                                table.source,
+                            )}
+                        >
+                            <h4
+                                id={getDesignSystemComponentSubcomponentPropTableId(
+                                    subcomponent.slug,
+                                    table.source,
+                                )}
+                            >
+                                {getDesignSystemPropTableTitle(systemName, table)}
+                            </h4>
+                            {table.description && <p>{table.description}</p>}
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Prop</th>
+                                        <th scope="col">Type</th>
+                                        <th scope="col">Standard</th>
+                                        <th scope="col">Beskrivelse</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {table.rows.map((row) => (
+                                        <tr>
+                                            <td>{row.name}</td>
+                                            <td>{row.type}</td>
+                                            <td>{row.defaultValue}</td>
+                                            <td>{row.description}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </section>
+                    ))}
+                </section>
+            ))}
+        </section>
+    )}
+
+    {componentRecipes.length > 0 && (
+        <section aria-labelledby="asset-komposisjoner">
+            <h2 id="asset-komposisjoner">Komposisjoner</h2>
+            <ol>
+                {componentRecipes.map((recipe) => (
+                    <li>
+                        <article aria-labelledby={`recipe-${recipe.slug}`}>
+                            <h3 id={`recipe-${recipe.slug}`}>{recipe.title}</h3>
+                            <p>{recipe.description}</p>
+                            <p>
+                                Påkrevde deler:
+                                {" "}
+                                {recipe.requiredPartNames.map((partName, index) => (
+                                    <Fragment>
+                                        {index > 0 && ", "}
+                                        <a href={`#${getDesignSystemComponentPartId(partName)}`}>{partName}</a>
+                                    </Fragment>
+                                ))}
+                            </p>
+                            <DesignSystemExampleBlock example={recipe.example} />
+                        </article>
+                    </li>
+                ))}
+            </ol>
+        </section>
+    )}
+
+    {componentParts.length > 0 && (
+        <section aria-labelledby="asset-anatomi">
+            <h2 id="asset-anatomi">Anatomi</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Del</th>
+                        <th scope="col">Selektor</th>
+                        <th scope="col">Forelder</th>
+                        <th scope="col">Kreves</th>
+                        <th scope="col">Gjentas</th>
+                        <th scope="col">Beskrivelse</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {componentParts.map((part) => (
+                        <tr id={getDesignSystemComponentPartId(part.name)}>
+                            <td>{part.name}</td>
+                            <td><code>{part.selector}</code></td>
+                            <td>{part.parentPartName ?? "Ingen"}</td>
+                            <td>{part.required ? "Ja" : "Nei"}</td>
+                            <td>{part.repeats ? "Ja" : "Nei"}</td>
+                            <td>{part.description}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </section>
+    )}
+
+    {asset.sections?.map((section) => (
+        <section aria-labelledby={section.id}>
+            <h2 id={section.id}>{section.title}</h2>
+            {section.paragraphs.map((paragraph) => (
+                <p>{paragraph}</p>
+            ))}
+            {section.items && section.items.length > 0 && (
+                <ul>
+                    {section.items.map((item) => (
+                        <li>{item}</li>
+                    ))}
+                </ul>
+            )}
+        </section>
+    ))}
+
+    {otherTables.map((table) => (
+        <section aria-labelledby={table.id}>
+            <h2 id={table.id}>{table.title}</h2>
+            {table.description && <p>{table.description}</p>}
+            <table>
+                <thead>
+                    <tr>
+                        {table.columns.map((column) => (
+                            <th scope="col">{column.label}</th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {table.rows.map((row) => (
+                        <tr>
+                            {table.columns.map((column) => (
+                                <td>{row[column.key] ?? ""}</td>
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </section>
+    ))}
+
+    {componentProfile && (
+        <section aria-labelledby="asset-komponentprofil">
+            <h2 id="asset-komponentprofil">Komponentprofil</h2>
+            <dl>
+                {componentProfileSummary.map((item) => (
+                    <Fragment>
+                        <dt>{item.label}</dt>
+                        <dd>{item.value}</dd>
+                    </Fragment>
+                ))}
+            </dl>
+
+            <section aria-labelledby="asset-komponentprofil-stiler">
+                <h3 id="asset-komponentprofil-stiler">Stiler</h3>
+                <ul>
+                    {componentProfile.styleImports.map((styleImport) => (
+                        <li><code>{styleImport}</code></li>
+                    ))}
+                </ul>
+            </section>
+
+            <section aria-labelledby="asset-komponentprofil-tilgjengelighet">
+                <h3 id="asset-komponentprofil-tilgjengelighet">Tilgjengelighet</h3>
+                <p>Tastatur: {componentProfile.keyboardSupport}</p>
+
+                <section aria-labelledby="asset-komponentprofil-semantikk">
+                    <h4 id="asset-komponentprofil-semantikk">Semantikk som kreves</h4>
+                    <ul>
+                        {componentProfile.semantics.map((item) => (
+                            <li>{item}</li>
+                        ))}
+                    </ul>
+                </section>
+
+                <section aria-labelledby="asset-komponentprofil-automatisert">
+                    <h4 id="asset-komponentprofil-automatisert">Automatiserte kontroller</h4>
+                    <ul>
+                        {componentProfile.automatedChecks.map((item) => (
+                            <li>{item}</li>
+                        ))}
+                    </ul>
+                </section>
+
+                <section aria-labelledby="asset-komponentprofil-manuelt">
+                    <h4 id="asset-komponentprofil-manuelt">Manuelle kontroller</h4>
+                    <ul>
+                        {componentProfile.manualChecks.map((item) => (
+                            <li>{item}</li>
+                        ))}
+                    </ul>
+                </section>
+            </section>
+
+            <section aria-labelledby="asset-komponentprofil-ytelse">
+                <h3 id="asset-komponentprofil-ytelse">Ytelse</h3>
+                <ul>
+                    {componentProfile.performanceNotes.map((item) => (
+                        <li>{item}</li>
+                    ))}
+                </ul>
+            </section>
+        </section>
+    )}
+
+    {asset.relationships && asset.relationships.length > 0 && (
+        <section aria-labelledby="asset-relasjoner">
+            <h2 id="asset-relasjoner">Relasjoner</h2>
+            {asset.relationships.map((group) => (
+                <section aria-labelledby={getDesignSystemRelationshipGroupId(group)}>
+                    <h3 id={getDesignSystemRelationshipGroupId(group)}>
+                        {getDesignSystemRelationshipTitle(group)}
+                    </h3>
+                    {group.description && <p>{group.description}</p>}
+                    <ul>
+                        {group.links.map((link) => (
+                            <li>
+                                <a href={link.href}>{link.title}</a>
+                                {link.description ? `: ${link.description}` : ""}
+                            </li>
+                        ))}
+                    </ul>
+                </section>
+            ))}
+        </section>
+    )}
+
+    {asset.relatedLinks && asset.relatedLinks.length > 0 && (
+        <section aria-labelledby="asset-relatert">
+            <h2 id="asset-relatert">Relatert</h2>
+            <ul>
+                {asset.relatedLinks.map((link) => (
+                    <li>
+                        <a href={link.href}>{link.title}</a>
+                        {link.description ? `: ${link.description}` : ""}
+                    </li>
+                ))}
+            </ul>
+        </section>
+    )}
+
+    {hasInteractiveExamples && <DesignSystemAssetEnhancements />}
+</main>

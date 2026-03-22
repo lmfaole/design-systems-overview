@@ -15,15 +15,20 @@ describe("sitemap helpers", () => {
         expect(paths).toEqual(expect.arrayContaining([
             "/",
             "/ds",
+            "/ds/jokul",
+            "/ds/jokul/installasjon",
+            "/ds/jokul/installasjon/react-og-core",
+            "/ds/jokul/komponenter",
+            "/ds/jokul/komponenter/button",
+            "/ds/jokul/komponenter/loader",
+            "/ds/jokul/komponenter/skeleton-loader",
+            "/ds/jokul/komponenter/table",
+            "/ds/jokul/tokens",
+            "/ds/jokul/tokens/spacing",
             "/ds/søk",
             "/sitemap",
             "/sitemap.xml",
             "/ds/mønster",
-            "/ds/mønster/status-i-oppdatert-region",
-            "/ds/mønster/skjelettvisning",
-            "/ds/mønster/fremdrift-ved-venting",
-            "/ds/mønster/tomtilstander",
-            "/ds/mønster/bekreftelse-etter-handling",
         ]));
         expect(paths).not.toContain("/404");
     });
@@ -34,12 +39,17 @@ describe("sitemap helpers", () => {
         expect(paths).toEqual(expect.arrayContaining([
             "/",
             "/ds",
+            "/ds/jokul",
+            "/ds/jokul/installasjon",
+            "/ds/jokul/installasjon/react-og-core",
+            "/ds/jokul/komponenter",
+            "/ds/jokul/komponenter/button",
+            "/ds/jokul/komponenter/loader",
+            "/ds/jokul/komponenter/skeleton-loader",
+            "/ds/jokul/komponenter/table",
+            "/ds/jokul/tokens",
+            "/ds/jokul/tokens/spacing",
             "/ds/mønster",
-            "/ds/mønster/status-i-oppdatert-region",
-            "/ds/mønster/skjelettvisning",
-            "/ds/mønster/fremdrift-ved-venting",
-            "/ds/mønster/tomtilstander",
-            "/ds/mønster/bekreftelse-etter-handling",
         ]));
         expect(paths).not.toContain("/404");
         expect(paths).not.toContain("/ds/søk");
@@ -51,8 +61,9 @@ describe("sitemap helpers", () => {
         const tree = createSitemapRouteTree([
             "/",
             "/ds",
-            "/ds/mønster",
-            "/ds/mønster/skjelettvisning",
+            "/ds/jokul",
+            "/ds/jokul/komponenter",
+            "/ds/jokul/komponenter/button",
             "/sitemap.xml",
         ]);
 
@@ -64,11 +75,16 @@ describe("sitemap helpers", () => {
                         path: "/ds",
                         children: [
                             {
-                                path: "/ds/mønster",
+                                path: "/ds/jokul",
                                 children: [
                                     {
-                                        path: "/ds/mønster/skjelettvisning",
-                                        children: [],
+                                        path: "/ds/jokul/komponenter",
+                                        children: [
+                                            {
+                                                path: "/ds/jokul/komponenter/button",
+                                                children: [],
+                                            },
+                                        ],
                                     },
                                 ],
                             },
@@ -87,23 +103,24 @@ describe("sitemap helpers", () => {
         const html = renderSitemapRouteList([
             "/",
             "/ds",
-            "/ds/mønster",
-            "/ds/mønster/skjelettvisning",
+            "/ds/jokul",
+            "/ds/jokul/komponenter",
+            "/ds/jokul/komponenter/button",
             "/sitemap.xml",
         ]);
 
         expect(html).toContain('<ul>');
         expect(html).toContain('<a href="/">/</a>');
-        expect(html).toContain('<a href="/ds/mønster/skjelettvisning">/ds/mønster/skjelettvisning</a>');
+        expect(html).toContain('<a href="/ds/jokul/komponenter/button">/ds/jokul/komponenter/button</a>');
         expect(html).toContain('<a href="/sitemap.xml">/sitemap.xml</a>');
     });
 
     it("renders sitemap xml with absolute urls", () => {
-        const xml = renderSitemapXml(["/", "/ds/mønster/skjelettvisning"]);
+        const xml = renderSitemapXml(["/", "/ds/jokul/komponenter/button"]);
 
         expect(xml).toContain('<?xml version="1.0" encoding="UTF-8"?>');
         expect(xml).toContain("<loc>https://lmfaole.party/</loc>");
-        expect(xml).toContain("<loc>https://lmfaole.party/ds/m%C3%B8nster/skjelettvisning</loc>");
+        expect(xml).toContain("<loc>https://lmfaole.party/ds/jokul/komponenter/button</loc>");
     });
 
     it("creates an xml response", async () => {

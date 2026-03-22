@@ -44,4 +44,14 @@ describe("resolveSiteBreadcrumbItems", () => {
             { label: "Annet", current: true, href: undefined },
         ]);
     });
+
+    it("uses Jøkul titles for documented local pages", () => {
+        expect(resolveSiteBreadcrumbItems("/ds/jokul/komponenter/button")).toEqual([
+            { href: "/", label: "Forside", current: false },
+            { href: "/ds", label: "Designsystemer", current: false },
+            { href: "/ds/jokul", label: "Jøkul", current: false },
+            { href: "/ds/jokul/komponenter", label: "Komponenter", current: false },
+            { label: "Button", current: true, href: undefined },
+        ]);
+    });
 });

@@ -48,8 +48,8 @@ export const lighthousePages = [
         },
     },
     {
-        name: "Pattern detail",
-        path: "/ds/mønster/skjelettvisning",
+        name: "Jøkul Spacing",
+        path: "/ds/jokul/tokens/spacing",
         thresholds: {
             performance: 0.9,
             "best-practices": 0.9,

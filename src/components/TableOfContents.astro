@@ -1,0 +1,152 @@
+---
+interface Props {
+    title?: string;
+}
+
+const { title = "Innhold" } = Astro.props;
+---
+
+<details data-page-toc open hidden>
+    <summary>{title}</summary>
+    <nav aria-label={title} data-page-toc-nav></nav>
+</details>
+
+<script>
+    import {
+        buildTableOfContentsTree,
+        createUniqueHeadingId,
+        normalizeHeadingText,
+        type TableOfContentsHeading,
+        type TableOfContentsItem,
+    } from "@/site/table-of-contents";
+
+    const HEADING_SELECTOR = "h1, h2, h3, h4, h5, h6";
+
+    function renderItems(items: TableOfContentsItem[]): HTMLOListElement {
+        const list = document.createElement("ol");
+
+        for (const item of items) {
+            const listItem = document.createElement("li");
+            const link = document.createElement("a");
+            link.href = `#${item.id}`;
+            link.textContent = item.text;
+            listItem.append(link);
+
+            if (item.children.length > 0) {
+                listItem.append(renderItems(item.children));
+            }
+
+            list.append(listItem);
+        }
+
+        return list;
+    }
+
+    function collectHeadings(
+        main: HTMLElement,
+        tocRoot: HTMLElement,
+    ): TableOfContentsHeading[] {
+        const usedIds = new Set<string>();
+        const headings: TableOfContentsHeading[] = [];
+
+        for (const heading of main.querySelectorAll(HEADING_SELECTOR)) {
+            if (!(heading instanceof HTMLHeadingElement)) {
+                continue;
+            }
+
+            if (tocRoot.contains(heading) || heading.closest("[hidden], [aria-hidden='true']")) {
+                continue;
+            }
+
+            const text = normalizeHeadingText(heading.textContent ?? "");
+
+            if (!text) {
+                continue;
+            }
+
+            const existingId = normalizeHeadingText(heading.id);
+
+            if (existingId && !usedIds.has(existingId)) {
+                usedIds.add(existingId);
+            } else if (existingId) {
+                heading.id = createUniqueHeadingId(existingId, usedIds);
+            } else {
+                heading.id = createUniqueHeadingId(text, usedIds);
+            }
+
+            headings.push({
+                id: heading.id,
+                text,
+                level: Number(heading.tagName.slice(1)),
+            });
+        }
+
+        return headings;
+    }
+
+    function updateTableOfContents(tocRoot: HTMLElement): void {
+        if (!(tocRoot instanceof HTMLElement)) {
+            return;
+        }
+
+        const main = tocRoot.closest("main");
+        const nav = tocRoot.querySelector("[data-page-toc-nav]");
+
+        if (!(main instanceof HTMLElement) || !(nav instanceof HTMLElement)) {
+            return;
+        }
+
+        const headings = collectHeadings(main, tocRoot);
+        const nextMarkup = headings.length > 0
+            ? renderItems(buildTableOfContentsTree(headings)).outerHTML
+            : "";
+
+        if (nav.innerHTML !== nextMarkup) {
+            nav.innerHTML = nextMarkup;
+        }
+
+        tocRoot.hidden = headings.length === 0;
+    }
+
+    function initTableOfContents(tocRoot: HTMLElement): void {
+        if (!(tocRoot instanceof HTMLElement)) {
+            return;
+        }
+
+        const main = tocRoot.closest("main");
+
+        if (!(main instanceof HTMLElement)) {
+            return;
+        }
+
+        let scheduledFrame = 0;
+        const scheduleUpdate = () => {
+            if (scheduledFrame !== 0) {
+                return;
+            }
+
+            scheduledFrame = window.requestAnimationFrame(() => {
+                scheduledFrame = 0;
+                updateTableOfContents(tocRoot);
+            });
+        };
+
+        updateTableOfContents(tocRoot);
+
+        const observer = new MutationObserver(() => {
+            scheduleUpdate();
+        });
+
+        observer.observe(main, {
+            childList: true,
+            subtree: true,
+            characterData: true,
+        });
+    }
+
+    for (const tocRoot of document.querySelectorAll("[data-page-toc]")) {
+        if (tocRoot instanceof HTMLElement) {
+            initTableOfContents(tocRoot);
+        }
+    }
+</script>

@@ -1,0 +1,130 @@
+---
+import PageHeader from "@/components/PageHeader.astro";
+import TableOfContents from "@/components/TableOfContents.astro";
+import DesignSystemExternalLinks from "@/components/DesignSystemExternalLinks.astro";
+import type { DesignSystem } from "@/data/design-systems";
+
+interface Props {
+    system: DesignSystem;
+    intro: string[];
+}
+
+const { system, intro } = Astro.props;
+const documentedSections = system.catalog.filter((section) => section.status === "documented");
+const plannedSections = system.catalog.filter((section) => section.status !== "documented");
+---
+
+<main class="page">
+    <PageHeader title={system.name} description={system.description} />
+
+    {intro.map((paragraph) => (
+        <p>{paragraph}</p>
+    ))}
+
+    {system.packageName && (
+        <p>
+            Primærpakke: <code>{system.packageName}</code>
+        </p>
+    )}
+
+    <TableOfContents />
+
+    {system.packages.length > 0 && (
+        <section aria-labelledby="jokul-pakker">
+            <h2 id="jokul-pakker">Pakker i fokus</h2>
+            <ul>
+                {system.packages.map((pkg) => (
+                    <li>
+                        <strong>
+                            <code>{pkg.name}</code>
+                        </strong>
+                        : {pkg.description}
+                    </li>
+                ))}
+            </ul>
+        </section>
+    )}
+
+    <section aria-labelledby="jokul-installasjon">
+        <h2 id="jokul-installasjon">Installasjon</h2>
+        <p>
+            <a href={system.localDocumentation?.installPath ?? system.docs}>Gå til installasjonsguidene</a>
+        </p>
+        <ul>
+            {system.installGuides.map((guide) => (
+                <li>
+                    <article>
+                        <h3>
+                            {guide.localPath ? <a href={guide.localPath}>{guide.title}</a> : guide.title}
+                        </h3>
+                        <p>{guide.description}</p>
+                        {guide.packages.length > 0 && (
+                            <p>
+                                Pakker: <code>{guide.packages.join(", ")}</code>
+                            </p>
+                        )}
+                    </article>
+                </li>
+            ))}
+        </ul>
+    </section>
+
+    <section aria-labelledby="jokul-dokumenterte-seksjoner">
+        <h2 id="jokul-dokumenterte-seksjoner">Dokumenterte seksjoner</h2>
+        {documentedSections.length === 0 ? (
+            <p>Ingen seksjoner er dokumentert lokalt ennå.</p>
+        ) : (
+            <ul>
+                {documentedSections.map((section) => (
+                    <li>
+                        <article>
+                            <h3>
+                                {section.localPath ? <a href={section.localPath}>{section.title}</a> : section.title}
+                            </h3>
+                            <p>{section.description}</p>
+                            {section.items && section.items.length > 0 && (
+                                <Fragment>
+                                    <p>Innhold i piloten:</p>
+                                    <ul>
+                                        {section.items.map((item) => (
+                                            <li>
+                                                {item.localPath ? <a href={item.localPath}>{item.title}</a> : item.title}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </Fragment>
+                            )}
+                        </article>
+                    </li>
+                ))}
+            </ul>
+        )}
+    </section>
+
+    {plannedSections.length > 0 && (
+        <section aria-labelledby="jokul-planlagte-seksjoner">
+            <h2 id="jokul-planlagte-seksjoner">Planlagt videre</h2>
+            <ul>
+                {plannedSections.map((section) => (
+                    <li>
+                        <strong>{section.title}</strong>: {section.description}
+                    </li>
+                ))}
+            </ul>
+        </section>
+    )}
+
+    <section aria-labelledby="jokul-roadmap">
+        <h2 id="jokul-roadmap">Neste steg</h2>
+        <ul>
+            {(system.localDocumentation?.roadmap ?? []).map((item) => (
+                <li>{item}</li>
+            ))}
+        </ul>
+    </section>
+
+    <section aria-labelledby="jokul-eksternt">
+        <h2 id="jokul-eksternt">Eksterne kilder</h2>
+        <DesignSystemExternalLinks links={system.externalLinks} />
+    </section>
+</main>

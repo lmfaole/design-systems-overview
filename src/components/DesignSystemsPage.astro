@@ -1,23 +1,32 @@
 ---
+import TableOfContents from "@/components/TableOfContents.astro";
 import {
     getComponentCountLabel,
+    getCoverageLabels,
+    getDocumentationStatusLabel,
     getDocumentedDesignSystems,
     getDesignSystems,
-    getUndocumentedDesignSystems,
-    isDocumentedInProject,
+    getExternalDesignSystems,
+    getInstallGuideLabel,
+    getLocalBasePath,
+    getPrimarySystemHref,
+    getPackageLabel,
+    getPlannedLocalDesignSystems,
+    getRoadmapItems,
 } from "@/data/ds-overview";
 import DesignSystemExternalLinks from "@/components/DesignSystemExternalLinks.astro";
 
 const systems = getDesignSystems();
 const documentedSystems = getDocumentedDesignSystems();
-const undocumentedSystems = getUndocumentedDesignSystems();
+const plannedSystems = getPlannedLocalDesignSystems();
+const externalSystems = getExternalDesignSystems();
 ---
 
 <main class="page">
     <header class="ds-page-header">
         <h1 class="title">Designsystemer</h1>
         <p class="description">
-            Oversikt over designsystemene som er registrert i prosjektet, og hvilke som faktisk har lokal dokumentasjon her.
+            Katalog over designsystemer vi følger, med plan for installasjon, dokumentasjon og hvordan vi skiller komponenter fra øvrige assets.
         </p>
     </header>
 
@@ -33,6 +42,8 @@ const undocumentedSystems = getUndocumentedDesignSystems();
     </form>
     <p>Søket dekker den lokale mønsterdokumentasjonen og sidene under <code>/ds</code>.</p>
 
+    <TableOfContents />
+
     <section>
         <div>
             <h2>Dokumenterte designsystemer</h2>
@@ -44,21 +55,32 @@ const undocumentedSystems = getUndocumentedDesignSystems();
             <ul>
                 {documentedSystems.map((system) => {
                     const componentCountLabel = getComponentCountLabel(system);
-                    const documentedInProject = isDocumentedInProject(system);
+                    const installGuideLabel = getInstallGuideLabel(system);
+                    const coverageLabels = getCoverageLabels(system);
+                    const packageLabel = getPackageLabel(system);
+                    const primaryHref = getPrimarySystemHref(system);
 
                     return (
                         <li>
                             <article>
                                 <h3>
-                                    <a href={system.docs}>{system.name}</a>
+                                    <a href={primaryHref}>{system.name}</a>
                                 </h3>
                                 <p>{system.description}</p>
-                                <p>
-                                    {documentedInProject
-                                        ? "Dokumentert i dette repoet."
-                                        : "Har foreløpig bare ekstern dokumentasjon."}
-                                </p>
+                                <p>{getDocumentationStatusLabel(system)}</p>
+                                {packageLabel && <p>Primærpakke: <code>{packageLabel}</code></p>}
+                                {installGuideLabel && <p>{installGuideLabel}</p>}
                                 {componentCountLabel && <p>{componentCountLabel}</p>}
+                                {coverageLabels.length > 0 && (
+                                    <>
+                                        <p>Dekning:</p>
+                                        <ul>
+                                            {coverageLabels.map((label) => (
+                                                <li>{label}</li>
+                                            ))}
+                                        </ul>
+                                    </>
+                                )}
                                 <DesignSystemExternalLinks links={system.externalLinks} />
                             </article>
                         </li>
@@ -70,15 +92,20 @@ const undocumentedSystems = getUndocumentedDesignSystems();
 
     <section>
         <div>
-            <h2>Uokumenterte designsystemer</h2>
-            <p>Disse designsystemene er registrert i prosjektet, men har ikke egne ruter eller lokal dokumentasjon i repoet ennå.</p>
+            <h2>Planlagte designsystemer</h2>
+            <p>Disse har en lokal dokumentasjonsplan i repoet, men selve rutene og innholdet er ikke bygget ut ennå.</p>
         </div>
-        {undocumentedSystems.length === 0 ? (
-            <p>Alle registrerte designsystemer har lokal dokumentasjon i repoet.</p>
+        {plannedSystems.length === 0 ? (
+            <p>Ingen designsystemer har en planlagt lokal dokumentasjonsstruktur i repoet ennå.</p>
         ) : (
             <ul>
-                {undocumentedSystems.map((system) => {
+                {plannedSystems.map((system) => {
                     const componentCountLabel = getComponentCountLabel(system);
+                    const installGuideLabel = getInstallGuideLabel(system);
+                    const coverageLabels = getCoverageLabels(system);
+                    const localBasePath = getLocalBasePath(system);
+                    const roadmapItems = getRoadmapItems(system);
+                    const packageLabel = getPackageLabel(system);
 
                     return (
                         <li>
@@ -87,8 +114,76 @@ const undocumentedSystems = getUndocumentedDesignSystems();
                                     <a href={system.docs}>{system.name}</a>
                                 </h3>
                                 <p>{system.description}</p>
-                                <p>Har foreløpig bare ekstern dokumentasjon.</p>
+                                <p>{getDocumentationStatusLabel(system)}</p>
+                                {localBasePath && <p>Planlagt lokal base: <code>{localBasePath}</code></p>}
+                                {packageLabel && <p>Primærpakke: <code>{packageLabel}</code></p>}
+                                {installGuideLabel && <p>{installGuideLabel}</p>}
                                 {componentCountLabel && <p>{componentCountLabel}</p>}
+                                {coverageLabels.length > 0 && (
+                                    <>
+                                        <p>Planlagt omfang:</p>
+                                        <ul>
+                                            {coverageLabels.map((label) => (
+                                                <li>{label}</li>
+                                            ))}
+                                        </ul>
+                                    </>
+                                )}
+                                {roadmapItems.length > 0 && (
+                                    <>
+                                        <p>Neste steg:</p>
+                                        <ul>
+                                            {roadmapItems.map((item) => (
+                                                <li>{item}</li>
+                                            ))}
+                                        </ul>
+                                    </>
+                                )}
+                                <DesignSystemExternalLinks links={system.externalLinks} />
+                            </article>
+                        </li>
+                    );
+                })}
+            </ul>
+        )}
+    </section>
+
+    <section>
+        <div>
+            <h2>Kun eksterne designsystemer</h2>
+            <p>Disse er registrert i katalogen, men har foreløpig ikke en lokal plan eller egne ruter i repoet.</p>
+        </div>
+        {externalSystems.length === 0 ? (
+            <p>Alle registrerte designsystemer har enten lokal dokumentasjon eller en plan for det.</p>
+        ) : (
+            <ul>
+                {externalSystems.map((system) => {
+                    const componentCountLabel = getComponentCountLabel(system);
+                    const installGuideLabel = getInstallGuideLabel(system);
+                    const coverageLabels = getCoverageLabels(system);
+                    const packageLabel = getPackageLabel(system);
+
+                    return (
+                        <li>
+                            <article>
+                                <h3>
+                                    <a href={system.docs}>{system.name}</a>
+                                </h3>
+                                <p>{system.description}</p>
+                                <p>{getDocumentationStatusLabel(system)}</p>
+                                {packageLabel && <p>Primærpakke: <code>{packageLabel}</code></p>}
+                                {installGuideLabel && <p>{installGuideLabel}</p>}
+                                {componentCountLabel && <p>{componentCountLabel}</p>}
+                                {coverageLabels.length > 0 && (
+                                    <>
+                                        <p>Asset-områder:</p>
+                                        <ul>
+                                            {coverageLabels.map((label) => (
+                                                <li>{label}</li>
+                                            ))}
+                                        </ul>
+                                    </>
+                                )}
                                 <DesignSystemExternalLinks links={system.externalLinks} />
                             </article>
                         </li>
@@ -101,31 +196,20 @@ const undocumentedSystems = getUndocumentedDesignSystems();
     <section>
         <div>
             <h2>Alle registrerte designsystemer</h2>
-            <p>Samlet oversikt over både lokale og eksterne dokumentasjonskilder.</p>
+            <p>Samlet oversikt over hvilke systemer som er katalogisert for videre lokal dokumentasjon.</p>
         </div>
         <ul>
-            {systems.map((system) => {
-                const componentCountLabel = getComponentCountLabel(system);
-                const documentedInProject = isDocumentedInProject(system);
-
-                return (
-                    <li>
-                        <article>
-                            <h3>
-                                <a href={system.docs}>{system.name}</a>
-                            </h3>
-                            <p>{system.description}</p>
-                            <p>
-                                {documentedInProject
-                                    ? "Dokumentert i dette repoet."
-                                    : "Har foreløpig bare ekstern dokumentasjon."}
-                            </p>
-                            {componentCountLabel && <p>{componentCountLabel}</p>}
-                            <DesignSystemExternalLinks links={system.externalLinks} />
-                        </article>
-                    </li>
-                );
-            })}
+            {systems.map((system) => (
+                <li>
+                    <article>
+                        <h3>
+                            <a href={system.docs}>{system.name}</a>
+                        </h3>
+                        <p>{system.description}</p>
+                        <p>{getDocumentationStatusLabel(system)}</p>
+                    </article>
+                </li>
+            ))}
         </ul>
     </section>
 </main>

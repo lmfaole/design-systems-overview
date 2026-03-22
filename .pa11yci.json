@@ -6,9 +6,11 @@
     },
     "urls": [
         "http://127.0.0.1:3001/ds",
+        "http://127.0.0.1:3001/ds/jokul",
+        "http://127.0.0.1:3001/ds/jokul/komponenter/button",
+        "http://127.0.0.1:3001/ds/jokul/komponenter/skeleton-loader",
+        "http://127.0.0.1:3001/ds/jokul/komponenter/table",
         "http://127.0.0.1:3001/ds/mønster",
-        "http://127.0.0.1:3001/ds/mønster/skjelettvisning",
-        "http://127.0.0.1:3001/ds/mønster/tomtilstander",
-        "http://127.0.0.1:3001/ds/søk?q=skjelettvisning"
+        "http://127.0.0.1:3001/ds/søk?q=button"
     ]
 }

@@ -1,0 +1,46 @@
+---
+import PageHeader from "@/components/PageHeader.astro";
+import TableOfContents from "@/components/TableOfContents.astro";
+
+interface CollectionItem {
+    href?: string;
+    title: string;
+    description: string;
+    meta?: string;
+}
+
+interface Props {
+    title: string;
+    description: string;
+    items: CollectionItem[];
+    emptyState?: string;
+}
+
+const {
+    title,
+    description,
+    items,
+    emptyState = "Ingen innholdssider er publisert her ennå.",
+} = Astro.props;
+---
+
+<main class="page">
+    <PageHeader title={title} description={description} />
+    <TableOfContents />
+
+    {items.length === 0 ? (
+        <p>{emptyState}</p>
+    ) : (
+        <ul>
+            {items.map((item) => (
+                <li>
+                    <article>
+                        <h2>{item.href ? <a href={item.href}>{item.title}</a> : item.title}</h2>
+                        {item.meta && <p><small>{item.meta}</small></p>}
+                        <p>{item.description}</p>
+                    </article>
+                </li>
+            ))}
+        </ul>
+    )}
+</main>

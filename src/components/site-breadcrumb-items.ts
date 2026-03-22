@@ -1,3 +1,8 @@
+import { getDesignSystem } from "@/data/design-systems";
+import {
+    getLocalDesignSystemAsset,
+    getLocalDesignSystemSection,
+} from "@/data/design-systems/local-docs";
 import { getPatternPost } from "@/data/mønster/patterns";
 
 export type SiteBreadcrumbItem = {
@@ -36,6 +41,65 @@ function resolveMønsterItems(patternSlug: string): SiteBreadcrumbItem[] {
         { href: "/ds", label: "Designsystemer" },
         { href: "/ds/mønster", label: "Mønster" },
         { label: post?.title ?? humanizeSegment(patternSlug) },
+    ]);
+}
+
+function resolveDesignSystemItems(segments: string[]): SiteBreadcrumbItem[] | undefined {
+    const systemSlug = segments[1];
+    const system = getDesignSystem(systemSlug ?? "");
+
+    if (!system) {
+        return undefined;
+    }
+
+    const baseItems: SiteBreadcrumbItem[] = [
+        { href: "/", label: "Forside" },
+        { href: "/ds", label: "Designsystemer" },
+        { href: `/ds/${system.slug}`, label: system.name },
+    ];
+
+    if (segments.length === 2) {
+        return withCurrent([
+            { href: "/", label: "Forside" },
+            { href: "/ds", label: "Designsystemer" },
+            { label: system.name },
+        ]);
+    }
+
+    if (segments[2] === "installasjon") {
+        if (segments.length === 3) {
+            return withCurrent([
+                ...baseItems,
+                { label: "Installasjon" },
+            ]);
+        }
+
+        const guide = system.installGuides.find((entry) => entry.slug === segments[3]);
+
+        return withCurrent([
+            ...baseItems,
+            { href: `/ds/${system.slug}/installasjon`, label: "Installasjon" },
+            { label: guide?.title ?? humanizeSegment(segments[3] ?? "") },
+        ]);
+    }
+
+    const sectionSlug = segments[2] ?? "";
+    const section = getLocalDesignSystemSection(system.slug, sectionSlug)
+        ?? system.catalog.find((entry) => entry.localPath?.endsWith(`/${sectionSlug}`));
+
+    if (segments.length === 3) {
+        return withCurrent([
+            ...baseItems,
+            { label: section?.title ?? humanizeSegment(sectionSlug) },
+        ]);
+    }
+
+    const asset = getLocalDesignSystemAsset(system.slug, sectionSlug, segments[3] ?? "");
+
+    return withCurrent([
+        ...baseItems,
+        { href: `/ds/${system.slug}/${sectionSlug}`, label: section?.title ?? humanizeSegment(sectionSlug) },
+        { label: asset?.title ?? humanizeSegment(segments[3] ?? "") },
     ]);
 }
 
@@ -80,6 +144,12 @@ export function resolveSiteBreadcrumbItems(pathname: string): SiteBreadcrumbItem
         }
 
         return resolveMønsterItems(segments[2]);
+    }
+
+    const designSystemItems = resolveDesignSystemItems(segments);
+
+    if (designSystemItems) {
+        return designSystemItems;
     }
 
     return withCurrent([

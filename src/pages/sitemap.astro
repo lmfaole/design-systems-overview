@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import TableOfContents from "@/components/TableOfContents.astro";
 import { getRoutePaths, renderSitemapRouteList } from "@/site/sitemap";
 
 const routePaths = getRoutePaths();
@@ -13,6 +14,7 @@ const routePaths = getRoutePaths();
 >
     <main class="page" data-ua-only>
         <h1>Sitekart</h1>
+        <TableOfContents />
         <nav aria-label="Alle ruter" set:html={renderSitemapRouteList(routePaths)} />
     </main>
 </BaseLayout>

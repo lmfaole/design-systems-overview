@@ -52,6 +52,7 @@
   },
   "homepage": "https://lmfaole.party",
   "dependencies": {
+    "@fremtind/jokul": "^4.3.0",
     "astro": "^6.0.7",
     "patch-package": "^8.0.1"
   },

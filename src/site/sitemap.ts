@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { getDesignSystemLocalPaths } from "@/data/design-systems/local-docs";
 import { getPatternHref, patternPosts } from "@/data/mønster/patterns";
 import { escapeHtml, joinHtml, tag, text } from "@/lib/html";
 import { SITE_URL } from "@/site/seo";
@@ -103,7 +104,10 @@ export function getRoutePaths(
     const staticPaths = getStaticRoutePaths(pagesRoot)
         .filter((routePath) => !EXCLUDED_ROUTE_PATHS.has(routePath));
 
-    const dynamicPaths = patternPosts.map((post) => getPatternHref(post));
+    const dynamicPaths = [
+        ...patternPosts.map((post) => getPatternHref(post)),
+        ...getDesignSystemLocalPaths(),
+    ];
 
     return sortPaths([...staticPaths, ...dynamicPaths]);
 }

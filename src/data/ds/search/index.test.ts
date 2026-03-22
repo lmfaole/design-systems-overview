@@ -2,16 +2,25 @@ import { describe, expect, it } from "vitest";
 import { searchDsDocuments } from "./index";
 
 describe("design system search data", () => {
-    it("returns real pattern matches for pattern queries", () => {
-        const results = searchDsDocuments("lastetilstand");
+    it("keeps the pattern overview searchable without detail documents", () => {
+        const results = searchDsDocuments("mønster");
 
-        expect(results.length).toBeGreaterThan(0);
-        expect(results.some((result) => result.doc.href === "/ds/mønster/status-i-oppdatert-region")).toBe(true);
+        expect(results.some((result) => result.doc.href === "/ds/mønster")).toBe(true);
+        expect(results.some((result) => result.doc.kind === "pattern")).toBe(false);
+        expect(results.some((result) => result.doc.href.startsWith("/ds/mønster/"))).toBe(false);
     });
 
-    it("returns pattern matches without importing the full pattern post graph at runtime", () => {
-        const results = searchDsDocuments("bekreftelse");
+    it("finds the documented Jøkul component and token pages", () => {
+        const componentResults = searchDsDocuments("button");
+        const skeletonResults = searchDsDocuments("skeleton");
+        const tableResults = searchDsDocuments("table");
+        const tokenResults = searchDsDocuments("spacing");
 
-        expect(results.some((result) => result.doc.href === "/ds/mønster/bekreftelse-etter-handling")).toBe(true);
+        expect(componentResults.some((result) => result.doc.href === "/ds/jokul/komponenter/button")).toBe(true);
+        expect(skeletonResults.some((result) => result.doc.href === "/ds/jokul/komponenter/skeleton-loader")).toBe(
+            true,
+        );
+        expect(tableResults.some((result) => result.doc.href === "/ds/jokul/komponenter/table")).toBe(true);
+        expect(tokenResults.some((result) => result.doc.href === "/ds/jokul/tokens/spacing")).toBe(true);
     });
 });

@@ -1,0 +1,60 @@
+---
+import "@fremtind/jokul/styles/core/core.min.css";
+import "@fremtind/jokul/styles/components/button/button.min.css";
+import "@fremtind/jokul/styles/components/loader/loader.min.css";
+import "@fremtind/jokul/styles/components/loader/skeleton-loader.min.css";
+import "@fremtind/jokul/styles/components/table/table.min.css";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import DesignSystemAssetPage from "@/components/ds/DesignSystemAssetPage.astro";
+import { getDesignSystem } from "@/data/design-systems";
+import {
+    getJokulAssetDoc,
+    getJokulAssetHref,
+    getJokulInstallGuideHref,
+    getJokulLocalSection,
+} from "@/data/design-systems/systems/jokul/docs";
+
+const system = getDesignSystem("jokul");
+const section = getJokulLocalSection("komponenter");
+
+if (!system || !section) {
+    throw new Error("Missing Jøkul component documentation");
+}
+
+export function getStaticPaths() {
+    const documentedSection = getJokulLocalSection("komponenter");
+
+    if (!documentedSection) {
+        return [];
+    }
+
+    return documentedSection.items.map((item) => ({
+        params: { slug: item.slug },
+    }));
+}
+
+const slug = Astro.params.slug ?? "";
+const asset = getJokulAssetDoc("komponenter", slug);
+
+if (!asset) {
+    throw new Error(`Missing Jøkul component "${slug}"`);
+}
+
+const installGuideHref = asset.installGuideSlug
+    ? getJokulInstallGuideHref(asset.installGuideSlug)
+    : undefined;
+---
+
+<BaseLayout
+    title={`Jøkul ${asset.title}`}
+    description={asset.description}
+    path={getJokulAssetHref("komponenter", asset.slug)}
+    type="article"
+>
+    <DesignSystemAssetPage
+        systemName={system.name}
+        sectionTitle={section.title}
+        asset={asset}
+        installGuideHref={installGuideHref}
+    />
+</BaseLayout>

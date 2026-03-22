@@ -1,0 +1,52 @@
+---
+import PageHeader from "@/components/PageHeader.astro";
+import TableOfContents from "@/components/TableOfContents.astro";
+import type { DesignSystemInstallGuide } from "@/data/design-systems";
+
+interface Props {
+    systemName: string;
+    guide: DesignSystemInstallGuide;
+}
+
+const { systemName, guide } = Astro.props;
+---
+
+<main class="page">
+    <PageHeader title={guide.title} description={guide.description} />
+
+    <p>
+        <small>{systemName} · Installasjon</small>
+    </p>
+
+    <TableOfContents />
+
+    {guide.packages.length > 0 && (
+        <section aria-labelledby="installasjon-pakker">
+            <h2 id="installasjon-pakker">Pakker</h2>
+            <ul>
+                {guide.packages.map((pkg) => (
+                    <li><code>{pkg}</code></li>
+                ))}
+            </ul>
+        </section>
+    )}
+
+    <section aria-labelledby="installasjon-steg">
+        <h2 id="installasjon-steg">Steg</h2>
+        <ol>
+            {guide.steps.map((step) => (
+                <li>
+                    <article>
+                        <h3>{step.title}</h3>
+                        <p>{step.description}</p>
+                        {step.code && (
+                            <pre>
+                                <code>{step.code}</code>
+                            </pre>
+                        )}
+                    </article>
+                </li>
+            ))}
+        </ol>
+    </section>
+</main>
